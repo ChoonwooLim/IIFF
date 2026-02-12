@@ -432,6 +432,47 @@
             background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #faf8f5 100%);
         }
 
+        /* LANGUAGE TOGGLE */
+        .en {
+            display: none;
+        }
+
+        body.lang-en .ko {
+            display: none;
+        }
+
+        body.lang-en .en {
+            display: inline;
+        }
+
+        body.lang-en li.en,
+        body.lang-en div.en,
+        body.lang-en tr.en,
+        body.lang-en p.en,
+        body.lang-en h3.en,
+        body.lang-en h4.en,
+        body.lang-en td.en,
+        body.lang-en th.en,
+        body.lang-en span.en {
+            display: revert;
+        }
+
+        body.lang-en li.ko,
+        body.lang-en div.ko,
+        body.lang-en tr.ko,
+        body.lang-en p.ko,
+        body.lang-en h3.ko,
+        body.lang-en h4.ko,
+        body.lang-en td.ko,
+        body.lang-en th.ko {
+            display: none;
+        }
+
+        .lang-btn {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
         /* WATERMARK */
         .watermark {
             position: absolute;
@@ -660,7 +701,8 @@
             </svg>
             <div class="cover-sub">Incheon International Film Festival</div>
             <h1>NEXT WAVE</h1>
-            <div class="cover-tag">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
+            <div class="cover-tag"><span class="ko">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</span><span class="en">A New Wave
+                    Bridging Asia, Hollywood, and the Future of Cinema</span></div>
             <div class="cover-ver">IIFF NextWave — Integrated Proposal v5</div>
         </div>
 
@@ -670,18 +712,26 @@
             <div class="slide-title">What is IIFF?</div>
             <div class="two-col">
                 <div>
-                    <div class="s-quote">"만약에(if)" — 그 한 단어에서, IIFF는 시작됩니다.</div>
+                    <div class="s-quote"><span class="ko">"만약에(if)" — 그 한 단어에서, IIFF는 시작됩니다.</span><span
+                            class="en">"What if (if)" — From that single word, IIFF begins.</span></div>
                     <ul class="s-list" style="margin-top:3vh">
-                        <li>만약에 올해, 내 영화가 이곳에서 처음으로 주목받는다면?</li>
-                        <li>만약에 이 무대에서, 내 연기가 올해의 최우수 연기자로 불린다면?</li>
-                        <li>만약에 이 선택이, 내 인생의 방향을 바꾸는 순간이 된다면?</li>
+                        <li class="ko">만약에 올해, 내 영화가 이곳에서 처음으로 주목받는다면?</li>
+                        <li class="ko">만약에 이 무대에서, 내 연기가 올해의 최우수 연기자로 불린다면?</li>
+                        <li class="ko">만약에 이 선택이, 내 인생의 방향을 바꾸는 순간이 된다면?</li>
+                        <li class="en">What if this year, my film gets noticed here for the first time?</li>
+                        <li class="en">What if on this stage, my performance is called the best of the year?</li>
+                        <li class="en">What if this choice becomes the moment that changes my life?</li>
                     </ul>
                 </div>
                 <div>
                     <div class="s-card">
-                        <h3>IIFF는</h3>
-                        <p>이미 성공한 사람들만을 위한 영화제가 아닙니다. 아직 기회가 오지 않은 이야기, 아직 발견되지 않은 재능, 아직 불리지 않은 이름들에게 "만약에"를 상상할 수 있는
-                            용기를 주는 영화제입니다.</p>
+                        <h3 class="ko">IIFF는</h3>
+                        <h3 class="en">IIFF is</h3>
+                        <p class="ko">이미 성공한 사람들만을 위한 영화제가 아닙니다. 아직 기회가 오지 않은 이야기, 아직 발견되지 않은 재능, 아직 불리지 않은 이름들에게 "만약에"를
+                            상상할 수 있는 용기를 주는 영화제입니다.</p>
+                        <p class="en">Not a festival only for those who have already succeeded. It's a festival that
+                            gives courage to undiscovered stories, untapped talent, and unnamed creators to imagine
+                            "what if."</p>
                     </div>
                     <div class="s-highlight" style="margin-top:2vh">
                         <strong>What if this year changes everything?</strong><br>
@@ -696,22 +746,30 @@
         <div class="slide">
             <div class="slide-part">PART 1 • INTRODUCTION</div>
             <div class="slide-title">Festival Overview</div>
-            <div class="slide-subtitle">영화 · 음악 · 테크놀로지 · K-컬처가 유기적으로 융합되는 미래형 글로벌 영화 플랫폼</div>
+            <div class="slide-subtitle"><span class="ko">영화 · 음악 · 테크놀로지 · K-컬처가 유기적으로 융합되는 미래형 글로벌 영화 플랫폼</span><span
+                    class="en">A next-generation global film platform where Film, Music, Technology and K-Culture
+                    converge</span></div>
             <div class="three-col">
                 <div class="s-card">
                     <div class="num">01</div>
                     <h3>INCHEON × HOLLYWOOD</h3>
-                    <p>Method Fest와 함께하는 글로벌 영화 플랫폼. 아시아와 헐리우드를 연결하는 국제 영화 플랫폼을 구축합니다.</p>
+                    <p class="ko">Method Fest와 함께하는 글로벌 영화 플랫폼. 아시아와 헐리우드를 연결하는 국제 영화 플랫폼을 구축합니다.</p>
+                    <p class="en">A global film platform in partnership with Method Fest, bridging Asia and Hollywood.
+                    </p>
                 </div>
                 <div class="s-card">
                     <div class="num">02</div>
                     <h3>DUAL STRUCTURE</h3>
-                    <p>상업영화와 독립영화가 분리되지 않고 공존하는 이중 구조. 산업성과 예술성이 균형을 이루는 건강한 영화 생태계.</p>
+                    <p class="ko">상업영화와 독립영화가 분리되지 않고 공존하는 이중 구조. 산업성과 예술성이 균형을 이루는 건강한 영화 생태계.</p>
+                    <p class="en">A dual structure where commercial and independent films coexist. A balanced ecosystem
+                        of industry and artistry.</p>
                 </div>
                 <div class="s-card">
                     <div class="num">03</div>
                     <h3>PARTICIPATORY</h3>
-                    <p>관객 참여형 프로그램, 신진 감독을 위한 멘토링·피칭·워크숍. '보는 영화제'가 아닌 '참여하는 영화제'.</p>
+                    <p class="ko">관객 참여형 프로그램, 신진 감독을 위한 멘토링·피칭·워크숍. '보는 영화제'가 아닌 '참여하는 영화제'.</p>
+                    <p class="en">Audience participation programs, mentoring, pitching and workshops for emerging
+                        directors. Not a festival to watch, but one to join.</p>
                 </div>
             </div>
             <div class="watermark">IIFF NEXT WAVE 2026</div>
@@ -721,20 +779,32 @@
         <div class="slide slide-warm">
             <div class="slide-part">PART 1 • INTRODUCTION</div>
             <div class="slide-title">Why Incheon?</div>
-            <div class="slide-subtitle">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div>
+            <div class="slide-subtitle"><span class="ko">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</span><span
+                    class="en">Incheon is not just an 'airport city' — it is the face of Korea that the world meets
+                    first.</span></div>
             <div class="two-col">
                 <div>
                     <ul class="s-list">
-                        <li><strong>'거쳐가는 도시'에서 영화인의 문화 종착지로</strong> — 인천에 머무르고, 인천을 경험하게 만드는 구조</li>
-                        <li><strong>헐리우드와 직접 연결</strong> — 글로벌 자본·인재·관광객 유입 구조</li>
-                        <li><strong>문화 행정 역량 증명</strong> — 국제 문화 행사 유치의 레퍼런스 자산</li>
-                        <li><strong>365일 영화·콘텐츠 허브</strong> — 연중 운영형 시스템</li>
+                        <li class="ko"><strong>'거쳐가는 도시'에서 영화인의 문화 종착지로</strong> — 인천에 머무르고, 인천을 경험하게 만드는 구조</li>
+                        <li class="ko"><strong>헐리우드와 직접 연결</strong> — 글로벌 자본·인재·관광객 유입 구조</li>
+                        <li class="ko"><strong>문화 행정 역량 증명</strong> — 국제 문화 행사 유치의 레퍼런스 자산</li>
+                        <li class="ko"><strong>365일 영화·콘텐츠 허브</strong> — 연중 운영형 시스템</li>
+                        <li class="en"><strong>From transit city to cultural destination</strong> — Making filmmakers
+                            stay and experience Incheon</li>
+                        <li class="en"><strong>Direct Hollywood connection</strong> — Attracting global capital, talent,
+                            and tourism</li>
+                        <li class="en"><strong>Proven cultural administration</strong> — Reference asset for
+                            international event hosting</li>
+                        <li class="en"><strong>365-day Film & Content Hub</strong> — Year-round operating system</li>
                     </ul>
                 </div>
                 <div>
                     <div class="s-highlight">
-                        <strong>결론:</strong> 영화제를 시작으로, 인천은 '아시아의 새로운 콘텐츠 중심 도시'로 브랜딩됩니다. IIFF는 단순한 문화 행사가 아니라, 인천의 정체성과
-                        미래를 재정의하는 도시 프로젝트입니다.
+                        <span class="ko"><strong>결론:</strong> 영화제를 시작으로, 인천은 '아시아의 새로운 콘텐츠 중심 도시'로 브랜딩됩니다. IIFF는 단순한 문화
+                            행사가 아니라, 인천의 정체성과 미래를 재정의하는 도시 프로젝트입니다.</span>
+                        <span class="en"><strong>Conclusion:</strong> Starting with the film festival, Incheon will be
+                            branded as 'Asia's new content hub.' IIFF is not just a cultural event — it's an urban
+                            project redefining Incheon's identity and future.</span>
                     </div>
                 </div>
             </div>
@@ -749,28 +819,33 @@
                 style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:2vh;position:relative;z-index:1">
                 <div class="s-quote"
                     style="border:none;text-align:center;max-width:80%;padding:0;font-size:clamp(1.4rem,2.2vw,2.2rem)">
-                    "영화가 머무는 도시 / 창작자가 성장하는 도시 / 세계가 다시 찾는 인천"
+                    <span class="ko">"영화가 머무는 도시 / 창작자가 성장하는 도시 / 세계가 다시 찾는 인천"</span><span class="en">"A city where
+                        cinema stays / Where creators grow / An Incheon the world returns to"</span>
                 </div>
                 <div class="icon-row" style="margin-top:5vh;width:85%">
                     <div class="icon-item">
                         <div class="ico">🎬</div>
                         <h4>Human First</h4>
-                        <p>기술을 부정하지 않되<br>사람을 지우지 않는 영화제</p>
+                        <p class="ko">기술을 부정하지 않되<br>사람을 지우지 않는 영화제</p>
+                        <p class="en">A festival that embraces technology<br>without erasing the human touch</p>
                     </div>
                     <div class="icon-item">
                         <div class="ico">💡</div>
                         <h4>Memory & Future</h4>
-                        <p>미래를 말하되<br>기억과 감정을 잃지 않는 영화제</p>
+                        <p class="ko">미래를 말하되<br>기억과 감정을 잃지 않는 영화제</p>
+                        <p class="en">A festival that speaks of the future<br>without losing memory and emotion</p>
                     </div>
                     <div class="icon-item">
                         <div class="ico">🌊</div>
                         <h4>Next Scene</h4>
-                        <p>경쟁보다 가능성을<br>결과보다 '다음 장면'을 남기는 영화제</p>
+                        <p class="ko">경쟁보다 가능성을<br>결과보다 '다음 장면'을 남기는 영화제</p>
+                        <p class="en">A festival that values potential<br>over competition, leaving the 'next scene'</p>
                     </div>
                     <div class="icon-item">
                         <div class="ico">🌉</div>
                         <h4>Bridge</h4>
-                        <p>과거의 낭만과 미래의 기술이<br>만나는 브릿지</p>
+                        <p class="ko">과거의 낭만과 미래의 기술이<br>만나는 브릿지</p>
+                        <p class="en">A bridge where the romance of the past<br>meets the technology of the future</p>
                     </div>
                 </div>
             </div>
@@ -785,29 +860,39 @@
                 <div class="s-card">
                     <div class="num">01</div>
                     <h3>Commercial & Global Showcase</h3>
-                    <p>헐리우드 및 글로벌 상업영화, 갈라 스크리닝, 레드카펫. IIFF의 외부 인지도와 미디어 파급력을 책임지는 얼굴 섹션.</p>
+                    <p class="ko">헐리우드 및 글로벌 상업영화, 갈라 스크리닝, 레드카펫. IIFF의 외부 인지도와 미디어 파급력을 책임지는 얼굴 섹션.</p>
+                    <p class="en">Hollywood & global commercial films, gala screenings, red carpet. The flagship section
+                        driving IIFF's visibility and media impact.</p>
                 </div>
                 <div class="s-card">
                     <div class="num">02</div>
                     <h3>Method Fest Indie Section</h3>
-                    <p>연기·연출·스토리 중심의 '창작 방법론(Method)'에 집중. 마스터 클래스, 워크숍, 국제 공동 제작 토크.</p>
+                    <p class="ko">연기·연출·스토리 중심의 '창작 방법론(Method)'에 집중. 마스터 클래스, 워크숍, 국제 공동 제작 토크.</p>
+                    <p class="en">Focused on creative methodology — acting, directing, story. Master classes, workshops,
+                        and international co-production talks.</p>
                 </div>
                 <div class="s-card">
                     <div class="num">03</div>
                     <h3>NextWave Mobile Film</h3>
-                    <p>모바일 디바이스로 촬영한 작품만 출품 가능. 숏폼과 영화적 서사의 경계를 확장하는 실험적 섹션.</p>
+                    <p class="ko">모바일 디바이스로 촬영한 작품만 출품 가능. 숏폼과 영화적 서사의 경계를 확장하는 실험적 섹션.</p>
+                    <p class="en">Submissions shot only on mobile devices. An experimental section expanding the
+                        boundary between short-form and cinematic narrative.</p>
                 </div>
             </div>
             <div class="two-col" style="margin-top:2vh">
                 <div class="s-card">
                     <div class="num">04</div>
                     <h3>Festival Camp & Live Culture</h3>
-                    <p>캠핑·공연·상영 결합. 밤에는 야외 상영, 낮에는 크리에이터 밋업. 머무르고 경험하는 문화 축제.</p>
+                    <p class="ko">캠핑·공연·상영 결합. 밤에는 야외 상영, 낮에는 크리에이터 밋업. 머무르고 경험하는 문화 축제.</p>
+                    <p class="en">Camping, performances, screenings combined. Outdoor screenings at night, creator
+                        meetups by day. A cultural festival to stay and experience.</p>
                 </div>
                 <div class="s-card">
                     <div class="num">05</div>
                     <h3>K-Culture Experience Zone</h3>
-                    <p>K-푸드, K-뷰티, 라이프스타일 브랜드가 참여하는 체험형 존. 한국 문화를 경험하는 국제 영화제.</p>
+                    <p class="ko">K-푸드, K-뷰티, 라이프스타일 브랜드가 참여하는 체험형 존. 한국 문화를 경험하는 국제 영화제.</p>
+                    <p class="en">An experiential zone featuring K-Food, K-Beauty, and lifestyle brands. Experience
+                        Korean culture at an international film festival.</p>
                 </div>
             </div>
             <div class="watermark">IIFF NEXT WAVE 2026</div>
@@ -821,32 +906,57 @@
                 <div>
                     <table class="s-table">
                         <thead>
-                            <tr>
+                            <tr class="ko">
                                 <th>초청 대상</th>
                                 <th>섭외 채널</th>
                                 <th>프로그램</th>
                             </tr>
+                            <tr class="en">
+                                <th>Invitee</th>
+                                <th>Channel</th>
+                                <th>Program</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class="ko">
                                 <td>할 베리</td>
                                 <td>CAA</td>
                                 <td>갈라 + 마스터 클래스</td>
                             </tr>
-                            <tr>
+                            <tr class="en">
+                                <td>Halle Berry</td>
+                                <td>CAA</td>
+                                <td>Gala + Master Class</td>
+                            </tr>
+                            <tr class="ko">
                                 <td>키아누 리브스</td>
                                 <td>WME</td>
                                 <td>개막식 특별 게스트</td>
                             </tr>
-                            <tr>
+                            <tr class="en">
+                                <td>Keanu Reeves</td>
+                                <td>WME</td>
+                                <td>Opening Ceremony Special Guest</td>
+                            </tr>
+                            <tr class="ko">
                                 <td>봉준호 감독</td>
                                 <td>국내</td>
                                 <td>심사위원장 / 마스터 클래스</td>
                             </tr>
-                            <tr>
+                            <tr class="en">
+                                <td>Director Bong Joon-ho</td>
+                                <td>Domestic</td>
+                                <td>Jury Chair / Master Class</td>
+                            </tr>
+                            <tr class="ko">
                                 <td>송강호</td>
                                 <td>국내</td>
                                 <td>개·폐막작 주연 배우</td>
+                            </tr>
+                            <tr class="en">
+                                <td>Song Kang-ho</td>
+                                <td>Domestic</td>
+                                <td>Opening/Closing Film Lead Actor</td>
                             </tr>
                         </tbody>
                     </table>
@@ -854,11 +964,16 @@
                 <div>
                     <div class="s-card">
                         <h3>🎬 NextWave Creator Camp</h3>
-                        <p>만 16세 이상 전 세계 누구나 참여. 스마트폰 촬영 필수. 48시간 내 촬영→편집→제출. 대상: 상금 + 차기 영화제 정식 상영권.</p>
+                        <p class="ko">만 16세 이상 전 세계 누구나 참여. 스마트폰 촬영 필수. 48시간 내 촬영→편집→제출. 대상: 상금 + 차기 영화제 정식 상영권.</p>
+                        <p class="en">Open to anyone worldwide aged 16+. Smartphone filming required. 48hr
+                            shoot→edit→submit. Grand prize: Cash + official screening at next festival.</p>
                     </div>
                     <div class="s-card" style="margin-top:1.5vh">
-                        <h3>✨ VIP 의전</h3>
-                        <p>인천공항 VIP 통로 · 전용 의전 차량 · 인스파이어 최상급 스위트 · 전속 코디네이터 · 보안 경호</p>
+                        <h3 class="ko">✨ VIP 의전</h3>
+                        <h3 class="en">✨ VIP Protocol</h3>
+                        <p class="ko">인천공항 VIP 통로 · 전용 의전 차량 · 인스파이어 최상급 스위트 · 전속 코디네이터 · 보안 경호</p>
+                        <p class="en">Incheon Airport VIP passage · Dedicated escort vehicle · Inspiroy top-tier suite ·
+                            Personal coordinator · Security detail</p>
                     </div>
                 </div>
             </div>
@@ -1252,6 +1367,7 @@
             <button onclick="nextSlide()" title="다음">▶</button>
         </div>
         <div class="tools">
+            <button class="lang-btn" onclick="toggleLang()" id="langBtn" title="한국어/English">🌐 EN</button>
             <button onclick="toggleFullscreen()" title="전체화면">⛶ 전체화면</button>
             <button onclick="window.print()" title="PDF 다운로드">📥 PDF</button>
             <button onclick="window.location.href='index.html'" title="기획서 보기">🏠 HOME</button>
@@ -1309,6 +1425,176 @@
         }
 
         showSlide(0);
+
+        let currentLang = 'ko';
+        const translations = {
+            // Slide 8
+            '"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루': '"Audiences arrive in the morning and stay until late at night" — An Immersive Festival Day',
+            '시간': 'Time', '장소': 'Venue', '프로그램': 'Program',
+            '디스커버리 파크 / CGV': 'Discovery Park / CGV',
+            '🌅 모닝 루틴 → 🎬 인디 섹션 상영 (메소드) / 📱 Creator Camp': '🌅 Morning Routine → 🎬 Indie Screening (Method) / 📱 Creator Camp',
+            '오로라 푸드코트': 'Aurora Food Court',
+            '🍜 K-푸드 팝업 런치': '🍜 K-Food Popup Lunch',
+            'MICE 시설': 'MICE Facility',
+            '🎤 마스터 클래스 + 💼 비즈니스 포럼': '🎤 Master Class + 💼 Business Forum',
+            '🎬 경쟁작/초청작 상영 + 감독 GV': '🎬 Competition/Invited Screenings + Director Q&A',
+            '레드카펫 → 아레나': 'Red Carpet → Arena',
+            '📸 레드카펫 & 포토콜 → 🌟 갈라 스크리닝': '📸 Red Carpet & Photo Call → 🌟 Gala Screening',
+            '디스커버리 파크': 'Discovery Park',
+            '🎶 K-팝 콘서트 & 야외 상영 → 🔥 캠프파이어 네트워킹': '🎶 K-Pop Concert & Outdoor Screening → 🔥 Campfire Networking',
+            // Slide 9
+            '아시아 × 헐리우드': 'Asia × Hollywood',
+            'The Gateway: 글로벌·아시아 스타 공동 레드카펫. 공동 제작 및 투자 유치 포럼.': 'The Gateway: Joint global-Asian star red carpet. Co-production and investment forum.',
+            '모바일 / Creator Camp': 'Mobile / Creator Camp',
+            '모두가 감독, 모두가 비평가. 모바일폰 영화 제작 → 야외 대형 스크린 상영.': 'Everyone is a director, everyone is a critic. Mobile filmmaking → Outdoor big-screen screening.',
+            '독립영화 정신 계승. 공동 심사 및 초청을 통해 독립영화의 권위를 확보.': 'Inheriting the indie spirit. Securing indie film authority through joint jury and invitations.',
+            '헐리우드 A급 배우 초청. 아레나에서 \'글로벌 멘토링 클래스\' 운영.': 'Inviting Hollywood A-list actors. Running \'Global Mentoring Class\' at the Arena.',
+            '인천-하와이 교차 개최. 4회부터 하와이 국제영화제와 협력 체계 구축.': 'Cross-hosting Incheon-Hawaii. Building partnership with Hawaii IFF from 4th edition.',
+            'K-팝 콘서트 / K-푸드 팝업 / K-뷰티 체험 부스 통합 운영.': 'K-Pop concert / K-Food popup / K-Beauty experience booths — integrated operations.',
+            // Slide 10
+            '1단계 · Foundation (1회)': 'Phase 1 · Foundation (1st Edition)',
+            '2단계 · Expansion (2회)': 'Phase 2 · Expansion (2nd Edition)',
+            '3단계 · Globalization (3회)': 'Phase 3 · Globalization (3rd Edition)',
+            '"1~3회 인천 기반 구축 → 4회부터 하와이 국제영화제와 교차 개최"': '"Build Incheon foundation (editions 1-3) → Cross-hosting with Hawaii IFF from edition 4"',
+            // Slide 11
+            '주요 프로그램': 'Key Programs', '역할': 'Role',
+            '인스파이어 아레나': 'Inspire Arena',
+            '개막/폐막식, 레드카펫, 갈라 콘서트': 'Opening/Closing Ceremony, Red Carpet, Gala Concert',
+            '상징 공간': 'Symbolic Venue',
+            'Creator Camp, 야외 상영, K-컬처 체험': 'Creator Camp, Outdoor Screening, K-Culture Experience',
+            '축제 공간': 'Festival Space',
+            '공동 제작 포럼, 마스터 클래스': 'Co-production Forum, Master Class',
+            '비즈니스 공간': 'Business Venue',
+            'CGV 상영관': 'CGV Theater',
+            '메소드-인디 섹션 전용관, 경쟁작 상영': 'Method-Indie section theater, Competition screening',
+            '상영 공간': 'Screening Venue',
+            '오로라 (디지털 스트리트)': 'Aurora (Digital Street)',
+            '수상작 디지털 상영, 포토존, 스폰서십': 'Award winners digital screening, Photo zone, Sponsorship',
+            '브랜딩 공간': 'Branding Venue',
+            // Slide 12
+            '총 예산': 'Total Budget', '프로그램 운영': 'Program Operations',
+            '스타 초청 & 의전': 'Star Invitation & Protocol', '마케팅 & 홍보': 'Marketing & PR',
+            '30억': '₩3B', '10억': '₩1B', '8억': '₩800M', '5억': '₩500M',
+            '1단계 (2025.10~2026.01)': 'Phase 1 (2025.10~2026.01)',
+            '2단계 (2026.02~04)': 'Phase 2 (2026.02~04)',
+            '3단계 (2026.05~07)': 'Phase 3 (2026.05~07)',
+            '4단계 (2026.08~10)': 'Phase 4 (2026.08~10)',
+            // Slide 13
+            '등급': 'Tier', '금액': 'Amount', '혜택': 'Benefits',
+            '5억 원+': '₩500M+',
+            '공식 타이틀 명명권, 전 프로그램 브랜딩, 개막식 VIP 좌석': 'Official title naming rights, All-program branding, Opening VIP seats',
+            '3억 원': '₩300M',
+            '섹션별 명명권(갈라/캠프), 브랜드 존 운영권': 'Section naming rights (Gala/Camp), Brand zone operation rights',
+            '1억 원': '₩100M',
+            '공식 파트너 로고 노출, 전용 부스, 초청 티켓 100매': 'Official partner logo, Dedicated booth, 100 invitation tickets',
+            '3천만 원': '₩30M',
+            '로고 노출, 온라인 공동 프로모션, 초청 티켓 30매': 'Logo exposure, Online co-promotion, 30 invitation tickets',
+            // Slide 14
+            '그룹': 'Group', '직책': 'Position', '성명': 'Name',
+            '인천시 & 공항공사': 'Incheon City & Airport Corp.',
+            '조직위원회 · 공동 주최': 'Organizing Committee · Co-host',
+            '인스파이어 리조트': 'Inspire Resort',
+            '집행위원회 · 시설 제공': 'Executive Committee · Venue Provider',
+            '상영 시설 · 티켓 시스템': 'Screening Facility · Ticketing',
+            '영화진흥위원회': 'Korean Film Council',
+            '전문 위원회 · 인력 양성': 'Expert Committee · Talent Development',
+            '해외 협력 · 인디 섹션': 'Overseas Partnership · Indie Section',
+            '스타 섭외 대행': 'Star Casting Agency',
+            '공동 위원장': 'Co-Chairman',
+            '박병용 (인스파이어 부회장)': 'Park Byung-yong (Inspire Vice Chairman)',
+            '오석근 (전 영진위 위원장)': 'Oh Seok-keun (Former KOFIC Chairman)',
+            '상임 고문': 'Standing Advisor',
+            '유동수 (국회의원)': 'Yoo Dong-soo (National Assembly Member)',
+            '자문 위원': 'Advisory Member',
+            '조광희 (전 시의원)': 'Cho Kwang-hee (Former City Councilor)',
+            '대외협력 이사': 'External Affairs Director',
+            '서태웅': 'Seo Tae-woong',
+            // Slide 15
+            '부산국제영화제 대비 차별화 전략': 'Differentiation Strategy vs. Busan International Film Festival',
+            '항목': 'Category', 'BIFF (부산)': 'BIFF (Busan)', 'IIFF NextWave (인천)': 'IIFF NextWave (Incheon)',
+            '포지셔닝': 'Positioning',
+            '아시아 최대 영화제': 'Asia\'s Largest Film Festival',
+            '미래형 글로벌 영화+컬처 플랫폼': 'Next-Gen Global Film + Culture Platform',
+            '콘텐츠': 'Content',
+            '장편 영화 중심': 'Feature Film Focus',
+            '영화 + 숏폼 + K-컬처 통합': 'Film + Short-form + K-Culture Integration',
+            '관객 경험': 'Audience Experience',
+            '상영 중심': 'Screening-centric',
+            '캠핑 + 체험 + 참여형 축제': 'Camping + Experience + Participatory Festival',
+            '글로벌 연결': 'Global Connection',
+            '아시아 중심': 'Asia-centric',
+            '헐리우드 직접 연결 (Method Fest)': 'Direct Hollywood Link (Method Fest)',
+            '공간': 'Venue', '영화의전당': 'Busan Cinema Center',
+            '인스파이어 아레나 + MICE + CGV': 'Inspire Arena + MICE + CGV',
+            // Slide 16
+            '"만약에, 이곳에서 내 이야기가 시작된다면?"': '"What if my story begins right here?"',
+            '인천 국제 넥스트웨이브 영화제 통합 기획서 v5': 'IIFF NextWave Integrated Proposal v5',
+            '← 전체 기획서 보기': '← View Full Proposal',
+        };
+        // Build map: store original text and mark elements for translation
+        function initTranslations() {
+            // Also handle innerHTML-based translations for complex cells
+            document.querySelectorAll('.slides-wrapper th, .slides-wrapper td, .slides-wrapper h3, .slides-wrapper h4, .slides-wrapper .slide-subtitle, .slides-wrapper .s-quote, .slides-wrapper .s-highlight, .slides-wrapper .lbl, .slides-wrapper .big, .slides-wrapper a').forEach(el => {
+                if (el.classList.contains('translatable') || el.querySelector('.ko') || el.querySelector('.en')) return;
+                const txt = el.textContent.trim();
+                if (translations[txt]) {
+                    el.dataset.ko = el.innerHTML;
+                    el.dataset.en = translations[txt];
+                    el.classList.add('translatable');
+                }
+            });
+            // Handle <p> elements – match by textContent (handles <br> → \n conversion)
+            document.querySelectorAll('.slides-wrapper p').forEach(el => {
+                if (el.classList.contains('translatable') || el.classList.contains('ko') || el.classList.contains('en') || el.querySelector('.ko') || el.querySelector('.en')) return;
+                const txt = el.textContent.trim();
+                if (translations[txt]) {
+                    el.dataset.ko = el.innerHTML;
+                    el.dataset.en = translations[txt];
+                    el.classList.add('translatable');
+                }
+            });
+            // Special handling for s-phase <p> with <br> tags – match by parent h4
+            const phaseTranslations = {
+                '1단계 · Foundation (1회)': '• Official organizing/executive committee launch<br>• Arena opening & CGV indie section<br>• Creator Camp pilot (100 teams)<br>• K-Pop mini concert introduction',
+                '2단계 · Expansion (2회)': '• Business market official launch<br>• Master class regularization<br>• Mobile film fest doubled in scale<br>• K-Culture programs significantly enhanced',
+                '3단계 · Globalization (3회)': '• Hawaii Film Festival official MOU<br>• Method section → Official competition<br>• 3-year performance analysis & long-term vision',
+                '1단계 (2025.10~2026.01)': '₩250M — Corporation establishment, seed funding, MOU signing',
+                '2단계 (2026.02~04)': '₩500M — Staff hiring, website, sponsorship acquisition (30%)',
+                '3단계 (2026.05~07)': '₩1B — Guest confirmation, ticket launch, PR focus',
+                '4단계 (2026.08~10)': '₩1.25B — Facility installation, rehearsal, festival hosting',
+            };
+            document.querySelectorAll('.s-phase').forEach(phase => {
+                const h4 = phase.querySelector('h4');
+                const p = phase.querySelector('p');
+                if (h4 && p && phaseTranslations[h4.textContent.trim()]) {
+                    if (!p.classList.contains('translatable')) {
+                        p.dataset.ko = p.innerHTML;
+                        p.dataset.en = phaseTranslations[h4.textContent.trim()];
+                        p.classList.add('translatable');
+                    }
+                }
+            });
+            // Handle the sponsorship highlight
+            document.querySelectorAll('.s-highlight').forEach(el => {
+                if (el.classList.contains('translatable') || el.querySelector('.ko') || el.querySelector('.en')) return;
+                const txt = el.textContent.trim();
+                if (txt.includes('핵심 가치:')) {
+                    el.dataset.ko = el.innerHTML;
+                    el.dataset.en = '<strong>Core Value:</strong> Not a sponsorship that just slaps a logo — a structure where brands become the \'protagonist\' within programs and experiences. Performance measured by foot traffic, booth dwell time, and UGC generation.';
+                    el.classList.add('translatable');
+                }
+            });
+        }
+        initTranslations();
+
+        function toggleLang() {
+            currentLang = currentLang === 'ko' ? 'en' : 'ko';
+            document.body.classList.toggle('lang-en', currentLang === 'en');
+            document.getElementById('langBtn').textContent = currentLang === 'ko' ? '🌐 EN' : '🌐 KO';
+            document.querySelectorAll('.translatable').forEach(el => {
+                el.innerHTML = currentLang === 'en' ? el.dataset.en : el.dataset.ko;
+            });
+        }
     </script>
 </body>
 
