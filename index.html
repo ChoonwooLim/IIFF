@@ -62,11 +62,11 @@
             background: rgba(8, 8, 18, 0.96);
             backdrop-filter: blur(24px);
             border-bottom: 1px solid rgba(201, 168, 76, 0.15);
-            padding: 0 3rem;
+            padding: 0 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 84px
+            height: 64px
         }
 
         nav .logo-container {
@@ -95,7 +95,7 @@
             display: flex;
             font-family: 'Inter', sans-serif;
             font-weight: 900;
-            font-size: 2rem;
+            font-size: 1.6rem;
             line-height: 1;
             letter-spacing: -1px
         }
@@ -149,23 +149,23 @@
         .nav-item>.nav-label {
             display: flex;
             align-items: center;
-            gap: .5rem;
-            padding: 0 1.2rem;
+            gap: .4rem;
+            padding: 0 1rem;
             height: 100%;
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: .95rem;
+            font-weight: 600;
             color: var(--text-dim);
             text-decoration: none;
             cursor: pointer;
             transition: all .25s;
-            border-bottom: 3px solid transparent;
+            border-bottom: 2px solid transparent;
             letter-spacing: .5px;
             white-space: nowrap;
             user-select: none
         }
 
         .nav-item>.nav-label .arrow {
-            font-size: .7rem;
+            font-size: .6rem;
             transition: transform .25s;
             opacity: .6
         }
@@ -203,11 +203,11 @@
         .nav-dropdown a {
             display: flex;
             align-items: center;
-            gap: .8rem;
-            padding: .8rem 1.2rem;
+            gap: .7rem;
+            padding: .7rem 1rem;
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: .9rem;
             font-weight: 500;
             border-radius: 8px;
             transition: all .2s;
@@ -215,8 +215,8 @@
         }
 
         .nav-dropdown a .dd-icon {
-            font-size: 1rem;
-            width: 1.6rem;
+            font-size: .9rem;
+            width: 1.5rem;
             text-align: center;
             flex-shrink: 0
         }
@@ -237,14 +237,14 @@
         .nav-item>a.nav-direct {
             display: flex;
             align-items: center;
-            padding: 0 1.2rem;
+            padding: 0 1rem;
             height: 100%;
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: .95rem;
+            font-weight: 600;
             color: var(--text-dim);
             text-decoration: none;
             transition: all .25s;
-            border-bottom: 3px solid transparent;
+            border-bottom: 2px solid transparent;
             letter-spacing: .5px
         }
 
@@ -853,31 +853,151 @@
             font-size: .8rem
         }
 
+        /* MOBILE NAV BUTTON */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--gold);
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
         /* RESPONSIVE */
-        @media(max-width:768px) {
+        @media(max-width: 1024px) {
+            nav {
+                padding: 0 1.5rem;
+            }
+
+            nav .nav-menu {
+                position: fixed;
+                top: 64px;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                /* Full width for mobile */
+                max-width: 320px;
+                /* Limit width on larger mobile */
+                background: rgba(12, 12, 28, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+                border-left: 1px solid rgba(201, 168, 76, 0.15);
+                overflow-y: auto;
+                height: calc(100vh - 64px);
+            }
+
+            nav .nav-menu.active {
+                transform: translateX(0);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-item {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 0.5rem;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-item>.nav-label,
+            .nav-item>a.nav-direct {
+                width: 100%;
+                justify-content: space-between;
+                padding: 1rem 0;
+                font-size: 1.1rem;
+            }
+
+            .nav-dropdown {
+                position: static;
+                transform: none;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                /* Hidden by default in mobile accordion */
+                padding-left: 1.5rem;
+                width: 100%;
+            }
+
+            .nav-item.active .nav-dropdown {
+                display: block;
+            }
+
+            .nav-dropdown a {
+                padding: 0.8rem 0;
+                color: var(--text-dim);
+            }
+
+            .nav-item>.nav-label .arrow {
+                transform: rotate(0deg);
+            }
+
+            .nav-item.active>.nav-label .arrow {
+                transform: rotate(180deg);
+            }
+
+            /* Main Content Adjustments */
             section {
-                padding: 100px 1.5rem 60px
+                padding: 100px 1.5rem 60px;
             }
 
             #cover h1 {
-                font-size: 2.5rem;
-                letter-spacing: 8px
+                font-size: 3rem;
+                letter-spacing: 5px;
             }
 
             .section-title {
-                font-size: 2rem
+                font-size: 2.2rem;
             }
 
             .split {
-                grid-template-columns: 1fr
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .card-grid {
-                grid-template-columns: 1fr
+                grid-template-columns: 1fr;
             }
 
-            nav .nav-links {
-                display: none
+            .org-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .org-connector {
+                height: 20px;
+            }
+        }
+
+        @media(max-width: 480px) {
+            #cover h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            nav {
+                padding: 0 1rem;
             }
         }
 
@@ -1006,7 +1126,13 @@
             </div>
             <div class="logo-sub">NEXTWAVE</div>
         </a>
-        <ul class="nav-menu">
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleMenu()">
+            ☰
+        </button>
+
+        <ul class="nav-menu" id="navMenu">
             <!-- HOME -->
             <li class="nav-item">
                 <a href="#cover" class="nav-direct">HOME</a>
@@ -1069,7 +1195,7 @@
     </nav>
 
     <!-- ═══════════════════════════════════════════ -->
-    
+
     <!-- ═══════════════════════════════════════════ -->
 
     <!-- COVER -->
@@ -1082,7 +1208,7 @@
 
     <!-- WHAT IS IIFF -->
 
-<section id="what-is-iiff" class="bg-alt">
+    <section id="what-is-iiff" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 1 • INTRODUCTION</div>
             <div class="section-title">1. What is IIFF?</div>
@@ -1125,7 +1251,7 @@
 
     <!-- OVERVIEW -->
 
-<section id="overview">
+    <section id="overview">
         <div class="section-content">
             <div class="section-label">PART 1 • INTRODUCTION</div>
             <div class="section-title">2. Festival Overview</div>
@@ -1191,7 +1317,7 @@
 
     <!-- WHY PARTICIPATE -->
 
-<section id="why-participate" class="bg-alt">
+    <section id="why-participate" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 1 • INTRODUCTION</div>
             <div class="section-title">3. Why Participate?</div>
@@ -1267,7 +1393,7 @@
 
     <!-- WHY INCHEON -->
 
-<section id="why-incheon">
+    <section id="why-incheon">
         <div class="section-content">
             <div class="section-label">PART 1 • INTRODUCTION</div>
             <div class="section-title">4. Why Incheon?</div>
@@ -1302,7 +1428,7 @@
 
     <!-- PROGRAMS -->
 
-<section id="vision">
+    <section id="vision">
         <div class="section-content">
             <div class="section-label">PART 1 • INTRODUCTION</div>
             <div class="section-title">5. Vision & Philosophy</div>
@@ -1347,14 +1473,14 @@
     <!-- ═══════════════════════════════════════════ -->
     <!-- PART 2 DIVIDER -->
     <!-- ═══════════════════════════════════════════ -->
-    
-        <h2>사업 추진 계획서</h2>
-        <p>제1회 인천 국제 넥스트웨이브 영화제의 구체적인 실행 전략, 조직, 예산, 스폰서십, 로드맵</p>
+
+    <h2>사업 추진 계획서</h2>
+    <p>제1회 인천 국제 넥스트웨이브 영화제의 구체적인 실행 전략, 조직, 예산, 스폰서십, 로드맵</p>
     </div>
 
     <!-- STRATEGY -->
 
-<section id="programs" class="bg-alt">
+    <section id="programs" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 2 • PROGRAMS</div>
             <div class="section-title">1. Core Programs</div>
@@ -1417,7 +1543,7 @@
 
     <!-- VISION -->
 
-<section id="stars">
+    <section id="stars">
         <div class="section-content">
             <div class="section-label">PART 2 • PROGRAMS</div>
             <div class="section-title">2. Star Invitation & Camp</div>
@@ -1539,7 +1665,7 @@
 
     <!-- BIFF COMPARISON -->
 
-<section id="simulation">
+    <section id="simulation">
         <div class="section-content">
             <div class="section-label">PART 2 • PROGRAMS</div>
             <div class="section-title">3. Daily Simulation</div>
@@ -1641,7 +1767,7 @@
 
     <!-- VOLUNTEER -->
 
-<section id="volunteer" class="bg-alt">
+    <section id="volunteer" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 2 • PROGRAMS</div>
             <div class="section-title">4. Civic Participation</div>
@@ -1686,7 +1812,7 @@
 
     <!-- A-TO-Z ROADMAP -->
 
-<section id="strategy" class="bg-alt">
+    <section id="strategy" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">1. Core Strategy</div>
@@ -1746,7 +1872,7 @@
 
     <!-- ORGANIZATION -->
 
-<section id="organization">
+    <section id="organization">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">2. Organization</div>
@@ -1844,7 +1970,7 @@
 
     <!-- 3-YEAR ROADMAP -->
 
-<section id="roadmap" class="bg-alt">
+    <section id="roadmap" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">3. 3-Year Roadmap</div>
@@ -1926,7 +2052,7 @@
 
     <!-- BUDGET -->
 
-<section id="atoz-roadmap">
+    <section id="atoz-roadmap">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">4. A-to-Z Roadmap</div>
@@ -2045,7 +2171,7 @@
 
     <!-- CASH FLOW -->
 
-<section id="space" class="bg-alt">
+    <section id="space" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">5. Space & Partners</div>
@@ -2151,7 +2277,7 @@
 
     <!-- SIMULATION -->
 
-<section id="biff" class="bg-alt">
+    <section id="biff" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 3 • STRATEGY</div>
             <div class="section-title">6. BIFF Comparison</div>
@@ -2215,7 +2341,7 @@
 
     <!-- SPONSORSHIP -->
 
-<section id="budget">
+    <section id="budget">
         <div class="section-content">
             <div class="section-label">PART 4 • FINANCE</div>
             <div class="section-title">1. Budget Plan</div>
@@ -2325,7 +2451,7 @@
 
     <!-- MARKETING -->
 
-<section id="cashflow" class="bg-alt">
+    <section id="cashflow" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 4 • FINANCE</div>
             <div class="section-title">2. Cash Flow</div>
@@ -2441,7 +2567,7 @@
 
     <!-- INITIAL BUDGET & SEED MONEY -->
 
-<section id="seedmoney">
+    <section id="seedmoney">
         <div class="section-content">
             <div class="section-label">PART 4 • FINANCE</div>
             <div class="section-title">3. Initial Budget</div>
@@ -2525,7 +2651,7 @@
 
     <!-- POLITICAL RISK -->
 
-<section id="sponsorship">
+    <section id="sponsorship">
         <div class="section-content">
             <div class="section-label">PART 4 • FINANCE</div>
             <div class="section-title">4. Sponsorship Plan</div>
@@ -2657,7 +2783,7 @@
 
     <!-- SPACE UTILIZATION -->
 
-<section id="marketing" class="bg-alt">
+    <section id="marketing" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 4 • FINANCE</div>
             <div class="section-title">5. Marketing Strategy</div>
@@ -2761,7 +2887,7 @@
 
     <!-- STARS & CREATOR CAMP -->
 
-<section id="political" class="bg-alt">
+    <section id="political" class="bg-alt">
         <div class="section-content">
             <div class="section-label">PART 5 • GOVERNANCE</div>
             <div class="section-title">1. Risk Management</div>
@@ -2881,7 +3007,7 @@
 
     <!-- PERSONNEL -->
 
-<section id="personnel">
+    <section id="personnel">
         <div class="section-content">
             <div class="section-label">PART 5 • GOVERNANCE</div>
             <div class="section-title">2. Personnel</div>
@@ -3048,13 +3174,65 @@
     </section>
 
 
-<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer>
         <div class="logo">NEXT WAVE</div>
         <p>Incheon International Film Festival — 인천 국제 넥스트웨이브 영화제</p>
         <p style="margin-top:.5rem;font-size:.7rem;color:var(--text-dim)">Integrated Proposal v5 · 감사합니다</p>
     </footer>
 
+    <script>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            navMenu.classList.toggle('active');
+            btn.innerHTML = navMenu.classList.contains('active') ? '✕' : '☰';
+        }
+
+        // Dropdown toggle for mobile
+        document.querySelectorAll('.nav-label').forEach(label => {
+            label.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1024) {
+                    e.preventDefault();
+                    // Close other open items
+                    const parent = label.parentElement;
+                    const isActive = parent.classList.contains('active');
+
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+
+                    if (!isActive) {
+                        parent.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Close menu when link is clicked
+        document.querySelectorAll('.nav-dropdown a, .nav-direct').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    document.getElementById('navMenu').classList.remove('active');
+                    document.querySelector('.mobile-menu-btn').innerHTML = '☰';
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
+            const navMenu = document.getElementById('navMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+
+            if (window.innerWidth <= 1024 &&
+                navMenu.classList.contains('active') &&
+                !nav.contains(e.target)) {
+                navMenu.classList.remove('active');
+                btn.innerHTML = '☰';
+            }
+        });
+    </script>
 </body>
 
 </html>
