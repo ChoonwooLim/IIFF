@@ -59,54 +59,198 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 20, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: .7rem 2rem;
+            background: rgba(8, 8, 18, 0.96);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            padding: 0 3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1.5rem;
-            transition: transform .3s
+            height: 84px
         }
 
-        nav .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 6px;
-            white-space: nowrap;
-            flex-shrink: 0
-        }
-
-        nav .nav-links {
+        nav .logo-container {
             display: flex;
+            align-items: center;
+            gap: .8rem;
+            text-decoration: none
+        }
+
+        .logo-icon {
+            filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.3));
+            animation: logo-pulse 3s infinite alternate
+        }
+
+        @keyframes logo-pulse {
+            from {
+                filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.3))
+            }
+
+            to {
+                filter: drop-shadow(0 0 12px rgba(255, 200, 0, 0.6))
+            }
+        }
+
+        .logo-text {
+            display: flex;
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            line-height: 1;
+            letter-spacing: -1px
+        }
+
+        .logo-char {
+            background: linear-gradient(to bottom,
+                    #ff0000 0%, #ff0000 16%,
+                    #ff7f00 16%, #ff7f00 32%,
+                    #ffff00 32%, #ffff00 48%,
+                    #00ff00 48%, #00ff00 64%,
+                    #0000ff 64%, #0000ff 80%,
+                    #8b00ff 80%, #8b00ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            transform: skewX(-10deg);
+            margin-right: 1px
+        }
+
+        .logo-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: .6rem;
+            color: var(--text-dim);
+            letter-spacing: 3px;
+            margin-left: .5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: .5rem;
+            height: 1.2rem;
+            display: flex;
+            align-items: center
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            height: 100%;
+            list-style: none
+        }
+
+        /* Main menu items */
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center
+        }
+
+        .nav-item>.nav-label {
+            display: flex;
+            align-items: center;
             gap: .5rem;
-            font-size: .7rem;
-            font-weight: 500;
+            padding: 0 1.2rem;
+            height: 100%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .25s;
+            border-bottom: 3px solid transparent;
             letter-spacing: .5px;
             white-space: nowrap;
-            align-items: center;
-            flex-shrink: 1;
-            min-width: 0
-        }
-
-        nav .nav-links .divider {
-            color: rgba(201, 168, 76, .3);
-            font-size: .6rem;
-            align-self: center;
             user-select: none
         }
 
-        nav .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: color .3s
+        .nav-item>.nav-label .arrow {
+            font-size: .7rem;
+            transition: transform .25s;
+            opacity: .6
         }
 
-        nav .nav-links a:hover {
-            color: var(--gold)
+        .nav-item:hover>.nav-label {
+            color: var(--gold-light);
+            border-bottom-color: var(--gold)
+        }
+
+        /* Dropdown panel */
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            min-width: 200px;
+            background: rgba(12, 12, 28, 0.97);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 12px;
+            padding: .5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all .25s ease;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+            list-style: none
+        }
+
+        .nav-item:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        .nav-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            padding: .8rem 1.2rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all .2s;
+            white-space: nowrap
+        }
+
+        .nav-dropdown a .dd-icon {
+            font-size: 1rem;
+            width: 1.6rem;
+            text-align: center;
+            flex-shrink: 0
+        }
+
+        .nav-dropdown a:hover {
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--gold-light);
+            padding-left: 1.3rem
+        }
+
+        .nav-dropdown .dd-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: .3rem .5rem
+        }
+
+        /* HOME direct link (no dropdown) */
+        .nav-item>a.nav-direct {
+            display: flex;
+            align-items: center;
+            padding: 0 1.2rem;
+            height: 100%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: all .25s;
+            border-bottom: 3px solid transparent;
+            letter-spacing: .5px
+        }
+
+        .nav-item>a.nav-direct:hover {
+            color: var(--gold-light);
+            border-bottom-color: var(--gold)
         }
 
         /* SECTIONS */
@@ -834,32 +978,98 @@
 
     <!-- NAVIGATION -->
     <nav>
-        <div class="logo">IIFF NEXTWAVE</div>
-        <div class="nav-links">
-            <a href="#cover">HOME</a>
-            <a href="#what-is-iiff">ABOUT</a>
-            <a href="#overview">개요</a>
-            <a href="#programs">프로그램</a>
-            <span class="divider">│</span>
-            <a href="#strategy">전략</a>
-            <a href="#organization">조직</a>
-            <a href="#roadmap">로드맵</a>
-            <a href="#budget">예산</a>
-            <a href="#marketing">마케팅</a>
-            <a href="#stars">스타초청</a>
-            <a href="#biff">BIFF비교</a>
-            <a href="#sponsorship">스폰서십</a>
-            <a href="#space">공간</a>
-            <a href="#simulation">시뮬레이션</a>
-            <a href="#atoz-roadmap">A-Z로드맵</a>
-            <a href="#cashflow">현금흐름</a>
-            <a href="#political">리스크</a>
-            <a href="#personnel">인적배치</a>
-        </div>
+        <a href="#cover" class="logo-container">
+            <!-- SVG Logo Icon: Infinity Film Reel -->
+            <svg class="logo-icon" viewBox="0 0 100 60" width="50" height="30">
+                <defs>
+                    <linearGradient id="reel-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#ff00cc;stop-opacity:1" /> <!-- Magenta -->
+                        <stop offset="50%" style="stop-color:#ffcc00;stop-opacity:1" /> <!-- Gold -->
+                        <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" /> <!-- Teal -->
+                    </linearGradient>
+                </defs>
+                <path d="M15,30 Q25,10 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
+                    stroke-linecap="round" />
+                <path d="M15,30 Q25,50 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
+                    stroke-linecap="round" opacity="0.6" />
+                <!-- Film holes simulation -->
+                <circle cx="20" cy="30" r="1.5" fill="#fff" />
+                <circle cx="35" cy="30" r="1.5" fill="#fff" />
+                <circle cx="50" cy="30" r="1.5" fill="#fff" />
+                <circle cx="65" cy="30" r="1.5" fill="#fff" />
+            </svg>
+            <div class="logo-text">
+                <span class="logo-char" style="--i:1">I</span>
+                <span class="logo-char" style="--i:2">I</span>
+                <span class="logo-char" style="--i:3">F</span>
+                <span class="logo-char" style="--i:4">F</span>
+            </div>
+            <div class="logo-sub">NEXTWAVE</div>
+        </a>
+        <ul class="nav-menu">
+            <!-- HOME -->
+            <li class="nav-item">
+                <a href="#cover" class="nav-direct">HOME</a>
+            </li>
+            <!-- 소개 -->
+            <li class="nav-item">
+                <span class="nav-label">소개 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown">
+                    <a href="#what-is-iiff"><span class="dd-icon">🎬</span>What is IIFF</a>
+                    <a href="#overview"><span class="dd-icon">📋</span>영화제 개요</a>
+                    <a href="#why-participate"><span class="dd-icon">💡</span>왜 참여해야 하는가</a>
+                    <a href="#why-incheon"><span class="dd-icon">📍</span>왜 인천인가</a>
+                    <a href="#vision"><span class="dd-icon">🎯</span>비전 & 철학</a>
+                </ul>
+            </li>
+            <!-- 프로그램 -->
+            <li class="nav-item">
+                <span class="nav-label">프로그램 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown">
+                    <a href="#programs"><span class="dd-icon">🎞️</span>핵심 프로그램</a>
+                    <a href="#stars"><span class="dd-icon">⭐</span>스타초청 & Creator Camp</a>
+                    <a href="#simulation"><span class="dd-icon">🕐</span>일일 시뮬레이션</a>
+                    <a href="#volunteer"><span class="dd-icon">🙋</span>시민 참여</a>
+                </ul>
+            </li>
+            <!-- 운영전략 -->
+            <li class="nav-item">
+                <span class="nav-label">운영전략 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown">
+                    <a href="#strategy"><span class="dd-icon">🧭</span>핵심 전략</a>
+                    <a href="#organization"><span class="dd-icon">🏛️</span>조직체계</a>
+                    <a href="#roadmap"><span class="dd-icon">📅</span>3개년 로드맵</a>
+                    <a href="#atoz-roadmap"><span class="dd-icon">🗺️</span>A-Z 로드맵</a>
+                    <div class="dd-divider"></div>
+                    <a href="#space"><span class="dd-icon">🏟️</span>공간활용 & 파트너</a>
+                    <a href="#biff"><span class="dd-icon">🆚</span>BIFF 비교분석</a>
+                </ul>
+            </li>
+            <!-- 재무 -->
+            <li class="nav-item">
+                <span class="nav-label">재무 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown">
+                    <a href="#budget"><span class="dd-icon">💰</span>예산 계획</a>
+                    <a href="#cashflow"><span class="dd-icon">📊</span>현금 흐름표</a>
+                    <a href="#seedmoney"><span class="dd-icon">🌱</span>초기 경비</a>
+                    <div class="dd-divider"></div>
+                    <a href="#sponsorship"><span class="dd-icon">🤝</span>스폰서십 플랜</a>
+                    <a href="#marketing"><span class="dd-icon">📣</span>마케팅 전략</a>
+                </ul>
+            </li>
+            <!-- 거버넌스 -->
+            <li class="nav-item">
+                <span class="nav-label">거버넌스 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown">
+                    <a href="#political"><span class="dd-icon">🛡️</span>선거 리스크 관리</a>
+                    <a href="#personnel"><span class="dd-icon">👥</span>인적 배치</a>
+                </ul>
+            </li>
+        </ul>
     </nav>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- PART 1: 기획서 v5 (전반부) -->
+    
     <!-- ═══════════════════════════════════════════ -->
 
     <!-- COVER -->
@@ -871,10 +1081,11 @@
     </section>
 
     <!-- WHAT IS IIFF -->
-    <section id="what-is-iiff" class="bg-alt">
+
+<section id="what-is-iiff" class="bg-alt">
         <div class="section-content">
-            <div class="section-label">Brand Philosophy</div>
-            <div class="section-title">What is IIFF</div>
+            <div class="section-label">PART 1 • INTRODUCTION</div>
+            <div class="section-title">1. What is IIFF?</div>
             <div class="section-desc">발음은 "이프(if)" — i 두 번, f 두 번 — 강조의 의미이며, 발음은 단순한 하나의 단어입니다.</div>
 
             <div class="split">
@@ -913,10 +1124,11 @@
     </section>
 
     <!-- OVERVIEW -->
-    <section id="overview">
+
+<section id="overview">
         <div class="section-content">
-            <div class="section-label">Festival Overview</div>
-            <div class="section-title">1. 영화제 개요</div>
+            <div class="section-label">PART 1 • INTRODUCTION</div>
+            <div class="section-title">2. Festival Overview</div>
             <div class="section-desc">인천 국제 영화제 "넥스트웨이브" — Incheon International Film Festival (IIFF-NextWave)</div>
 
             <div class="highlight-box vision">
@@ -978,10 +1190,11 @@
     </section>
 
     <!-- WHY PARTICIPATE -->
-    <section id="why-participate" class="bg-alt">
+
+<section id="why-participate" class="bg-alt">
         <div class="section-content">
-            <div class="section-label">Why Participate</div>
-            <div class="section-title">2. 왜 IIFF-NextWave에 참여해야 하는가</div>
+            <div class="section-label">PART 1 • INTRODUCTION</div>
+            <div class="section-title">3. Why Participate?</div>
 
             <div class="card-grid">
                 <div class="card">
@@ -1053,10 +1266,11 @@
     </section>
 
     <!-- WHY INCHEON -->
-    <section id="why-incheon">
+
+<section id="why-incheon">
         <div class="section-content">
-            <div class="section-label">Why Incheon</div>
-            <div class="section-title">3. 왜 '인천'이어야 하는가</div>
+            <div class="section-label">PART 1 • INTRODUCTION</div>
+            <div class="section-title">4. Why Incheon?</div>
             <div class="section-desc">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div>
 
             <ol class="num-list">
@@ -1087,10 +1301,63 @@
     </section>
 
     <!-- PROGRAMS -->
-    <section id="programs" class="bg-alt">
+
+<section id="vision">
         <div class="section-content">
-            <div class="section-label">Core Programs</div>
-            <div class="section-title">4. 차별화된 핵심 프로그램</div>
+            <div class="section-label">PART 1 • INTRODUCTION</div>
+            <div class="section-title">5. Vision & Philosophy</div>
+
+            <div class="highlight-box vision" style="text-align:center;padding:3rem">
+                <p style="font-size:1.3rem;color:var(--text-bright);font-weight:500">인천 국제 넥스트웨이브 영화제는<br>하나의 영화제가 아니라,
+                    <strong>하나의 도시 전략</strong>입니다.
+                </p>
+                <p style="margin-top:1.5rem;font-size:1.1rem">IIFF-NextWave는<br>영화를 상영하는 이벤트가 아니라,<br><strong>도시의 정체성을
+                        다시 설계하는 프로젝트</strong>입니다.</p>
+                <p style="margin-top:1.5rem;font-size:1.2rem;color:var(--gold)">"영화가 머무는 도시 / 창작자가 성장하는 도시 / 세계가 다시 찾는
+                    인천"</p>
+            </div>
+
+            <div class="subsection" style="margin-top:3rem">
+                <h3>인천 국제 넥스트웨이브 영화제의 기획 철학</h3>
+                <p>우리가 살고 있는 시대는 불과 몇 년 전과도 완전히 다른 세상이 되었습니다. 사람들이 모이던 몰과 백화점들은 문을 닫고 도시는 비어 있는 공간을 안게 되었습니다. 창작은 더 이상
+                    소수의 재능이나 고가의 장비를 가진 사람만의 영역이 아닙니다.</p>
+                <p>AI와 자동화는 아이디어가 없어도, 경험이 없어도 콘텐츠를 만들고 유통할 수 있는 시대를 열었습니다. 앞으로는 무엇이 진짜이고, 무엇이 가짜인지조차 구분하기 어려운 세상이 펼쳐질
+                    것입니다.</p>
+                <p>이 변화는 막을 수 없습니다. 그리고 거스를 필요도 없습니다.</p>
+                <blockquote>그럼에도 불구하고, 사람은 지난날을 기억합니다. 기술이 아무리 발전해도, 사람의 마음속에는 여전히 <strong>추억과 낭만</strong>이 남아 있습니다. 손으로
+                    만든 것, 사람을 직접 만나 눈을 마주하는 경험, 같은 공간에서 숨을 쉬며 웃고, 울고, 감동하는 순간.</blockquote>
+                <p>IIFF는, 이 두 세대 사이에 단절이 아닌 <strong>'연결'</strong>을 만들고자 합니다. IIFF는, 사람의 마음과 손으로 만들어진 것들이 다시 중심이 되는 공간을
+                    꿈꿉니다.</p>
+                <p>동시에, AI와 새로운 테크놀로지와의 공존도 숨기지 않습니다. IIFF는, 과거를 붙잡는 영화제가 아니라, <strong>과거의 낭만과 미래의 기술이 만나는
+                        '브릿지'</strong>가 되고자 합니다.</p>
+                <p>이전의 어떤 영화제와도 닮지 않은, 솔직하고, 따뜻하고, 감동이 있는 영화제를 지향합니다.</p>
+                <ul class="styled-list">
+                    <li>기술을 부정하지 않되, 사람을 지우지 않고</li>
+                    <li>미래를 말하되, 기억과 감정을 잃지 않으며</li>
+                    <li>경쟁보다 가능성을, 결과보다 '다음 장면'을 남기는 영화제</li>
+                </ul>
+                <p style="margin-top:1rem"><strong>IIFF는 계속해서 'If'를 선물하는 영화제가 되고자 합니다.</strong></p>
+                <blockquote>"만약에, 이곳에서 내 이야기가 시작된다면? 만약에, 이 만남이 나의 다음 인생을 바꾼다면?"<br><br>그 질문이 사람들의 마음속에 오래 남는
+                    영화제.<br><strong>인천 국제 넥스트웨이브 영화제는 영화를 통해 도시를 바꾸고, 사람을 다시 연결하며, 미래를 따뜻하게 건너가는 방법을 제안합니다.</strong>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PART 2 DIVIDER -->
+    <!-- ═══════════════════════════════════════════ -->
+    
+        <h2>사업 추진 계획서</h2>
+        <p>제1회 인천 국제 넥스트웨이브 영화제의 구체적인 실행 전략, 조직, 예산, 스폰서십, 로드맵</p>
+    </div>
+
+    <!-- STRATEGY -->
+
+<section id="programs" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 2 • PROGRAMS</div>
+            <div class="section-title">1. Core Programs</div>
 
             <div class="card-grid">
                 <div class="card">
@@ -1149,511 +1416,11 @@
     </section>
 
     <!-- VISION -->
-    <section id="vision">
+
+<section id="stars">
         <div class="section-content">
-            <div class="section-label">Vision & Philosophy</div>
-            <div class="section-title">5. 비전</div>
-
-            <div class="highlight-box vision" style="text-align:center;padding:3rem">
-                <p style="font-size:1.3rem;color:var(--text-bright);font-weight:500">인천 국제 넥스트웨이브 영화제는<br>하나의 영화제가 아니라,
-                    <strong>하나의 도시 전략</strong>입니다.
-                </p>
-                <p style="margin-top:1.5rem;font-size:1.1rem">IIFF-NextWave는<br>영화를 상영하는 이벤트가 아니라,<br><strong>도시의 정체성을
-                        다시 설계하는 프로젝트</strong>입니다.</p>
-                <p style="margin-top:1.5rem;font-size:1.2rem;color:var(--gold)">"영화가 머무는 도시 / 창작자가 성장하는 도시 / 세계가 다시 찾는
-                    인천"</p>
-            </div>
-
-            <div class="subsection" style="margin-top:3rem">
-                <h3>인천 국제 넥스트웨이브 영화제의 기획 철학</h3>
-                <p>우리가 살고 있는 시대는 불과 몇 년 전과도 완전히 다른 세상이 되었습니다. 사람들이 모이던 몰과 백화점들은 문을 닫고 도시는 비어 있는 공간을 안게 되었습니다. 창작은 더 이상
-                    소수의 재능이나 고가의 장비를 가진 사람만의 영역이 아닙니다.</p>
-                <p>AI와 자동화는 아이디어가 없어도, 경험이 없어도 콘텐츠를 만들고 유통할 수 있는 시대를 열었습니다. 앞으로는 무엇이 진짜이고, 무엇이 가짜인지조차 구분하기 어려운 세상이 펼쳐질
-                    것입니다.</p>
-                <p>이 변화는 막을 수 없습니다. 그리고 거스를 필요도 없습니다.</p>
-                <blockquote>그럼에도 불구하고, 사람은 지난날을 기억합니다. 기술이 아무리 발전해도, 사람의 마음속에는 여전히 <strong>추억과 낭만</strong>이 남아 있습니다. 손으로
-                    만든 것, 사람을 직접 만나 눈을 마주하는 경험, 같은 공간에서 숨을 쉬며 웃고, 울고, 감동하는 순간.</blockquote>
-                <p>IIFF는, 이 두 세대 사이에 단절이 아닌 <strong>'연결'</strong>을 만들고자 합니다. IIFF는, 사람의 마음과 손으로 만들어진 것들이 다시 중심이 되는 공간을
-                    꿈꿉니다.</p>
-                <p>동시에, AI와 새로운 테크놀로지와의 공존도 숨기지 않습니다. IIFF는, 과거를 붙잡는 영화제가 아니라, <strong>과거의 낭만과 미래의 기술이 만나는
-                        '브릿지'</strong>가 되고자 합니다.</p>
-                <p>이전의 어떤 영화제와도 닮지 않은, 솔직하고, 따뜻하고, 감동이 있는 영화제를 지향합니다.</p>
-                <ul class="styled-list">
-                    <li>기술을 부정하지 않되, 사람을 지우지 않고</li>
-                    <li>미래를 말하되, 기억과 감정을 잃지 않으며</li>
-                    <li>경쟁보다 가능성을, 결과보다 '다음 장면'을 남기는 영화제</li>
-                </ul>
-                <p style="margin-top:1rem"><strong>IIFF는 계속해서 'If'를 선물하는 영화제가 되고자 합니다.</strong></p>
-                <blockquote>"만약에, 이곳에서 내 이야기가 시작된다면? 만약에, 이 만남이 나의 다음 인생을 바꾼다면?"<br><br>그 질문이 사람들의 마음속에 오래 남는
-                    영화제.<br><strong>인천 국제 넥스트웨이브 영화제는 영화를 통해 도시를 바꾸고, 사람을 다시 연결하며, 미래를 따뜻하게 건너가는 방법을 제안합니다.</strong>
-                </blockquote>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PART 2 DIVIDER -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div id="part2" class="part-divider">
-        <div class="part-num">PART II</div>
-        <h2>사업 추진 계획서</h2>
-        <p>제1회 인천 국제 넥스트웨이브 영화제의 구체적인 실행 전략, 조직, 예산, 스폰서십, 로드맵</p>
-    </div>
-
-    <!-- STRATEGY -->
-    <section id="strategy" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">★ 1 ★ Core Strategy</div>
-            <div class="section-title">1. 영화제 비전 및 핵심 특징 구현 전략</div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>핵심 특징</th>
-                            <th>영화제 비전</th>
-                            <th>구체적 구현 전략</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>아시아와 헐리우드의 만남</td>
-                            <td>"The Gateway: 아시아-헐리우드, 새로운 물결의 시작"</td>
-                            <td>개막식 및 레드카펫: 인스파이어 아레나 및 오로라 활용, 글로벌·아시아 스타 공동 레드카펫. 비즈니스 &amp; 포럼: MICE 시설에서 공동 제작 및 투자
-                                유치 포럼 개최.</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>모바일/야영/평가/상영</td>
-                            <td>"모두가 감독, 모두가 비평가: NextWave Creator Camp"</td>
-                            <td>디스커버리 파크에 국제 야영장 조성. 참가자들이 모바일폰으로 영화를 제작하고, 야외 대형 스크린에서 상영 및 상호 평가 진행.</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>메소드필름페스타 융합</td>
-                            <td>"Method-Indie Channel: 독립영화 정신 계승"</td>
-                            <td>'i-NWFF 메소드필름 인디 섹션' 신설. 공동 심사 및 초청을 통해 독립영화의 권위를 확보. 인접 CGV 상영관을 인디 영화 전용관으로 운영.</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>헐리우드 유명배우 참여</td>
-                            <td>"Star Power &amp; Global Mentoring"</td>
-                            <td>헐리우드 A급 배우 출연작 상영 및 배우 초청. 아레나에서 '글로벌 멘토링 클래스' 운영.</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>인천-하와이 교차 개최</td>
-                            <td>"Dual-Hub Strategy: 아시아-태평양 문화 교류"</td>
-                            <td>1~3회는 인천 기반 구축, 4회부터 하와이 국제영화제와 협력하여 교차 개최 로드맵 수립.</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>K-컬처 융합</td>
-                            <td>"Beyond Cinema: K-WAVE Festival"</td>
-                            <td>디스커버리 파크 내 K-팝 미니 콘서트/버스킹 존, K-푸드 팝업 스토어, K-뷰티 체험 부스를 통합 운영.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ORGANIZATION -->
-    <section id="organization">
-        <div class="section-content">
-            <div class="section-label">Organization</div>
-            <div class="section-title">2. 조직체계 및 참여 가능 그룹</div>
-
-            <div class="subsection">
-                <h3>2.1 조직도 (3단계)</h3>
-                <div style="text-align:center;margin:2rem 0">
-                    <div class="org-row">
-                        <div class="org-box primary">
-                            <h5>추진 위원회 (위원장)</h5>
-                        </div>
-                    </div>
-                    <div class="org-connector"></div>
-                    <div class="org-row">
-                        <div class="org-box primary">
-                            <h5>총괄사업추진단장</h5>
-                        </div>
-                    </div>
-                    <div class="org-connector"></div>
-                    <div class="org-row">
-                        <div class="org-box">
-                            <h5>예술 전략 및 감독</h5>
-                        </div>
-                        <div class="org-box">
-                            <h5>사무국 (집행 조직)</h5>
-                        </div>
-                        <div class="org-box">
-                            <h5>실무 운영</h5>
-                        </div>
-                        <div class="org-box">
-                            <h5>전문 위원회 &amp; 파트너</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>2.2 참여 가능 그룹별 역할</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>그룹</th>
-                                <th>조직 역할</th>
-                                <th>주요 임무 및 참여 명분</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>인천광역시 &amp; 인천국제공항공사</td>
-                                <td>조직위원회 및 공동 주최</td>
-                                <td>행정/재정 지원, 국제 협력, 장소 사용 허가</td>
-                            </tr>
-                            <tr>
-                                <td>인스파이어 리조트</td>
-                                <td>집행위원회 및 공동 주최</td>
-                                <td>주요 시설 제공 및 운영, 숙박/F&amp;B 협력, 마케팅/홍보 협력</td>
-                            </tr>
-                            <tr>
-                                <td>CGV (또는 주요 영화관 체인)</td>
-                                <td>실무 집행 (상영 시설)</td>
-                                <td>상영관 시설 제공 및 기술 운영, 티켓 시스템 연동</td>
-                            </tr>
-                            <tr>
-                                <td>한국 영화진흥위원회(KOFIC) &amp; 영상위원회</td>
-                                <td>전문 위원회 (심사/교육)</td>
-                                <td>국내 독립 영화 발굴 및 지원, 영화 인력 양성 프로그램</td>
-                            </tr>
-                            <tr>
-                                <td>메소드필름페스타(Method Fest)</td>
-                                <td>전문 위원회 (해외 협력)</td>
-                                <td>독립 영화 섹션 공동 기획, 헐리우드 독립영화인 네트워크 연계</td>
-                            </tr>
-                            <tr>
-                                <td>글로벌 콘텐츠 에이전시 (CAA, UTA)</td>
-                                <td>전문 위원회 (스타 섭외)</td>
-                                <td>헐리우드 유명 배우 및 감독 초청 대행, 비즈니스 미팅 주선</td>
-                            </tr>
-                            <tr>
-                                <td>엔터테인먼트 기획사 (하이브, JYP 등)</td>
-                                <td>파트너 그룹 (K-컬처 융합)</td>
-                                <td>K-팝 공연 콘텐츠 제공, K-뷰티/푸드 프로그램 기획 협력</td>
-                            </tr>
-                            <tr>
-                                <td>통신사/IT 기업 (SKT, KT)</td>
-                                <td>파트너 그룹 (모바일 영화)</td>
-                                <td>모바일 영화 제작 키트 및 기술 지원, 5G 라이브 스트리밍</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3-YEAR ROADMAP -->
-    <section id="roadmap" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">3-Year Roadmap</div>
-            <div class="section-title">3. 단계별 추진 계획 (3개년 로드맵)</div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h4><span class="badge badge-gold">1단계</span> Foundation — 1회</h4>
-                    <p><strong>목표:</strong> 영화제의 성공적 런칭 및 글로벌 인지도의 기반 마련</p>
-                    <ul class="styled-list">
-                        <li>공식 조직위/집행위원회 발족 (인천시-인스파이어-메소드 파트너십)</li>
-                        <li>아레나 개막식 &amp; CGV 상영관 인디 섹션 운영 집중</li>
-                        <li>'NextWave Creator Camp' 시범 운영 (국내외 100팀 제한)</li>
-                        <li>K-팝 연계 미니 콘서트 도입</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h4><span class="badge badge-red">2단계</span> Expansion — 2회</h4>
-                    <p><strong>목표:</strong> 아시아-헐리우드 비즈니스 플랫폼 기능 강화 및 프로그램 확장</p>
-                    <ul class="styled-list">
-                        <li>'아시아-헐리우드 비즈니스 마켓' 정식 런칭 및 MICE 활용</li>
-                        <li>헐리우드 유명 배우 마스터 클래스 정례화 및 확대</li>
-                        <li>디스커버리 파크 국제 야영/모바일 영화제 규모 2배 확장</li>
-                        <li>K-컬처 연계 프로그램(푸드, 뷰티) 대폭 강화</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h4><span class="badge badge-blue">3단계</span> Globalization — 3회</h4>
-                    <p><strong>목표:</strong> 아시아 대표 영화제 도약 및 인천-하와이 교차 개최 준비 완료</p>
-                    <ul class="styled-list">
-                        <li>하와이 국제영화제와 공식 협력 MOU 체결 및 교차 개최 로드맵 확정</li>
-                        <li>메소드 섹션을 공식 경쟁 부문으로 격상</li>
-                        <li>3개년 성과 분석 및 장기 비전 수립</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>4. 공간 활용 및 프로그램 배치 계획</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>장소</th>
-                                <th>주요 프로그램</th>
-                                <th>활용 특징</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>인스파이어 아레나</td>
-                                <td>개막/폐막식 및 레드카펫, K-팝 스타 초청 '갈라 콘서트'</td>
-                                <td>1, 4, 6</td>
-                            </tr>
-                            <tr>
-                                <td>디스커버리 파크</td>
-                                <td>'NextWave Creator Camp', 야외 상영 및 평가회, K-푸드/K-뷰티 체험</td>
-                                <td>2, 6</td>
-                            </tr>
-                            <tr>
-                                <td>인스파이어 MICE 시설</td>
-                                <td>아시아-헐리우드 공동 제작 포럼/마켓, 마스터 클래스</td>
-                                <td>1, 4</td>
-                            </tr>
-                            <tr>
-                                <td>인접 CGV 등 상영관</td>
-                                <td>'메소드-인디 섹션' 전용 상영관, 일반 초청작/경쟁작 상영</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>오로라 (디지털 스트리트)</td>
-                                <td>모바일 영화 수상작 디지털 미디어 상영, 포토존 및 스폰서십 공간</td>
-                                <td>2, 6</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- BUDGET -->
-    <section id="budget">
-        <div class="section-content">
-            <div class="section-label">Budget Plan</div>
-            <div class="section-title">5. 재원 확보 및 예산 운영 전략</div>
-            <div class="section-desc">제1회 기준, 30억 원 규모</div>
-
-            <div class="split">
-                <div class="split-item">
-                    <h3>재원 확보 (Revenues)</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>항목</th>
-                                    <th>금액</th>
-                                    <th>비율</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>공적 자금 (시/정부)</td>
-                                    <td>10억 원</td>
-                                    <td>33.3%</td>
-                                </tr>
-                                <tr>
-                                    <td>기업 스폰서십 (민간)</td>
-                                    <td>12억 원</td>
-                                    <td>40.0%</td>
-                                </tr>
-                                <tr>
-                                    <td>수익 사업 (Ticket &amp; Market)</td>
-                                    <td>6억 원</td>
-                                    <td>20.0%</td>
-                                </tr>
-                                <tr>
-                                    <td>기타 (재단 기금 등)</td>
-                                    <td>2억 원</td>
-                                    <td>6.7%</td>
-                                </tr>
-                                <tr style="font-weight:700">
-                                    <td>합계</td>
-                                    <td>30억 원</td>
-                                    <td>100%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="split-item">
-                    <h3>지출 항목 (Expenses)</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>항목</th>
-                                    <th>금액</th>
-                                    <th>비율</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>프로그램 운영비</td>
-                                    <td>8억 원</td>
-                                    <td>26.7%</td>
-                                </tr>
-                                <tr>
-                                    <td>초청 및 의전비</td>
-                                    <td>9억 원</td>
-                                    <td>30.0%</td>
-                                </tr>
-                                <tr>
-                                    <td>마케팅 및 홍보비</td>
-                                    <td>6억 원</td>
-                                    <td>20.0%</td>
-                                </tr>
-                                <tr>
-                                    <td>시설 및 인프라</td>
-                                    <td>4억 원</td>
-                                    <td>13.3%</td>
-                                </tr>
-                                <tr>
-                                    <td>인건비 및 일반 관리비</td>
-                                    <td>3억 원</td>
-                                    <td>10.0%</td>
-                                </tr>
-                                <tr style="font-weight:700">
-                                    <td>합계</td>
-                                    <td>30억 원</td>
-                                    <td>100%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h4>재원 확보 전략</h4>
-                <ul class="styled-list">
-                    <li><strong>❶ 정부/지자체 지원:</strong> 인천시, 문체부, 영화진흥위원회 등 공적 지원금 유치</li>
-                    <li><strong>❷ 인스파이어 공동 주최:</strong> 아레나, 디스커버리 파크, MICE 등 시설 사용료 대폭 감면 또는 현물 투자</li>
-                    <li><strong>❸ 기업 스폰서십:</strong> K-컬처, IT/모바일, 항공사 등 연계 기업의 전략적 스폰서십 유치</li>
-                    <li><strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- MARKETING -->
-    <section id="marketing" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">Marketing Strategy</div>
-            <div class="section-title">6. 홍보 마케팅 전략</div>
-
-            <div class="split">
-                <div class="split-item">
-                    <h3>6.1 글로벌 인지도 확보 (전문성 강조)</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>전략</th>
-                                    <th>세부 활동</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>헐리우드 네트워크 활용</td>
-                                    <td>헐리우드 스타 및 메소드필름페스타 관계자와의 독점 인터뷰를 글로벌 주요 영화 매체(Variety, Hollywood Reporter 등)에 제공
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>아시아 게이트웨이 브랜딩</td>
-                                    <td>아시아 주요 영화 시장 관계자를 초청하고, 개막식에 아시아 대표 배우 및 감독 배치</td>
-                                </tr>
-                                <tr>
-                                    <td>타겟 미디어 파트너십</td>
-                                    <td>영화 전문 매거진 및 비즈니스 콘텐츠 미디어(포브스 아시아)와 협력</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="split-item">
-                    <h3>6.2 대중 참여 및 바이럴 (참여성 강조)</h3>
-                    <div class="table-wrap">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>전략</th>
-                                    <th>세부 활동</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>NextWave Creator Challenge</td>
-                                    <td>모바일 영화 제작 캠프를 숏폼 콘텐츠로 제작·배포. 인플루언서 참가자 초청</td>
-                                </tr>
-                                <tr>
-                                    <td>K-WAVE 페스티벌 통합 홍보</td>
-                                    <td>'영화와 캠핑을 함께 즐기는 유일한 축제'로 포지셔닝</td>
-                                </tr>
-                                <tr>
-                                    <td>인스파이어 연계 마케팅</td>
-                                    <td>숙박/F&amp;B 패키지와 영화제 티켓 묶어 판매, 상호 시너지 창출</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>6.3 홍보 콘텐츠 및 프로모션 타임라인</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>콘텐츠</th>
-                                <th>내용</th>
-                                <th>시기</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge badge-gold">티저 영상</span></td>
-                                <td>아시아와 헐리우드 스타들의 과거 명장면과 인스파이어의 화려한 시설을 교차 편집하여 'NextWave' 컨셉 강조</td>
-                                <td>D-120일</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-gold">공식 포스터</span></td>
-                                <td>인천의 도시 경관, 아레나, 디스커버리 파크의 야외 상영 장면을 모두 담아 영화제의 '공간적 특색' 시각화</td>
-                                <td>D-90일</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-red">얼리버드 티켓</span></td>
-                                <td>개/폐막식 및 NextWave 캠프 참가권을 한정 수량 판매하여 초기 관심도 및 현금 유동성 확보</td>
-                                <td>D-60일</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-blue">인천 시민 우대</span></td>
-                                <td>인천 거주자에게 CGV 인디 섹션 티켓 할인 제공 (지역 밀착형 영화제)</td>
-                                <td>D-30일</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- STARS & CREATOR CAMP -->
-    <section id="stars">
-        <div class="section-content">
-            <div class="section-label">★ 2 ★ Star Invitation & Creator Camp</div>
-            <div class="section-title">7. 헐리우드 스타 초청 및 NextWave Creator Camp</div>
+            <div class="section-label">PART 2 • PROGRAMS</div>
+            <div class="section-title">2. Star Invitation & Camp</div>
 
             <div class="subsection">
                 <h3>7.1 헐리우드 스타 초청 전략</h3>
@@ -1771,10 +1538,623 @@
     </section>
 
     <!-- BIFF COMPARISON -->
-    <section id="biff" class="bg-alt">
+
+<section id="simulation">
         <div class="section-content">
-            <div class="section-label">★ 3 ★ BIFF Comparison</div>
-            <div class="section-title">8. BIFF(부산국제영화제) 비교 분석</div>
+            <div class="section-label">PART 2 • PROGRAMS</div>
+            <div class="section-title">3. Daily Simulation</div>
+            <div class="section-desc">"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루</div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>시간</th>
+                            <th>장소</th>
+                            <th>프로그램</th>
+                            <th>상세</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>09:00~10:00</td>
+                            <td>디스커버리 파크</td>
+                            <td>🌅 모닝 요가 & 아침 식사</td>
+                            <td>야영 참가자 기상, 캠프 내 모닝 루틴</td>
+                        </tr>
+                        <tr>
+                            <td>10:00~12:00</td>
+                            <td>인접 CGV</td>
+                            <td>🎬 인디 섹션 상영 (메소드)</td>
+                            <td>메소드-인디 섹션 작품 2~3편 블록 상영 + GV</td>
+                        </tr>
+                        <tr>
+                            <td>10:00~12:00</td>
+                            <td>디스커버리 파크</td>
+                            <td>📱 Creator Camp 활동</td>
+                            <td>모바일 영화 제작 워크숍, 촬영 실습</td>
+                        </tr>
+                        <tr>
+                            <td>12:00~13:30</td>
+                            <td>오로라 푸드코트</td>
+                            <td>🍜 K-푸드 팝업 런치</td>
+                            <td>인천 맛집 및 K-푸드 셰프 팝업 운영</td>
+                        </tr>
+                        <tr>
+                            <td>13:30~15:30</td>
+                            <td>MICE 시설</td>
+                            <td>🎤 마스터 클래스</td>
+                            <td>헐리우드 배우/감독의 특별 강연 및 Q&A</td>
+                        </tr>
+                        <tr>
+                            <td>13:30~15:30</td>
+                            <td>MICE 시설</td>
+                            <td>💼 비즈니스 포럼</td>
+                            <td>공동 제작·투자 매칭 세션</td>
+                        </tr>
+                        <tr>
+                            <td>15:30~16:00</td>
+                            <td>오로라</td>
+                            <td>☕ 네트워킹 브레이크</td>
+                            <td>K-뷰티 체험 부스 방문, 굿즈 스토어</td>
+                        </tr>
+                        <tr>
+                            <td>16:00~18:00</td>
+                            <td>인접 CGV</td>
+                            <td>🎬 경쟁작/초청작 상영</td>
+                            <td>경쟁 부문 작품 상영 + 감독 GV</td>
+                        </tr>
+                        <tr>
+                            <td>18:00~19:00</td>
+                            <td>레드카펫 존</td>
+                            <td>📸 레드카펫 & 포토콜</td>
+                            <td>저녁 행사 전 스타 레드카펫 이벤트</td>
+                        </tr>
+                        <tr>
+                            <td>19:00~21:00</td>
+                            <td>아레나</td>
+                            <td>🌟 갈라 스크리닝</td>
+                            <td>대형 스크린 프리미어 상영, 감독·배우 무대 인사</td>
+                        </tr>
+                        <tr>
+                            <td>21:00~23:00</td>
+                            <td>디스커버리 파크</td>
+                            <td>🎶 K-팝 콘서트 & 야외 상영</td>
+                            <td>미니 라이브 공연 후 야외 대형 스크린 상영</td>
+                        </tr>
+                        <tr>
+                            <td>23:00~</td>
+                            <td>디스커버리 파크</td>
+                            <td>🔥 캠프파이어 & 네트워킹</td>
+                            <td>영화인·관객·캠퍼 자유 교류, DJ 세트</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>핵심 포인트:</strong> 관객은 CGV에서 영화를 보고, 아레나에서 갈라를 경험하고, 디스커버리 파크에서 캠핑과 K-컬처를 즐기며, MICE에서 비즈니스 미팅을
+                    한다. 하루 종일 다양한 콘텐츠가 끊임없이 이어지는 <strong>체류형 영화제</strong>의 완성.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VOLUNTEER -->
+
+<section id="volunteer" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 2 • PROGRAMS</div>
+            <div class="section-title">4. Civic Participation</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>프로그램명</th>
+                            <th>역할 및 혜택</th>
+                            <th>연계 특징</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>핵심 활동 참여</td>
+                            <td>i-NextWave Creator Camp 코디네이터</td>
+                            <td>캠프 운영 지원, 외국인 참가자 통역/안내, 야영 안전 관리 보조</td>
+                            <td>모바일/야영</td>
+                        </tr>
+                        <tr>
+                            <td>홍보 및 피드백</td>
+                            <td>인천 글로벌 모니터링단 (IGM)</td>
+                            <td>해외 관람객 유치 피드백, K-컬처 체험 동선 점검, 바이럴 홍보 콘텐츠 제작</td>
+                            <td>K-컬처</td>
+                        </tr>
+                        <tr>
+                            <td>지역 연결고리</td>
+                            <td>메소드 인디 섹션 서포터</td>
+                            <td>독립 영화관 안내, 아트 스크리닝 셔틀 안내 및 영화 정보 공유</td>
+                            <td>메소드</td>
+                        </tr>
+                        <tr>
+                            <td>인센티브</td>
+                            <td colspan="3">VIP 패스, 공식 굿즈, 헐리우드 스타 멘토링 클래스 특별 참석 기회</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- A-TO-Z ROADMAP -->
+
+<section id="strategy" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">1. Core Strategy</div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>핵심 특징</th>
+                            <th>영화제 비전</th>
+                            <th>구체적 구현 전략</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>아시아와 헐리우드의 만남</td>
+                            <td>"The Gateway: 아시아-헐리우드, 새로운 물결의 시작"</td>
+                            <td>개막식 및 레드카펫: 인스파이어 아레나 및 오로라 활용, 글로벌·아시아 스타 공동 레드카펫. 비즈니스 &amp; 포럼: MICE 시설에서 공동 제작 및 투자
+                                유치 포럼 개최.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>모바일/야영/평가/상영</td>
+                            <td>"모두가 감독, 모두가 비평가: NextWave Creator Camp"</td>
+                            <td>디스커버리 파크에 국제 야영장 조성. 참가자들이 모바일폰으로 영화를 제작하고, 야외 대형 스크린에서 상영 및 상호 평가 진행.</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>메소드필름페스타 융합</td>
+                            <td>"Method-Indie Channel: 독립영화 정신 계승"</td>
+                            <td>'i-NWFF 메소드필름 인디 섹션' 신설. 공동 심사 및 초청을 통해 독립영화의 권위를 확보. 인접 CGV 상영관을 인디 영화 전용관으로 운영.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>헐리우드 유명배우 참여</td>
+                            <td>"Star Power &amp; Global Mentoring"</td>
+                            <td>헐리우드 A급 배우 출연작 상영 및 배우 초청. 아레나에서 '글로벌 멘토링 클래스' 운영.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>인천-하와이 교차 개최</td>
+                            <td>"Dual-Hub Strategy: 아시아-태평양 문화 교류"</td>
+                            <td>1~3회는 인천 기반 구축, 4회부터 하와이 국제영화제와 협력하여 교차 개최 로드맵 수립.</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>K-컬처 융합</td>
+                            <td>"Beyond Cinema: K-WAVE Festival"</td>
+                            <td>디스커버리 파크 내 K-팝 미니 콘서트/버스킹 존, K-푸드 팝업 스토어, K-뷰티 체험 부스를 통합 운영.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ORGANIZATION -->
+
+<section id="organization">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">2. Organization</div>
+
+            <div class="subsection">
+                <h3>2.1 조직도 (3단계)</h3>
+                <div style="text-align:center;margin:2rem 0">
+                    <div class="org-row">
+                        <div class="org-box primary">
+                            <h5>추진 위원회 (위원장)</h5>
+                        </div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-row">
+                        <div class="org-box primary">
+                            <h5>총괄사업추진단장</h5>
+                        </div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-row">
+                        <div class="org-box">
+                            <h5>예술 전략 및 감독</h5>
+                        </div>
+                        <div class="org-box">
+                            <h5>사무국 (집행 조직)</h5>
+                        </div>
+                        <div class="org-box">
+                            <h5>실무 운영</h5>
+                        </div>
+                        <div class="org-box">
+                            <h5>전문 위원회 &amp; 파트너</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>2.2 참여 가능 그룹별 역할</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>그룹</th>
+                                <th>조직 역할</th>
+                                <th>주요 임무 및 참여 명분</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인천광역시 &amp; 인천국제공항공사</td>
+                                <td>조직위원회 및 공동 주최</td>
+                                <td>행정/재정 지원, 국제 협력, 장소 사용 허가</td>
+                            </tr>
+                            <tr>
+                                <td>인스파이어 리조트</td>
+                                <td>집행위원회 및 공동 주최</td>
+                                <td>주요 시설 제공 및 운영, 숙박/F&amp;B 협력, 마케팅/홍보 협력</td>
+                            </tr>
+                            <tr>
+                                <td>CGV (또는 주요 영화관 체인)</td>
+                                <td>실무 집행 (상영 시설)</td>
+                                <td>상영관 시설 제공 및 기술 운영, 티켓 시스템 연동</td>
+                            </tr>
+                            <tr>
+                                <td>한국 영화진흥위원회(KOFIC) &amp; 영상위원회</td>
+                                <td>전문 위원회 (심사/교육)</td>
+                                <td>국내 독립 영화 발굴 및 지원, 영화 인력 양성 프로그램</td>
+                            </tr>
+                            <tr>
+                                <td>메소드필름페스타(Method Fest)</td>
+                                <td>전문 위원회 (해외 협력)</td>
+                                <td>독립 영화 섹션 공동 기획, 헐리우드 독립영화인 네트워크 연계</td>
+                            </tr>
+                            <tr>
+                                <td>글로벌 콘텐츠 에이전시 (CAA, UTA)</td>
+                                <td>전문 위원회 (스타 섭외)</td>
+                                <td>헐리우드 유명 배우 및 감독 초청 대행, 비즈니스 미팅 주선</td>
+                            </tr>
+                            <tr>
+                                <td>엔터테인먼트 기획사 (하이브, JYP 등)</td>
+                                <td>파트너 그룹 (K-컬처 융합)</td>
+                                <td>K-팝 공연 콘텐츠 제공, K-뷰티/푸드 프로그램 기획 협력</td>
+                            </tr>
+                            <tr>
+                                <td>통신사/IT 기업 (SKT, KT)</td>
+                                <td>파트너 그룹 (모바일 영화)</td>
+                                <td>모바일 영화 제작 키트 및 기술 지원, 5G 라이브 스트리밍</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3-YEAR ROADMAP -->
+
+<section id="roadmap" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">3. 3-Year Roadmap</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4><span class="badge badge-gold">1단계</span> Foundation — 1회</h4>
+                    <p><strong>목표:</strong> 영화제의 성공적 런칭 및 글로벌 인지도의 기반 마련</p>
+                    <ul class="styled-list">
+                        <li>공식 조직위/집행위원회 발족 (인천시-인스파이어-메소드 파트너십)</li>
+                        <li>아레나 개막식 &amp; CGV 상영관 인디 섹션 운영 집중</li>
+                        <li>'NextWave Creator Camp' 시범 운영 (국내외 100팀 제한)</li>
+                        <li>K-팝 연계 미니 콘서트 도입</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h4><span class="badge badge-red">2단계</span> Expansion — 2회</h4>
+                    <p><strong>목표:</strong> 아시아-헐리우드 비즈니스 플랫폼 기능 강화 및 프로그램 확장</p>
+                    <ul class="styled-list">
+                        <li>'아시아-헐리우드 비즈니스 마켓' 정식 런칭 및 MICE 활용</li>
+                        <li>헐리우드 유명 배우 마스터 클래스 정례화 및 확대</li>
+                        <li>디스커버리 파크 국제 야영/모바일 영화제 규모 2배 확장</li>
+                        <li>K-컬처 연계 프로그램(푸드, 뷰티) 대폭 강화</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <h4><span class="badge badge-blue">3단계</span> Globalization — 3회</h4>
+                    <p><strong>목표:</strong> 아시아 대표 영화제 도약 및 인천-하와이 교차 개최 준비 완료</p>
+                    <ul class="styled-list">
+                        <li>하와이 국제영화제와 공식 협력 MOU 체결 및 교차 개최 로드맵 확정</li>
+                        <li>메소드 섹션을 공식 경쟁 부문으로 격상</li>
+                        <li>3개년 성과 분석 및 장기 비전 수립</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>4. 공간 활용 및 프로그램 배치 계획</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>장소</th>
+                                <th>주요 프로그램</th>
+                                <th>활용 특징</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인스파이어 아레나</td>
+                                <td>개막/폐막식 및 레드카펫, K-팝 스타 초청 '갈라 콘서트'</td>
+                                <td>1, 4, 6</td>
+                            </tr>
+                            <tr>
+                                <td>디스커버리 파크</td>
+                                <td>'NextWave Creator Camp', 야외 상영 및 평가회, K-푸드/K-뷰티 체험</td>
+                                <td>2, 6</td>
+                            </tr>
+                            <tr>
+                                <td>인스파이어 MICE 시설</td>
+                                <td>아시아-헐리우드 공동 제작 포럼/마켓, 마스터 클래스</td>
+                                <td>1, 4</td>
+                            </tr>
+                            <tr>
+                                <td>인접 CGV 등 상영관</td>
+                                <td>'메소드-인디 섹션' 전용 상영관, 일반 초청작/경쟁작 상영</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>오로라 (디지털 스트리트)</td>
+                                <td>모바일 영화 수상작 디지털 미디어 상영, 포토존 및 스폰서십 공간</td>
+                                <td>2, 6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUDGET -->
+
+<section id="atoz-roadmap">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">4. A-to-Z Roadmap</div>
+            <div class="section-desc">전체 예산 30억 원 기준, 현금 흐름을 고려한 적시 투입 계획</div>
+
+            <div class="subsection">
+                <h3>13.1 단계별 추진 로드맵</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4><span class="badge badge-gold">1단계</span> 추진위 발족 (2025.10 ~ 2026.01)</h4>
+                        <p><strong>핵심 목표:</strong> 법인 설립, 초기 씨드 자금 확보(2.5억), 핵심 파트너십(인스파이어, 인천시) MOU 체결</p>
+                        <p><strong>예상 비용:</strong> 2.5억 원 (인건비, 법인 설립비, CI 개발, 기획 연구비)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4><span class="badge badge-gold">2단계</span> 조직위 출범 (2026.02 ~ 2026.04)</h4>
+                        <p><strong>핵심 목표:</strong> 사무국 인력 채용(팀장급), 프로그램 섹션 확정, 1차 스폰서십 유치 완료(30%)</p>
+                        <p><strong>예상 비용:</strong> 5억 원 (운영비, 홈페이지 구축, 해외 게스트 섭외 착수금)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4><span class="badge badge-red">3단계</span> 프로그램 확정 & 마케팅 (2026.05 ~ 2026.07)</h4>
+                        <p><strong>핵심 목표:</strong> 상영작 선정, 헐리우드 스타 초청 확정, 티켓 예매 오픈, 자원활동가 모집</p>
+                        <p><strong>예상 비용:</strong> 10억 원 (게스트 항공/숙박, 홍보비, 시설 계약금)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4><span class="badge badge-blue">4단계</span> 현장 준비 & 개최 (2026.08 ~ 2026.10)</h4>
+                        <p><strong>핵심 목표:</strong> 시설물 설치, 리허설, 영화제 개최, 안전 관리</p>
+                        <p><strong>예상 비용:</strong> 12.5억 원 (행사 운영비, 무대 설치비, 인건비, 체류비)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>13.2 조직위원회 구조</h3>
+                <div style="text-align:center;margin:2rem 0">
+                    <div class="org-row">
+                        <div class="org-box primary">
+                            <h5>조직 위원장 (시장/기업인)</h5>
+                        </div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-row">
+                        <div class="org-box primary">
+                            <h5>집행 위원장 (총괄 Expert)</h5>
+                        </div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-row">
+                        <div class="org-box primary">
+                            <h5>사무국장</h5>
+                        </div>
+                    </div>
+                    <div class="org-connector"></div>
+                    <div class="org-row">
+                        <div class="org-box">
+                            <h5>경영지원팀</h5>
+                            <p>예산/계약/인사</p>
+                        </div>
+                        <div class="org-box">
+                            <h5>프로그램팀</h5>
+                            <p>상영작/게스트/캠프</p>
+                        </div>
+                        <div class="org-box">
+                            <h5>운영/기술팀</h5>
+                            <p>현장/영사/셔틀</p>
+                        </div>
+                        <div class="org-box">
+                            <h5>홍보마케팅팀</h5>
+                            <p>티켓/SNS/프레스</p>
+                        </div>
+                        <div class="org-box">
+                            <h5>대외협력팀</h5>
+                            <p>스폰서/정부/MOU</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>13.3 팀별 KPI (핵심 성과 지표)</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>조직</th>
+                                <th>확인 방법 (KPI)</th>
+                                <th>달성 기준</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>프로그램팀</td>
+                                <td>초청 수락서(LOI) 확보율</td>
+                                <td>D-3개월까지 주요 게스트/작품 90% 계약 완료</td>
+                            </tr>
+                            <tr>
+                                <td>마케팅팀</td>
+                                <td>티켓 예매율 및 SNS 도달률</td>
+                                <td>얼리버드 10분 내 매진 / 팔로워 5만 명</td>
+                            </tr>
+                            <tr>
+                                <td>운영팀</td>
+                                <td>시설 안전 점검 필증</td>
+                                <td>D-1개월 전 모든 시설 안전 검사 '적합' 판정</td>
+                            </tr>
+                            <tr>
+                                <td>대외협력팀</td>
+                                <td>스폰서십 입금 달성률</td>
+                                <td>D-2개월 전 목표 후원금 100% 약정 체결</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASH FLOW -->
+
+<section id="space" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">5. Space & Partners</div>
+
+            <div class="subsection">
+                <h3>10.1 인스파이어 리조트 공간별 활용 전략</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>공간</th>
+                                <th>면적/규모</th>
+                                <th>영화제 활용 프로그램</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인스파이어 아레나</td>
+                                <td>15,000석 다목적 공연장</td>
+                                <td>개·폐막식, 갈라 스크리닝, K-팝 콘서트, 시상식</td>
+                            </tr>
+                            <tr>
+                                <td>디스커버리 파크</td>
+                                <td>대규모 야외 공간</td>
+                                <td>Creator Camp 야영, 야외상영, 캠핑 페스티벌, K-푸드/뷰티 존</td>
+                            </tr>
+                            <tr>
+                                <td>MICE 시설</td>
+                                <td>컨벤션·회의실</td>
+                                <td>비즈니스 포럼, 마스터 클래스, 프레스 센터, 투자자 네트워킹</td>
+                            </tr>
+                            <tr>
+                                <td>오로라(디지털 스트리트)</td>
+                                <td>약 200m 디지털 미디어 조형물</td>
+                                <td>모바일 수상작 디지털 전시, 포토존, 스폰서 디지털 광고</td>
+                            </tr>
+                            <tr>
+                                <td>호텔·리조트</td>
+                                <td>숙박 시설</td>
+                                <td>VIP/게스트 숙소, 관객 패키지 연계</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>10.2 인천 도심 연계 전략</h3>
+                <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+                    <div class="card">
+                        <h3>🎬 영화공간 주안</h3>
+                        <p>인천의 독립영화 거점. 메소드-인디 섹션 위성 상영관 및 아트 스크리닝 셔틀 운영.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🏢 송도 국제도시</h3>
+                        <p>해외 비즈니스 게스트 숙박 대안, 네트워킹 디너 및 VIP 라운지 운영.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🏛️ 인천 구도심</h3>
+                        <p>개항장 일대 로케이션 투어, 인천 아트 시네마 연계 특별 상영.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>10.3 K-컬처 파트너 네트워크</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>발굴 카테고리</th>
+                                <th>잠재적 협력 파트너 (예시)</th>
+                                <th>영화제 기여 역할</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>K-식품 / F&B</td>
+                                <td>인천 지역 맛집, CJ푸드빌</td>
+                                <td>K-푸드 팝업 운영, 캠프 식음 케이터링</td>
+                            </tr>
+                            <tr>
+                                <td>K-뷰티</td>
+                                <td>아모레퍼시픽, 올리브영</td>
+                                <td>메이크업 체험 부스, 스타 뷰티 클래스</td>
+                            </tr>
+                            <tr>
+                                <td>K-팝·엔터</td>
+                                <td>하이브, JYP, SM</td>
+                                <td>미니 콘서트, 팬미팅, K-팝 스타 레드카펫</td>
+                            </tr>
+                            <tr>
+                                <td>K-관광</td>
+                                <td>인천관광공사, 한국관광공사</td>
+                                <td>외국인 관광 패키지, 팸투어 운영</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIMULATION -->
+
+<section id="biff" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 3 • STRATEGY</div>
+            <div class="section-title">6. BIFF Comparison</div>
             <div class="section-desc">선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다</div>
 
             <div class="table-wrap">
@@ -1834,10 +2214,321 @@
     </section>
 
     <!-- SPONSORSHIP -->
-    <section id="sponsorship">
+
+<section id="budget">
         <div class="section-content">
-            <div class="section-label">★ 4 ★ Sponsorship Plan</div>
-            <div class="section-title">9. 3개년 스폰서십 플랜</div>
+            <div class="section-label">PART 4 • FINANCE</div>
+            <div class="section-title">1. Budget Plan</div>
+            <div class="section-desc">제1회 기준, 30억 원 규모</div>
+
+            <div class="split">
+                <div class="split-item">
+                    <h3>재원 확보 (Revenues)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>금액</th>
+                                    <th>비율</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>공적 자금 (시/정부)</td>
+                                    <td>10억 원</td>
+                                    <td>33.3%</td>
+                                </tr>
+                                <tr>
+                                    <td>기업 스폰서십 (민간)</td>
+                                    <td>12억 원</td>
+                                    <td>40.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>수익 사업 (Ticket &amp; Market)</td>
+                                    <td>6억 원</td>
+                                    <td>20.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>기타 (재단 기금 등)</td>
+                                    <td>2억 원</td>
+                                    <td>6.7%</td>
+                                </tr>
+                                <tr style="font-weight:700">
+                                    <td>합계</td>
+                                    <td>30억 원</td>
+                                    <td>100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="split-item">
+                    <h3>지출 항목 (Expenses)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>금액</th>
+                                    <th>비율</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>프로그램 운영비</td>
+                                    <td>8억 원</td>
+                                    <td>26.7%</td>
+                                </tr>
+                                <tr>
+                                    <td>초청 및 의전비</td>
+                                    <td>9억 원</td>
+                                    <td>30.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>마케팅 및 홍보비</td>
+                                    <td>6억 원</td>
+                                    <td>20.0%</td>
+                                </tr>
+                                <tr>
+                                    <td>시설 및 인프라</td>
+                                    <td>4억 원</td>
+                                    <td>13.3%</td>
+                                </tr>
+                                <tr>
+                                    <td>인건비 및 일반 관리비</td>
+                                    <td>3억 원</td>
+                                    <td>10.0%</td>
+                                </tr>
+                                <tr style="font-weight:700">
+                                    <td>합계</td>
+                                    <td>30억 원</td>
+                                    <td>100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>재원 확보 전략</h4>
+                <ul class="styled-list">
+                    <li><strong>❶ 정부/지자체 지원:</strong> 인천시, 문체부, 영화진흥위원회 등 공적 지원금 유치</li>
+                    <li><strong>❷ 인스파이어 공동 주최:</strong> 아레나, 디스커버리 파크, MICE 등 시설 사용료 대폭 감면 또는 현물 투자</li>
+                    <li><strong>❸ 기업 스폰서십:</strong> K-컬처, IT/모바일, 항공사 등 연계 기업의 전략적 스폰서십 유치</li>
+                    <li><strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARKETING -->
+
+<section id="cashflow" class="bg-alt">
+        <div class="section-content">
+            <div class="section-label">PART 4 • FINANCE</div>
+            <div class="section-title">2. Cash Flow</div>
+            <div class="section-desc">"성공적인 영화제는 '돈맥경화'가 없어야 한다"</div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>1분기 (D-12~9)<br>추진위 단계</th>
+                            <th>2분기 (D-8~6)<br>조직위 출범</th>
+                            <th>3분기 (D-5~3)<br>본격 준비</th>
+                            <th>4분기 (D-2~D+1)<br>개최 및 정산</th>
+                            <th>합계</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-weight:600">
+                            <td>현금 유입</td>
+                            <td>250</td>
+                            <td>800</td>
+                            <td>1,000</td>
+                            <td>950</td>
+                            <td>3,000</td>
+                        </tr>
+                        <tr>
+                            <td>› 지자체/공공</td>
+                            <td>100 (씨드)</td>
+                            <td>400 (보조금 1차)</td>
+                            <td>300 (보조금 2차)</td>
+                            <td>200 (잔금)</td>
+                            <td>1,000</td>
+                        </tr>
+                        <tr>
+                            <td>› 민간 스폰서</td>
+                            <td>100 (씨드)</td>
+                            <td>400 (1차 후원)</td>
+                            <td>500 (2차 후원)</td>
+                            <td>200 (잔금)</td>
+                            <td>1,200</td>
+                        </tr>
+                        <tr>
+                            <td>› 자체 수익</td>
+                            <td>50 (기부금)</td>
+                            <td>–</td>
+                            <td>200 (티켓/참가비)</td>
+                            <td>550 (티켓/마켓)</td>
+                            <td>800</td>
+                        </tr>
+                        <tr style="font-weight:600;border-top:2px solid var(--glass-border)">
+                            <td>현금 유출</td>
+                            <td>200</td>
+                            <td>600</td>
+                            <td>900</td>
+                            <td>1,300</td>
+                            <td>3,000</td>
+                        </tr>
+                        <tr>
+                            <td>› 인건비/운영</td>
+                            <td>100</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td>300</td>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>› 초청/체류비</td>
+                            <td>20 (계약금)</td>
+                            <td>200 (선급금)</td>
+                            <td>300 (중도금)</td>
+                            <td>380 (잔금)</td>
+                            <td>900</td>
+                        </tr>
+                        <tr>
+                            <td>› 마케팅비</td>
+                            <td>50</td>
+                            <td>100</td>
+                            <td>250</td>
+                            <td>200</td>
+                            <td>600</td>
+                        </tr>
+                        <tr>
+                            <td>› 시설/제작비</td>
+                            <td>30</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>420</td>
+                            <td>700</td>
+                        </tr>
+                        <tr style="font-weight:700;color:var(--gold)">
+                            <td>현금 잔액</td>
+                            <td>+50</td>
+                            <td>+250</td>
+                            <td>+350</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size:.75rem;color:var(--text-dim);margin-top:.5rem">(단위: 백만 원)</p>
+
+            <div class="highlight-box">
+                <p><strong>자금 운용 팁:</strong></p>
+                <ul class="styled-list">
+                    <li><strong>3분기 관리 중요:</strong> 마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려</li>
+                    <li><strong>예비비 확보:</strong> 전체 예산의 5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- INITIAL BUDGET & SEED MONEY -->
+
+<section id="seedmoney">
+        <div class="section-content">
+            <div class="section-label">PART 4 • FINANCE</div>
+            <div class="section-title">3. Initial Budget</div>
+
+            <div class="split">
+                <div class="split-item">
+                    <h3>추진위원회 초기 경비 (약 6개월)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>금액 (백만 원)</th>
+                                    <th>용도</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>인건비 및 운영비</td>
+                                    <td>80</td>
+                                    <td>코어 인력(3인) 인건비, 사무실 임차</td>
+                                </tr>
+                                <tr>
+                                    <td>회의 및 네트워킹</td>
+                                    <td>60</td>
+                                    <td>추진위/분과위 회의, 비전 발표회</td>
+                                </tr>
+                                <tr>
+                                    <td>초기 네트워크 구축</td>
+                                    <td>80</td>
+                                    <td>메소드페스타/하와이 MOU 출장, 헐리우드 접촉</td>
+                                </tr>
+                                <tr>
+                                    <td>홍보물 및 자료 제작</td>
+                                    <td>30</td>
+                                    <td>비전 선포 자료, 홈페이지, 로고/디자인</td>
+                                </tr>
+                                <tr style="font-weight:700">
+                                    <td>총계</td>
+                                    <td>250</td>
+                                    <td>(한화 2억 5천만 원)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="split-item">
+                    <h3>50:50 매칭 펀딩 전략</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>단계</th>
+                                    <th>전략</th>
+                                    <th>목표 금액</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-gold">1단계</span></td>
+                                    <td>공공 시드 확보 (40%)<br>인천시 문화예술진흥기금 활용</td>
+                                    <td>100백만 원</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-red">2단계</span></td>
+                                    <td>민간 매칭 펀드 (40%)<br>인스파이어 현금/현물 지원</td>
+                                    <td>100백만 원</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-blue">3단계</span></td>
+                                    <td>후원회 멤버십 (20%)<br>위원 중심 초기 모금</td>
+                                    <td>50백만 원</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POLITICAL RISK -->
+
+<section id="sponsorship">
+        <div class="section-content">
+            <div class="section-label">PART 4 • FINANCE</div>
+            <div class="section-title">4. Sponsorship Plan</div>
 
             <div class="subsection">
                 <h3>9.1 스폰서십 등급 (Tier System)</h3>
@@ -1965,576 +2656,115 @@
     </section>
 
     <!-- SPACE UTILIZATION -->
-    <section id="space" class="bg-alt">
+
+<section id="marketing" class="bg-alt">
         <div class="section-content">
-            <div class="section-label">★ 5 ★ Space & Partners</div>
-            <div class="section-title">10. 공간 활용 상세 및 인천 협력 파트너</div>
-
-            <div class="subsection">
-                <h3>10.1 인스파이어 리조트 공간별 활용 전략</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>공간</th>
-                                <th>면적/규모</th>
-                                <th>영화제 활용 프로그램</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>인스파이어 아레나</td>
-                                <td>15,000석 다목적 공연장</td>
-                                <td>개·폐막식, 갈라 스크리닝, K-팝 콘서트, 시상식</td>
-                            </tr>
-                            <tr>
-                                <td>디스커버리 파크</td>
-                                <td>대규모 야외 공간</td>
-                                <td>Creator Camp 야영, 야외상영, 캠핑 페스티벌, K-푸드/뷰티 존</td>
-                            </tr>
-                            <tr>
-                                <td>MICE 시설</td>
-                                <td>컨벤션·회의실</td>
-                                <td>비즈니스 포럼, 마스터 클래스, 프레스 센터, 투자자 네트워킹</td>
-                            </tr>
-                            <tr>
-                                <td>오로라(디지털 스트리트)</td>
-                                <td>약 200m 디지털 미디어 조형물</td>
-                                <td>모바일 수상작 디지털 전시, 포토존, 스폰서 디지털 광고</td>
-                            </tr>
-                            <tr>
-                                <td>호텔·리조트</td>
-                                <td>숙박 시설</td>
-                                <td>VIP/게스트 숙소, 관객 패키지 연계</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>10.2 인천 도심 연계 전략</h3>
-                <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
-                    <div class="card">
-                        <h3>🎬 영화공간 주안</h3>
-                        <p>인천의 독립영화 거점. 메소드-인디 섹션 위성 상영관 및 아트 스크리닝 셔틀 운영.</p>
-                    </div>
-                    <div class="card">
-                        <h3>🏢 송도 국제도시</h3>
-                        <p>해외 비즈니스 게스트 숙박 대안, 네트워킹 디너 및 VIP 라운지 운영.</p>
-                    </div>
-                    <div class="card">
-                        <h3>🏛️ 인천 구도심</h3>
-                        <p>개항장 일대 로케이션 투어, 인천 아트 시네마 연계 특별 상영.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>10.3 K-컬처 파트너 네트워크</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>발굴 카테고리</th>
-                                <th>잠재적 협력 파트너 (예시)</th>
-                                <th>영화제 기여 역할</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>K-식품 / F&B</td>
-                                <td>인천 지역 맛집, CJ푸드빌</td>
-                                <td>K-푸드 팝업 운영, 캠프 식음 케이터링</td>
-                            </tr>
-                            <tr>
-                                <td>K-뷰티</td>
-                                <td>아모레퍼시픽, 올리브영</td>
-                                <td>메이크업 체험 부스, 스타 뷰티 클래스</td>
-                            </tr>
-                            <tr>
-                                <td>K-팝·엔터</td>
-                                <td>하이브, JYP, SM</td>
-                                <td>미니 콘서트, 팬미팅, K-팝 스타 레드카펫</td>
-                            </tr>
-                            <tr>
-                                <td>K-관광</td>
-                                <td>인천관광공사, 한국관광공사</td>
-                                <td>외국인 관광 패키지, 팸투어 운영</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SIMULATION -->
-    <section id="simulation">
-        <div class="section-content">
-            <div class="section-label">★ 6 ★ Daily Simulation</div>
-            <div class="section-title">11. 영화제 일일 운영 시뮬레이션</div>
-            <div class="section-desc">"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루</div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>시간</th>
-                            <th>장소</th>
-                            <th>프로그램</th>
-                            <th>상세</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>09:00~10:00</td>
-                            <td>디스커버리 파크</td>
-                            <td>🌅 모닝 요가 & 아침 식사</td>
-                            <td>야영 참가자 기상, 캠프 내 모닝 루틴</td>
-                        </tr>
-                        <tr>
-                            <td>10:00~12:00</td>
-                            <td>인접 CGV</td>
-                            <td>🎬 인디 섹션 상영 (메소드)</td>
-                            <td>메소드-인디 섹션 작품 2~3편 블록 상영 + GV</td>
-                        </tr>
-                        <tr>
-                            <td>10:00~12:00</td>
-                            <td>디스커버리 파크</td>
-                            <td>📱 Creator Camp 활동</td>
-                            <td>모바일 영화 제작 워크숍, 촬영 실습</td>
-                        </tr>
-                        <tr>
-                            <td>12:00~13:30</td>
-                            <td>오로라 푸드코트</td>
-                            <td>🍜 K-푸드 팝업 런치</td>
-                            <td>인천 맛집 및 K-푸드 셰프 팝업 운영</td>
-                        </tr>
-                        <tr>
-                            <td>13:30~15:30</td>
-                            <td>MICE 시설</td>
-                            <td>🎤 마스터 클래스</td>
-                            <td>헐리우드 배우/감독의 특별 강연 및 Q&A</td>
-                        </tr>
-                        <tr>
-                            <td>13:30~15:30</td>
-                            <td>MICE 시설</td>
-                            <td>💼 비즈니스 포럼</td>
-                            <td>공동 제작·투자 매칭 세션</td>
-                        </tr>
-                        <tr>
-                            <td>15:30~16:00</td>
-                            <td>오로라</td>
-                            <td>☕ 네트워킹 브레이크</td>
-                            <td>K-뷰티 체험 부스 방문, 굿즈 스토어</td>
-                        </tr>
-                        <tr>
-                            <td>16:00~18:00</td>
-                            <td>인접 CGV</td>
-                            <td>🎬 경쟁작/초청작 상영</td>
-                            <td>경쟁 부문 작품 상영 + 감독 GV</td>
-                        </tr>
-                        <tr>
-                            <td>18:00~19:00</td>
-                            <td>레드카펫 존</td>
-                            <td>📸 레드카펫 & 포토콜</td>
-                            <td>저녁 행사 전 스타 레드카펫 이벤트</td>
-                        </tr>
-                        <tr>
-                            <td>19:00~21:00</td>
-                            <td>아레나</td>
-                            <td>🌟 갈라 스크리닝</td>
-                            <td>대형 스크린 프리미어 상영, 감독·배우 무대 인사</td>
-                        </tr>
-                        <tr>
-                            <td>21:00~23:00</td>
-                            <td>디스커버리 파크</td>
-                            <td>🎶 K-팝 콘서트 & 야외 상영</td>
-                            <td>미니 라이브 공연 후 야외 대형 스크린 상영</td>
-                        </tr>
-                        <tr>
-                            <td>23:00~</td>
-                            <td>디스커버리 파크</td>
-                            <td>🔥 캠프파이어 & 네트워킹</td>
-                            <td>영화인·관객·캠퍼 자유 교류, DJ 세트</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="highlight-box">
-                <p><strong>핵심 포인트:</strong> 관객은 CGV에서 영화를 보고, 아레나에서 갈라를 경험하고, 디스커버리 파크에서 캠핑과 K-컬처를 즐기며, MICE에서 비즈니스 미팅을
-                    한다. 하루 종일 다양한 콘텐츠가 끊임없이 이어지는 <strong>체류형 영화제</strong>의 완성.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- VOLUNTEER -->
-    <section id="volunteer" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">Citizen Engagement</div>
-            <div class="section-title">12. 시민 참여 프로그램 (자원활동가)</div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>프로그램명</th>
-                            <th>역할 및 혜택</th>
-                            <th>연계 특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>핵심 활동 참여</td>
-                            <td>i-NextWave Creator Camp 코디네이터</td>
-                            <td>캠프 운영 지원, 외국인 참가자 통역/안내, 야영 안전 관리 보조</td>
-                            <td>모바일/야영</td>
-                        </tr>
-                        <tr>
-                            <td>홍보 및 피드백</td>
-                            <td>인천 글로벌 모니터링단 (IGM)</td>
-                            <td>해외 관람객 유치 피드백, K-컬처 체험 동선 점검, 바이럴 홍보 콘텐츠 제작</td>
-                            <td>K-컬처</td>
-                        </tr>
-                        <tr>
-                            <td>지역 연결고리</td>
-                            <td>메소드 인디 섹션 서포터</td>
-                            <td>독립 영화관 안내, 아트 스크리닝 셔틀 안내 및 영화 정보 공유</td>
-                            <td>메소드</td>
-                        </tr>
-                        <tr>
-                            <td>인센티브</td>
-                            <td colspan="3">VIP 패스, 공식 굿즈, 헐리우드 스타 멘토링 클래스 특별 참석 기회</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- A-TO-Z ROADMAP -->
-    <section id="atoz-roadmap">
-        <div class="section-content">
-            <div class="section-label">★ 8 ★ A to Z Roadmap</div>
-            <div class="section-title">13. A to Z 로드맵 — 추진위원회에서 조직위원회까지</div>
-            <div class="section-desc">전체 예산 30억 원 기준, 현금 흐름을 고려한 적시 투입 계획</div>
-
-            <div class="subsection">
-                <h3>13.1 단계별 추진 로드맵</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <h4><span class="badge badge-gold">1단계</span> 추진위 발족 (2025.10 ~ 2026.01)</h4>
-                        <p><strong>핵심 목표:</strong> 법인 설립, 초기 씨드 자금 확보(2.5억), 핵심 파트너십(인스파이어, 인천시) MOU 체결</p>
-                        <p><strong>예상 비용:</strong> 2.5억 원 (인건비, 법인 설립비, CI 개발, 기획 연구비)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4><span class="badge badge-gold">2단계</span> 조직위 출범 (2026.02 ~ 2026.04)</h4>
-                        <p><strong>핵심 목표:</strong> 사무국 인력 채용(팀장급), 프로그램 섹션 확정, 1차 스폰서십 유치 완료(30%)</p>
-                        <p><strong>예상 비용:</strong> 5억 원 (운영비, 홈페이지 구축, 해외 게스트 섭외 착수금)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4><span class="badge badge-red">3단계</span> 프로그램 확정 & 마케팅 (2026.05 ~ 2026.07)</h4>
-                        <p><strong>핵심 목표:</strong> 상영작 선정, 헐리우드 스타 초청 확정, 티켓 예매 오픈, 자원활동가 모집</p>
-                        <p><strong>예상 비용:</strong> 10억 원 (게스트 항공/숙박, 홍보비, 시설 계약금)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4><span class="badge badge-blue">4단계</span> 현장 준비 & 개최 (2026.08 ~ 2026.10)</h4>
-                        <p><strong>핵심 목표:</strong> 시설물 설치, 리허설, 영화제 개최, 안전 관리</p>
-                        <p><strong>예상 비용:</strong> 12.5억 원 (행사 운영비, 무대 설치비, 인건비, 체류비)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>13.2 조직위원회 구조</h3>
-                <div style="text-align:center;margin:2rem 0">
-                    <div class="org-row">
-                        <div class="org-box primary">
-                            <h5>조직 위원장 (시장/기업인)</h5>
-                        </div>
-                    </div>
-                    <div class="org-connector"></div>
-                    <div class="org-row">
-                        <div class="org-box primary">
-                            <h5>집행 위원장 (총괄 Expert)</h5>
-                        </div>
-                    </div>
-                    <div class="org-connector"></div>
-                    <div class="org-row">
-                        <div class="org-box primary">
-                            <h5>사무국장</h5>
-                        </div>
-                    </div>
-                    <div class="org-connector"></div>
-                    <div class="org-row">
-                        <div class="org-box">
-                            <h5>경영지원팀</h5>
-                            <p>예산/계약/인사</p>
-                        </div>
-                        <div class="org-box">
-                            <h5>프로그램팀</h5>
-                            <p>상영작/게스트/캠프</p>
-                        </div>
-                        <div class="org-box">
-                            <h5>운영/기술팀</h5>
-                            <p>현장/영사/셔틀</p>
-                        </div>
-                        <div class="org-box">
-                            <h5>홍보마케팅팀</h5>
-                            <p>티켓/SNS/프레스</p>
-                        </div>
-                        <div class="org-box">
-                            <h5>대외협력팀</h5>
-                            <p>스폰서/정부/MOU</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="subsection">
-                <h3>13.3 팀별 KPI (핵심 성과 지표)</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>조직</th>
-                                <th>확인 방법 (KPI)</th>
-                                <th>달성 기준</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>프로그램팀</td>
-                                <td>초청 수락서(LOI) 확보율</td>
-                                <td>D-3개월까지 주요 게스트/작품 90% 계약 완료</td>
-                            </tr>
-                            <tr>
-                                <td>마케팅팀</td>
-                                <td>티켓 예매율 및 SNS 도달률</td>
-                                <td>얼리버드 10분 내 매진 / 팔로워 5만 명</td>
-                            </tr>
-                            <tr>
-                                <td>운영팀</td>
-                                <td>시설 안전 점검 필증</td>
-                                <td>D-1개월 전 모든 시설 안전 검사 '적합' 판정</td>
-                            </tr>
-                            <tr>
-                                <td>대외협력팀</td>
-                                <td>스폰서십 입금 달성률</td>
-                                <td>D-2개월 전 목표 후원금 100% 약정 체결</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CASH FLOW -->
-    <section id="cashflow" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">Cash Flow Statement</div>
-            <div class="section-title">14. 현금 흐름표 (Cash Flow) — 예상</div>
-            <div class="section-desc">"성공적인 영화제는 '돈맥경화'가 없어야 한다"</div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>1분기 (D-12~9)<br>추진위 단계</th>
-                            <th>2분기 (D-8~6)<br>조직위 출범</th>
-                            <th>3분기 (D-5~3)<br>본격 준비</th>
-                            <th>4분기 (D-2~D+1)<br>개최 및 정산</th>
-                            <th>합계</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="font-weight:600">
-                            <td>현금 유입</td>
-                            <td>250</td>
-                            <td>800</td>
-                            <td>1,000</td>
-                            <td>950</td>
-                            <td>3,000</td>
-                        </tr>
-                        <tr>
-                            <td>› 지자체/공공</td>
-                            <td>100 (씨드)</td>
-                            <td>400 (보조금 1차)</td>
-                            <td>300 (보조금 2차)</td>
-                            <td>200 (잔금)</td>
-                            <td>1,000</td>
-                        </tr>
-                        <tr>
-                            <td>› 민간 스폰서</td>
-                            <td>100 (씨드)</td>
-                            <td>400 (1차 후원)</td>
-                            <td>500 (2차 후원)</td>
-                            <td>200 (잔금)</td>
-                            <td>1,200</td>
-                        </tr>
-                        <tr>
-                            <td>› 자체 수익</td>
-                            <td>50 (기부금)</td>
-                            <td>–</td>
-                            <td>200 (티켓/참가비)</td>
-                            <td>550 (티켓/마켓)</td>
-                            <td>800</td>
-                        </tr>
-                        <tr style="font-weight:600;border-top:2px solid var(--glass-border)">
-                            <td>현금 유출</td>
-                            <td>200</td>
-                            <td>600</td>
-                            <td>900</td>
-                            <td>1,300</td>
-                            <td>3,000</td>
-                        </tr>
-                        <tr>
-                            <td>› 인건비/운영</td>
-                            <td>100</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>300</td>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>› 초청/체류비</td>
-                            <td>20 (계약금)</td>
-                            <td>200 (선급금)</td>
-                            <td>300 (중도금)</td>
-                            <td>380 (잔금)</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>› 마케팅비</td>
-                            <td>50</td>
-                            <td>100</td>
-                            <td>250</td>
-                            <td>200</td>
-                            <td>600</td>
-                        </tr>
-                        <tr>
-                            <td>› 시설/제작비</td>
-                            <td>30</td>
-                            <td>100</td>
-                            <td>150</td>
-                            <td>420</td>
-                            <td>700</td>
-                        </tr>
-                        <tr style="font-weight:700;color:var(--gold)">
-                            <td>현금 잔액</td>
-                            <td>+50</td>
-                            <td>+250</td>
-                            <td>+350</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p style="font-size:.75rem;color:var(--text-dim);margin-top:.5rem">(단위: 백만 원)</p>
-
-            <div class="highlight-box">
-                <p><strong>자금 운용 팁:</strong></p>
-                <ul class="styled-list">
-                    <li><strong>3분기 관리 중요:</strong> 마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려</li>
-                    <li><strong>예비비 확보:</strong> 전체 예산의 5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- INITIAL BUDGET & SEED MONEY -->
-    <section id="seedmoney">
-        <div class="section-content">
-            <div class="section-label">Initial Budget</div>
-            <div class="section-title">15. 초기 진행 경비 및 마련 방안</div>
+            <div class="section-label">PART 4 • FINANCE</div>
+            <div class="section-title">5. Marketing Strategy</div>
 
             <div class="split">
                 <div class="split-item">
-                    <h3>추진위원회 초기 경비 (약 6개월)</h3>
+                    <h3>6.1 글로벌 인지도 확보 (전문성 강조)</h3>
                     <div class="table-wrap">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>항목</th>
-                                    <th>금액 (백만 원)</th>
-                                    <th>용도</th>
+                                    <th>전략</th>
+                                    <th>세부 활동</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>인건비 및 운영비</td>
-                                    <td>80</td>
-                                    <td>코어 인력(3인) 인건비, 사무실 임차</td>
+                                    <td>헐리우드 네트워크 활용</td>
+                                    <td>헐리우드 스타 및 메소드필름페스타 관계자와의 독점 인터뷰를 글로벌 주요 영화 매체(Variety, Hollywood Reporter 등)에 제공
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>회의 및 네트워킹</td>
-                                    <td>60</td>
-                                    <td>추진위/분과위 회의, 비전 발표회</td>
+                                    <td>아시아 게이트웨이 브랜딩</td>
+                                    <td>아시아 주요 영화 시장 관계자를 초청하고, 개막식에 아시아 대표 배우 및 감독 배치</td>
                                 </tr>
                                 <tr>
-                                    <td>초기 네트워크 구축</td>
-                                    <td>80</td>
-                                    <td>메소드페스타/하와이 MOU 출장, 헐리우드 접촉</td>
-                                </tr>
-                                <tr>
-                                    <td>홍보물 및 자료 제작</td>
-                                    <td>30</td>
-                                    <td>비전 선포 자료, 홈페이지, 로고/디자인</td>
-                                </tr>
-                                <tr style="font-weight:700">
-                                    <td>총계</td>
-                                    <td>250</td>
-                                    <td>(한화 2억 5천만 원)</td>
+                                    <td>타겟 미디어 파트너십</td>
+                                    <td>영화 전문 매거진 및 비즈니스 콘텐츠 미디어(포브스 아시아)와 협력</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="split-item">
-                    <h3>50:50 매칭 펀딩 전략</h3>
+                    <h3>6.2 대중 참여 및 바이럴 (참여성 강조)</h3>
                     <div class="table-wrap">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>단계</th>
                                     <th>전략</th>
-                                    <th>목표 금액</th>
+                                    <th>세부 활동</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="badge badge-gold">1단계</span></td>
-                                    <td>공공 시드 확보 (40%)<br>인천시 문화예술진흥기금 활용</td>
-                                    <td>100백만 원</td>
+                                    <td>NextWave Creator Challenge</td>
+                                    <td>모바일 영화 제작 캠프를 숏폼 콘텐츠로 제작·배포. 인플루언서 참가자 초청</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge badge-red">2단계</span></td>
-                                    <td>민간 매칭 펀드 (40%)<br>인스파이어 현금/현물 지원</td>
-                                    <td>100백만 원</td>
+                                    <td>K-WAVE 페스티벌 통합 홍보</td>
+                                    <td>'영화와 캠핑을 함께 즐기는 유일한 축제'로 포지셔닝</td>
                                 </tr>
                                 <tr>
-                                    <td><span class="badge badge-blue">3단계</span></td>
-                                    <td>후원회 멤버십 (20%)<br>위원 중심 초기 모금</td>
-                                    <td>50백만 원</td>
+                                    <td>인스파이어 연계 마케팅</td>
+                                    <td>숙박/F&amp;B 패키지와 영화제 티켓 묶어 판매, 상호 시너지 창출</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            <div class="subsection">
+                <h3>6.3 홍보 콘텐츠 및 프로모션 타임라인</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>콘텐츠</th>
+                                <th>내용</th>
+                                <th>시기</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-gold">티저 영상</span></td>
+                                <td>아시아와 헐리우드 스타들의 과거 명장면과 인스파이어의 화려한 시설을 교차 편집하여 'NextWave' 컨셉 강조</td>
+                                <td>D-120일</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-gold">공식 포스터</span></td>
+                                <td>인천의 도시 경관, 아레나, 디스커버리 파크의 야외 상영 장면을 모두 담아 영화제의 '공간적 특색' 시각화</td>
+                                <td>D-90일</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-red">얼리버드 티켓</span></td>
+                                <td>개/폐막식 및 NextWave 캠프 참가권을 한정 수량 판매하여 초기 관심도 및 현금 유동성 확보</td>
+                                <td>D-60일</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-blue">인천 시민 우대</span></td>
+                                <td>인천 거주자에게 CGV 인디 섹션 티켓 할인 제공 (지역 밀착형 영화제)</td>
+                                <td>D-30일</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- POLITICAL RISK -->
-    <section id="political" class="bg-alt">
+    <!-- STARS & CREATOR CAMP -->
+
+<section id="political" class="bg-alt">
         <div class="section-content">
-            <div class="section-label">★ 9 ★ Political Risk Management</div>
-            <div class="section-title">16. 선거 리스크 관리</div>
+            <div class="section-label">PART 5 • GOVERNANCE</div>
+            <div class="section-title">1. Risk Management</div>
             <div class="section-desc">핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"</div>
 
             <div class="highlight-box important">
@@ -2650,10 +2880,11 @@
     </section>
 
     <!-- PERSONNEL -->
-    <section id="personnel">
+
+<section id="personnel">
         <div class="section-content">
-            <div class="section-label">Personnel Assignment</div>
-            <div class="section-title">17. 인적 배치 및 역할 분담</div>
+            <div class="section-label">PART 5 • GOVERNANCE</div>
+            <div class="section-title">2. Personnel</div>
             <div class="section-desc">BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조</div>
 
             <div class="subsection">
@@ -2816,7 +3047,8 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+
+<!-- FOOTER -->
     <footer>
         <div class="logo">NEXT WAVE</div>
         <p>Incheon International Film Festival — 인천 국제 넥스트웨이브 영화제</p>
