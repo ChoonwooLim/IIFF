@@ -1001,38 +1001,308 @@
             }
         }
 
-        /* PRINT */
+        /* PRESENTATION MODE (ON SCREEN PREVIEW) */
+        body.presentation-mode {
+            background: #0a0a14;
+            color: #e8e8f0;
+            overflow: auto;
+        }
+
+        body.presentation-mode nav,
+        body.presentation-mode .mobile-menu-btn,
+        body.presentation-mode footer,
+        body.presentation-mode .version,
+        body.presentation-mode .scroll-hint {
+            display: none !important;
+        }
+
+        body.presentation-mode section {
+            width: 100vw;
+            height: 100vh;
+            padding: 3rem 5rem;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #0a0a14;
+            position: relative;
+            border-bottom: 1px solid #333;
+            box-sizing: border-box;
+        }
+
+        body.presentation-mode section::after {
+            content: "IIFF NEXT WAVE - PREVIEW MODE (ESC to Exit)";
+            position: absolute;
+            bottom: 2rem;
+            right: 4rem;
+            font-size: 1rem;
+            color: rgba(201, 168, 76, 0.4);
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.presentation-mode .section-title {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        body.presentation-mode .section-desc {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        body.presentation-mode .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Exit Button for Presentation Mode */
+        #exit-ppt-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: rgba(201, 168, 76, 0.2);
+            color: #fff;
+            border: 1px solid #c9a84c;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        body.presentation-mode #exit-ppt-btn {
+            display: block;
+        }
+
+        /* PRINT (TRUE 16:9 PPT STYLE) */
         @media print {
-            nav {
-                display: none
+            @page {
+                size: 33.87cm 19.05cm;
+                /* Standard PPT Widescreen */
+                margin: 0;
             }
 
-            section {
-                min-height: auto;
-                page-break-inside: avoid;
-                padding: 40px 20px
-            }
-
-            .card,
-            .table-wrap {
-                page-break-inside: avoid
-            }
-
+            html,
             body {
-                background: #fff;
-                color: #222
+                width: 33.87cm;
+                height: 19.05cm;
+                background: #0a0a14 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* Hide everything irrelevant */
+            nav,
+            .mobile-menu-btn,
+            footer,
+            .version,
+            .scroll-hint {
+                display: none !important;
+            }
+
+            /* Main Slide Container */
+            section {
+                width: 33.87cm !important;
+                height: 19.05cm !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                padding: 1.5cm 2.5cm !important;
+                /* Balanced margins */
+                margin: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                background: #0a0a14 !important;
+                position: relative !important;
+                border: none !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Branding Watermark */
+            section::after {
+                content: "IIFF NEXT WAVE 2026";
+                position: absolute;
+                bottom: 1cm;
+                right: 2.5cm;
+                font-size: 12pt;
+                color: rgba(201, 168, 76, 0.4);
+                font-family: 'Playfair Display', serif;
+                letter-spacing: 2px;
+            }
+
+            /* Cover Page Special */
+            #cover {
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+            }
+
+            #cover h1 {
+                font-size: 80pt !important;
+                margin-bottom: 20pt !important;
+                background: linear-gradient(to right, #fff, #c9a84c) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                /* Note: Text fill color might fallback in some PDF engines, so keep color white as backup */
+                color: #fff !important;
+                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+            }
+
+            #cover .subtitle {
+                font-size: 24pt !important;
+                color: #c9a84c !important;
+                margin-bottom: 30pt !important;
+            }
+
+            #cover .tagline {
+                font-size: 18pt !important;
+                color: #aaa !important;
+            }
+
+            /* Section Headers */
+            .section-label {
+                font-size: 14pt !important;
+                color: #c9a84c !important;
+                margin-bottom: 10pt !important;
+                display: block !important;
             }
 
             .section-title {
-                color: #111
+                font-size: 48pt !important;
+                line-height: 1.1 !important;
+                color: #fff !important;
+                margin-bottom: 20pt !important;
+                text-align: left !important;
+                max-width: 80% !important;
+            }
+
+            .section-desc {
+                font-size: 18pt !important;
+                color: #ccc !important;
+                margin-bottom: 30pt !important;
+                line-height: 1.6 !important;
+                max-width: 90% !important;
+            }
+
+            /* Layout: Split -> Grid side-by-side */
+            .split {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 40pt !important;
+                margin-top: 20pt !important;
+                align-items: start !important;
+            }
+
+            /* Layout: Cards -> 2 or 3 columns */
+            .card-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                /* Force 3 cols for density */
+                gap: 15pt !important;
+            }
+
+            .card {
+                padding: 15pt !important;
+                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                background: rgba(255, 255, 255, 0.03) !important;
+                border-radius: 8pt !important;
+                box-shadow: none !important;
+                break-inside: avoid !important;
+            }
+
+            .card h3 {
+                font-size: 16pt !important;
+                color: #e8d490 !important;
+                margin-bottom: 8pt !important;
+            }
+
+            .card p {
+                font-size: 10pt !important;
+                /* Smaller body text for cards */
+                line-height: 1.4 !important;
+                color: #bbb !important;
+            }
+
+            .card-number {
+                font-size: 24pt !important;
+                top: 10pt !important;
+                right: 10pt !important;
+            }
+
+            /* Tables */
+            .table-wrap {
+                margin: 20pt 0 !important;
+                border: 1px solid #333 !important;
+            }
+
+            table {
+                font-size: 10pt !important;
+                /* Compact table text */
             }
 
             th {
-                color: #8a6d2b
+                background: #1a1a2e !important;
+                color: #c9a84c !important;
+                padding: 8pt 10pt !important;
+                border-bottom: 2px solid #444 !important;
             }
 
             td {
-                color: #444
+                padding: 8pt 10pt !important;
+                border-bottom: 1px solid #222 !important;
+                color: #ddd !important;
+            }
+
+            /* Stats */
+            .stats-row {
+                display: flex !important;
+                gap: 20pt !important;
+                justify-content: space-between !important;
+            }
+
+            .stat-card {
+                flex: 1 !important;
+                padding: 15pt !important;
+                border: 1px solid #333 !important;
+            }
+
+            .stat-card .number {
+                font-size: 36pt !important;
+                color: #c9a84c !important;
+            }
+
+            .stat-card .label {
+                font-size: 12pt !important;
+            }
+
+            /* Lists */
+            .num-list li {
+                padding: 10pt 10pt 10pt 35pt !important;
+                font-size: 12pt !important;
+                background: transparent !important;
+                border: 1px solid #333 !important;
+                margin-bottom: 10pt !important;
+            }
+
+            .num-list li::before {
+                width: 20pt !important;
+                height: 20pt !important;
+                font-size: 10pt !important;
+                left: 8pt !important;
+                top: 8pt !important;
+            }
+
+            /* Highlight Box */
+            .highlight-box {
+                background: rgba(201, 168, 76, 0.05) !important;
+                border: 1px solid rgba(201, 168, 76, 0.3) !important;
+                padding: 15pt 20pt !important;
+                font-size: 14pt !important;
+                margin: 20pt 0 !important;
             }
         }
 
@@ -1189,6 +1459,14 @@
                 <ul class="nav-dropdown">
                     <a href="#political"><span class="dd-icon">🛡️</span>선거 리스크 관리</a>
                     <a href="#personnel"><span class="dd-icon">👥</span>인적 배치</a>
+                </ul>
+            </li>
+            <!-- 도구 -->
+            <li class="nav-item">
+                <span class="nav-label" style="color:var(--gold)">도구 <span class="arrow">▼</span></span>
+                <ul class="nav-dropdown" style="right:0;left:auto;transform:translateY(4px)">
+                    <a href="presentation.html" target="_blank"><span class="dd-icon">🖥️</span>프레젠테이션</a>
+                    <a href="#" onclick="printPresentation();return false;"><span class="dd-icon">🖨️</span>인쇄하기</a>
                 </ul>
             </li>
         </ul>
@@ -3232,7 +3510,36 @@
                 btn.innerHTML = '☰';
             }
         });
+
+        /* Presentation Mode Logic */
+        function togglePresentationMode() {
+            document.body.classList.toggle('presentation-mode');
+            if (document.body.classList.contains('presentation-mode')) {
+                // Enter fullscreen if possible
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(e => console.log(e));
+                }
+                alert("프레젠테이션 모드입니다. 키보드 방향키 혹은 스크롤로 이동하세요. ESC 키를 누르면 종료됩니다.");
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(e => console.log(e));
+                }
+            }
+        }
+
+        // Exit on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && document.body.classList.contains('presentation-mode')) {
+                togglePresentationMode();
+            }
+        });
+        // Print presentation
+        function printPresentation() {
+            const w = window.open('presentation.html', '_blank');
+            w.addEventListener('load', () => { w.print(); });
+        }
     </script>
+    <button id="exit-ppt-btn" onclick="togglePresentationMode()">✕ 나가기</button>
 </body>
 
 </html>
