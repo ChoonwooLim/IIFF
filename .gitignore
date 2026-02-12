@@ -1,0 +1,5 @@
+# Original PDF files (too large for GitHub)
+original/*.pdf
+
+# Extracted text (not needed in repo)
+original/*.txt
