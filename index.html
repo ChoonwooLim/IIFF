@@ -1469,9 +1469,8 @@
                     <a href="#" onclick="printPresentation();return false;"><span class="dd-icon">🖨️</span>인쇄하기</a>
                     <div class="dd-divider"></div>
                     <a href="presentation_full.html" target="_blank"><span class="dd-icon">📑</span>Full 프레젠테이션</a>
-                    <a href="presentation_full.html" target="_blank"
-                        onclick="setTimeout(()=>window.open('presentation_full.html').print(),500);return false;"><span
-                            class="dd-icon">🖨️</span>Full 인쇄하기</a>
+                    <a href="#" onclick="printFullPresentation();return false;"><span class="dd-icon">🖨️</span>Full
+                        인쇄하기</a>
                 </ul>
             </li>
             <!-- 언어 -->
@@ -4017,6 +4016,10 @@
         // Print presentation
         function printPresentation() {
             const w = window.open('presentation.html', '_blank');
+            w.addEventListener('load', () => { w.print(); });
+        }
+        function printFullPresentation() {
+            const w = window.open('presentation_full.html', '_blank');
             w.addEventListener('load', () => { w.print(); });
         }
 

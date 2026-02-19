@@ -80,6 +80,59 @@ extra_css = """
 
 /* SPLIT */
 .split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 2vh; position: relative; z-index:1; }
+
+/* PRINT: content flows to next page if needed */
+@media print {
+    @page { size: 33.87cm 19.05cm; margin: 0; }
+    html, body {
+        width: 33.87cm;
+        height: auto;
+        overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .nav-bar, .progress { display: none !important; }
+    .slides-wrapper {
+        position: static !important;
+        width: 33.87cm;
+        display: block !important;
+    }
+    .slide {
+        position: relative !important;
+        display: block !important;
+        width: 33.87cm !important;
+        min-height: 19.05cm !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 1.2cm 2cm !important;
+        padding-bottom: 1.5cm !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        box-sizing: border-box !important;
+        justify-content: flex-start !important;
+    }
+    .slide .print-inner {
+        width: 100%;
+        display: block;
+    }
+    /* Cover & section divider slides: fixed 1-page */
+    .slide-cover, .slide-section, .slide-end {
+        height: 19.05cm !important;
+        min-height: 19.05cm !important;
+        max-height: 19.05cm !important;
+        overflow: hidden !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    /* Prevent breaking inside key elements */
+    .s-card, .s-highlight, .s-phase, .org-box { break-inside: avoid; page-break-inside: avoid; }
+    table { page-break-inside: auto; }
+    tr { break-inside: avoid; page-break-inside: avoid; }
+    /* Ensure all slides visible */
+    .slide { opacity: 1 !important; display: block !important; }
+}
 """
 
 # Now extract all content sections from index.html
@@ -150,10 +203,12 @@ def make_content_slide(part_label, title, content, warm=False, scroll=False):
         cls += " slide-warm"
     return f'''
 <div class="{cls}">
+    <div class="print-inner">
     <div class="slide-part">{part_label}</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">{title}</div>
     {content}
     <div class="watermark">IIFF NEXT WAVE</div>
+    </div>
 </div>
 '''
 
