@@ -1,1088 +1,608 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IIFF NextWave - 인천 국제 넥스트웨이브 영화제 통합 기획서</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>IIFF NextWave — Full Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+
         :root {
-            --bg: #0a0a14;
-            --bg2: #0f0f1e;
-            --bg3: #141428;
-            --gold: #c9a84c;
-            --gold-light: #e8d490;
-            --gold-dark: #8a6d2b;
-            --red: #c43c3c;
-            --red-light: #e85858;
-            --blue: #1a2744;
-            --blue-light: #2a3f6e;
-            --text: #e8e8f0;
-            --text-dim: #8888a0;
-            --text-bright: #ffffff;
-            --accent: #4a8fe7;
-            --glass: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08)
+            --bg: #ffffff;
+            --bg-warm: #faf8f5;
+            --bg-subtle: #f3f0eb;
+            --accent: #8b6914;
+            --accent-light: #c9a84c;
+            --accent-bg: rgba(201, 168, 76, 0.08);
+            --text: #1a1a2e;
+            --text-dim: #555;
+            --text-light: #888;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
         }
 
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px
-        }
-
-        body {
-            font-family: 'Noto Sans KR', 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            overflow-x: hidden
-        }
-
-        ::selection {
-            background: var(--gold);
-            color: var(--bg)
-        }
-
-        /* NAV */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(8, 8, 18, 0.96);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px
-        }
-
-        nav .logo-container {
-            display: flex;
-            align-items: center;
-            gap: .8rem;
-            text-decoration: none
-        }
-
-        .logo-icon {
-            filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.3));
-            animation: logo-pulse 3s infinite alternate
-        }
-
-        @keyframes logo-pulse {
-            from {
-                filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.3))
-            }
-
-            to {
-                filter: drop-shadow(0 0 12px rgba(255, 200, 0, 0.6))
-            }
-        }
-
-        .logo-text {
-            display: flex;
-            font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: 1.6rem;
-            line-height: 1;
-            letter-spacing: -1px
-        }
-
-        .logo-char {
-            background: linear-gradient(to bottom,
-                    #ff0000 0%, #ff0000 16%,
-                    #ff7f00 16%, #ff7f00 32%,
-                    #ffff00 32%, #ffff00 48%,
-                    #00ff00 48%, #00ff00 64%,
-                    #0000ff 64%, #0000ff 80%,
-                    #8b00ff 80%, #8b00ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            transform: skewX(-10deg);
-            margin-right: 1px
-        }
-
-        .logo-sub {
-            font-family: 'Playfair Display', serif;
-            font-size: .6rem;
-            color: var(--text-dim);
-            letter-spacing: 3px;
-            margin-left: .5rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.2);
-            padding-left: .5rem;
-            height: 1.2rem;
-            display: flex;
-            align-items: center
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            height: 100%;
-            list-style: none
-        }
-
-        /* Main menu items */
-        .nav-item {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center
-        }
-
-        .nav-item>.nav-label {
-            display: flex;
-            align-items: center;
-            gap: .4rem;
-            padding: 0 1rem;
-            height: 100%;
-            font-size: .95rem;
-            font-weight: 600;
-            color: var(--text-dim);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all .25s;
-            border-bottom: 2px solid transparent;
-            letter-spacing: .5px;
-            white-space: nowrap;
-            user-select: none
-        }
-
-        .nav-item>.nav-label .arrow {
-            font-size: .6rem;
-            transition: transform .25s;
-            opacity: .6
-        }
-
-        .nav-item:hover>.nav-label {
-            color: var(--gold-light);
-            border-bottom-color: var(--gold)
-        }
-
-        /* Dropdown panel */
-        .nav-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(4px);
-            min-width: 200px;
-            background: rgba(12, 12, 28, 0.97);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(201, 168, 76, 0.2);
-            border-radius: 12px;
-            padding: .5rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all .25s ease;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-            list-style: none
-        }
-
-        .nav-item:hover .nav-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0)
-        }
-
-        .nav-dropdown a {
-            display: flex;
-            align-items: center;
-            gap: .7rem;
-            padding: .7rem 1rem;
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: .9rem;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: all .2s;
-            white-space: nowrap
-        }
-
-        .nav-dropdown a .dd-icon {
-            font-size: .9rem;
-            width: 1.5rem;
-            text-align: center;
-            flex-shrink: 0
-        }
-
-        .nav-dropdown a:hover {
-            background: rgba(201, 168, 76, 0.1);
-            color: var(--gold-light);
-            padding-left: 1.3rem
-        }
-
-        .nav-dropdown .dd-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.06);
-            margin: .3rem .5rem
-        }
-
-        /* HOME direct link (no dropdown) */
-        .nav-item>a.nav-direct {
-            display: flex;
-            align-items: center;
-            padding: 0 1rem;
-            height: 100%;
-            font-size: .95rem;
-            font-weight: 600;
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: all .25s;
-            border-bottom: 2px solid transparent;
-            letter-spacing: .5px
-        }
-
-        .nav-item>a.nav-direct:hover {
-            color: var(--gold-light);
-            border-bottom-color: var(--gold)
-        }
-
-        /* SECTIONS */
-        section {
-            min-height: 100vh;
-            padding: 120px 4rem 80px;
-            position: relative
-        }
-
-        .section-cover {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column
-        }
-
-        .section-content {
-            max-width: 1200px;
-            margin: 0 auto
-        }
-
-        /* COVER */
-        #cover {
-            background: linear-gradient(135deg, #050510 0%, #0a1628 40%, #1a0a20 70%, #050510 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden
-        }
-
-        #cover::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 6s ease-in-out infinite
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: .5;
-                transform: translate(-50%, -50%) scale(1)
-            }
-
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.2)
-            }
-        }
-
-        #cover .subtitle {
-            font-size: .9rem;
-            letter-spacing: 12px;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            font-weight: 300;
-            position: relative;
-            z-index: 1
-        }
-
-        #cover h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: 20px;
-            color: var(--text-bright);
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1
-        }
-
-        #cover .tagline {
-            font-size: 1rem;
-            color: var(--text-dim);
-            letter-spacing: 4px;
-            font-weight: 300;
-            margin-top: 1rem;
-            position: relative;
-            z-index: 1
-        }
-
-        #cover .version {
-            position: absolute;
-            bottom: 40px;
-            font-size: .75rem;
-            color: var(--text-dim);
-            letter-spacing: 3px
-        }
-
-        /* HEADERS */
-        .section-label {
-            font-size: .7rem;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            font-weight: 500
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            margin-bottom: .5rem;
-            line-height: 1.3
-        }
-
-        .section-desc {
-            font-size: 1rem;
-            color: var(--text-dim);
-            margin-bottom: 3rem;
-            max-width: 800px;
-            font-weight: 300
-        }
-
-        /* CARDS */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all .3s;
-            position: relative;
-            overflow: hidden
-        }
-
-        .card:hover {
-            border-color: rgba(201, 168, 76, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3)
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--red), var(--gold));
-            opacity: 0;
-            transition: opacity .3s
-        }
-
-        .card:hover::before {
-            opacity: 1
-        }
-
-        .card-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: rgba(201, 168, 76, 0.15);
-            position: absolute;
-            top: 10px;
-            right: 20px
-        }
-
-        .card h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--gold-light);
-            margin-bottom: .8rem
-        }
-
-        .card p {
-            font-size: .9rem;
-            color: var(--text-dim);
-            line-height: 1.7
-        }
-
-        .card .en {
-            font-family: 'Inter', sans-serif;
-            font-size: .75rem;
-            color: var(--accent);
-            letter-spacing: 2px;
-            margin-bottom: .5rem;
-            display: block
-        }
-
-        /* HIGHLIGHT BOX */
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(201, 168, 76, 0.08), rgba(201, 168, 76, 0.02));
-            border: 1px solid rgba(201, 168, 76, 0.2);
-            border-radius: 16px;
-            padding: 2rem 2.5rem;
-            margin: 2rem 0;
-            position: relative
-        }
-
-        .highlight-box::before {
-            content: '💡';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            font-size: 1.2rem;
-            background: var(--bg);
-            padding: 0 8px
-        }
-
-        .highlight-box.vision::before {
-            content: '🎯'
-        }
-
-        .highlight-box.important::before {
-            content: '⭐'
-        }
-
-        /* TABLES */
-        .table-wrap {
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border)
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: .85rem
-        }
-
-        thead {
-            background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05))
-        }
-
-        th {
-            padding: 14px 16px;
-            text-align: left;
-            color: var(--gold-light);
-            font-weight: 600;
-            border-bottom: 1px solid var(--glass-border);
-            white-space: nowrap;
-            font-size: .8rem;
-            letter-spacing: 1px
-        }
-
-        td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--glass-border);
-            color: var(--text-dim);
-            vertical-align: top
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02)
-        }
-
-        tr:last-child td {
-            border-bottom: none
-        }
-
-        /* SPLIT */
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-            margin: 2rem 0
-        }
-
-        .split-item h3 {
-            font-size: 1.2rem;
-            color: var(--gold-light);
-            margin-bottom: 1rem
-        }
-
-        /* STATS */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px
-        }
-
-        .stat-card .number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--gold);
-            display: block
-        }
-
-        .stat-card .label {
-            font-size: .8rem;
-            color: var(--text-dim);
-            margin-top: .5rem;
-            display: block
-        }
-
-        /* TIMELINE */
-        .timeline {
-            position: relative;
-            margin: 2rem 0;
-            padding-left: 40px
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--gold), var(--red), var(--accent))
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -32px;
-            top: 22px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--gold);
-            border: 3px solid var(--bg)
-        }
-
-        .timeline-item h4 {
-            color: var(--gold-light);
-            margin-bottom: .5rem
-        }
-
-        .timeline-item p {
-            font-size: .9rem;
-            color: var(--text-dim)
-        }
-
-        /* DIVIDER */
-        .divider {
-            text-align: center;
-            padding: 60px 4rem;
-            background: linear-gradient(135deg, #0a0a14, #1a0a20, #0a1628);
-            position: relative;
-            overflow: hidden;
-            min-height: auto
-        }
-
-        .divider h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--text-bright);
-            letter-spacing: 10px;
-            position: relative;
-            z-index: 1
-        }
-
-        .divider .sub {
-            color: var(--gold);
-            letter-spacing: 6px;
-            font-size: .8rem;
-            margin-top: 1rem;
-            position: relative;
-            z-index: 1
-        }
-
-        /* CHECKLIST */
-        .checklist {
-            list-style: none;
-            margin: 1rem 0
-        }
-
-        .checklist li {
-            padding: .6rem 0 .6rem 2rem;
-            position: relative;
-            color: var(--text-dim);
-            font-size: .9rem;
-            border-bottom: 1px solid var(--glass-border)
-        }
-
-        .checklist li::before {
-            content: '☐';
-            position: absolute;
-            left: 0;
-            color: var(--gold)
-        }
-
-        /* LIST */
-        .styled-list {
-            list-style: none;
-            margin: 1rem 0
-        }
-
-        .styled-list li {
-            padding: .5rem 0 .5rem 1.5rem;
-            position: relative;
-            color: var(--text-dim);
-            font-size: .9rem
-        }
-
-        .styled-list li::before {
-            content: '›';
-            position: absolute;
-            left: 0;
-            color: var(--gold);
-            font-weight: 700
-        }
-
-        /* BADGE */
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: .7rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin: 2px
-        }
-
-        .badge-gold {
-            background: rgba(201, 168, 76, 0.2);
-            color: var(--gold-light);
-            border: 1px solid rgba(201, 168, 76, 0.3)
-        }
-
-        .badge-red {
-            background: rgba(196, 60, 60, 0.2);
-            color: var(--red-light);
-            border: 1px solid rgba(196, 60, 60, 0.3)
-        }
-
-        .badge-blue {
-            background: rgba(74, 143, 231, 0.2);
-            color: var(--accent);
-            border: 1px solid rgba(74, 143, 231, 0.3)
-        }
-
-        /* QUOTE */
-        blockquote {
-            border-left: 3px solid var(--gold);
-            padding: 1.5rem 2rem;
-            margin: 2rem 0;
-            background: var(--glass);
-            border-radius: 0 12px 12px 0;
-            font-style: italic;
-            color: var(--text-dim)
-        }
-
-        blockquote strong {
-            color: var(--gold-light);
-            font-style: normal
-        }
-
-        /* SUBSECTION */
-        .subsection {
-            margin: 3rem 0
-        }
-
-        .subsection h3 {
-            font-size: 1.3rem;
-            color: var(--gold-light);
-            margin-bottom: 1rem;
-            padding-bottom: .5rem;
-            border-bottom: 1px solid var(--glass-border)
-        }
-
-        .subsection h4 {
-            font-size: 1.05rem;
-            color: var(--text-bright);
-            margin: 1.5rem 0 .8rem
-        }
-
-        .subsection p {
-            font-size: .9rem;
-            color: var(--text-dim);
-            margin-bottom: 1rem
-        }
-
-        /* PART DIVIDER */
-        .part-divider {
-            min-height: 50vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            flex-direction: column;
-            background: linear-gradient(135deg, #050510, #0a1628 50%, #1a0a20);
-            position: relative;
-            padding: 80px 4rem
-        }
-
-        .part-divider .part-num {
-            font-size: .8rem;
-            letter-spacing: 10px;
-            color: var(--gold);
-            margin-bottom: 1rem
-        }
-
-        .part-divider h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: var(--text-bright);
-            letter-spacing: 8px;
-            margin-bottom: 1rem
-        }
-
-        .part-divider p {
-            color: var(--text-dim);
-            max-width: 600px;
-            font-size: 1rem
-        }
-
-        /* ORG CHART */
-        .org-box {
-            text-align: center;
-            padding: 1rem 1.5rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            margin: .5rem
-        }
-
-        .org-box.primary {
-            border-color: rgba(201, 168, 76, 0.4);
-            background: rgba(201, 168, 76, 0.06)
-        }
-
-        .org-box h5 {
-            color: var(--gold-light);
-            font-size: .85rem;
-            margin-bottom: .3rem
-        }
-
-        .org-box p {
-            color: var(--text-dim);
-            font-size: .75rem
-        }
-
-        .org-row {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin: 1rem 0
-        }
-
-        .org-connector {
-            width: 2px;
-            height: 24px;
-            background: var(--gold-dark);
-            margin: 0 auto
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 60px 4rem;
-            background: var(--bg);
-            border-top: 1px solid var(--glass-border)
-        }
-
-        footer .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            letter-spacing: 12px;
-            color: var(--gold);
-            margin-bottom: 1rem
-        }
-
-        footer p {
-            color: var(--text-dim);
-            font-size: .8rem
-        }
-
-        /* MOBILE NAV BUTTON */
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
-            color: var(--gold);
-            cursor: pointer;
-            z-index: 1001;
-            background: none;
-            border: none;
-            padding: 0.5rem;
-        }
-
-        /* RESPONSIVE */
-        @media(max-width: 1024px) {
-            nav {
-                padding: 0 1.5rem;
-            }
-
-            nav .nav-menu {
-                position: fixed;
-                top: 64px;
-                right: 0;
-                bottom: 0;
-                width: 100%;
-                /* Full width for mobile */
-                max-width: 320px;
-                /* Limit width on larger mobile */
-                background: rgba(12, 12, 28, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 2rem;
-                transform: translateX(100%);
-                transition: transform 0.3s ease-in-out;
-                border-left: 1px solid rgba(201, 168, 76, 0.15);
-                overflow-y: auto;
-                height: calc(100vh - 64px);
-            }
-
-            nav .nav-menu.active {
-                transform: translateX(0);
-                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-item {
-                width: 100%;
-                height: auto;
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 0.5rem;
-                padding: 0.5rem 0;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .nav-item>.nav-label,
-            .nav-item>a.nav-direct {
-                width: 100%;
-                justify-content: space-between;
-                padding: 1rem 0;
-                font-size: 1.1rem;
-            }
-
-            .nav-dropdown {
-                position: static;
-                transform: none;
-                background: transparent;
-                border: none;
-                box-shadow: none;
-                opacity: 1;
-                visibility: visible;
-                display: none;
-                /* Hidden by default in mobile accordion */
-                padding-left: 1.5rem;
-                width: 100%;
-            }
-
-            .nav-item.active .nav-dropdown {
-                display: block;
-            }
-
-            .nav-dropdown a {
-                padding: 0.8rem 0;
-                color: var(--text-dim);
-            }
-
-            .nav-item>.nav-label .arrow {
-                transform: rotate(0deg);
-            }
-
-            .nav-item.active>.nav-label .arrow {
-                transform: rotate(180deg);
-            }
-
-            /* Main Content Adjustments */
-            section {
-                padding: 100px 1.5rem 60px;
-            }
-
-            #cover h1 {
-                font-size: 3rem;
-                letter-spacing: 5px;
-            }
-
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .split {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .org-row {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .org-connector {
-                height: 20px;
-            }
-        }
-
-        @media(max-width: 480px) {
-            #cover h1 {
-                font-size: 2.2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .logo-text {
-                font-size: 1.2rem;
-            }
-
-            nav {
-                padding: 0 1rem;
-            }
-        }
-
-        /* PRESENTATION MODE (ON SCREEN PREVIEW) */
-        body.presentation-mode {
-            background: #0a0a14;
-            color: #e8e8f0;
-            overflow: auto;
-        }
-
-        body.presentation-mode nav,
-        body.presentation-mode .mobile-menu-btn,
-        body.presentation-mode footer,
-        body.presentation-mode .version,
-        body.presentation-mode .scroll-hint {
-            display: none !important;
-        }
-
-        body.presentation-mode section {
-            width: 100vw;
-            height: 100vh;
-            padding: 3rem 5rem;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: #0a0a14;
-            position: relative;
-            border-bottom: 1px solid #333;
             box-sizing: border-box;
         }
 
-        body.presentation-mode section::after {
-            content: "IIFF NEXT WAVE - PREVIEW MODE (ESC to Exit)";
-            position: absolute;
-            bottom: 2rem;
-            right: 4rem;
-            font-size: 1rem;
-            color: rgba(201, 168, 76, 0.4);
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--text);
             font-family: 'Inter', sans-serif;
         }
 
-        body.presentation-mode .section-title {
-            font-size: 3.5rem;
-            color: #fff;
-            margin-bottom: 2rem;
+        .slides-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
         }
 
-        body.presentation-mode .section-desc {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6vh 8vw;
+            background: var(--bg);
+            overflow: hidden;
         }
 
-        body.presentation-mode .split {
+        .slide.active {
+            display: flex;
+        }
+
+        /* DECORATIVE SHAPES */
+        .slide::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 105, 20, 0.04) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+            pointer-events: none;
+        }
+
+        /* TYPOGRAPHY */
+        .slide-part {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 600;
+            margin-bottom: 1.5vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-part::after {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-light);
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.15;
+            margin-bottom: 3vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-subtitle {
+            font-size: clamp(0.95rem, 1.5vw, 1.3rem);
+            color: var(--text-dim);
+            line-height: 1.7;
+            max-width: 65%;
+            margin-bottom: 4vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* LAYOUTS */
+        .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4vw;
             align-items: start;
+            margin-top: 2vh;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Exit Button for Presentation Mode */
-        #exit-ppt-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            background: rgba(201, 168, 76, 0.2);
-            color: #fff;
-            border: 1px solid #c9a84c;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2vw;
+            margin-top: 2vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CARDS */
+        .s-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5vh 2vw;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
+        }
+
+        .s-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .s-card h3 {
+            font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+            color: var(--accent);
+            margin-bottom: 1vh;
+            font-weight: 600;
+        }
+
+        .s-card p {
+            font-size: clamp(0.75rem, 0.95vw, 0.9rem);
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .s-card .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--accent-light);
+            font-weight: 700;
+            margin-bottom: 0.5vh;
+            opacity: 0.5;
+        }
+
+        /* STAT BOXES */
+        .stat-row {
+            display: flex;
+            gap: 2.5vw;
+            margin-top: 3vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-box {
+            text-align: center;
+            flex: 1;
+            padding: 3vh 1vw;
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-box .big {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .stat-box .lbl {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.5vh;
+        }
+
+        /* LIST */
+        .s-list {
+            list-style: none;
+            margin-top: 1.5vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .s-list li {
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+            color: var(--text);
+            padding: 1vh 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .s-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-light);
+            font-weight: 700;
+        }
+
+        /* TABLE */
+        .s-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2vh;
+            position: relative;
+            z-index: 1;
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
+        }
+
+        .s-table th {
+            background: var(--bg-subtle);
+            color: var(--accent);
+            text-align: left;
+            padding: 1.2vh 1.5vw;
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        .s-table td {
+            padding: 1vh 1.5vw;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-dim);
+        }
+
+        .s-table tr:hover td {
+            background: var(--accent-bg);
+        }
+
+        /* QUOTE */
+        .s-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2.2vw, 2rem);
+            color: var(--accent);
+            font-style: italic;
+            line-height: 1.6;
+            border-left: 3px solid var(--accent-light);
+            padding-left: 2vw;
+            max-width: 70%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HIGHLIGHT BOX */
+        .s-highlight {
+            background: var(--bg-warm);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-left: 4px solid var(--accent-light);
+            border-radius: 12px;
+            padding: 2vh 2.5vw;
+            margin-top: 2vh;
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+            color: var(--text);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* TIMELINE */
+        .s-timeline {
+            display: flex;
+            gap: 2vw;
+            margin-top: 2vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .s-phase {
+            flex: 1;
+            border-left: 3px solid var(--accent-light);
+            padding-left: 1.5vw;
+            background: var(--bg-warm);
+            padding: 2vh 1.5vw;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .s-phase h4 {
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+            color: var(--accent);
+            margin-bottom: 0.8vh;
+            font-weight: 700;
+        }
+
+        .s-phase p {
+            font-size: clamp(0.7rem, 0.85vw, 0.8rem);
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* COVER SLIDE */
+        .slide-cover {
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #faf8f5 100%);
+        }
+
+        .slide-cover::before {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.1) 0%, transparent 60%);
+            top: -200px;
+            right: -200px;
+        }
+
+        .slide-cover::after {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 105, 20, 0.06) 0%, transparent 60%);
+            bottom: -200px;
+            left: -200px;
+        }
+
+        /* Film strip decoration SVG */
+        .cover-deco {
+            position: absolute;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+
+        .cover-deco-left {
+            left: 3vw;
+            top: 10vh;
+            width: 80px;
+            height: 80vh;
+        }
+
+        .cover-deco-right {
+            right: 3vw;
+            top: 10vh;
+            width: 80px;
+            height: 80vh;
+        }
+
+        .slide-cover .cover-sub {
+            font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+            color: var(--accent);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 3vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4.5rem, 9vw, 8rem);
+            background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin-bottom: 3vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-cover .cover-tag {
+            font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+            color: var(--text-dim);
+            max-width: 550px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-cover .cover-ver {
+            margin-top: 5vh;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* SLIDE WITH ACCENT BG */
+        .slide-warm {
+            background: var(--bg-warm);
+        }
+
+        .slide-warm::before {
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+        }
+
+        /* END SLIDE */
+        .slide-end {
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 50%, #faf8f5 100%);
+        }
+
+        /* LANGUAGE TOGGLE */
+        .en {
             display: none;
-            backdrop-filter: blur(10px);
         }
 
-        body.presentation-mode #exit-ppt-btn {
-            display: block;
+        body.lang-en .ko {
+            display: none;
         }
 
-        /* PRINT (TRUE 16:9 PPT STYLE) */
+        body.lang-en .en {
+            display: inline;
+        }
+
+        body.lang-en li.en,
+        body.lang-en div.en,
+        body.lang-en tr.en,
+        body.lang-en p.en,
+        body.lang-en h3.en,
+        body.lang-en h4.en,
+        body.lang-en td.en,
+        body.lang-en th.en,
+        body.lang-en span.en {
+            display: revert;
+        }
+
+        body.lang-en li.ko,
+        body.lang-en div.ko,
+        body.lang-en tr.ko,
+        body.lang-en p.ko,
+        body.lang-en h3.ko,
+        body.lang-en h4.ko,
+        body.lang-en td.ko,
+        body.lang-en th.ko {
+            display: none;
+        }
+
+        .lang-btn {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* WATERMARK */
+        .watermark {
+            position: absolute;
+            bottom: 2vh;
+            right: 3vw;
+            font-size: 0.65rem;
+            color: rgba(201, 168, 76, 0.25);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* ICON GRID (SVG-based decorative icons) */
+        .icon-row {
+            display: flex;
+            gap: 2vw;
+            margin-top: 2vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .icon-item {
+            flex: 1;
+            text-align: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3vh 1.5vw;
+            box-shadow: var(--shadow);
+        }
+
+        .icon-item .ico {
+            font-size: 2.5rem;
+            margin-bottom: 1vh;
+        }
+
+        .icon-item h4 {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5vh;
+        }
+
+        .icon-item p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        /* NAVIGATION */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3vw;
+            z-index: 100;
+        }
+
+        .nav-bar .brand {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .nav-bar .controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .nav-bar button {
+            background: var(--bg-warm);
+            border: 1px solid var(--border);
+            color: var(--text);
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            padding: 0 14px;
+        }
+
+        .nav-bar button:hover {
+            background: var(--accent-bg);
+            border-color: var(--accent-light);
+        }
+
+        .nav-bar .counter {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            min-width: 60px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .nav-bar .tools {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .nav-bar .tools button {
+            font-size: 0.72rem;
+            gap: 4px;
+        }
+
+        /* PROGRESS BAR */
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-light), var(--accent));
+            transition: width 0.4s ease;
+            z-index: 101;
+        }
+
+        /* PRINT */
         @media print {
             @page {
                 size: 33.87cm 19.05cm;
-                /* Standard PPT Widescreen */
                 margin: 0;
             }
 
@@ -1090,436 +610,149 @@
             body {
                 width: 33.87cm;
                 height: 19.05cm;
-                background: #0a0a14 !important;
+                overflow: visible !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
 
-            /* Hide everything irrelevant */
-            nav,
-            .mobile-menu-btn,
-            footer,
-            .version,
-            .scroll-hint {
+            .nav-bar,
+            .progress {
                 display: none !important;
             }
 
-            /* Main Slide Container */
-            section {
+            .slides-wrapper {
+                position: static;
+            }
+
+            .slide {
+                position: relative !important;
+                display: flex !important;
                 width: 33.87cm !important;
                 height: 19.05cm !important;
                 page-break-after: always !important;
                 break-after: page !important;
-                padding: 1.5cm 2.5cm !important;
-                /* Balanced margins */
-                margin: 0 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: center !important;
-                background: #0a0a14 !important;
-                position: relative !important;
-                border: none !important;
-                box-sizing: border-box !important;
-            }
-
-            /* Branding Watermark */
-            section::after {
-                content: "IIFF NEXT WAVE 2026";
-                position: absolute;
-                bottom: 1cm;
-                right: 2.5cm;
-                font-size: 12pt;
-                color: rgba(201, 168, 76, 0.4);
-                font-family: 'Playfair Display', serif;
-                letter-spacing: 2px;
-            }
-
-            /* Cover Page Special */
-            #cover {
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center !important;
-            }
-
-            #cover h1 {
-                font-size: 80pt !important;
-                margin-bottom: 20pt !important;
-                background: linear-gradient(to right, #fff, #c9a84c) !important;
-                -webkit-background-clip: text !important;
-                -webkit-text-fill-color: transparent !important;
-                /* Note: Text fill color might fallback in some PDF engines, so keep color white as backup */
-                color: #fff !important;
-                text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-            }
-
-            #cover .subtitle {
-                font-size: 24pt !important;
-                color: #c9a84c !important;
-                margin-bottom: 30pt !important;
-            }
-
-            #cover .tagline {
-                font-size: 18pt !important;
-                color: #aaa !important;
-            }
-
-            /* Section Headers */
-            .section-label {
-                font-size: 14pt !important;
-                color: #c9a84c !important;
-                margin-bottom: 10pt !important;
-                display: block !important;
-            }
-
-            .section-title {
-                font-size: 48pt !important;
-                line-height: 1.1 !important;
-                color: #fff !important;
-                margin-bottom: 20pt !important;
-                text-align: left !important;
-                max-width: 80% !important;
-            }
-
-            .section-desc {
-                font-size: 18pt !important;
-                color: #ccc !important;
-                margin-bottom: 30pt !important;
-                line-height: 1.6 !important;
-                max-width: 90% !important;
-            }
-
-            /* Layout: Split -> Grid side-by-side */
-            .split {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 40pt !important;
-                margin-top: 20pt !important;
-                align-items: start !important;
-            }
-
-            /* Layout: Cards -> 2 or 3 columns */
-            .card-grid {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                /* Force 3 cols for density */
-                gap: 15pt !important;
-            }
-
-            .card {
-                padding: 15pt !important;
-                border: 1px solid rgba(255, 255, 255, 0.15) !important;
-                background: rgba(255, 255, 255, 0.03) !important;
-                border-radius: 8pt !important;
-                box-shadow: none !important;
-                break-inside: avoid !important;
-            }
-
-            .card h3 {
-                font-size: 16pt !important;
-                color: #e8d490 !important;
-                margin-bottom: 8pt !important;
-            }
-
-            .card p {
-                font-size: 10pt !important;
-                /* Smaller body text for cards */
-                line-height: 1.4 !important;
-                color: #bbb !important;
-            }
-
-            .card-number {
-                font-size: 24pt !important;
-                top: 10pt !important;
-                right: 10pt !important;
-            }
-
-            /* Tables */
-            .table-wrap {
-                margin: 20pt 0 !important;
-                border: 1px solid #333 !important;
-            }
-
-            table {
-                font-size: 10pt !important;
-                /* Compact table text */
-            }
-
-            th {
-                background: #1a1a2e !important;
-                color: #c9a84c !important;
-                padding: 8pt 10pt !important;
-                border-bottom: 2px solid #444 !important;
-            }
-
-            td {
-                padding: 8pt 10pt !important;
-                border-bottom: 1px solid #222 !important;
-                color: #ddd !important;
-            }
-
-            /* Stats */
-            .stats-row {
-                display: flex !important;
-                gap: 20pt !important;
-                justify-content: space-between !important;
-            }
-
-            .stat-card {
-                flex: 1 !important;
-                padding: 15pt !important;
-                border: 1px solid #333 !important;
-            }
-
-            .stat-card .number {
-                font-size: 36pt !important;
-                color: #c9a84c !important;
-            }
-
-            .stat-card .label {
-                font-size: 12pt !important;
-            }
-
-            /* Lists */
-            .num-list li {
-                padding: 10pt 10pt 10pt 35pt !important;
-                font-size: 12pt !important;
-                background: transparent !important;
-                border: 1px solid #333 !important;
-                margin-bottom: 10pt !important;
-            }
-
-            .num-list li::before {
-                width: 20pt !important;
-                height: 20pt !important;
-                font-size: 10pt !important;
-                left: 8pt !important;
-                top: 8pt !important;
-            }
-
-            /* Highlight Box */
-            .highlight-box {
-                background: rgba(201, 168, 76, 0.05) !important;
-                border: 1px solid rgba(201, 168, 76, 0.3) !important;
-                padding: 15pt 20pt !important;
-                font-size: 14pt !important;
-                margin: 20pt 0 !important;
             }
         }
+    
 
-        /* NUMBERED LIST */
-        .num-list {
-            counter-reset: item;
-            list-style: none;
-            margin: 1.5rem 0
-        }
+/* SCROLLABLE SLIDE CONTENT */
+.slide-scroll {
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: 4vh;
+}
+.slide-scroll::-webkit-scrollbar { width: 4px; }
+.slide-scroll::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
 
-        .num-list li {
-            counter-increment: item;
-            padding: 1rem 1rem 1rem 3.5rem;
-            position: relative;
-            margin-bottom: 1rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            color: var(--text-dim);
-            font-size: .9rem
-        }
+/* SECTION HEADER SLIDE */
+.slide-section {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #faf8f5 0%, #f0ebe0 50%, #faf8f5 100%);
+}
+.slide-section .part-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 10vw, 9rem);
+    background: linear-gradient(135deg, var(--accent) 30%, var(--accent-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    opacity: 0.3;
+    position: relative;
+    z-index: 1;
+}
+.slide-section .part-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--text);
+    font-weight: 700;
+    margin-top: -2vh;
+    position: relative;
+    z-index: 1;
+}
 
-        .num-list li::before {
-            content: counter(item);
-            position: absolute;
-            left: 1rem;
-            top: 1rem;
-            width: 28px;
-            height: 28px;
-            background: rgba(201, 168, 76, 0.2);
-            color: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: .85rem
-        }
+/* ORG CHART */
+.org-row { display: flex; justify-content: center; gap: 1vw; flex-wrap: wrap; position: relative; z-index:1; }
+.org-box { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5vh 1.5vw; text-align: center; box-shadow: var(--shadow); min-width: 120px; }
+.org-box.primary { border-color: rgba(201,168,76,0.4); background: var(--accent-bg); }
+.org-box h5 { color: var(--accent); font-size: 0.8rem; margin-bottom: 0.3vh; }
+.org-box p { color: var(--text-dim); font-size: 0.7rem; }
+.org-connector { width: 2px; height: 2vh; background: var(--accent-light); margin: 0 auto; }
 
-        /* ARROW POINTER */
-        .pointer {
-            color: var(--gold);
-            font-weight: 700;
-            margin-right: 4px
-        }
+/* BADGE */
+.badge { display: inline-block; padding: 0.2em 0.8em; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+.badge-gold { background: rgba(201,168,76,0.15); color: var(--accent); }
+.badge-red { background: rgba(220,80,80,0.12); color: #c0392b; }
+.badge-blue { background: rgba(80,130,220,0.12); color: #2980b9; }
 
-        /* SECTION BG VARIANTS */
-        .bg-alt {
-            background: var(--bg2)
-        }
+/* FOUR COL */
+.four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; margin-top: 2vh; position: relative; z-index:1; }
 
-        .bg-dark {
-            background: var(--bg)
-        }
+/* SPLIT */
+.split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 2vh; position: relative; z-index:1; }
 
-        .bg-accent {
-            background: linear-gradient(180deg, var(--bg2), var(--bg3))
-        }
     </style>
 </head>
-
 <body>
+    <div class="progress" id="progress"></div>
+    <div class="slides-wrapper">
 
-    <!-- NAVIGATION -->
-    <nav>
-        <a href="#cover" class="logo-container">
-            <!-- SVG Logo Icon: Infinity Film Reel -->
-            <svg class="logo-icon" viewBox="0 0 100 60" width="50" height="30">
-                <defs>
-                    <linearGradient id="reel-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#ff00cc;stop-opacity:1" /> <!-- Magenta -->
-                        <stop offset="50%" style="stop-color:#ffcc00;stop-opacity:1" /> <!-- Gold -->
-                        <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" /> <!-- Teal -->
-                    </linearGradient>
-                </defs>
-                <path d="M15,30 Q25,10 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
-                    stroke-linecap="round" />
-                <path d="M15,30 Q25,50 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
-                    stroke-linecap="round" opacity="0.6" />
-                <!-- Film holes simulation -->
-                <circle cx="20" cy="30" r="1.5" fill="#fff" />
-                <circle cx="35" cy="30" r="1.5" fill="#fff" />
-                <circle cx="50" cy="30" r="1.5" fill="#fff" />
-                <circle cx="65" cy="30" r="1.5" fill="#fff" />
-            </svg>
-            <div class="logo-text">
-                <span class="logo-char" style="--i:1">I</span>
-                <span class="logo-char" style="--i:2">I</span>
-                <span class="logo-char" style="--i:3">F</span>
-                <span class="logo-char" style="--i:4">F</span>
-            </div>
-            <div class="logo-sub">NEXTWAVE</div>
-        </a>
+<div class="slide slide-cover active">
+    <svg class="cover-deco cover-deco-left" viewBox="0 0 80 600" xmlns="http://www.w3.org/2000/svg">
+        <rect width="80" height="600" fill="#1a1a2e" rx="4"/>
+        <rect x="5" y="10" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="34" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="58" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="82" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="10" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="34" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="58" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="82" width="20" height="14" rx="2" fill="#fff"/>
+    </svg>
+    <svg class="cover-deco cover-deco-right" viewBox="0 0 80 600" xmlns="http://www.w3.org/2000/svg">
+        <rect width="80" height="600" fill="#1a1a2e" rx="4"/>
+        <rect x="5" y="10" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="34" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="58" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="5" y="82" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="10" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="34" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="58" width="20" height="14" rx="2" fill="#fff"/>
+        <rect x="55" y="82" width="20" height="14" rx="2" fill="#fff"/>
+    </svg>
+    <div class="cover-sub">Incheon International Film Festival</div>
+    <h1>NEXT WAVE</h1>
+    <div class="cover-tag">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결<br>인천 국제 넥스트웨이브 영화제 통합 기획서</div>
+    <div class="cover-ver">IIFF NextWave — Integrated Proposal v5</div>
+</div>
 
-        <!-- Mobile Menu Button -->
-        <button class="mobile-menu-btn" onclick="toggleMenu()">
-            ☰
-        </button>
+<div class="slide slide-section">
+    <div class="part-num">PART 1</div>
+    <div class="slide-part">INTRODUCTION</div>
+    <div class="part-title">소개 · Introduction</div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-        <ul class="nav-menu" id="navMenu">
-            <!-- HOME -->
-            <li class="nav-item">
-                <a href="#cover" class="nav-direct">HOME</a>
-            </li>
-            <!-- 소개 -->
-            <li class="nav-item">
-                <span class="nav-label">소개 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown">
-                    <a href="#what-is-iiff"><span class="dd-icon">🎬</span>What is IIFF</a>
-                    <a href="#overview"><span class="dd-icon">📋</span>영화제 개요</a>
-                    <a href="#why-participate"><span class="dd-icon">💡</span>왜 참여해야 하는가</a>
-                    <a href="#why-incheon"><span class="dd-icon">📍</span>왜 인천인가</a>
-                    <a href="#vision"><span class="dd-icon">🎯</span>비전 & 철학</a>
-                </ul>
-            </li>
-            <!-- 프로그램 -->
-            <li class="nav-item">
-                <span class="nav-label">프로그램 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown">
-                    <a href="#programs"><span class="dd-icon">🎞️</span>핵심 프로그램</a>
-                    <a href="#stars"><span class="dd-icon">⭐</span>스타초청 & Creator Camp</a>
-                    <a href="#simulation"><span class="dd-icon">🕐</span>일일 시뮬레이션</a>
-                    <a href="#volunteer"><span class="dd-icon">🙋</span>시민 참여</a>
-                </ul>
-            </li>
-            <!-- 운영전략 -->
-            <li class="nav-item">
-                <span class="nav-label">운영전략 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown">
-                    <a href="#strategy"><span class="dd-icon">🧭</span>핵심 전략</a>
-                    <a href="#organization"><span class="dd-icon">🏛️</span>조직체계</a>
-                    <a href="#roadmap"><span class="dd-icon">📅</span>3개년 로드맵</a>
-                    <a href="#atoz-roadmap"><span class="dd-icon">🗺️</span>A-Z 로드맵</a>
-                    <div class="dd-divider"></div>
-                    <a href="#space"><span class="dd-icon">🏟️</span>공간활용 & 파트너</a>
-                    <a href="#biff"><span class="dd-icon">🆚</span>BIFF 비교분석</a>
-                </ul>
-            </li>
-            <!-- 재무 -->
-            <li class="nav-item">
-                <span class="nav-label">재무 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown">
-                    <a href="#budget"><span class="dd-icon">💰</span>예산 계획</a>
-                    <a href="#cashflow"><span class="dd-icon">📊</span>현금 흐름표</a>
-                    <a href="#seedmoney"><span class="dd-icon">🌱</span>초기 경비</a>
-                    <div class="dd-divider"></div>
-                    <a href="#sponsorship"><span class="dd-icon">🤝</span>스폰서십 플랜</a>
-                    <a href="#marketing"><span class="dd-icon">📣</span>마케팅 전략</a>
-                </ul>
-            </li>
-            <!-- 거버넌스 -->
-            <li class="nav-item">
-                <span class="nav-label">거버넌스 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown">
-                    <a href="#political"><span class="dd-icon">🛡️</span>선거 리스크 관리</a>
-                    <a href="#personnel"><span class="dd-icon">👥</span>인적 배치</a>
-                </ul>
-            </li>
-            <!-- 도구 -->
-            <li class="nav-item">
-                <span class="nav-label" style="color:var(--gold)">도구 <span class="arrow">▼</span></span>
-                <ul class="nav-dropdown" style="right:0;left:auto;transform:translateY(4px)">
-                    <a href="presentation.html" target="_blank"><span class="dd-icon">🖥️</span>프레젠테이션</a>
-                    <a href="#" onclick="printPresentation();return false;"><span class="dd-icon">🖨️</span>인쇄하기</a>
-                    <div class="dd-divider"></div>
-                    <a href="presentation_full.html" target="_blank"><span class="dd-icon">📑</span>Full 프레젠테이션</a>
-                    <a href="presentation_full.html" target="_blank"
-                        onclick="setTimeout(()=>window.open('presentation_full.html').print(),500);return false;"><span
-                            class="dd-icon">🖨️</span>Full 인쇄하기</a>
-                </ul>
-            </li>
-            <!-- 언어 -->
-            <li class="nav-item">
-                <a class="nav-direct lang-toggle-btn" href="#" onclick="toggleLang();return false;" id="langBtn"
-                    style="color:var(--gold);font-weight:700">🌐 EN</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- COVER -->
-    <section id="cover" class="section-cover">
-        <div class="subtitle">Incheon International Film Festival</div>
-        <h1>NEXT WAVE</h1>
-        <div class="tagline">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
-        <div class="version">IIFF NextWave — Integrated Proposal v5</div>
-    </section>
-
-    <!-- WHAT IS IIFF -->
-
-    <section id="what-is-iiff" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 1 • INTRODUCTION</div>
-            <div class="section-title">1. What is IIFF?</div>
-            <div class="section-desc"
-                data-en="Pronounced &quot;if&quot; — two i's, two f's — for emphasis, yet spoken as a single simple word.">
-                발음은 "이프(if)" — i 두 번, f 두 번 — 강조의 의미이며, 발음은 단순한 하나의 단어입니다.</div>
-
-            <div class="split">
+<div class="slide">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. What is IIFF?</div>
+    <div class="slide-subtitle">발음은 "이프(if)" — i 두 번, f 두 번 — 강조의 의미이며, 발음은 단순한 하나의 단어입니다.</div><div class="split-2">
                 <div class="split-item">
                     <h3 style="font-family:'Playfair Display',serif;font-size:4rem;color:var(--gold)">if</h3>
                     <p style="font-size:1.8rem;color:var(--text-bright);margin:.5rem 0">"만약에"</p>
-                    <ul class="styled-list" style="margin-top:1.5rem">
+                    <ul class="s-list" style="margin-top:1.5rem">
                         <li>만약에 올해, 내 영화가 이곳에서 처음으로 주목받는다면?</li>
                         <li>만약에 이 무대에서, 내 연기가 올해의 최우수 연기자로 불린다면?</li>
                         <li>만약에 이 선택이, 내 인생의 방향을 바꾸는 순간이 된다면?</li>
                     </ul>
-                    <div class="highlight-box" style="margin-top:2rem">
+                    <div class="s-highlight" style="margin-top:2rem">
                         <p data-en="IIFF is a film festival that makes you start imagining &quot;what if.&quot;">IIFF는
                             바로 그 <strong>'만약에'</strong>를 시작하게 하는 영화제입니다.</p>
                     </div>
                 </div>
                 <div class="split-item">
-                    <div class="card" style="margin-bottom:1.5rem">
+                    <div class="s-card" style="margin-bottom:1.5rem">
                         <h3>IIFF는</h3>
                         <p
                             data-en="It is not a festival only for those already successful. It is not a stage only for already recognized works.">
@@ -1534,7 +767,7 @@
                         <strong>What if this year changes everything?</strong><br>
                         <strong>What if this is where your story begins?</strong>
                     </blockquote>
-                    <div class="card">
+                    <div class="s-card">
                         <span class="en">OUR VISION</span>
                         <p
                             data-en="A question open to everyone, dreams and hopes for all, and the imagination to create new waves.&lt;br&gt;&lt;strong&gt;From that one word — if — IIFF begins.&lt;/strong&gt;">
@@ -1543,20 +776,14 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- OVERVIEW -->
-
-    <section id="overview">
-        <div class="section-content">
-            <div class="section-label">PART 1 • INTRODUCTION</div>
-            <div class="section-title">2. Festival Overview</div>
-            <div class="section-desc"
-                data-en="Incheon International Film Festival &quot;NextWave&quot; — IIFF-NextWave">인천 국제 영화제 "넥스트웨이브" —
-                Incheon International Film Festival (IIFF-NextWave)</div>
-
-            <div class="highlight-box vision">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Festival Overview</div>
+    <div class="slide-subtitle">인천 국제 영화제 "넥스트웨이브" —
+                Incheon International Film Festival (IIFF-NextWave)</div><div class="s-highlight">
                 <p
                     data-en="&lt;strong&gt;IIFF — NextWave&lt;/strong&gt; goes beyond the conventional festival framework of simply screening films. It is an international film festival aiming to become a &lt;strong&gt;future-oriented global film platform&lt;/strong&gt; where film, music, technology, and K-Culture organically converge.">
                     <strong>IIFF — NextWave는</strong> 단순히 영화를 상영하는 기존 영화제의 틀을 넘어, 영화 · 음악 · 테크놀로지 · K-컬처가 유기적으로 융합되는
@@ -1570,8 +797,8 @@
                     또한, '칸'이나 '오스카'처럼 이름 그 자체로 권위를 갖는 <strong>"iiff" 브랜드</strong>로 성장합니다.</p>
             </div>
 
-            <div class="card-grid">
-                <div class="card">
+            <div class="three-col">
+                <div class="s-card">
                     <span class="card-number">01</span>
                     <span class="en">INCHEON × HOLLYWOOD</span>
                     <h3 data-en="Global Film Platform with Method Fest">Method Fest와 함께하는 글로벌 영화 플랫폼</h3>
@@ -1584,14 +811,14 @@
                         Justin Kim과 Don Franken이 명예위원장 및 글로벌 파트너로 참여합니다. 헐리우드 독립영화 네트워크의 실질적 연결,
                         글로벌 영화인의 인천 방문 및 교류, 공동 섹션 운영을 통한 국제 프로그램 구성 등 실제 작동하는 글로벌 연계 구조를 의미합니다.</p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">02</span>
                     <span class="en">DUAL STRUCTURE</span>
                     <h3 data-en="Dual Structure: Commercial &amp; Independent Films Coexist">상업영화와 독립영화가 공존하는 이중 구조</h3>
                     <p
                         data-en="IIFF is not limited to one genre or scale. Through a dual structure where commercial and independent films coexist, it surveys both the present and future of the film industry.">
                         IIFF는 하나의 장르나 규모에 국한되지 않습니다. 상업영화와 독립영화가 분리되지 않고 공존하는 이중 구조를 통해 영화 산업의 현재와 미래를 동시에 조망합니다.</p>
-                    <ul class="styled-list" style="margin-top:.8rem">
+                    <ul class="s-list" style="margin-top:.8rem">
                         <li data-en="Securing popularity and scalability through global commercial films">글로벌 상업영화를 통해
                             대중성과 확장성 확보</li>
                         <li data-en="Strengthening indie/art film identity through Method Fest partnership">Method Fest
@@ -1600,7 +827,7 @@
                             이루는 건강한 영화 생태계 조성</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">03</span>
                     <span class="en">PARTICIPATORY FESTIVAL</span>
                     <h3 data-en="An Experiential Festival Where Audiences Participate and Creators Grow">관객이 참여하고, 창작자가
@@ -1608,7 +835,7 @@
                     <p
                         data-en="IIFF — NextWave aims to be not a 'watching festival' but a &lt;strong&gt;&quot;participating festival.&quot;&lt;/strong&gt;">
                         IIFF — NextWave는 '보는 영화제'가 아닌 <strong>"참여하는 영화제"</strong>를 지향합니다.</p>
-                    <ul class="styled-list" style="margin-top:.8rem">
+                    <ul class="s-list" style="margin-top:.8rem">
                         <li data-en="Participatory programs, voting, and experiential content">관객 참여형 프로그램 및 투표, 체험 콘텐츠
                             운영</li>
                         <li data-en="Mentoring, pitching, and workshops for emerging directors, actors, and creators">신진
@@ -1617,14 +844,14 @@
                             단편, 숏폼, 모바일 콘텐츠 등 새로운 영상 포맷을 포용하는 개방형 경쟁 구조</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">04</span>
                     <span class="en">BEYOND THE FESTIVAL</span>
                     <h3 data-en="Year-Round Content Ecosystem That Continues After the Festival">영화제 이후에도 지속되는 연중 콘텐츠
                         생태계</h3>
                     <p data-en="IIFF — NextWave is not an event that happens once a year and ends.">IIFF — NextWave는 1년에
                         한 번 열리고 끝나는 이벤트가 아닙니다.</p>
-                    <ul class="styled-list" style="margin-top:.8rem">
+                    <ul class="s-list" style="margin-top:.8rem">
                         <li
                             data-en="Screenings, education, production, and exchange programs that continue after the festival">
                             영화제 이후에도 이어지는 상영, 교육, 제작, 교류 프로그램</li>
@@ -1634,25 +861,21 @@
                             data-en="Building a structure where film, video, performance, and tech-based content is continuously produced and distributed year-round">
                             영화, 영상, 공연, 테크 기반 콘텐츠가 연중 지속적으로 생산·유통되는 구조 구축</li>
                     </ul>
-                    <div class="highlight-box" style="margin-top:1rem">
+                    <div class="s-highlight" style="margin-top:1rem">
                         <p
                             data-en="IIFF is a project that creates a &lt;strong&gt;new content ecosystem&lt;/strong&gt; in Incheon, starting with the film festival.">
                             IIFF는 영화제를 시작으로 인천에 <strong>새로운 콘텐츠 생태계</strong>를 만들어가는 프로젝트입니다.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- WHY PARTICIPATE -->
-
-    <section id="why-participate" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 1 • INTRODUCTION</div>
-            <div class="section-title">3. Why Participate?</div>
-
-            <div class="card-grid">
-                <div class="card">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Why Participate?</div>
+    <div class="three-col">
+                <div class="s-card">
                     <span class="card-number">2-1</span>
                     <h3 data-en="Beyond " Exposure": A Brand Platform Built Together">"노출"을 넘어, 함께 만드는 브랜드 플랫폼</h3>
                     <p
@@ -1669,7 +892,7 @@
                         조회수/공유수/UGC 생성량
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-2</span>
                     <h3 data-en="Global Exposure Value in the K-Content Market">K-콘텐츠 중심 시장에서의 글로벌 노출 가치</h3>
                     <p
@@ -1685,7 +908,7 @@
                         <strong>측정 지표:</strong> 출품작/감독 인터뷰 수, 언론 노출, 관객 반응, 해외 참가자 재방문 의향
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-3</span>
                     <h3 data-en="Inspire Resort × Premium Operations Infrastructure">인스파이어 리조트 × 프리미엄 운영 인프라</h3>
                     <p
@@ -1698,7 +921,7 @@
                         공연/체험<br><strong>City Screens:</strong> 인천 내 대표 상영관 연계 정통 상영 섹션
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-4</span>
                     <h3 data-en="Young, Global Audience Influx Through K-Pop, K-Food, K-Beauty, Short-Form">
                         K-팝·K-푸드·K-뷰티·숏폼의 젊고 글로벌한 관객 유입 구조</h3>
@@ -1715,7 +938,7 @@
                         <strong>측정 지표:</strong> 관객 연령/국적 분포, 체험존 참여율, SNS UGC 발생량, 해시태그 도달
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-5</span>
                     <h3 data-en="Mobile Short Film Competition + Camping Festival Viral Engine">모바일 숏필름 컴피티션 + 캠핑형 페스티벌
                         바이럴 엔진</h3>
@@ -1732,7 +955,7 @@
                         <strong>측정 지표:</strong> 출품작 수, 조회수/공유수, 참가자 재참여율, 숏폼 콘텐츠 총 생산량
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-6</span>
                     <h3 data-en="" A Festival Where Content Keeps Being Reproduced"">"콘텐츠가 계속 재생산되는 영화제"</h3>
                     <p
@@ -1748,7 +971,7 @@
                         <strong>측정 지표:</strong> 종료 후 30/60/90일 콘텐츠 조회수, 구독자 증가, 검색량, PR 가치 환산
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-7</span>
                     <h3 data-en="Brand Value · Global Network · Long-term Business Assets">브랜드 가치 · 글로벌 네트워크 · 장기 비즈니스
                         자산</h3>
@@ -1760,7 +983,7 @@
                         Partner Circle"로 장기 파트너십 체계화.
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">2-8</span>
                     <h3 data-en="Long-term Partnership Structure, Not a One-time Event">1회성 이벤트가 아닌 장기 파트너십 구조</h3>
                     <p
@@ -1773,20 +996,13 @@
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- WHY INCHEON -->
-
-    <section id="why-incheon">
-        <div class="section-content">
-            <div class="section-label">PART 1 • INTRODUCTION</div>
-            <div class="section-title">4. Why Incheon?</div>
-            <div class="section-desc"
-                data-en="Incheon is not just an 'airport city' — it is the face of Korea that the world meets first.">
-                인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div>
-
-            <ol class="num-list">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Why Incheon?</div>
+    <div class="slide-subtitle">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div><ol class="num-list">
                 <li data-en="&lt;strong&gt;From a 'transit city' to the world's filmmakers' cultural destination&lt;/strong&gt;&lt;br&gt;Not airport → Seoul, but a structure that makes people stay and experience Incheon. Opening/closing, galas, master classes, meetups, and camping festivals placed throughout the city.&lt;br&gt;&lt;span class="
                     pointer"&gt;👉&lt;/span&gt; Incheon is no longer a transit point but &lt;strong&gt;a city with
                     reasons to visit&lt;/strong&gt;."><strong>'거쳐가는 도시'에서 "전 세계 영화인의 문화
@@ -1821,24 +1037,20 @@
                 </li>
             </ol>
 
-            <div class="highlight-box important" style="margin-top:2rem">
+            <div class="s-highlight" style="margin-top:2rem">
                 <p
                     data-en="&lt;strong&gt;Conclusion:&lt;/strong&gt; Starting with the film festival, Incheon is branded as &lt;strong&gt;'Asia's new content-centered city.'&lt;/strong&gt; IIFF is not just a cultural event — it is a city project that redefines Incheon's identity and future.">
                     <strong>결론:</strong> 영화제를 시작으로, 인천은 <strong>'아시아의 새로운 콘텐츠 중심 도시'</strong>로 브랜딩됩니다. IIFF는 단순한 문화 행사가
                     아니라, 인천의 정체성과 미래를 재정의하는 도시 프로젝트입니다.
                 </p>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- PROGRAMS -->
-
-    <section id="vision">
-        <div class="section-content">
-            <div class="section-label">PART 1 • INTRODUCTION</div>
-            <div class="section-title">5. Vision & Philosophy</div>
-
-            <div class="highlight-box vision" style="text-align:center;padding:3rem">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Vision & Philosophy</div>
+    <div class="s-highlight" style="text-align:center;padding:3rem">
                 <p style="font-size:1.3rem;color:var(--text-bright);font-weight:500"
                     data-en="The Incheon International NextWave Film Festival is&lt;br&gt;not just a film festival,&lt;br&gt;it is &lt;strong&gt;a city strategy&lt;/strong&gt;.">
                     인천 국제 넥스트웨이브 영화제는<br>하나의 영화제가 아니라,
@@ -1854,7 +1066,7 @@
                     인천"</p>
             </div>
 
-            <div class="subsection" style="margin-top:3rem">
+            <div class="subsection" style="position:relative;z-index:1" style="margin-top:3rem">
                 <h3>인천 국제 넥스트웨이브 영화제의 기획 철학</h3>
                 <p
                     data-en="The era we live in has become a completely different world from just a few years ago. The malls and department stores where people gathered have closed, leaving cities with empty spaces. Creation is no longer the domain of those with rare talent or expensive equipment.">
@@ -1880,7 +1092,7 @@
                         '브릿지'</strong>가 되고자 합니다.</p>
                 <p data-en="It aspires to be a festival unlike any before — honest, warm, and moving.">이전의 어떤 영화제와도 닮지
                     않은, 솔직하고, 따뜻하고, 감동이 있는 영화제를 지향합니다.</p>
-                <ul class="styled-list">
+                <ul class="s-list">
                     <li>기술을 부정하지 않되, 사람을 지우지 않고</li>
                     <li>미래를 말하되, 기억과 감정을 잃지 않으며</li>
                     <li>경쟁보다 가능성을, 결과보다 '다음 장면'을 남기는 영화제</li>
@@ -1895,27 +1107,14 @@
                     영화제.<br><strong>인천 국제 넥스트웨이브 영화제는 영화를 통해 도시를 바꾸고, 사람을 다시 연결하며, 미래를 따뜻하게 건너가는 방법을 제안합니다.</strong>
                 </blockquote>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PART 2 DIVIDER -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <h2>사업 추진 계획서</h2>
-    <p data-en="Detailed execution strategy, organization, budget, sponsorship, and roadmap for the 1st IIFF NextWave">
-        제1회 인천 국제 넥스트웨이브 영화제의 구체적인 실행 전략, 조직, 예산, 스폰서십, 로드맵</p>
-    </div>
-
-    <!-- STRATEGY -->
-
-    <section id="programs" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 2 • PROGRAMS</div>
-            <div class="section-title">1. Core Programs</div>
-
-            <div class="card-grid">
-                <div class="card">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 2 • PROGRAMS</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Core Programs</div>
+    <div class="three-col">
+                <div class="s-card">
                     <span class="card-number">01</span>
                     <span class="en">COMMERCIAL & GLOBAL SHOWCASE</span>
                     <h3>대중성과 국제 화제성을 동시에 확보하는 메인 스트림 섹션</h3>
@@ -1933,7 +1132,7 @@
                             섹션</strong>
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">02</span>
                     <span class="en">METHOD FEST INDEPENDENT FILM SECTION</span>
                     <h3 data-en="Creator-Centered Global Independent Film Festival Section">창작자 중심 글로벌 독립영화제 섹션</h3>
@@ -1949,7 +1148,7 @@
                         grow&quot;&lt;/strong&gt;"><span class="pointer">👉</span> 단순 상영이 아닌 <strong>"영화인이 성장하는
                             영화제"</strong>라는 철학을 가장 잘 보여주는 섹션</p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">03</span>
                     <span class="en">NEXTWAVE MOBILE FILM COMPETITION</span>
                     <h3 data-en="The Future Section Representing 'New Film Language' Made on Mobile">모바일로 제작하는 '새로운 영화
@@ -1967,7 +1166,7 @@
                         <strong>미래 영화의 인큐베이터</strong>
                     </p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">04</span>
                     <span class="en">FESTIVAL CAMP & LIVE CULTURE</span>
                     <h3 data-en="'Film-Type Festival' Combining Camping, Performance, and Screening">캠핑·공연·상영이 결합된 '영화형
@@ -1983,7 +1182,7 @@
                         experience&lt;/strong&gt;"><span class="pointer">👉</span> 영화제를 "보는 행사"에서 <strong>머무르고 경험하는 문화
                             축제</strong>로 확장</p>
                 </div>
-                <div class="card">
+                <div class="s-card">
                     <span class="card-number">05</span>
                     <span class="en">K-CULTURE EXPERIENCE ZONE</span>
                     <h3 data-en="A Space Where K-Culture Permeates Through Film">영화를 중심으로 K-컬처가 스며드는 공간</h3>
@@ -2001,24 +1200,20 @@
                             영화제'</strong>로 완성하는 마지막 퍼즐</p>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- VISION -->
-
-    <section id="stars">
-        <div class="section-content">
-            <div class="section-label">PART 2 • PROGRAMS</div>
-            <div class="section-title">2. Star Invitation & Camp</div>
-
-            <div class="subsection">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 2 • PROGRAMS</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Star Invitation & Camp</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="7.1 Hollywood Star Invitation Strategy">7.1 헐리우드 스타 초청 전략</h3>
                 <p
                     data-en="Securing direct invitation routes through Hollywood local agencies (CAA, WME, UTA). Appearance fees, accommodation, and protocol details are pre-agreed via international-standard Rider contracts.">
                     헐리우드 현지 법인 또는 에이전시(CAA, WME, UTA)를 통한 직접적 초청 루트를 확보합니다. 출연료, 체류비, 의전 사항은 국제 기준의 Rider 계약으로 사전 합의합니다.
                 </p>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en="Invitation Target (Example)">초청 대상 (예시)</th>
@@ -2058,21 +1253,21 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="7.2 NextWave Creator Camp Rules (Summary)">7.2 NextWave Creator Camp 규정 (요약)</h3>
-                <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-                    <div class="card">
+                <div class="three-col" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+                    <div class="s-card">
                         <h3 data-en="📋 Eligibility">📋 참가 자격</h3>
-                        <ul class="styled-list">
+                        <ul class="s-list">
                             <li data-en="Anyone worldwide aged 16+">만 16세 이상 전 세계 누구나</li>
                             <li data-en="Individual or team of up to 5">개인 또는 5인 이내 팀 참가</li>
                             <li data-en="Must film with smartphone (iPhone/Galaxy)">스마트폰(아이폰/갤럭시) 촬영 필수</li>
                             <li data-en="Entry fee included (basic camping gear provided)">참가비 포함 (야영 장비 기본 제공)</li>
                         </ul>
                     </div>
-                    <div class="card">
+                    <div class="s-card">
                         <h3 data-en="🎬 Production Rules">🎬 제작 규정</h3>
-                        <ul class="styled-list">
+                        <ul class="s-list">
                             <li data-en="Free genre (experimental/documentary/drama/MV)">장르 자유 (실험/다큐/드라마/뮤비)</li>
                             <li data-en="Runtime: 3-15 minutes">러닝타임: 3분~15분 이내</li>
                             <li data-en="Film, edit, and submit within camp period (48 hours)">캠프 기간(48시간) 내 촬영·편집·제출
@@ -2081,9 +1276,9 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card">
+                    <div class="s-card">
                         <h3 data-en="🏆 Judging &amp; Awards">🏆 심사 및 시상</h3>
-                        <ul class="styled-list">
+                        <ul class="s-list">
                             <li data-en="Professional jury + audience voting combined">전문 심사위원단 + 관객 투표 병행</li>
                             <li data-en="Grand Prize: prize money + official screening at next festival">대상: 상금 + 차기 영화제
                                 정식 상영권</li>
@@ -2094,10 +1289,17 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 2 • PROGRAMS</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Star Invitation & Camp</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="7.3 Protocol &amp; VIP Management">7.3 의전 및 VIP 관리</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Category<" data-en=">Item<">항목</th>
@@ -2136,20 +1338,14 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- BIFF COMPARISON -->
-
-    <section id="simulation">
-        <div class="section-content">
-            <div class="section-label">PART 2 • PROGRAMS</div>
-            <div class="section-title">3. Daily Simulation</div>
-            <div class="section-desc" data-en="" Audiences arrive in the morning and stay until late at night" — An
-                Immersive Festival Day">"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루</div>
-
-            <div class="table-wrap">
-                <table>
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 2 • PROGRAMS</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Daily Simulation</div>
+    <div class="slide-subtitle">"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루</div><div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th data-en="Time">시간</th>
@@ -2236,24 +1432,21 @@
                 </table>
             </div>
 
-            <div class="highlight-box">
+            <div class="s-highlight">
                 <p
                     data-en="<strong>Key Point:</strong> Audiences watch films at CGV, experience galas at the Arena, enjoy camping &amp; K-Culture at Discovery Park, and attend business meetings at MICE. A full day of diverse, non-stop content — the completion of an <strong>Immersive Festival</strong>.">
                     <strong>핵심 포인트:</strong> 관객은 CGV에서 영화를 보고, 아레나에서 갈라를 경험하고, 디스커버리 파크에서 캠핑과 K-컬처를 즐기며, MICE에서 비즈니스 미팅을
                     한다. 하루 종일 다양한 콘텐츠가 끊임없이 이어지는 <strong>체류형 영화제</strong>의 완성.
                 </p>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- VOLUNTEER -->
-
-    <section id="volunteer" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 2 • PROGRAMS</div>
-            <div class="section-title">4. Civic Participation</div>
-            <div class="table-wrap">
-                <table>
+<div class="slide">
+    <div class="slide-part">PART 2 • PROGRAMS</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Civic Participation</div>
+    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th data-en="Category">구분</th>
@@ -2293,17 +1486,14 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- A-TO-Z ROADMAP -->
-
-    <section id="strategy" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">1. Core Strategy</div>
-            <div class="table-wrap">
-                <table>
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Core Strategy</div>
+    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th data-en="No.">번호</th>
@@ -2369,17 +1559,20 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- ORGANIZATION -->
+<div class="slide slide-section">
+    <div class="part-num">PART 2</div>
+    <div class="slide-part">ORGANIZATION</div>
+    <div class="part-title">조직 · Organization</div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <section id="organization">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">2. Organization</div>
-
-            <div class="subsection">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Organization</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="2.1 Organization Chart (3 Levels)">2.1 조직도 (3단계)</h3>
                 <div style="text-align:center;margin:2rem 0">
                     <div class="org-row">
@@ -2411,10 +1604,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="2.2 Group Roles &amp; Participation">2.2 참여 가능 그룹별 역할</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en="Group">그룹</th>
@@ -2475,23 +1668,27 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- 3-YEAR ROADMAP -->
+<div class="slide slide-section">
+    <div class="part-num">PART 3</div>
+    <div class="slide-part">STRATEGY</div>
+    <div class="part-title">전략 · Strategy</div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <section id="roadmap" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">3. 3-Year Roadmap</div>
-            <div class="timeline">
-                <div class="timeline-item">
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. 3-Year Roadmap</div>
+    <div class="s-timeline" style="flex-direction:column">
+                <div class="s-phase">
                     <h4 data-en="<span class=&quot;badge badge-gold&quot;>Phase 1</span> Foundation — Ed. 1"><span
                             class="badge badge-gold">1단계</span> Foundation — 1회</h4>
                     <p data-en="<strong>Goal:</strong> Successful festival launch &amp; global awareness foundation">
                         <strong>목표:</strong> 영화제의 성공적 런칭 및 글로벌 인지도의 기반 마련
                     </p>
-                    <ul class="styled-list">
+                    <ul class="s-list">
                         <li
                             data-en="Official organizing/executive committee launch (Incheon-Inspire-Method partnership)">
                             공식 조직위/집행위원회 발족 (인천시-인스파이어-메소드 파트너십)</li>
@@ -2502,14 +1699,14 @@
                         <li data-en="K-Pop linked mini concert introduction">K-팝 연계 미니 콘서트 도입</li>
                     </ul>
                 </div>
-                <div class="timeline-item">
+                <div class="s-phase">
                     <h4 data-en="<span class=&quot;badge badge-red&quot;>Phase 2</span> Expansion — Ed. 2"><span
                             class="badge badge-red">2단계</span> Expansion — 2회</h4>
                     <p
                         data-en="<strong>Goal:</strong> Asia-Hollywood business platform enhancement &amp; program expansion">
                         <strong>목표:</strong> 아시아-헐리우드 비즈니스 플랫폼 기능 강화 및 프로그램 확장
                     </p>
-                    <ul class="styled-list">
+                    <ul class="s-list">
                         <li data-en="'Asia-Hollywood Business Market' official launch &amp; MICE utilization">'아시아-헐리우드
                             비즈니스 마켓' 정식 런칭 및 MICE 활용</li>
                         <li data-en="Hollywood star master class regularization &amp; expansion">헐리우드 유명 배우 마스터 클래스 정례화
@@ -2520,14 +1717,14 @@
                         </li>
                     </ul>
                 </div>
-                <div class="timeline-item">
+                <div class="s-phase">
                     <h4 data-en="<span class=&quot;badge badge-blue&quot;>Phase 3</span> Globalization — Ed. 3"><span
                             class="badge badge-blue">3단계</span> Globalization — 3회</h4>
                     <p
                         data-en="<strong>Goal:</strong> Leap to Asia's leading festival &amp; Incheon-Hawaii cross-hosting ready">
                         <strong>목표:</strong> 아시아 대표 영화제 도약 및 인천-하와이 교차 개최 준비 완료
                     </p>
-                    <ul class="styled-list">
+                    <ul class="s-list">
                         <li data-en="Official MOU with Hawaii Int'l Film Fest &amp; cross-hosting roadmap finalized">하와이
                             국제영화제와 공식 협력 MOU 체결 및 교차 개최 로드맵 확정</li>
                         <li data-en="Method section elevated to official competition">메소드 섹션을 공식 경쟁 부문으로 격상</li>
@@ -2537,10 +1734,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="4. Space Utilization &amp; Program Layout Plan">4. 공간 활용 및 프로그램 배치 계획</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en="Venue">장소</th>
@@ -2585,22 +1782,16 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- BUDGET -->
-
-    <section id="atoz-roadmap">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">4. A-to-Z Roadmap</div>
-            <div class="section-desc" data-en="Budget ₩3B: Cash-flow-based timely investment plan">전체 예산 30억 원 기준, 현금
-                흐름을 고려한 적시 투입 계획</div>
-
-            <div class="subsection">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="13.1 Phase-by-Phase Roadmap">13.1 단계별 추진 로드맵</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
+                <div class="s-timeline" style="flex-direction:column">
+                    <div class="s-phase">
                         <h4
                             data-en="<span class=&quot;badge badge-gold&quot;>Phase 1</span> Steering Committee Launch (2025.10 ~ 2026.01)">
                             <span class="badge badge-gold">1단계</span> 추진위 발족 (2025.10 ~ 2026.01)
@@ -2614,7 +1805,7 @@
                             <strong>예상 비용:</strong> 2.5억 원 (인건비, 법인 설립비, CI 개발, 기획 연구비)
                         </p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="s-phase">
                         <h4
                             data-en="<span class=&quot;badge badge-gold&quot;>Phase 2</span> Organizing Committee Launch (2026.02 ~ 2026.04)">
                             <span class="badge badge-gold">2단계</span> 조직위 출범 (2026.02 ~ 2026.04)
@@ -2628,7 +1819,7 @@
                             <strong>예상 비용:</strong> 5억 원 (운영비, 홈페이지 구축, 해외 게스트 섭외 착수금)
                         </p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="s-phase">
                         <h4
                             data-en="<span class=&quot;badge badge-red&quot;>Phase 3</span> Program Finalization &amp; Marketing (2026.05 ~ 2026.07)">
                             <span class="badge badge-red">3단계</span> 프로그램 확정 & 마케팅 (2026.05 ~ 2026.07)
@@ -2642,7 +1833,7 @@
                             <strong>예상 비용:</strong> 10억 원 (게스트 항공/숙박, 홍보비, 시설 계약금)
                         </p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="s-phase">
                         <h4
                             data-en="<span class=&quot;badge badge-blue&quot;>Phase 4</span> On-site Preparation &amp; Hosting (2026.08 ~ 2026.10)">
                             <span class="badge badge-blue">4단계</span> 현장 준비 & 개최 (2026.08 ~ 2026.10)
@@ -2659,7 +1850,7 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="13.2 Organizing Committee Structure">13.2 조직위원회 구조</h3>
                 <div style="text-align:center;margin:2rem 0">
                     <div class="org-row">
@@ -2705,10 +1896,17 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="13.3 Team KPIs (Key Performance Indicators)">13.3 팀별 KPI (핵심 성과 지표)</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Team<">조직</th>
@@ -2745,20 +1943,16 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- CASH FLOW -->
-
-    <section id="space" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">5. Space & Partners</div>
-
-            <div class="subsection">
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Space & Partners</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="10.1 Inspire Resort Space Utilization Strategy">10.1 인스파이어 리조트 공간별 활용 전략</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Space<">공간</th>
@@ -2802,22 +1996,22 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="10.2 Incheon Downtown Integration Strategy">10.2 인천 도심 연계 전략</h3>
-                <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
-                    <div class="card">
+                <div class="three-col" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+                    <div class="s-card">
                         <h3 data-en="🎬 Film Space Juan">🎬 영화공간 주안</h3>
                         <p
                             data-en="Incheon's indie film hub. Method-Indie satellite theater and art screening shuttle.">
                             인천의 독립영화 거점. 메소드-인디 섹션 위성 상영관 및 아트 스크리닝 셔틀 운영.</p>
                     </div>
-                    <div class="card">
+                    <div class="s-card">
                         <h3 data-en="🏢 Songdo International City">🏢 송도 국제도시</h3>
                         <p
                             data-en="Alternative lodging for international business guests, networking dinner, and VIP lounge.">
                             해외 비즈니스 게스트 숙박 대안, 네트워킹 디너 및 VIP 라운지 운영.</p>
                     </div>
-                    <div class="card">
+                    <div class="s-card">
                         <h3 data-en="🏛️ Incheon Old Downtown">🏛️ 인천 구도심</h3>
                         <p data-en="Open port area location tours, Incheon Art Cinema special screenings.">개항장 일대 로케이션
                             투어, 인천 아트 시네마 연계 특별 상영.</p>
@@ -2825,10 +2019,17 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Space & Partners</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="10.3 K-Culture Partner Network">10.3 K-컬처 파트너 네트워크</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Discovery Category<">발굴 카테고리</th>
@@ -2862,21 +2063,14 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- SIMULATION -->
-
-    <section id="biff" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 3 • STRATEGY</div>
-            <div class="section-title">6. BIFF Comparison</div>
-            <div class="section-desc"
-                data-en="Using the achievements of predecessor festivals as a &quot;benchmark&quot; and IIFF&apos;s differentiators as &quot;strategic weapons&quot;">
-                선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다</div>
-
-            <div class="table-wrap">
-                <table>
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">6. BIFF Comparison</div>
+    <div class="slide-subtitle">선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다</div><div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th data-en=">Comparison<">비교 항목</th>
@@ -2928,29 +2122,31 @@
                 </table>
             </div>
 
-            <div class="highlight-box important">
+            <div class="s-highlight">
                 <p
                     data-en="<strong>Strategic Implication:</strong> Not competing head-on with BIFF, but securing an independent position in the &quot;future-oriented, experiential, K-Culture convergence&quot; space that BIFF doesn&apos;t cover. If BIFF is a festival of &quot;authority,&quot; IIFF is a festival of &quot;experience.&quot;">
                     <strong>전략적 시사점:</strong> BIFF와 정면 경쟁이 아닌, BIFF가 커버하지 못하는 '미래형·체험형·K-컬처 융합형' 영역에서 독자적 포지션을 확보한다.
                     BIFF가 '권위'의 영화제라면, IIFF는 '경험'의 영화제.
                 </p>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- SPONSORSHIP -->
+<div class="slide slide-section">
+    <div class="part-num">PART 4</div>
+    <div class="slide-part">FINANCE</div>
+    <div class="part-title">재무 · Finance</div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <section id="budget">
-        <div class="section-content">
-            <div class="section-label">PART 4 • FINANCE</div>
-            <div class="section-title">1. Budget Plan</div>
-            <div class="section-desc" data-en="1st edition, ₩3 billion scale">제1회 기준, 30억 원 규모</div>
-
-            <div class="split">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Budget Plan</div>
+    <div class="slide-subtitle">제1회 기준, 30억 원 규모</div><div class="split-2">
                 <div class="split-item">
                     <h3 data-en=">Revenue Sources (Revenues)<">재원 확보 (Revenues)</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th>항목</th>
@@ -2991,8 +2187,8 @@
                 </div>
                 <div class="split-item">
                     <h3 data-en=">Expenditure Items (Expenses)<">지출 항목 (Expenses)</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th>항목</th>
@@ -3037,9 +2233,9 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h4 data-en=">Revenue Securing Strategy<">재원 확보 전략</h4>
-                <ul class="styled-list">
+                <ul class="s-list">
                     <li
                         data-en="&lt;strong&gt;❶ Government/Municipal Support:&lt;/strong&gt; Securing public grants from Incheon City, MCST, KOFIC">
                         <strong>❶ 정부/지자체 지원:</strong> 인천시, 문체부, 영화진흥위원회 등 공적 지원금 유치
@@ -3054,25 +2250,19 @@
                     </li>
                     <li
                         data-en="&lt;strong&gt;❹ Revenue Business:&lt;/strong&gt; Ticket sales, business market fees, camping fees, K-Culture popup rental">
-                        <strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익
-                    </li>
+                        <strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익</li>
 
                 </ul>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- MARKETING -->
-
-    <section id="cashflow" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 4 • FINANCE</div>
-            <div class="section-title">2. Cash Flow</div>
-            <div class="section-desc" data-en="" A successful festival must have no cash flow blockage"">"성공적인 영화제는
-                '돈맥경화'가 없어야 한다"</div>
-
-            <div class="table-wrap">
-                <table>
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Cash Flow</div>
+    <div class="slide-subtitle">"성공적인 영화제는
+                '돈맥경화'가 없어야 한다"</div><div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th data-en="Category">구분</th>
@@ -3171,9 +2361,9 @@
             <p style="font-size:.75rem;color:var(--text-dim);margin-top:.5rem" data-en="(Unit: million KRW)">(단위: 백만 원)
             </p>
 
-            <div class="highlight-box">
+            <div class="s-highlight">
                 <p data-en="<strong>Cash Management Tips:</strong>"><strong>자금 운용 팁:</strong></p>
-                <ul class="styled-list">
+                <ul class="s-list">
                     <li data-en="<strong>Q3 Management Critical:</strong>"><strong>3분기 관리 중요:</strong
                             data-en="Heavy spending on marketing and Hollywood guest advances — ensure 2nd sponsorship payments arrive on time">
                         마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려</li>
@@ -3182,21 +2372,17 @@
                         5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비</li>
                 </ul>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- INITIAL BUDGET & SEED MONEY -->
-
-    <section id="seedmoney">
-        <div class="section-content">
-            <div class="section-label">PART 4 • FINANCE</div>
-            <div class="section-title">3. Initial Budget</div>
-
-            <div class="split">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Initial Budget</div>
+    <div class="split-2">
                 <div class="split-item">
                     <h3 data-en="Steering Committee Initial Expenses (~6 months)">추진위원회 초기 경비 (약 6개월)</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th>항목</th>
@@ -3238,8 +2424,8 @@
                 </div>
                 <div class="split-item">
                     <h3 data-en="50:50 Matching Fund Strategy">50:50 매칭 펀딩 전략</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th data-en=">Phase<">단계</th>
@@ -3271,20 +2457,16 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- POLITICAL RISK -->
-
-    <section id="sponsorship">
-        <div class="section-content">
-            <div class="section-label">PART 4 • FINANCE</div>
-            <div class="section-title">4. Sponsorship Plan</div>
-
-            <div class="subsection">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Sponsorship Plan</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="9.1 Sponsorship Tiers (Tier System)">9.1 스폰서십 등급 (Tier System)</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Tier<">등급</th>
@@ -3324,10 +2506,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="9.2 Target Sponsor Industries &amp; Approach">9.2 타겟 스폰서 업종 및 접근 전략</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Industry<">업종</th>
@@ -3383,10 +2565,17 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Sponsorship Plan</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="9.3 3-Year Sponsorship Strategy">9.3 3개년 스폰서십 전략</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Year<">연차</th>
@@ -3417,21 +2606,17 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- SPACE UTILIZATION -->
-
-    <section id="marketing" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 4 • FINANCE</div>
-            <div class="section-title">5. Marketing Strategy</div>
-
-            <div class="split">
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 4 • FINANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Marketing Strategy</div>
+    <div class="split-2">
                 <div class="split-item">
                     <h3 data-en="6.1 Global Awareness (Professionalism Focus)">6.1 글로벌 인지도 확보 (전문성 강조)</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th>전략</th>
@@ -3464,8 +2649,8 @@
                 </div>
                 <div class="split-item">
                     <h3 data-en="6.2 Public Engagement &amp; Viral (Participation Focus)">6.2 대중 참여 및 바이럴 (참여성 강조)</h3>
-                    <div class="table-wrap">
-                        <table>
+                    <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                        <table class="s-table">
                             <thead>
                                 <tr>
                                     <th>전략</th>
@@ -3497,10 +2682,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="6.3 PR Content &amp; Promotion Timeline">6.3 홍보 콘텐츠 및 프로모션 타임라인</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Content<">콘텐츠</th>
@@ -3542,19 +2727,20 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- STARS & CREATOR CAMP -->
+<div class="slide slide-section">
+    <div class="part-num">PART 5</div>
+    <div class="slide-part">GOVERNANCE</div>
+    <div class="part-title">거버넌스 · Governance</div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <section id="political" class="bg-alt">
-        <div class="section-content">
-            <div class="section-label">PART 5 • GOVERNANCE</div>
-            <div class="section-title">1. Risk Management</div>
-            <div class="section-desc" data-en="Core Strategy: " Private-led preparation → Government endorsement for
-                hosting"">핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"</div>
-
-            <div class="highlight-box important">
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 5 • GOVERNANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
+    <div class="slide-subtitle">핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"</div><div class="s-highlight">
                 <p
                     data-en="The June 2026 local election variable is the most critical factor determining the festival&apos;s survival and continuity. A sophisticated political solution is needed that &quot;leverages the election as momentum rather than being biased toward any party.&quot;">
                     2026년 6월 지방선거 변수는 영화제의 생존과 지속성을 결정짓는 가장 중요한 요소. '특정 정당이나 현직에 치우치지 않고, 선거 국면을 오히려 동력으로 활용하는' 고도의 정치적
@@ -3564,8 +2750,8 @@
                     여야 후보 모두가 <strong>"내가 당선되면 이 영화제를 적극 지원하겠다"</strong>고 서약하게 만드는 '역제안 전략'</p>
             </div>
 
-            <div class="table-wrap">
-                <table>
+            <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                <table class="s-table">
                     <thead>
                         <tr>
                             <th>단계</th>
@@ -3633,9 +2819,16 @@
                 </table>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 5 • GOVERNANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="16.1 Non-partisan Steering Committee Principles">16.1 비당파 추진위원회 구성 원칙</h3>
-                <ul class="styled-list">
+                <ul class="s-list">
                     <li
                         data-en="<strong>Chair:</strong> Cultural elder related to film festivals (economic revitalization cause is non-partisan)">
                         <strong>위원장:</strong> 영화제 관련 문화계 원로 (경제 활성화 명분은 여야 막론 반대 불가)
@@ -3654,13 +2847,13 @@
                 </ul>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="16.2 Candidate MOU Strategy">16.2 후보 대상 MOU 전략</h3>
-                <div class="highlight-box">
+                <div class="s-highlight">
                     <p data-en="<strong>Proposal Title:</strong> " Global Incheon 2026: Cultural Economy Platform
                         Connecting Asia and Hollywood""><strong>제안서 타이틀:</strong> "Global Incheon 2026: 아시아와 헐리우드를 잇는 문화
                         경제 플랫폼 제안"</p>
-                    <ul class="styled-list" style="margin-top:.5rem">
+                    <ul class="s-list" style="margin-top:.5rem">
                         <li
                             data-en="Upon election, designate 'Incheon Int'l NextWave Film Festival' as core tourism strategy project">
                             당선 시 '인천 국제 넥스트웨이브 영화제'를 핵심 관광 전략 사업으로 지정</li>
@@ -3673,11 +2866,18 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-warm slide-scroll">
+    <div class="slide-part">PART 5 • GOVERNANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="16.3 Pre/Post-election Task Division (Shadow Operation)">16.3 선거 전후 업무 분장 (Shadow
                     Operation)</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th>시기</th>
@@ -3720,23 +2920,16 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </section>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
 
-    <!-- PERSONNEL -->
-
-    <section id="personnel">
-        <div class="section-content">
-            <div class="section-label">PART 5 • GOVERNANCE</div>
-            <div class="section-title">2. Personnel</div>
-            <div class="section-desc"
-                data-en="Leaders with BIFF know-how at the forefront, 'practical experts' as the backbone running operations">
-                BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조</div>
-
-            <div class="subsection">
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 5 • GOVERNANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.1 Control Tower (Leadership)">17.1 컨트롤 타워 (Leadership)</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th data-en=">Position<">직책</th>
@@ -3792,10 +2985,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.2 External Cooperation &amp; Political Affairs">17.2 대외 협력 및 정무</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th>직책</th>
@@ -3830,10 +3023,17 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-scroll">
+    <div class="slide-part">PART 5 • GOVERNANCE</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
+    <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.3 Global Network (USA / Asia / Hollywood)">17.3 글로벌 네트워크 (USA / Asia / Hollywood)</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th>직책</th>
@@ -3875,10 +3075,10 @@
                 </div>
             </div>
 
-            <div class="subsection">
+            <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.4 Operations &amp; Technical/Design">17.4 실무 운영 및 기술/디자인</h3>
-                <div class="table-wrap">
-                    <table>
+                <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
+                    <table class="s-table">
                         <thead>
                             <tr>
                                 <th>직책</th>
@@ -3927,102 +3127,89 @@
                     </table>
                 </div>
             </div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+</div>
+
+<div class="slide slide-end slide-cover">
+    <div class="cover-sub">IIFF NEXT WAVE 2026</div>
+    <h1 style="font-size:clamp(3rem,7vw,6rem)">Thank You</h1>
+    <div class="s-quote" style="border:none;text-align:center;max-width:70%;margin:3vh auto 0">
+        "만약에, 이곳에서 내 이야기가 시작된다면?"
+    </div>
+    <div style="margin-top:5vh;color:var(--text-dim);font-size:0.9rem;position:relative;z-index:1">
+        인천 국제 넥스트웨이브 영화제 통합 기획서 v5<br>
+        <a href="index.html" style="color:var(--accent);text-decoration:none">← 전체 기획서 보기</a>
+    </div>
+</div>
+
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="nav-bar">
+        <div class="brand">IIFF NEXT WAVE — FULL</div>
+        <div class="controls">
+            <button onclick="prevSlide()" title="이전">◀</button>
+            <span class="counter" id="counter">1 / 36</span>
+            <button onclick="nextSlide()" title="다음">▶</button>
         </div>
-    </section>
-
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="logo">NEXT WAVE</div>
-        <p data-en="Incheon International Film Festival — i-NextWave Film Festival">Incheon International Film Festival
-            — 인천 국제 넥스트웨이브 영화제</p>
-        <p style="margin-top:.5rem;font-size:.7rem;color:var(--text-dim)" data-en="Integrated Proposal v5 · Thank You">
-            Integrated Proposal v5 · 감사합니다</p>
-    </footer>
+        <div class="tools">
+            <button onclick="toggleFullscreen()" title="전체화면">⛶ 전체화면</button>
+            <button onclick="window.print()" title="PDF 다운로드">📥 PDF</button>
+            <button onclick="window.location.href='index.html'" title="기획서 보기">🏠 HOME</button>
+        </div>
+    </div>
 
     <script>
-        function toggleMenu() {
-            const navMenu = document.getElementById('navMenu');
-            const btn = document.querySelector('.mobile-menu-btn');
-            navMenu.classList.toggle('active');
-            btn.innerHTML = navMenu.classList.contains('active') ? '✕' : '☰';
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+
+        function showSlide(n) {
+            slides.forEach((s, i) => {
+                s.classList.remove('active');
+                if (i === n) s.classList.add('active');
+            });
+            current = n;
+            document.getElementById('counter').textContent = `${n + 1} / ${total}`;
+            document.getElementById('progress').style.width = `${((n + 1) / total) * 100}%`;
         }
 
-        // Dropdown toggle for mobile
-        document.querySelectorAll('.nav-label').forEach(label => {
-            label.addEventListener('click', (e) => {
-                if (window.innerWidth <= 1024) {
-                    e.preventDefault();
-                    // Close other open items
-                    const parent = label.parentElement;
-                    const isActive = parent.classList.contains('active');
+        function nextSlide() { if (current < total - 1) showSlide(current + 1); }
+        function prevSlide() { if (current > 0) showSlide(current - 1); }
 
-                    document.querySelectorAll('.nav-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-
-                    if (!isActive) {
-                        parent.classList.add('active');
-                    }
-                }
-            });
-        });
-
-        // Close menu when link is clicked
-        document.querySelectorAll('.nav-dropdown a, .nav-direct').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    document.getElementById('navMenu').classList.remove('active');
-                    document.querySelector('.mobile-menu-btn').innerHTML = '☰';
-                }
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const nav = document.querySelector('nav');
-            const navMenu = document.getElementById('navMenu');
-            const btn = document.querySelector('.mobile-menu-btn');
-
-            if (window.innerWidth <= 1024 &&
-                navMenu.classList.contains('active') &&
-                !nav.contains(e.target)) {
-                navMenu.classList.remove('active');
-                btn.innerHTML = '☰';
-            }
-        });
-
-        /* Presentation Mode Logic */
-        function togglePresentationMode() {
-            document.body.classList.toggle('presentation-mode');
-            if (document.body.classList.contains('presentation-mode')) {
-                // Enter fullscreen if possible
-                if (document.documentElement.requestFullscreen) {
-                    document.documentElement.requestFullscreen().catch(e => console.log(e));
-                }
-                alert("프레젠테이션 모드입니다. 키보드 방향키 혹은 스크롤로 이동하세요. ESC 키를 누르면 종료됩니다.");
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen().catch(e => console.log(e));
-                }
-            }
-        }
-
-        // Exit on ESC
         document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape" && document.body.classList.contains('presentation-mode')) {
-                togglePresentationMode();
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault(); nextSlide();
             }
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault(); prevSlide();
+            }
+            if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+            if (e.key === 'End') { e.preventDefault(); showSlide(total - 1); }
         });
-        // Print presentation
-        function printPresentation() {
-            const w = window.open('presentation.html', '_blank');
-            w.addEventListener('load', () => { w.print(); });
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-bar') || e.target.closest('button') || e.target.closest('a')) return;
+            if (e.clientX > window.innerWidth / 2) nextSlide();
+            else prevSlide();
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(e => console.log(e));
+            } else {
+                document.exitFullscreen().catch(e => console.log(e));
+            }
         }
 
+        showSlide(0);
     </script>
-    <script src="translations-index.js"></script>
-    <button id="exit-ppt-btn" onclick="togglePresentationMode()">✕ 나가기</button>
 </body>
-
 </html>
