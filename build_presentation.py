@@ -16,14 +16,22 @@ pres_css = css_match.group(1) if css_match else ''
 
 # Add extra CSS for scrollable content slides
 extra_css = """
-/* SCROLLABLE SLIDE CONTENT */
-.slide-scroll {
-    overflow-y: auto;
-    justify-content: flex-start;
+/* FIX: Override base .slide to allow scrolling and clear nav bar */
+.slide {
+    overflow-y: auto !important;
+    justify-content: flex-start !important;
     padding-top: 4vh;
+    padding-bottom: 70px; /* clear nav bar */
 }
-.slide-scroll::-webkit-scrollbar { width: 4px; }
-.slide-scroll::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+
+/* Keep cover/section/end slides centered */
+.slide-cover, .slide-section, .slide-end {
+    justify-content: center !important;
+    overflow: hidden !important;
+    padding-bottom: 6vh;
+}
 
 /* SECTION HEADER SLIDE */
 .slide-section {
@@ -140,8 +148,6 @@ def make_content_slide(part_label, title, content, warm=False, scroll=False):
     cls = "slide"
     if warm:
         cls += " slide-warm"
-    if scroll:
-        cls += " slide-scroll"
     return f'''
 <div class="{cls}">
     <div class="slide-part">{part_label}</div>
@@ -278,18 +284,16 @@ for sid, content in sections:
                 intro_part += p
         
         if intro_part.strip():
-            slides.append(make_content_slide(label, title, subtitle + intro_part, warm=(sid in ['roadmap','biff','space','marketing','political']), scroll=True))
+            slides.append(make_content_slide(label, title, subtitle + intro_part, warm=(sid in ['roadmap','biff','space','marketing','political'])))
         
         # Group remaining subsections
         for i in range(0, len(sub_parts), 2):
             group = ''.join(sub_parts[i:i+2])
             sub_title_match = re.search(r'<h3[^>]*>(.*?)</h3>', group)
             sub_title = sub_title_match.group(1) if sub_title_match else title
-            slides.append(make_content_slide(label, title, group, warm=(sid in ['roadmap','biff','space','marketing','political']), scroll=True))
+            slides.append(make_content_slide(label, title, group, warm=(sid in ['roadmap','biff','space','marketing','political'])))
     else:
-        # Single slide (may need scroll)
-        needs_scroll = len(inner) > 3000
-        slides.append(make_content_slide(label, title, subtitle + inner, warm=(sid in ['roadmap','biff','space','marketing','political']), scroll=needs_scroll))
+        slides.append(make_content_slide(label, title, subtitle + inner, warm=(sid in ['roadmap','biff','space','marketing','political'])))
 
 # FINAL SLIDE: Thank You
 slides.append('''

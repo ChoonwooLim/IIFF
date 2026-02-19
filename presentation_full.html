@@ -635,14 +635,22 @@
         }
     
 
-/* SCROLLABLE SLIDE CONTENT */
-.slide-scroll {
-    overflow-y: auto;
-    justify-content: flex-start;
+/* FIX: Override base .slide to allow scrolling and clear nav bar */
+.slide {
+    overflow-y: auto !important;
+    justify-content: flex-start !important;
     padding-top: 4vh;
+    padding-bottom: 70px; /* clear nav bar */
 }
-.slide-scroll::-webkit-scrollbar { width: 4px; }
-.slide-scroll::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 2px; }
+
+/* Keep cover/section/end slides centered */
+.slide-cover, .slide-section, .slide-end {
+    justify-content: center !important;
+    overflow: hidden !important;
+    padding-bottom: 6vh;
+}
 
 /* SECTION HEADER SLIDE */
 .slide-section {
@@ -779,7 +787,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Festival Overview</div>
     <div class="slide-subtitle">인천 국제 영화제 "넥스트웨이브" —
@@ -871,7 +879,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Why Participate?</div>
     <div class="three-col">
@@ -999,7 +1007,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Why Incheon?</div>
     <div class="slide-subtitle">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div><ol class="num-list">
@@ -1047,7 +1055,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Vision & Philosophy</div>
     <div class="s-highlight" style="text-align:center;padding:3rem">
@@ -1110,7 +1118,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 2 • PROGRAMS</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Core Programs</div>
     <div class="three-col">
@@ -1203,7 +1211,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 2 • PROGRAMS</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Star Invitation & Camp</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -1293,7 +1301,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 2 • PROGRAMS</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Star Invitation & Camp</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -1341,7 +1349,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 2 • PROGRAMS</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Daily Simulation</div>
     <div class="slide-subtitle">"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루</div><div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
@@ -1489,7 +1497,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Core Strategy</div>
     <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
@@ -1569,7 +1577,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Organization</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -1678,7 +1686,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. 3-Year Roadmap</div>
     <div class="s-timeline" style="flex-direction:column">
@@ -1785,7 +1793,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -1900,7 +1908,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -1946,7 +1954,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Space & Partners</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2023,7 +2031,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Space & Partners</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2066,7 +2074,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">6. BIFF Comparison</div>
     <div class="slide-subtitle">선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다</div><div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
@@ -2139,7 +2147,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Budget Plan</div>
     <div class="slide-subtitle">제1회 기준, 30억 원 규모</div><div class="split-2">
@@ -2250,14 +2258,15 @@
                     </li>
                     <li
                         data-en="&lt;strong&gt;❹ Revenue Business:&lt;/strong&gt; Ticket sales, business market fees, camping fees, K-Culture popup rental">
-                        <strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익</li>
+                        <strong>❹ 수익 사업:</strong> 티켓 판매, 비즈니스 마켓 참가비, 야영 참가비, K-컬처 팝업 스토어 임대 수익
+                    </li>
 
                 </ul>
             </div>
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Cash Flow</div>
     <div class="slide-subtitle">"성공적인 영화제는
@@ -2375,7 +2384,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Initial Budget</div>
     <div class="split-2">
@@ -2460,7 +2469,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Sponsorship Plan</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2569,7 +2578,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Sponsorship Plan</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2609,7 +2618,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 4 • FINANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">5. Marketing Strategy</div>
     <div class="split-2">
@@ -2737,7 +2746,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
     <div class="slide-subtitle">핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"</div><div class="s-highlight">
@@ -2823,7 +2832,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2870,7 +2879,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-warm slide-scroll">
+<div class="slide slide-warm">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. Risk Management</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -2923,7 +2932,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
     <div class="subsection" style="position:relative;z-index:1">
@@ -3027,7 +3036,7 @@
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
-<div class="slide slide-scroll">
+<div class="slide">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
     <div class="subsection" style="position:relative;z-index:1">
