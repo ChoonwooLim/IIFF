@@ -76,7 +76,9 @@
             text-decoration: none
         }
 
-        .logo-icon {
+        .logo-icon-img {
+            height: 32px;
+            width: auto;
             filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.3));
             animation: logo-pulse 3s infinite alternate
         }
@@ -91,30 +93,31 @@
             }
         }
 
-        .logo-text {
-            display: flex;
-            font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: 1.6rem;
-            line-height: 1;
-            letter-spacing: -1px
+        .cover-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.2));
+            animation: cover-logo-glow 4s ease-in-out infinite alternate
         }
 
-        .logo-char {
-            background: linear-gradient(to bottom,
-                    #ff0000 0%, #ff0000 16%,
-                    #ff7f00 16%, #ff7f00 32%,
-                    #ffff00 32%, #ffff00 48%,
-                    #00ff00 48%, #00ff00 64%,
-                    #0000ff 64%, #0000ff 80%,
-                    #8b00ff 80%, #8b00ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            transform: skewX(-10deg);
-            margin-right: 1px
+        @keyframes cover-logo-glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255, 200, 0, 0.15))
+            }
+
+            to {
+                filter: drop-shadow(0 0 40px rgba(255, 200, 0, 0.35))
+            }
+        }
+
+        .footer-logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 1rem;
+            opacity: 0.7
         }
 
         .logo-sub {
@@ -1369,31 +1372,7 @@
     <!-- NAVIGATION -->
     <nav>
         <a href="#cover" class="logo-container">
-            <!-- SVG Logo Icon: Infinity Film Reel -->
-            <svg class="logo-icon" viewBox="0 0 100 60" width="50" height="30">
-                <defs>
-                    <linearGradient id="reel-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#ff00cc;stop-opacity:1" /> <!-- Magenta -->
-                        <stop offset="50%" style="stop-color:#ffcc00;stop-opacity:1" /> <!-- Gold -->
-                        <stop offset="100%" style="stop-color:#00ccff;stop-opacity:1" /> <!-- Teal -->
-                    </linearGradient>
-                </defs>
-                <path d="M15,30 Q25,10 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
-                    stroke-linecap="round" />
-                <path d="M15,30 Q25,50 40,30 T75,30 T40,30" fill="none" stroke="url(#reel-grad)" stroke-width="8"
-                    stroke-linecap="round" opacity="0.6" />
-                <!-- Film holes simulation -->
-                <circle cx="20" cy="30" r="1.5" fill="#fff" />
-                <circle cx="35" cy="30" r="1.5" fill="#fff" />
-                <circle cx="50" cy="30" r="1.5" fill="#fff" />
-                <circle cx="65" cy="30" r="1.5" fill="#fff" />
-            </svg>
-            <div class="logo-text">
-                <span class="logo-char" style="--i:1">I</span>
-                <span class="logo-char" style="--i:2">I</span>
-                <span class="logo-char" style="--i:3">F</span>
-                <span class="logo-char" style="--i:4">F</span>
-            </div>
+            <img src="IIFF%20white.png" alt="IIFF" class="logo-icon-img">
             <div class="logo-sub">NEXTWAVE</div>
         </a>
 
@@ -1483,6 +1462,7 @@
 
     <!-- COVER -->
     <section id="cover" class="section-cover">
+        <img src="IIFF%20white.png" alt="IIFF" class="cover-logo">
         <div class="subtitle">Incheon International Film Festival</div>
         <h1>NEXT WAVE</h1>
         <div class="tagline">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
@@ -1557,7 +1537,7 @@
         </div>
 
         <!-- Slide 6: Vision Statements -->
-        <div class="card-grid" style="margin-top:3rem">
+        <div class="card-grid" style="margin-top:3rem;max-width:900px;margin-left:auto;margin-right:auto;grid-template-columns:repeat(2,1fr);gap:1rem">
             <div class="card">
                 <span class="en">SEE · ENJOY · CREATE</span>
                 <h3 data-en="See, enjoy, create, evaluate each other, and spread it.">보고, 즐기고, 만들고, 서로 평가하고, 퍼뜨린다.</h3>
@@ -3965,6 +3945,7 @@
 
     <!-- FOOTER -->
     <footer>
+        <img src="IIFF%20white.png" alt="IIFF" class="footer-logo">
         <div class="logo">NEXT WAVE</div>
         <p data-en="Incheon International Film Festival — i-NextWave Film Festival">Incheon International Film Festival
             — 인천 국제 넥스트웨이브 영화제</p>
