@@ -847,7 +847,85 @@
         border: 1px solid rgba(0,0,0,0.05);
     }
 
-</style>
+
+        /* =========================================
+           PRINT OPTIMIZATION (PDF EXPORT)
+           ========================================= */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            
+            html, body {
+                width: 100%;
+                height: auto !important;
+                background-color: var(--bg) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* Break the absolute positioned slider constraints */
+            #slider {
+                width: 100% !important;
+                height: auto !important;
+                position: relative !important;
+                overflow: visible !important;
+                display: block !important;
+            }
+            
+            /* Force all slides to be visible, stacked, and page-breaking */
+            .slide {
+                position: relative !important;
+                width: 100vw !important;
+                height: 100vh !important; /* Force exact screen size per page */
+                max-height: 100vh !important;
+                min-height: 100vh !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                break-after: page !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                display: flex !important;
+                transform: none !important;
+                z-index: 1 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: transparent !important; /* Managed by .slide before/after or inline */
+            }
+            
+            /* Hide UI controls */
+            #nav-bar, .controls, button, .nav-btn, .print-btn {
+                display: none !important;
+            }
+            
+            /* Reset shadows and animations for crisp vector text */
+            * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+                transition: none !important;
+                animation: none !important;
+            }
+            
+            /* Give cards crisp borders instead of shadows */
+            .s-card {
+                border: 1px solid rgba(0, 0, 0, 0.2) !important;
+                background-color: #FFFFFF !important;
+            }
+            
+            /* Ensure charts fit */
+            canvas {
+                max-width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid !important;
+            }
+        }
+
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
