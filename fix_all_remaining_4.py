@@ -1,132 +1,183 @@
 """
-Part 4: Sponsorship, Marketing, Risk Management, Personnel sections.
+Apply ALL missing content from PPTX to presentation_full.html
 """
-with open('index.html', 'r', encoding='utf-8') as f:
+import re
+
+with open(r'C:\WORK\IIFF\presentation_full.html', 'r', encoding='utf-8') as f:
     html = f.read()
 
-count = 0
+changes_made = []
 
-def add_data_en(korean, english):
-    global html, count
-    if korean not in html:
-        return
-    idx = html.find(korean)
-    while idx != -1:
-        tag_start = html.rfind('<', 0, idx)
-        tag_end = html.find('>', tag_start)
-        tag_content = html[tag_start:tag_end+1]
-        if 'data-en' not in tag_content and tag_start != -1:
-            new_tag = tag_content[:-1] + f' data-en="{english}">'
-            html = html[:tag_start] + new_tag + html[tag_end+1:]
-            count += 1
-            break
-        else:
-            idx = html.find(korean, idx + 1)
-            if idx == -1:
-                break
+# ===== A. What is IIFF? slide — add missing text =====
+# After "IIFF는 바로 그 '만약에'를 시작하게 하는 영화제입니다."
+old = "바로 그 <strong>'만약에'</strong>를 시작하게 하는 영화제입니다.</p>"
+new = """바로 그 <strong>'만약에'</strong>를 시작하게 하는 영화제입니다.</p>
+                        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-dim)">if는 일어날수 있는 모든 우연 즉 모든 가능성입니다. 끝없는 상상입니다.</p>"""
+if old in html:
+    html = html.replace(old, new, 1)
+    changes_made.append("A1: Added 'if는 일어날수 있는 모든 우연' text")
 
-# ══════════════════════════════════════════════════════
-# SPONSORSHIP (9.1 - 9.3)
-# ══════════════════════════════════════════════════════
-add_data_en('9.1 스폰서십 등급 (Tier System)', '9.1 Sponsorship Tiers (Tier System)')
-add_data_en('>등급<', '>Tier<')
-add_data_en('>금액 기준<', '>Amount Criteria<')
-add_data_en('>주요 혜택<', '>Key Benefits<')
-add_data_en('>타이틀 스폰서<', '>Title Sponsor<')
-add_data_en('>5억 원 이상<', '>₩500M+<')
-add_data_en('영화제 공식 명칭 삽입, 모든 홍보물 로고 노출, 개막식 VIP석, 전용 브랜드 존 운영', 'Festival official name insertion, logo on all materials, opening VIP seats, dedicated brand zone')
-add_data_en('>프리미엄 파트너<', '>Premium Partner<')
-add_data_en('>2~5억 원<', '>₩200-500M<')
-add_data_en('핵심 섹션 네이밍권 (갈라/캠프/어워드), 주요 행사 VIP 초대, 프레스 월 로고 노출', 'Key section naming rights (Gala/Camp/Awards), VIP invitations, press wall logo')
-add_data_en('>공식 파트너<', '>Official Partner<')
-add_data_en('>5천만~2억 원<', '>₩50-200M<')
-add_data_en('홈페이지 및 공식 인쇄물 로고, K-컬처 존 부스 운영권, SNS 콜라보 콘텐츠', 'Website/print logo, K-Culture zone booth rights, SNS collab content')
-add_data_en('>서포터<', '>Supporter<')
-add_data_en('>5천만 원 이하<', '>Under ₩50M<')
-add_data_en('홈페이지 로고 게시, 공식 굿즈 콜라보, 소규모 체험 부스 운영', 'Website logo, official goods collab, small experience booth')
+# After OUR VISION section — add "Unlimited imagination" and "if, 그 단어에서..."
+old_vision = """<p data-en="Not a festival only for those already recognized. It is a stage for EVERYONE who has a story.">
+                            이미 인정받은 이들만을 위한 축제가 아닙니다. 이야기를 가진 '모든 사람'을 위한 무대입니다.</p>"""
+new_vision = """<p data-en="Not a festival only for those already recognized. It is a stage for EVERYONE who has a story.">
+                            이미 인정받은 이들만을 위한 축제가 아닙니다. 이야기를 가진 '모든 사람'을 위한 무대입니다.</p>
+                        <p style="margin-top:1rem;font-style:italic;color:var(--accent-light);font-size:0.95rem"
+                            data-en="Unlimited imagination and free creation">Unlimited imagination and free creation</p>
+                        <p style="font-size:0.9rem;color:var(--text-dim);margin-top:0.5rem"
+                            data-en="From the word 'if', IIFF begins.">if, 그 단어에서, IIFF는 시작됩니다.</p>"""
+if old_vision in html:
+    html = html.replace(old_vision, new_vision, 1)
+    changes_made.append("A2: Added 'Unlimited imagination' and 'if, 그 단어에서' text")
 
-# 9.2
-add_data_en('9.2 타겟 스폰서 업종 및 접근 전략', '9.2 Target Sponsor Industries &amp; Approach')
-add_data_en('>업종<', '>Industry<')
-add_data_en('>타겟 기업 (예시)<', '>Target Companies (Example)<')
-add_data_en('>연계 가능 프로그램<', '>Linked Programs<')
-add_data_en('>접근 방식<', '>Approach<')
-add_data_en('>IT/모바일<', '>IT/Mobile<')
-add_data_en('>삼성, Apple, SKT<', '>Samsung, Apple, SKT<')
-add_data_en('모바일 영화 컴피티션 (촬영 기기 제공 + 네이밍)', 'Mobile film competition (filming devices + naming)')
-add_data_en('모바일 콘텐츠 제작 인프라 제공 제안', 'Mobile content production infra proposal')
-add_data_en('>항공/여행<', '>Aviation/Travel<')
-add_data_en('>대한항공, 아시아나<', '>Korean Air, Asiana<')
-add_data_en('해외 게스트 항공 지원 + 관광 패키지 공동 개발', 'Overseas guest flight support + tourism package co-development')
-add_data_en('인천공항 → 영화제 연결 동선 마케팅', 'Incheon Airport → Festival route marketing')
-add_data_en('>소비재/뷰티<', '>Consumer/Beauty<')
-add_data_en('>아모레퍼시픽, LG생활건강<', '>Amorepacific, LG H&amp;H<')
-add_data_en('K-뷰티 체험 부스 + 스타 메이크업 쇼', 'K-Beauty experience booth + star makeup show')
-add_data_en('글로벌 관객 대상 제품 노출 + 체험', 'Product exposure + experience for global audiences')
-add_data_en('>식음료<', '>F&amp;B<')
-add_data_en('>CJ제일제당, 하이트진로<', '>CJ CheilJedang, HiteJinro<')
-add_data_en('K-푸드 팝업 스토어 + 캠프 식음 지원', 'K-Food popup store + camp F&amp;B support')
-add_data_en('야외 축제 환경에서 브랜드 체험 극대화', 'Maximize brand experience in outdoor festival setting')
-add_data_en('>자동차<', '>Automotive<')
-add_data_en('>현대, 기아<', '>Hyundai, Kia<')
-add_data_en('공식 의전 차량 + 레드카펫 차량 전시', 'Official protocol vehicles + red carpet vehicle display')
-add_data_en('프리미엄 이미지 연계 (EV/수소차)', 'Premium image linkage (EV/hydrogen)')
-add_data_en('>금융<', '>Finance<')
-add_data_en('>KB, 신한, 하나<', '>KB, Shinhan, Hana<')
-add_data_en('K-콘텐츠 펀드/투자 연계 포럼', 'K-Content fund/investment forum')
-add_data_en('ESG 활동 + 문화 투자 포트폴리오', 'ESG activities + cultural investment portfolio')
+# ===== B. English 4-point slide (PPTX Slide 6) =====
+# Insert after the What is IIFF? slide (after its closing </div>)
+# Find the slide that contains "OUR VISION" and ends with watermark, then insert after it
+marker = """<div class="watermark">IIFF NEXT WAVE</div>
+    </div>
+</div>
 
-# 9.3
-add_data_en('9.3 3개년 스폰서십 전략', '9.3 3-Year Sponsorship Strategy')
-add_data_en('>연차<', '>Year<')
-add_data_en('>스폰서십 목표<', '>Sponsorship Target<')
-add_data_en('>1회차<', '>1st Edition<')
-add_data_en('핵심 파트너 확보 + 현물 스폰서 중심', 'Core partner acquisition + in-kind sponsor focus')
-add_data_en('>~12억 원 (인스파이어 현물 포함)<', '>~₩1.2B (incl. Inspire in-kind)<')
-add_data_en('>2회차<', '>2nd Edition<')
-add_data_en('브랜드 경쟁 구도 형성 + 프리미엄 네이밍 판매', 'Brand competition formation + premium naming sales')
-add_data_en('>~20억 원<', '>~₩2B<')
-add_data_en('>3회차<', '>3rd Edition<')
-add_data_en('글로벌 브랜드 유치 + 멀티이어 계약 전환', 'Global brand acquisition + multi-year contract conversion')
-add_data_en('>~30억 원<', '>~₩3B<')
+<div class="slide">
+    <div class="print-inner">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Festival Overview</div>"""
+new_slide6 = """<div class="watermark">IIFF NEXT WAVE</div>
+    </div>
+</div>
 
-# ══════════════════════════════════════════════════════
-# MARKETING (6.1 - 6.3)
-# ══════════════════════════════════════════════════════
-add_data_en('6.1 글로벌 인지도 확보 (전문성 강조)', '6.1 Global Awareness (Professionalism Focus)')
-add_data_en('6.2 대중 참여 및 바이럴 (참여성 강조)', '6.2 Public Engagement &amp; Viral (Participation Focus)')
-add_data_en('6.3 홍보 콘텐츠 및 프로모션 타임라인', '6.3 PR Content &amp; Promotion Timeline')
+<div class="slide slide-cover" style="background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#0d1117 100%)">
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:2rem;position:relative;z-index:1">
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">See, enjoy, create, evaluate each other, and spread it.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">보고, 즐기고, 만들고, 서로 평가하고, 퍼뜨린다.</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">We meet across borders, dream together, and act together.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">국경을 넘어 만나고, 함께 꿈꾸고, 함께 행동한다.</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">The one and only film festival in the universe that opens a new era</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">새로운 시대를 여는 세상에서 단 하나뿐인 영화제</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">Incheon will now become the gateway to a new era, breaking down old boundaries.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">인천은 이제 낡은 경계를 허물고 새로운 시대의 관문이 됩니다.</p>
+        </div>
+    </div>
+</div>
 
-# 6.1 table
-add_data_en('>세부 활동<', '>Detailed Activities<')
-add_data_en('>헐리우드 네트워크 활용<', '>Hollywood Network Utilization<')
-add_data_en('헐리우드 스타 및 메소드필름페스타 관계자와의 독점 인터뷰를 글로벌 주요 영화 매체(Variety, Hollywood Reporter 등)에 제공', 'Providing exclusive interviews with Hollywood stars and Method Fest officials to major global film media (Variety, Hollywood Reporter, etc.)')
-add_data_en('>아시아 게이트웨이 브랜딩<', '>Asia Gateway Branding<')
-add_data_en('아시아 주요 영화 시장 관계자를 초청하고, 개막식에 아시아 대표 배우 및 감독 배치', 'Inviting key Asian film market players and placing representative Asian actors/directors at the opening')
-add_data_en('>타겟 미디어 파트너십<', '>Target Media Partnership<')
-add_data_en('영화 전문 매거진 및 비즈니스 콘텐츠 미디어(포브스 아시아)와 협력', 'Partnering with film magazines and business content media (Forbes Asia)')
+<div class="slide">
+    <div class="print-inner">
+    <div class="slide-part">PART 1 • INTRODUCTION</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Festival Overview</div>"""
+if marker in html:
+    html = html.replace(marker, new_slide6, 1)
+    changes_made.append("B: Added English 4-point slide (PPTX Slide 6)")
 
-# 6.2 table
-add_data_en('모바일 영화 제작 캠프를 숏폼 콘텐츠로 제작·배포. 인플루언서 참가자 초청', 'Producing mobile film camp as short-form content. Inviting influencer participants')
-add_data_en('>K-WAVE 페스티벌 통합 홍보<', '>K-WAVE Festival Integrated PR<')
-add_data_en("'영화와 캠핑을 함께 즐기는 유일한 축제'로 포지셔닝", "Positioning as 'the only festival where you enjoy film and camping together'")
-add_data_en('>인스파이어 연계 마케팅<', '>Inspire Linked Marketing<')
-add_data_en('숙박/F&amp;B 패키지와 영화제 티켓 묶어 판매, 상호 시너지 창출', 'Bundle accommodation/F&amp;B packages with festival tickets for mutual synergy')
+# ===== C. English subtitles =====
+subtitles = [
+    # (existing text to find, subtitle to add before/after)
+    ("2. Festival Overview</div>", 
+     '2. Festival Overview</div>\n    <div class="slide-subtitle" style="font-size:0.75rem;color:var(--accent);letter-spacing:1px;font-weight:400;text-transform:uppercase">00. complex platform — music, technology, and K-culture.</div>'),
+    
+    # Core Diffs - These are inside subsection h3 tags, add as subtitle
+]
 
-# 6.3 table
-add_data_en('>콘텐츠<', '>Content<')
-add_data_en('>시기<', '>Timing<')
-add_data_en('>티저 영상<', '>Teaser Video<')
-add_data_en("아시아와 헐리우드 스타들의 과거 명장면과 인스파이어의 화려한 시설을 교차 편집하여 'NextWave' 컨셉 강조", "Cross-editing iconic scenes of Asian and Hollywood stars with Inspire's facilities to emphasize 'NextWave' concept")
-add_data_en('>공식 포스터<', '>Official Poster<')
-add_data_en("인천의 도시 경관, 아레나, 디스커버리 파크의 야외 상영 장면을 모두 담아 영화제의 '공간적 특색' 시각화", "Visualizing the festival's 'spatial character' with Incheon cityscape, Arena, and Discovery Park outdoor screening scenes")
-add_data_en('>얼리버드 티켓<', '>Early Bird Tickets<')
-add_data_en('개/폐막식 및 NextWave 캠프 참가권을 한정 수량 판매하여 초기 관심도 및 현금 유동성 확보', 'Limited sales of opening/closing and NextWave Camp participation to secure early interest and cash flow')
-add_data_en('>인천 시민 우대<', '>Incheon Citizen Priority<')
-add_data_en('인천 거주자에게 CGV 인디 섹션 티켓 할인 제공 (지역 밀착형 영화제)', 'CGV indie section ticket discount for Incheon residents (community-based festival)')
+for old_text, new_text in subtitles:
+    count = html.count(old_text)
+    if count > 0:
+        html = html.replace(old_text, new_text, 1)
+        changes_made.append(f"C: Added subtitle near '{old_text[:40]}'")
 
-print(f"Part 4 done: {count} fixes applied")
+# Add numbered English labels to Core Differentiation cards
+core_diff_labels = [
+    ('인천 × 헐리우드', '01. INCHEON × HOLLYWOOD', '인천 × 헐리우드'),
+    ('이중 구조', '02. DUAL STRUCTURE', '이중 구조'),
+    ('참여형 페스티벌', '03. PARTICIPATORY FESTIVAL', '참여형 페스티벌'),
+    ('상시 영화제', '04. BEYOND THE FESTIVAL', '상시 영화제'),
+]
 
-with open('index.html', 'w', encoding='utf-8') as f:
+# Add english subtitles to specific content slides
+slide_subtitles = {
+    '3. 참여 메리트': 'Together Platform',
+    '4. 인천의 중요성': 'The center of K - content',
+    '5. 인스파이어 리조트': 'Amazing Inspire Resort',
+    '6. K-Culture Convergence': 'Attractive K-pop, K-food, and K-beauty',
+    '7. 모바일 영화제': 'Mobile Short Film Competition + Camping Festival Viral Engine',
+    '8. 365일 영화제': '365 days a year, offline and online',
+    '9. IIFF 파트너 네트워크': 'networking - IIFF Partner Circle',
+    '10. 장기 비전': 'long-term partnership & IIFF Lab / IIFF Campus',
+}
+
+for title_kr, subtitle_en in slide_subtitles.items():
+    pattern = f'>{title_kr}</div>'
+    replacement = f'>{title_kr}</div>\n    <div class="slide-subtitle" style="font-size:0.75rem;color:var(--accent);letter-spacing:1px;font-weight:400;text-transform:uppercase">{subtitle_en}</div>'
+    if pattern in html:
+        html = html.replace(pattern, replacement, 1)
+        changes_made.append(f"C: Added '{subtitle_en}' subtitle")
+
+# ===== D. Part section divider labels =====
+# Part 2: ORGANIZATION → PROGRAMS
+old_part2 = """<div class="slide slide-section">
+    <div class="part-num">PART 2</div>
+    <div class="slide-part">ORGANIZATION</div>
+    <div class="part-title">조직 · Organization</div>"""
+new_part2 = """<div class="slide slide-section">
+    <div class="part-num">PART 2</div>
+    <div class="slide-part">PROGRAMS</div>
+    <div class="part-title">프로그램 · programs</div>"""
+if old_part2 in html:
+    html = html.replace(old_part2, new_part2, 1)
+    changes_made.append("D1: Part 2 ORGANIZATION → PROGRAMS")
+
+# Part 3: 전략 → 실행전략
+old_part3 = """<div class="slide slide-section">
+    <div class="part-num">PART 3</div>
+    <div class="slide-part">STRATEGY</div>
+    <div class="part-title">전략 · Strategy</div>"""
+new_part3 = """<div class="slide slide-section">
+    <div class="part-num">PART 3</div>
+    <div class="slide-part">STRATEGY</div>
+    <div class="part-title">실행전략 · strategy</div>"""
+if old_part3 in html:
+    html = html.replace(old_part3, new_part3, 1)
+    changes_made.append("D2: Part 3 전략 → 실행전략")
+
+# ===== E. Core Strategy table text fixes =====
+# 비전 → 비젼
+html = html.replace('영화제 비전', '영화제 비젼')
+changes_made.append("E1: 영화제 비전 → 영화제 비젼")
+
+# 구현 전략 → 실현 전략
+html = html.replace('구체적 구현 전략', '구체적 실현 전략')
+# Also check for "구현 전략" without 구체적
+old_header = 'data-en="Specific Implementation Strategy">구체적 구현 전략'
+new_header = 'data-en="Specific Implementation Strategy">구체적 실현 전략'
+if old_header in html:
+    html = html.replace(old_header, new_header)
+
+changes_made.append("E2: 구체적 구현 전략 → 구체적 실현 전략")
+
+# ===== F. Personnel subtitle =====
+old_personnel = '>2. Personnel</div>'
+new_personnel = """>2. Personnel</div>
+    <div class="slide-subtitle" style="font-size:0.8rem;color:var(--text-dim)">BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조</div>"""
+html = html.replace(old_personnel, new_personnel)
+changes_made.append("F: Added Personnel subtitle (BIFF 노하우...)")
+
+# ===== G. A-to-Z Roadmap subtitle =====
+old_atoz = '>4. A-to-Z Roadmap</div>'
+new_atoz = """>4. A-to-Z Roadmap</div>
+    <div class="slide-subtitle" style="font-size:0.8rem;color:var(--text-dim)">전체 예산 30억 원 기준, 단계별 자금의 고려한 동시 사업 계획</div>"""
+# Only replace first occurrence (the first A-to-Z Roadmap slide)
+if old_atoz in html:
+    html = html.replace(old_atoz, new_atoz, 1)
+    changes_made.append("G: Added A-to-Z Roadmap subtitle")
+
+# ===== Write result =====
+with open(r'C:\WORK\IIFF\presentation_full.html', 'w', encoding='utf-8') as f:
     f.write(html)
-print("Part 4 saved.")
+
+print(f"Total changes: {len(changes_made)}")
+for c in changes_made:
+    print(f"  ✅ {c}")

@@ -7,19 +7,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
 
+        
         :root {
-            --bg: #ffffff;
-            --bg-warm: #faf8f5;
-            --bg-subtle: #f3f0eb;
-            --accent: #8b6914;
-            --accent-light: #c9a84c;
-            --accent-bg: rgba(201, 168, 76, 0.08);
-            --text: #1a1a2e;
-            --text-dim: #555;
-            --text-light: #888;
-            --border: rgba(0, 0, 0, 0.08);
-            --shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            /* High Contrast Premium White Theme */
+            --bg: #FFFFFF;
+            --bg-alt: #F8F9FA;
+            --text-main: #000000; /* Pure black for maximum legibility */
+            --text-dim: #444444; /* Dark gray, fully opaque */
+            
+            /* High Contrast Accent Colors */
+            --accent: #9B7A00; /* Bronze Gold - prominent on white */
+            --accent-light: #B8860B;
+            --accent-hover: #7A5C00;
+            --accent-red: #A81111; /* Crimson Red */
+            
+            /* Solid Card Backgrounds (No transparency bleed) */
+            --glass-border: rgba(0, 0, 0, 0.15); /* Stronger border */
+            --glass-bg: #FFFFFF; /* Pure Solid White */
+            --radius-lg: 1.5rem;
+            --radius-sm: 0.75rem;
+            
+            --font-headings: 'Playfair Display', 'Nanum Myeongjo', serif;
+            --font-body: 'Inter', 'Pretendard', -apple-system, sans-serif;
+            
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            --shadow-premium: 0 4px 24px rgba(0,0,0,0.08);
         }
+
 
         * {
             margin: 0;
@@ -87,7 +101,17 @@
         }
 
         /* TYPOGRAPHY */
-        .slide-part {
+        .slide-part::before {
+        content: '';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: url('Sorces/IIFF dark.png') center/contain no-repeat;
+        vertical-align: middle;
+        margin-right: 8px;
+        opacity: 0.5;
+    }
+    .slide-part {
             font-size: 0.8rem;
             color: var(--accent);
             text-transform: uppercase;
@@ -753,7 +777,79 @@
     .slide { opacity: 1 !important; display: block !important; }
 }
 
-    </style>
+    
+    /* Premium UI Overrides */
+    body { background-color: var(--bg); color: var(--text-main); font-family: var(--font-body); font-weight: 500; }
+    h1, h2, h3, .slide-title, .cover-title, .part-title { font-family: var(--font-headings); letter-spacing: -0.02em; }
+    
+    .slide {
+        background: radial-gradient(circle at top right, #F5F5F7 0%, var(--bg) 60%);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .slide-warm {
+        background: radial-gradient(circle at top left, #FEFAF6 0%, var(--bg) 60%);
+    }
+    .slide-cover, .slide-section {
+        background: var(--bg);
+        text-align: center;
+    }
+    .slide-end {
+        background: radial-gradient(circle at center, #F5F5F7 0%, var(--bg) 80%);
+    }
+    
+    /* Premium Cards & Tables (Glassmorphism) */
+    .s-card, .table-wrap, .split-item, .org-box {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-premium);
+        position: relative;
+        overflow: hidden;
+    }
+    .s-card::before {
+        content: ''; position: absolute; top:0; left:0; right:0; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        opacity: 0.3;
+    }
+    .s-card { padding: 2.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease; font-weight: 500; font-size: 1.05rem; line-height: 1.6; }
+    .s-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -15px rgba(212,175,55,0.15); }
+    
+    /* Table Enhancements */
+    .s-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .s-table th { background: rgba(0,0,0,0.06); color: var(--accent); padding: 1.2rem; font-family: var(--font-headings); letter-spacing: 1px; font-weight: 700; font-size:1.15rem; }
+    .s-table td { padding: 1rem 1.2rem; border-bottom: 1px solid rgba(0,0,0,0.15); font-weight: 500; font-size: 1.05rem; }
+    .s-table tr:last-child td { border-bottom: none; }
+    .s-table tr { transition: background 0.2s ease; }
+    .s-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+    
+    /* Typography */
+    .slide-title { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding-bottom: 0.5rem; }
+    .badge { border-radius: 4px; padding: 0.2rem 0.6rem; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border: 1px solid currentColor; background: transparent; }
+    .badge-gold { color: var(--accent); }
+    .badge-red { color: var(--accent-red); }
+    .badge-blue { color: #4A90E2; }
+    
+    /* Layout Enhancements */
+    .split-2 { gap: 3rem; }
+    .split-item { padding: 2.5rem; }
+    
+    /* Custom Chart Container */
+    .chart-container-premium {
+        position: relative;
+        height: 400px; /* Force height for visibility */
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: rgba(255,255,255,0.5);
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+</style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="progress" id="progress"></div>
@@ -783,12 +879,38 @@
         <rect x="55" y="82" width="20" height="14" rx="2" fill="#fff"/>
     </svg>
     <div class="cover-sub">Incheon International Film Festival</div>
-    <h1>NEXT WAVE</h1>
-    <div class="cover-tag">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결<br>인천 국제 넥스트웨이브 영화제 통합 기획서</div>
-    <div class="cover-ver">IIFF NextWave — Integrated Proposal v5</div>
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:clamp(80px,12vw,160px);margin:1vh auto;display:block;position:relative;z-index:1">
+    <h1 style="font-size:clamp(2rem,5vw,4rem);margin-top:0">NEXT WAVE</h1>
+    <div class="cover-tag">인천국제영화제 IIFF 추진위원회</div>
+    <div class="cover-ver">2026.02. — Insights from INSPIRE</div>
+</div>
+
+<div class="slide slide-cover" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#1a1a2e 100%)">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:clamp(60px,10vw,120px);margin:0 auto 1vh;display:block;position:relative;z-index:1;">
+    <div class="cover-sub" style="color:rgba(201,168,76,0.7)">〔NEXT WAVE〕</div>
+    <div class="cover-tag" style="color:rgba(255,255,255,0.85);max-width:700px">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
+    <div style="margin-top:4vh;display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;position:relative;z-index:1">
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
+            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">헐리우드와 공동제작, 투자, 배급 실전협업 영화제</p>
+        </div>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
+            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">상업영화와 독립영화가 공존하는 영화제</p>
+        </div>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
+            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">참여하고 공동창작하고 즐기는 잼보리형 영화제</p>
+        </div>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
+            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">온라인 오프라인 365일 영화제</p>
+        </div>
+    </div>
+    <div style="margin-top:3vh;position:relative;z-index:1">
+        <p style="color:var(--accent-light);font-size:0.95rem;font-weight:500">영화 · 음악 · 테크놀로지 · K-컬처가 융합된 영화 플랫폼</p>
+    </div>
+    <div class="cover-ver" style="color:rgba(201,168,76,0.4)">Cinematic Insights from INSPIRE Resort</div>
 </div>
 
 <div class="slide slide-section">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.6">
     <div class="part-num">PART 1</div>
     <div class="slide-part">INTRODUCTION</div>
     <div class="part-title">소개 · Introduction</div>
@@ -799,6 +921,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">1. What is IIFF?</div>
+    <div class="slide-subtitle" style="font-size:0.85rem;color:var(--accent);letter-spacing:2px;font-weight:500">All coincidences, all possibilities, endless imagination</div>
     <div class="slide-subtitle">발음은 "이프(if)" — i 두 번, f 두 번 — 강조의 의미이며, 발음은 단순한 하나의 단어입니다.</div><div class="split-2">
                 <div class="split-item">
                     <h3 style="font-family:'Playfair Display',serif;font-size:4rem;color:var(--gold)">if</h3>
@@ -811,6 +934,7 @@
                     <div class="s-highlight" style="margin-top:2rem">
                         <p data-en="IIFF is a film festival that makes you start imagining &quot;what if.&quot;">IIFF는
                             바로 그 <strong>'만약에'</strong>를 시작하게 하는 영화제입니다.</p>
+                        <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-dim)">if는 일어날수 있는 모든 우연 즉 모든 가능성입니다. 끝없는 상상입니다.</p>
                     </div>
                 </div>
                 <div class="split-item">
@@ -835,6 +959,7 @@
                             data-en="A question open to everyone, dreams and hopes for all, and the imagination to create new waves.&lt;br&gt;&lt;strong&gt;From that one word — if — IIFF begins.&lt;/strong&gt;">
                             누구에게나 열려 있는 질문, 모든이에게 꿈과 희망을, 그리고 새로운 파도를 만드는 상상.<br><strong>if, 그 한 단어에서, IIFF는
                                 시작됩니다.</strong></p>
+                        <p style="margin-top:1rem;font-style:italic;color:var(--accent-light);font-size:0.95rem">Unlimited imagination and free creation</p>
                     </div>
                 </div>
             </div>
@@ -842,10 +967,33 @@
     </div>
 </div>
 
+<div class="slide slide-cover" style="background:linear-gradient(135deg,#F5F5F7 0%,#FFFFFF 50%,#F5F5F7 100%)">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.4">
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:2rem;position:relative;z-index:1">
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">See, enjoy, create, evaluate each other, and spread it.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">보고, 즐기고, 만들고, 서로 평가하고, 퍼뜨린다.</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">We meet across borders, dream together, and act together.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">국경을 넘어 만나고, 함께 꿈꾸고, 함께 행동한다.</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">The one and only film festival in the universe that opens a new era</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">새로운 시대를 여는 세상에서 단 하나뿐인 영화제</p>
+        </div>
+        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
+            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">Incheon will now become the gateway to a new era, breaking down old boundaries.</p>
+            <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">인천은 이제 낡은 경계를 허물고 새로운 시대의 관문이 됩니다.</p>
+        </div>
+    </div>
+</div>
+
 <div class="slide">
     <div class="print-inner">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Festival Overview</div>
+    <div class="slide-subtitle" style="font-size:0.75rem;color:var(--accent);letter-spacing:1px;font-weight:400;text-transform:uppercase">00. complex platform — music, technology, and K-culture.</div>
     <div class="slide-subtitle">인천 국제 영화제 "넥스트웨이브" —
                 Incheon International Film Festival (IIFF-NextWave)</div><div class="s-highlight">
                 <p
@@ -940,6 +1088,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">3. Why Participate?</div>
+    <div class="slide-subtitle" style="font-size:0.75rem;color:var(--accent);letter-spacing:1px;font-weight:400;text-transform:uppercase">Together Platform</div>
     <div class="three-col">
                 <div class="s-card">
                     <span class="card-number">2-1</span>
@@ -1070,6 +1219,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 1 • INTRODUCTION</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. Why Incheon?</div>
+    <div class="slide-subtitle" style="font-size:0.75rem;color:var(--accent);letter-spacing:1px;font-weight:400;text-transform:uppercase">The center of K - content</div>
     <div class="slide-subtitle">인천은 단순한 '공항 도시'가 아니라 세계가 가장 먼저 만나는 대한민국의 얼굴입니다.</div><ol class="num-list">
                 <li data-en="&lt;strong&gt;From a 'transit city' to the world's filmmakers' cultural destination&lt;/strong&gt;&lt;br&gt;Not airport → Seoul, but a structure that makes people stay and experience Incheon. Opening/closing, galas, master classes, meetups, and camping festivals placed throughout the city.&lt;br&gt;&lt;span class="
                     pointer"&gt;👉&lt;/span&gt; Incheon is no longer a transit point but &lt;strong&gt;a city with
@@ -1580,8 +1730,8 @@
                         <tr>
                             <th data-en="No.">번호</th>
                             <th data-en="Key Feature">핵심 특징</th>
-                            <th data-en="Festival Vision">영화제 비전</th>
-                            <th data-en="Implementation Strategy">구체적 구현 전략</th>
+                            <th data-en="Festival Vision">영화제 비젼</th>
+                            <th data-en="Implementation Strategy">구체적 실현 전략</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1646,9 +1796,10 @@
 </div>
 
 <div class="slide slide-section">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.6">
     <div class="part-num">PART 2</div>
-    <div class="slide-part">ORGANIZATION</div>
-    <div class="part-title">조직 · Organization</div>
+    <div class="slide-part">PROGRAMS</div>
+    <div class="part-title">프로그램 · programs</div>
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
@@ -1757,9 +1908,10 @@
 </div>
 
 <div class="slide slide-section">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.6">
     <div class="part-num">PART 3</div>
     <div class="slide-part">STRATEGY</div>
-    <div class="part-title">전략 · Strategy</div>
+    <div class="part-title">실행전략 · strategy</div>
     <div class="watermark">IIFF NEXT WAVE</div>
 </div>
 
@@ -1876,6 +2028,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 3 • STRATEGY</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap</div>
+    <div class="slide-subtitle" style="font-size:0.8rem;color:var(--text-dim)">전체 예산 30억 원 기준, 단계별 자금의 고려한 동시 사업 계획</div>
     <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="13.1 Phase-by-Phase Roadmap">13.1 단계별 추진 로드맵</h3>
                 <div class="s-timeline" style="flex-direction:column">
@@ -1938,8 +2091,17 @@
                 </div>
             </div>
 
-            <div class="subsection" style="position:relative;z-index:1">
-                <h3 data-en="13.2 Organizing Committee Structure">13.2 조직위원회 구조</h3>
+            </div>
+    <div class="watermark">IIFF NEXT WAVE</div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="print-inner">
+    <div class="slide-part">PART 3 • STRATEGY</div>
+    <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">4. A-to-Z Roadmap (Cont.)</div>
+    <div class="subsection" style="position:relative;z-index:1">
+        <h3 data-en="13.2 Organizing Committee Structure">13.2 조직위원회 구조</h3>
                 <div style="text-align:center;margin:2rem 0">
                     <div class="org-row">
                         <div class="org-box primary">
@@ -2230,6 +2392,7 @@
 </div>
 
 <div class="slide slide-section">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.6">
     <div class="part-num">PART 4</div>
     <div class="slide-part">FINANCE</div>
     <div class="part-title">재무 · Finance</div>
@@ -2841,6 +3004,7 @@
 </div>
 
 <div class="slide slide-section">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.6">
     <div class="part-num">PART 5</div>
     <div class="slide-part">GOVERNANCE</div>
     <div class="part-title">거버넌스 · Governance</div>
@@ -3043,6 +3207,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
+    <div class="slide-subtitle" style="font-size:0.8rem;color:var(--text-dim)">BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조</div>
     <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.1 Control Tower (Leadership)">17.1 컨트롤 타워 (Leadership)</h3>
                 <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
@@ -3149,6 +3314,7 @@
     <div class="print-inner">
     <div class="slide-part">PART 5 • GOVERNANCE</div>
     <div class="slide-title" style="font-size:clamp(1.8rem,3.5vw,2.8rem)">2. Personnel</div>
+    <div class="slide-subtitle" style="font-size:0.8rem;color:var(--text-dim)">BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조</div>
     <div class="subsection" style="position:relative;z-index:1">
                 <h3 data-en="17.3 Global Network (USA / Asia / Hollywood)">17.3 글로벌 네트워크 (USA / Asia / Hollywood)</h3>
                 <div class="table-wrap" style="overflow-x:auto;position:relative;z-index:1">
@@ -3251,6 +3417,7 @@
 </div>
 
 <div class="slide slide-end slide-cover">
+    <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:clamp(60px,8vw,100px);margin:0 auto 2vh;display:block;position:relative;z-index:1;opacity:0.8">
     <div class="cover-sub">IIFF NEXT WAVE 2026</div>
     <h1 style="font-size:clamp(3rem,7vw,6rem)">Thank You</h1>
     <div class="s-quote" style="border:none;text-align:center;max-width:70%;margin:3vh auto 0">
@@ -3266,7 +3433,7 @@
 
     <!-- BOTTOM NAV -->
     <div class="nav-bar">
-        <div class="brand">IIFF NEXT WAVE — FULL</div>
+        <div class="brand"><img src="Sorces/IIFF dark.png" alt="IIFF" style="height:20px;vertical-align:middle;margin-right:8px;opacity:0.7">NEXT WAVE</div>
         <div class="controls">
             <button onclick="prevSlide()" title="이전">◀</button>
             <span class="counter" id="counter">1 / 36</span>
@@ -3331,5 +3498,161 @@
 
         showSlide(0);
     </script>
+
+<!-- Premium Data Visualizations (Chart.js) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Shared Colors
+    const colorGold = '#D4AF37';
+    const colorRed = '#8B0000';
+    const colorBlue = '#2B547E';
+    const colorDim = '#000000';
+    const textMain = '#000000';
+
+    Chart.defaults.color = '#000000';
+    Chart.defaults.font.weight = 'bold';
+    Chart.defaults.font.size = 14;
+    Chart.defaults.font.family = "'Inter', 'Pretendard', sans-serif";
+
+    function replaceTableWithChart(headingText, chartType, configFunc) {
+        // Find the slide containing the specific heading
+        const headings = Array.from(document.querySelectorAll('h3, .slide-title, h4'));
+        const targetHeading = headings.find(h => h.textContent.includes(headingText));
+        
+        if (!targetHeading) return;
+        
+        // Find the closest table-wrap
+        let current = targetHeading;
+        let tableWrap = null;
+        while(current && current.nextElementSibling) {
+            current = current.nextElementSibling;
+            if (current.classList.contains('table-wrap') || current.querySelector('.table-wrap')) {
+                tableWrap = current.classList.contains('table-wrap') ? current : current.querySelector('.table-wrap');
+                break;
+            }
+        }
+        
+        if (!tableWrap) return;
+
+        // Parse Table Data
+        const table = tableWrap.querySelector('table');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const data = rows.map(tr => {
+            const cells = Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim());
+            return cells;
+        });
+
+        // Hide table, create canvas
+        tableWrap.style.display = 'none';
+        
+        const container = document.createElement('div');
+        container.className = 'chart-container-premium';
+        const canvas = document.createElement('canvas');
+        container.appendChild(canvas);
+        
+        tableWrap.parentNode.insertBefore(container, tableWrap.nextSibling);
+
+        const ctx = canvas.getContext('2d');
+        const config = configFunc(data, ctx);
+        new Chart(ctx, config);
+    }
+
+    // 1. Budget Plan - Revenues (Pie)
+    replaceTableWithChart('재원 확보 (Revenues)', 'doughnut', (data) => {
+        // Exclude the '합계' row
+        const validData = data.filter(r => !r[0].includes('합계'));
+        return {
+            type: 'doughnut',
+            data: {
+                labels: validData.map(r => r[0]), // "공적 자금"
+                datasets: [{
+                    data: validData.map(r => parseFloat(r[2].replace('%', ''))), // parse percentage
+                    backgroundColor: [colorGold, '#E5C158', '#4A6B8A', '#2A3441'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#000000', font: { size: 15, weight: 'bold' } } },
+                    tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${validData[ctx.dataIndex][1]} (${ctx.raw}%)` } }
+                },
+                cutout: '65%'
+            }
+        };
+    });
+
+    // 2. Budget Plan - Expenses (Pie)
+    replaceTableWithChart('지출 항목 (Expenses)', 'doughnut', (data) => {
+        const validData = data.filter(r => !r[0].includes('합계'));
+        return {
+            type: 'doughnut',
+            data: {
+                labels: validData.map(r => r[0]),
+                datasets: [{
+                    data: validData.map(r => parseFloat(r[2].replace('%', ''))),
+                    backgroundColor: [colorRed, '#A52A2A', '#CD5C5C', '#8B4513', '#6A4B3A'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#000000', font: { size: 15, weight: 'bold' } } },
+                    tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${validData[ctx.dataIndex][1]} (${ctx.raw}%)` } }
+                },
+                cutout: '65%'
+            }
+        };
+    });
+
+    // 3. Cash Flow (Bar Chart)
+    replaceTableWithChart('2. Cash Flow', 'bar', (data) => {
+        // We need specific rows: Inflow vs Outflow
+        const inflows = data.find(r => r[0].includes('현금 유입'));
+        const outflows = data.find(r => r[0].includes('현금 유출'));
+        
+        if (!inflows || !outflows) return {};
+
+        // data format is [Category, Q1, Q2, Q3, Q4, Total]
+        const parseNum = (str) => parseFloat(str.replace(/,/g, '').replace(/[^0-9.-]/g, '')) || 0;
+
+        return {
+            type: 'bar',
+            data: {
+                labels: ['Q1 (D-12~9)', 'Q2 (D-8~6)', 'Q3 (D-5~3)', 'Q4 (D-2~D+1)'],
+                datasets: [
+                    {
+                        label: '현금 유입 (Inflow)',
+                        data: inflows.slice(1, 5).map(parseNum),
+                        backgroundColor: colorGold,
+                        borderRadius: 6
+                    },
+                    {
+                        label: '현금 유출 (Outflow)',
+                        data: outflows.slice(1, 5).map(parseNum),
+                        backgroundColor: colorRed,
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#000000', font: {size: 15, weight: 'bold'} } },
+                    title: { display: true, text: '분기별 현금 흐름 (단위: 백만원)', color: colorGold, font: {size: 16} }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(0,0,0,0.1)' }, ticks: { color: '#000000', font: {weight: 'bold'} } },
+                    x: { grid: { display: false }, ticks: { color: '#000000', font: {weight: 'bold'} } }
+                }
+            }
+        };
+    });
+});
+</script>
 </body>
+
 </html>
