@@ -1,0 +1,552 @@
+--- pptx
++++ show
+@@ -1,3 +1,3 @@
+ === FILE ===
+-Total slides: 74
++Total slides: 75
+ Slide size: 12192000, 6858000
+@@ -568,2 +568,3 @@
+   Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
+   --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+@@ -586,2 +587,3 @@
+   Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
+   --- Shape: type=TABLE (19), name=표 3
+@@ -611,2 +613,3 @@
+   Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
+   --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+@@ -622,9 +625,12 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++  --- Shape: type=TABLE (19), name=표 3
++      TABLE: 5 rows x 3 cols
++        R0: 발굴 카테고리 | 잠재적 협력 파트너 (예시) | 영화제 기여 역할
++        R1: K-식품 / F&B | 인천 지역 맛집, CJ푸드빌 | K-푸드 팝업 운영, 캠프 식음 케이터링
++        R2: K-뷰티 | 아모레퍼시픽, 올리브영 | 메이크업 체험 부스, 스타 뷰티 클래스
++        R3: K-팝·엔터 | 하이브, JYP, SM | 미니 콘서트, 팬미팅, K-팝 스타 레드카펫
++        R4: K-관광 | 인천관광공사, 한국관광공사 | 외국인 관광 패키지, 팸투어 운영
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
+       P0: [B=None,S=None,C=None]3 K-컬처 파트너 네트워크
+-      P2: [B=None,S=None,C=None]발굴 카테고리	잠재적 협력 파트너 (예시)	영화제 기여 역할
+-      P3: [B=None,S=None,C=None]K-식품 / F&B	인천 지역 맛집, CJ푸드빌	K-푸드 팝업 운영, 캠프 식음 케이터링
+-      P4: [B=None,S=None,C=None]K-뷰티	아모레퍼시픽, 올리브영	메이크업 체험 부스, 스타 뷰티 클래스
+-      P5: [B=None,S=None,C=None]K-팝·엔터	하이브, JYP, SM	미니 콘서트, 팬미팅, K-팝 스타 레드카펫
+-      P6: [B=None,S=None,C=None]K-관광	인천관광공사, 한국관광공사	외국인 관광 패키지, 팸투어 운영
+ 
+@@ -648,2 +654,19 @@
+   Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]6. BIFF Comparison
++  --- Shape: type=TABLE (19), name=표 3
++      TABLE: 8 rows x 3 cols
++        R0: 비교항목 | BIFF(부산국제영화제) | IIFF(인천국제영화제)
++        R1: 위상 | 아시아 최대 A급 국제영화제 | 아시아 최초 '미래형 융합 영화 플랫폼'
++        R2: 주요 콘텐츠 | 정통 영화 상영 및 시상 중심 | 영화 + 모바일 + K-컬처 + 야영 + 공연 융합
++        R3: 예산 규모(1회) | 약 200억 원 (현재) | 약 30억 원 (인스파이어 현물 포함 시 50억+)
++        R4: 핵심 관객층 | 영화 관계자, 시네필 | 영화인 + MZ세대 + 글로벌 K-컬처 팬 + 관광객
++        R5: 장소 | 영화의 전당 (부산 센텀시티) | 인스파이어 리조트 + 인천 도심 상영관
++        R6: 헐리우드 연계 | 매년 할리우드 스타 초청 (수동적) | Method Fest 공동 운영 (구조적 연결)
++        R7: 차별화 무기 | 30년 축적된 권위와 네트워크 | 모바일 영화제, 야영 캠프, K-컬처 융합, 인스파이어 인프라
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++      P0: [B=None,S=None,C=None]선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다
++
++========== SLIDE 53 ==========
++  Layout: 제목 및 내용
+   --- Shape: type=TEXT_BOX (17), name=TextBox 3
+@@ -652,3 +675,3 @@
+ 
+-========== SLIDE 53 ==========
++========== SLIDE 54 ==========
+   Layout: 제목 및 내용
+@@ -656,23 +679,14 @@
+       P0: [B=None,S=None,C=None]1. Budget Plan
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]제1회 기준, 30억 원 규모
+-      P2: [B=None,S=None,C=None]재원 확보 (Revenues)
+-      P3: [B=None,S=None,C=None]항목	금액	비율
+-      P4: [B=None,S=None,C=None]공적 자금 (시/정부)	10억 원	33.3%
+-      P5: [B=None,S=None,C=None]기업 스폰서십 (민간)	12억 원	40.0%
+-      P6: [B=None,S=None,C=None]수익 사업 (Ticket & Market)	6억 원	20.0%
+-      P7: [B=None,S=None,C=None]기타 (재단 기금 등)	2억 원	6.7%
+-      P8: [B=None,S=None,C=None]합계	30억 원	100%
+-
+-========== SLIDE 54 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]지출 항목 (Expenses)
+-      P2: [B=None,S=None,C=None]항목	금액	비율
+-      P3: [B=None,S=None,C=None]프로그램 운영비	8억 원	26.7%
+-      P4: [B=None,S=None,C=None]초청 및 의전비	9억 원	30.0%
+-      P5: [B=None,S=None,C=None]마케팅 및 홍보비	6억 원	20.0%
+-      P6: [B=None,S=None,C=None]시설 및 인프라	4억 원	13.3%
+-      P7: [B=None,S=None,C=None]인건비 및 일반 관리비	3억 원	10.0%
+-      P8: [B=None,S=None,C=None]합계	30억 원	100%
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=None,S=165100,C=None]제1회 기준, 30억 원 규모
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 6 rows x 3 cols
++        R0: 항목 | 금액 | 비율
++        R1: 공적 자금 (시/정부) | 10억 원 | 33.3%
++        R2: 기업 스폰서십 (민간) | 12억 원 | 40.0%
++        R3: 수익 사업 (Ticket & Market) | 6억 원 | 20.0%
++        R4: 기타 (재단 기금 등) | 2억 원 | 6.7%
++        R5: 합계 | 30억 원 | 100%
++  --- Shape: type=AUTO_SHAPE (1), name=직사각형 5
++      P0: [B=False,S=None,C=None]재원 확보 (Revenues)
+ 
+@@ -680,3 +694,21 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Budget Plan
++  --- Shape: type=AUTO_SHAPE (1), name=직사각형 3
++      P0: [B=False,S=203200,C=None]지출 항목 (Expenses)
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 7 rows x 3 cols
++        R0: 항목 | 금액 | 비율
++        R1: 프로그램 운영비 | 8억 원 | 26.7%
++        R2: 초청 및 의전비 | 9억 원 | 30.0%
++        R3: 마케팅 및 홍보비 | 6억 원 | 20.0%
++        R4: 시설 및 인프라 | 4억 원 | 13.3%
++        R5: 인건비 및 일반 관리비 | 3억 원 | 10.0%
++        R6: 합계 | 30억 원 | 100%
++
++========== SLIDE 56 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Budget Plan
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]재원 확보 전략
+@@ -687,3 +719,3 @@
+ 
+-========== SLIDE 56 ==========
++========== SLIDE 57 ==========
+   Layout: 제목 및 내용
+@@ -691,25 +723,22 @@
+       P0: [B=None,S=None,C=None]2. Cash Flow
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]"성공적인 영화제는 '돈맥경화'가 없어야 한다"
+-      P1: [B=None,S=None,C=None]구분	1분기 (D-12~9)
+-      P2: [B=None,S=None,C=None]추진위 단계	2분기 (D-8~6)
+-      P3: [B=None,S=None,C=None]조직위 출범	3분기 (D-5~3)
+-      P4: [B=None,S=None,C=None]본격 준비	4분기 (D-2~D+1)
+-      P5: [B=None,S=None,C=None]개최 및 정산	합계
+-      P6: [B=None,S=None,C=None]현금 유입	250	800	1,000	950	3,000
+-      P7: [B=None,S=None,C=None]› 지자체/공공	100 (Seed)	400 (보조금 1차)	300 (보조금 2차)	200 (Balance)	1,000
+-      P8: [B=None,S=None,C=None]› 민간 스폰서	100 (Seed)	400 (1차 후원)	500 (2차 후원)	200 (Balance)	1,200
+-      P9: [B=None,S=None,C=None]› 자체 수익	50 (기부금)	–	200 (티켓/참가비)	550 (티켓/마켓)	800
+-      P10: [B=None,S=None,C=None]현금 유출	200	600	900	1,300	3,000
+-      P11: [B=None,S=None,C=None]› 인건비/운영	100	200	200	300	800
+-      P12: [B=None,S=None,C=None]› 초청/체류비	20 (계약금)	200 (선급금)	300 (중도금)	380 (잔금)	900
+-      P13: [B=None,S=None,C=None]› 마케팅비	50	100	250	200	600
+-      P14: [B=None,S=None,C=None]› 시설/제작비	30	100	150	420	700
+-      P15: [B=None,S=None,C=None]현금 잔액	+50	+250	+350	0	0
+-      P16: [B=None,S=None,C=None](단위: 백만 원)
+-      P18: [B=None,S=None,C=None]자금 운용 팁:
+-      P20: [B=None,S=None,C=None]3분기 관리 중요: 마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려
+-      P21: [B=None,S=None,C=None]예비비 확보: 전체 예산의 5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비
+-
+-========== SLIDE 57 ==========
++  --- Shape: type=TABLE (19), name=표 3
++      TABLE: 11 rows x 6 cols
++        R0: 구분 | 1분기 (D-12~9) / 추진위 단계 | 2분기 (D-8~6) / 조직위 출범 | 3분기 (D-5~3) / 본격 준비 | 4분기 (D-2~D+1) / 개최 및 정산 | 합계
++        R1: 현금 유입 | 250 | 800 | 1,000 | 950 | 3,000
++        R2: › 지자체/공공 | 100 (Seed) | 400 (보조금 1차) | 300 (보조금 2차) | 200 (Balance) | 1,000
++        R3: › 민간 스폰서 | 100 (Seed) | 400 (1차 후원) | 500 (2차 후원) | 200 (Balance) | 1,200
++        R4: › 자체 수익 | 50 (기부금) | – | 200 (티켓/참가비) | 550 (티켓/마켓) | 800
++        R5: 현금 유출 | 200 | 600 | 900 | 1,300 | 3,000
++        R6: › 인건비/운영 | 100 | 200 | 200 | 300 | 800
++        R7: › 초청/체류비 | 20 (계약금) | 200 (선급금) | 300 (중도금) | 380 (잔금) | 900
++        R8: › 마케팅비 | 50 | 100 | 250 | 200 | 600
++        R9: › 시설/제작비 | 30 | 100 | 150 | 420 | 700
++        R10: 현금 잔액 | +50 | +250 | +350 | 0 | 0
++  --- Shape: type=AUTO_SHAPE (1), name=직사각형 4
++      P0: [B=False,S=118110,C=None](단위: 백만 원)
++  --- Shape: type=TEXT_BOX (17), name=TextBox 7
++      P0: [B=None,S=165100,C=None]★ 3분기 관리 중요: 마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려
++      P1: [B=None,S=165100,C=None]★ 예비비 확보: 전체 예산의 5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비
++
++========== SLIDE 58 ==========
+   Layout: 제목 및 내용
+@@ -717,22 +746,12 @@
+       P0: [B=None,S=None,C=None]3. Initial Budget
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TABLE (19), name=표 3
++      TABLE: 6 rows x 3 cols
++        R0: 항목 | 금액  / (백만 원) | 용도
++        R1: 인건비 및 운영비 | 80 | 코어 인력(3인) 인건비, 사무실 임차
++        R2: 회의 및 네트워킹 | 60 | 추진위/분과위 회의, 비전 발표회
++        R3: 초기 네트워크 구축 | 80 | 메소드페스타/하와이 MOU 출장, 헐리우드 접촉
++        R4: 홍보물 및 자료 제작 | 30 | 비전 선포 자료, 홈페이지, 로고/디자인
++        R5: 총계 | 250 | (한화 2억 5천만 원)
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
+       P0: [B=None,S=None,C=None]추진위원회 초기 경비 (약 6개월)
+-      P2: [B=None,S=None,C=None]항목	금액 (백만 원)	용도
+-      P3: [B=None,S=None,C=None]인건비 및 운영비	80	코어 인력(3인) 인건비, 사무실 임차
+-      P4: [B=None,S=None,C=None]회의 및 네트워킹	60	추진위/분과위 회의, 비전 발표회
+-      P5: [B=None,S=None,C=None]초기 네트워크 구축	80	메소드페스타/하와이 MOU 출장, 헐리우드 접촉
+-      P6: [B=None,S=None,C=None]홍보물 및 자료 제작	30	비전 선포 자료, 홈페이지, 로고/디자인
+-      P7: [B=None,S=None,C=None]총계	250	(한화 2억 5천만 원)
+-
+-========== SLIDE 58 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]50:50 매칭 펀딩 전략
+-      P2: [B=None,S=None,C=None]단계	전략	목표 금액
+-      P3: [B=None,S=None,C=None]1단계	공공 시드 확보 (40%)
+-      P4: [B=None,S=None,C=None]인천시 문화예술진흥기금 활용	100백만 원
+-      P6: [B=None,S=None,C=None]2단계	민간 매칭 펀드 (40%)
+-      P7: [B=None,S=None,C=None]인스파이어 현금/현물 지원	100백만 원
+-      P9: [B=None,S=None,C=None]3단계	후원회 멤버십 (20%)
+-      P10: [B=None,S=None,C=None]위원 중심 초기 모금	50백만 원
+ 
+@@ -741,33 +760,56 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]3. Initial Budget
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=False,S=228600,C=000000]50:50 매칭 펀딩 전략
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 4 rows x 3 cols
++        R0: 단계 | 전략 | 목표 금액
++        R1: 1단계 | 공공 시드 확보 (40%) / 인천시 문화예술진흥기금 활용 | 100백만 원
++        R2: 2단계 | 민간 매칭 펀드 (40%) / 인스파이어 현금/현물 지원 | 100백만 원
++        R3: 3단계 | 후원회 멤버십 (20%) / 위원 중심 초기 모금 | 50백만 원
++
++========== SLIDE 60 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. Sponsorship Plan
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]1 스폰서십 등급 (Tier System)
+-      P2: [B=None,S=None,C=None]등급	금액 기준	주요 혜택
+-      P3: [B=None,S=None,C=None]타이틀 스폰서	5억 원 이상	영화제 공식 명칭 삽입, 모든 홍보물 로고 노출, 개막식 VIP석, 전용 브랜드 존 운영
+-      P4: [B=None,S=None,C=None]프리미엄 파트너	2~5억 원	핵심 섹션 네이밍권 (갈라/캠프/어워드), 주요 행사 VIP 초대, 프레스 월 로고 노출
+-      P5: [B=None,S=None,C=None]공식 파트너	5천만~2억 원	홈페이지 및 공식 인쇄물 로고, K-컬처 존 부스 운영권, SNS 콜라보 콘텐츠
+-      P6: [B=None,S=None,C=None]서포터	5천만 원 이하	홈페이지 로고 게시, 공식 굿즈 콜라보, 소규모 체험 부스 운영
+-
+-========== SLIDE 60 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 5 rows x 3 cols
++        R0: 등급 | 금액 기준 | 주요 혜택
++        R1: 타이틀 스폰서 | 5억 원 이상 | 영화제 공식 명칭 삽입, 모든 홍보물 로고 노출, 개막식 VIP석, 전용 브랜드 존 운영
++        R2: 프리미엄 파트너 | 2~5억 원 | 핵심 섹션 네이밍권 (갈라/캠프/어워드), 주요 행사 VIP 초대, 프레스 월 로고 노출
++        R3: 공식 파트너 | 5천만~2억 원 | 홈페이지 및 공식 인쇄물 로고, K-컬처 존 부스 운영권, SNS 콜라보 콘텐츠
++        R4: 서포터 | 5천만 원 이하 | 홈페이지 로고 게시, 공식 굿즈 콜라보, 소규모 체험 부스 운영
++
++========== SLIDE 61 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]4. Sponsorship Plan
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]2 타겟 스폰서 업종 및 접근 전략
+-      P2: [B=None,S=None,C=None]업종	타겟 기업 (예시)	연계 가능 프로그램	접근 방식
+-      P3: [B=None,S=None,C=None]IT/모바일	삼성, Apple, SKT	모바일 영화 컴피티션 (촬영 기기 제공 + 네이밍)	모바일 콘텐츠 제작 인프라 제공 제안
+-      P4: [B=None,S=None,C=None]항공/여행	대한항공, 아시아나	해외 게스트 항공 지원 + 관광 패키지 공동 개발	인천공항 → 영화제 연결 동선 마케팅
+-      P5: [B=None,S=None,C=None]소비재/뷰티	아모레퍼시픽, LG생활건강	K-뷰티 체험 부스 + 스타 메이크업 쇼	글로벌 관객 대상 제품 노출 + 체험
+-      P6: [B=None,S=None,C=None]식음료	CJ제일제당, 하이트진로	K-푸드 팝업 스토어 + 캠프 식음 지원	야외 축제 환경에서 브랜드 체험 극대화
+-      P7: [B=None,S=None,C=None]자동차	현대, 기아	공식 의전 차량 + 레드카펫 차량 전시	프리미엄 이미지 연계 (EV/수소차)
+-      P8: [B=None,S=None,C=None]금융	KB, 신한, 하나	K-콘텐츠 펀드/투자 연계 포럼	ESG 활동 + 문화 투자 포트폴리오
+-
+-========== SLIDE 61 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 7 rows x 4 cols
++        R0: 업종 | 타겟 기업 (예시) | 연계 가능 프로그램 | 접근 방식
++        R1: IT/모바일 | 삼성, Apple, SKT | 모바일 영화 컴피티션 (촬영 기기 제공 + 네이밍) | 모바일 콘텐츠 제작 인프라 제공 제안
++        R2: 항공/여행 | 대한항공, 아시아나 | 해외 게스트 항공 지원 + 관광 패키지 공동 개발 | 인천공항 → 영화제 연결 동선 마케팅
++        R3: 소비재/뷰티 | 아모레퍼시픽, LG생활건강 | K-뷰티 체험 부스 + 스타 메이크업 쇼 | 글로벌 관객 대상 제품 노출 + 체험
++        R4: 식음료 | CJ제일제당, 하이트진로 | K-푸드 팝업 스토어 + 캠프 식음 지원 | 야외 축제 환경에서 브랜드 체험 극대화
++        R5: 자동차 | 현대, 기아 | 공식 의전 차량 + 레드카펫 차량 전시 | 프리미엄 이미지 연계 (EV/수소차)
++        R6: 금융 | KB, 신한, 하나 | K-콘텐츠 펀드/투자 연계 포럼 | ESG 활동 + 문화 투자 포트폴리오
++
++========== SLIDE 62 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]4. Sponsorship Plan
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]3개년 스폰서십 전략
+-      P2: [B=None,S=None,C=None]연차	전략	스폰서십 목표
+-      P3: [B=None,S=None,C=None]1회차	핵심 파트너 확보 + 현물 스폰서 중심	~12억 원 (인스파이어 현물 포함)
+-      P4: [B=None,S=None,C=None]2회차	브랜드 경쟁 구도 형성 + 프리미엄 네이밍 판매	~20억 원
+-      P5: [B=None,S=None,C=None]3회차	글로벌 브랜드 유치 + 멀티이어 계약 전환	~30억 원
+-
+-========== SLIDE 62 ==========
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 4 rows x 3 cols
++        R0: 연차 | 전략 | 스폰서십 목표
++        R1: 1회차 | 핵심 파트너 확보 + 현물 스폰서 중심 | ~12억 원 (인스파이어 현물 포함)
++        R2: 2회차 | 브랜드 경쟁 구도 형성 + 프리미엄 네이밍 판매 | ~20억 원
++        R3: 3회차 | 글로벌 브랜드 유치 + 멀티이어 계약 전환 | ~30억 원
++
++========== SLIDE 63 ==========
+   Layout: 제목 및 내용
+@@ -775,29 +817,39 @@
+       P0: [B=None,S=None,C=None]5. Marketing Strategy
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]1 글로벌 인지도 확보 (전문성 강조)
+-      P2: [B=None,S=None,C=None]전략	세부 활동
+-      P3: [B=None,S=None,C=None]헐리우드 네트워크 활용	헐리우드 스타 및 메소드필름페스타 관계자와의 독점 인터뷰를 글로벌 주요 영화 매체(Variety, Hollywood Reporter 등)에 제공
+-      P4: [B=None,S=None,C=None]아시아 게이트웨이 브랜딩	아시아 주요 영화 시장 관계자를 초청하고, 개막식에 아시아 대표 배우 및 감독 배치
+-      P5: [B=None,S=None,C=None]타겟 미디어 파트너십	영화 전문 매거진 및 비즈니스 콘텐츠 미디어(포브스 아시아)와 협력
+-
+-========== SLIDE 63 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 4 rows x 2 cols
++        R0: 전략 | 세부 활동
++        R1: 헐리우드 네트워크 활용 | 헐리우드 스타 및 메소드필름페스타 관계자와의 독점 인터뷰를 글로벌 주요 영화 매체(Variety, Hollywood Reporter 등)에 제공
++        R2: 아시아 게이트웨이 브랜딩 | 아시아 주요 영화 시장 관계자를 초청하고, 개막식에 아시아 대표 배우 및 감독 배치
++        R3: 타겟 미디어 파트너십 | 영화 전문 매거진 및 비즈니스 콘텐츠 미디어(포브스 아시아)와 협력
++
++========== SLIDE 64 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]5. Marketing Strategy
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]2 대중 참여 및 바이럴 (참여성 강조)
+-      P2: [B=None,S=None,C=None]전략	세부 활동
+-      P3: [B=None,S=None,C=None]NextWave Creator Challenge	모바일 영화 제작 캠프를 숏폼 콘텐츠로 제작·배포. 인플루언서 참가자 초청
+-      P4: [B=None,S=None,C=None]K-WAVE 페스티벌 통합 홍보	'영화와 캠핑을 함께 즐기는 유일한 축제'로 포지셔닝
+-      P5: [B=None,S=None,C=None]인스파이어 연계 마케팅	숙박/F&B 패키지와 영화제 티켓 묶어 판매, 상호 시너지 창출
+-
+-========== SLIDE 64 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 4 rows x 2 cols
++        R0: 전략 | 세부 활동
++        R1: NextWave Creator Challenge | 모바일 영화 제작 캠프를 숏폼 콘텐츠로 제작·배포. 인플루언서 참가자 초청
++        R2: K-WAVE 페스티벌 통합 홍보 | '영화와 캠핑을 함께 즐기는 유일한 축제'로 포지셔닝
++        R3: 인스파이어 연계 마케팅 | 숙박/F&B 패키지와 영화제 티켓 묶어 판매, 상호 시너지 창출
++
++========== SLIDE 65 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]세부 활동
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]3 홍보 콘텐츠 및 프로모션 타임라인
+-      P2: [B=None,S=None,C=None]콘텐츠	내용	시기
+-      P3: [B=None,S=None,C=None]티저 영상	아시아와 헐리우드 스타들의 과거 명장면과 인스파이어의 화려한 시설을 교차 편집하여 'NextWave' 컨셉 강조	D-120 days
+-      P4: [B=None,S=None,C=None]공식 포스터	인천의 도시 경관, 아레나, 디스커버리 파크의 야외 상영 장면을 모두 담아 영화제의 '공간적 특색' 시각화	D-90 days
+-      P5: [B=None,S=None,C=None]얼리버드 티켓	개/폐막식 및 NextWave 캠프 참가권을 한정 수량 판매하여 초기 관심도 및 현금 유동성 확보	D-60 days
+-      P6: [B=None,S=None,C=None]인천 시민 우대	인천 거주자에게 CGV 인디 섹션 티켓 할인 제공 (지역 밀착형 영화제)	D-30 days
+-
+-========== SLIDE 65 ==========
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 5 rows x 3 cols
++        R0: 콘텐츠 | 내용 | 시기
++        R1: 티저 영상 | 아시아와 헐리우드 스타들의 과거 명장면과 인스파이어의 화려한 시설을 교차 편집하여 'NextWave' 컨셉 강조 | D-120 days
++        R2: 공식 포스터 | 인천의 도시 경관, 아레나, 디스커버리 파크의 야외 상영 장면을 모두 담아 영화제의 '공간적 특색' 시각화 | D-90 days
++        R3: 얼리버드 티켓 | 개/폐막식 및 NextWave 캠프 참가권을 한정 수량 판매하여 초기 관심도 및 현금 유동성 확보 | D-60 days
++        R4: 인천 시민 우대 | 인천 거주자에게 CGV 인디 섹션 티켓 할인 제공 (지역 밀착형 영화제) | D-30 days
++
++========== SLIDE 66 ==========
+   Layout: 제목 및 내용
+@@ -807,3 +859,3 @@
+ 
+-========== SLIDE 66 ==========
++========== SLIDE 67 ==========
+   Layout: 제목 및 내용
+@@ -811,21 +863,8 @@
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"
+-      P2: [B=None,S=None,C=None]2026년 6월 지방선거 변수는 영화제의 생존과 지속성을 결정짓는 가장 중요한 요소. '특정 정당이나 현직에 치우치지 않고, 선거 국면을 오히려 동력으로 활용하는' 고도의 정치적 솔루션이 필요하다.
+-      P3: [B=None,S=None,C=None]여야 후보 모두가 "내가 당선되면 이 영화제를 적극 지원하겠다"고 서약하게 만드는 '역제안 전략'
+-
+-========== SLIDE 67 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]단계	시기	정치적 상황	영화제 추진 핵심 과제
+-      P1: [B=None,S=None,C=None]1단계
+-      P2: [B=None,S=None,C=None]민간 발족	2025.12월	현직 임기 말	추진위 발족 (경제인+예술인+인스파이어, 정치인 배제). 100% 민간 씨드머니로 운영.
+-      P3: [B=None,S=None,C=None]2단계
+-      P4: [B=None,S=None,C=None]공약화	2026.1~3월	후보 경선 진행	여야 유력 후보에게 '영화제 지원 확약서' 전달. 헐리우드 섭외 민간 채널로 병행.
+-      P5: [B=None,S=None,C=None]3단계
+-      P6: [B=None,S=None,C=None]선거 기간	2026.4~5월	공식 선거운동	선거와 분리된 '문화 비전 선포식' 개최. 후보들의 방문·지지 발언 유도.
+-      P7: [B=None,S=None,C=None]4단계
+-      P8: [B=None,S=None,C=None]당선자 협력	2026.6~7월	선거(6.3) 및 인수위	당선자를 당연직 조직위원장으로 추대. 추경 예산 편성 요청.
+-      P9: [B=None,S=None,C=None]5단계
+-      P10: [B=None,S=None,C=None]개최	2026.8~10월	신임 시장 취임 초기	신임 시장의 '취임 1호 문화 치적'으로 포장하여 전폭적 지원 유도.
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++      P0: [B=None,S=None,C=None]★ 2026년 6월 지방선거 변수는 영화제의 생존과 지속성을 결정짓는 가장 중요한 요소. '특정 정당이나 현직에 치우치지 않고, 선거 국면을 오히려 동력으로 활용하는' 고도의 정치적 솔루션이 필요하다.
++  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++      P0: [B=None,S=None,C=None]★ 여야 후보 모두가 "내가 당선되면 이 영화제를 적극 지원하겠다"고 서약하게 만드는 '역제안 전략'
+ 
+@@ -833,8 +872,12 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]1 비당파 추진위원회 구성 원칙
+-      P2: [B=None,S=None,C=None]위원장: 영화제 관련 문화계 원로 (경제 활성화 명분은 여야 막론 반대 불가)
+-      P3: [B=None,S=None,C=None]공동 위원장: 인스파이어 리조트 대표, 인천상공회의소 회장
+-      P4: [B=None,S=None,C=None]고문단: 인천 지역 대학 총장, 원로 영화감독 (정치적 성향 중립인 인물)
+-      P5: [B=None,S=None,C=None]원칙: 선거 전까지는 인천시 예산을 받지 않는 것이 오히려 안전
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Risk Management
++  --- Shape: type=TABLE (19), name=표 3
++      TABLE: 6 rows x 4 cols
++        R0: 단계 | 시기 | 정치적 상황 | 영화제 추진 핵심 과제
++        R1: 1단계 / 민간 발족 | 2025.12월 | 현직 임기 말 | 추진위 발족 (경제인+예술인+인스파이어, 정치인 배제). 100% 민간 씨드머니로 운영.
++        R2: 2단계 / 공약화 | 2026.1~3월 | 후보 경선 진행 | 여야 유력 후보에게 '영화제 지원 확약서' 전달. 헐리우드 섭외 민간 채널로 병행.
++        R3: 3단계 / 선거 기간 | 2026.4~5월 | 공식 선거운동 | 선거와 분리된 '문화 비전 선포식' 개최. 후보들의 방문·지지 발언 유도.
++        R4: 4단계 / 당선자 협력 | 2026.6~7월 | 선거(6.3) 및 인수위 | 당선자를 당연직 조직위원장으로 추대. 추경 예산 편성 요청.
++        R5: 5단계 / 개최 | 2026.8~10월 | 신임 시장 취임 초기 | 신임 시장의 '취임 1호 문화 치적'으로 포장하여 전폭적 지원 유도.
+ 
+@@ -842,8 +885,11 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]2 후보 대상 MOU 전략
+-      P2: [B=None,S=None,C=None]제안서 타이틀: "Global Incheon 2026: 아시아와 헐리우드를 잇는 문화 경제 플랫폼 제안"
+-      P4: [B=None,S=None,C=None]당선 시 '인천 국제 넥스트웨이브 영화제'를 핵심 관광 전략 사업으로 지정
+-      P5: [B=None,S=None,C=None]추가경정예산 편성 등 행정/재정적 지원 보장
+-      P6: [B=None,S=None,C=None]영화제의 자율성과 독립성 보장, 추진위 성과 계승
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Risk Management
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=None,S=None,C=None]1 | [B=None,S=None,C=None]. | [B=None,S=None,C=None]  비당파 추진위원회 구성 원칙
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++      P0: [B=None,S=None,C=None]★ 위원장 : 영화제 관련 문화계 원로 (경제 활성화 명분은 여야 막론 반대 불가)
++      P2: [B=None,S=None,C=None]★ 공동 위원장 : 인스파이어 리조트 대표, 인천상공회의소 회장
++      P4: [B=None,S=None,C=None]★고문단 : 인천 지역 대학 총장, 원로 영화감독 (정치적 성향 중립인 인물)
++      P6: [B=None,S=None,C=None]★ 원칙 : 선거 전까지는 인천시 예산을 받지 않는 것이 오히려 안전
+ 
+@@ -851,11 +897,28 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Risk Management
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=None,S=None,C=None]2 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 후보 대상 MOU 전략
++  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++      P0: [B=None,S=None,C=None] 제안서 타이틀: 
++      P1: [B=None,S=None,C=None]"Global Incheon 2026: 아시아와 헐리우드를 잇는 문화 경제 플랫폼 제안"
++      P4: [B=None,S=None,C=None]1) | [B=None,S=None,C=None] 당선 시 '인천 국제 넥스트웨이브 영화제'를 핵심 관광 전략 사업으로 지정
++      P6: [B=None,S=None,C=None]2) | [B=None,S=None,C=None] 추가경정예산 편성 등 행정/재정적 지원 보장
++      P8: [B=None,S=None,C=None]3) | [B=None,S=None,C=None] 영화제의 자율성과 독립성 보장, 추진위 성과 계승
++
++========== SLIDE 71 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]1. Risk Management
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]3 선거 전후 업무 분장 (Shadow Operation)
+-      P2: [B=None,S=None,C=None]시기	추진위원회 (민간) 역할	정치권/인천시 역할
+-      P3: [B=None,S=None,C=None]12월~2월	법인 설립, 사무국 구성, 인스파이어 자금 집행, 헐리우드 에이전시 접촉 (비공개)	(관망) 선거 준비 돌입
+-      P4: [B=None,S=None,C=None]3월~5월	상영작 선정·게스트 가계약 (보안 유지), 스폰서 가계약, 후보자 초청 비전 발표회	후보자: 영화제 지원 공약 발표, 서약서 서명
+-      P5: [B=None,S=None,C=None]6월 (선거 직후)	당선자 인수위에 보고서 제출, "예산만 승인하면 됨" 강조	당선자: 업무 보고 청취, 추경 예산 긴급 편성
+-      P6: [B=None,S=None,C=None]7월~10월	공식 조직위로 전환, 시장 취임 연계 대대적 홍보	행정 인력 파견, 경찰/소방 안전 대책 지원
+-
+-========== SLIDE 71 ==========
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 5 rows x 3 cols
++        R0: 시기 | 추진위원회 (민간)역할 | 정치권/인천시 역할
++        R1: 12월~2월 | 법인 설립, 사무국 구성, 인스파이어 자금 집행, 헐리우드 에이전시 접촉 (비공개) | (관망) 선거 준비 돌입
++        R2: 3월~5월 | 상영작 선정·게스트 가계약 (보안 유지), 스폰서 가계약, 후보자 초청 비전 발표회 | 후보자: 영화제 지원 공약 발표, 서약서 서명
++        R3: 6월 (선거 직후) | 당선자 인수위에 보고서 제출, "예산만 승인하면 됨" 강조 | 당선자: 업무 보고 청취, 추경 예산 긴급 편성
++        R4: 7월~10월 | 공식 조직위로 전환, 시장 취임 연계 대대적 홍보 | 행정 인력 파견, 경찰/소방 안전 대책 지원
++
++========== SLIDE 72 ==========
+   Layout: 제목 및 내용
+@@ -863,22 +926,15 @@
+       P0: [B=None,S=None,C=None]2. Personnel
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조
+-      P2: [B=None,S=None,C=None]1 컨트롤 타워 (Leadership)
+-      P3: [B=None,S=None,C=None]직책	성명	핵심 역할
+-      P4: [B=None,S=None,C=None]명예 위원장	이용관 (전 BIFF 이사장)	상징적 권위 및 방패. BIFF 성공 신화를 인천에 이식하는 상징성. 정치적 외풍을 막는 '어른' 역할.
+-      P5: [B=None,S=None,C=None]명예 위원장	저스틴 김 (메소드영화제 조직위원장)	비버리힐즈 메소드영화제의 독립영화 정신을 대변. 헐리우드와의 가교 역할.
+-      P6: [B=None,S=None,C=None]명예 위원장	돈 플랑캔 (메소드영화제 조직위원장)	헐리우드 영화인 인맥 총동원. 영화 자본과 월가의 큰손들과의 교류 총괄.
+-      P7: [B=None,S=None,C=None]추진 위원장	이청산 (전 BIFF 비대위원장)	실질적 리더십 & 위기관리. '무'에서 '유'를 창조하는 추진위의 강력한 드라이브.
+-      P8: [B=None,S=None,C=None]공동 위원장	박병용 (인스파이어 부회장)	재정 및 조직, 업무 지원. 인스파이어 공간·설비 제공. 후원 조직 구성 관리.
+-      P9: [B=None,S=None,C=None]공동 위원장	오석근 (전 영진위 위원장)	정책 및 예산 설계. 영진위 네트워크 활용한 국비 지원. 문체부 행정 조율.
+-      P10: [B=None,S=None,C=None]17.2 대외 협력 및 정무
+-
+-========== SLIDE 72 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]2 대외 협력 및 정무
+-      P2: [B=None,S=None,C=None]직책	성명	핵심 역할
+-      P3: [B=None,S=None,C=None]상임 고문	유동수 (국회의원)	국회 차원 지원, 국비 예산 확보 교두보, 선거 국면 중립적 지원자 포지셔닝
+-      P4: [B=None,S=None,C=None]자문 위원	조광희 (전 시의원)	영종도 지역 민원 해결, 인근 주민 협조 유도, 소상공인 갈등 관리
+-      P5: [B=None,S=None,C=None]대외협력 이사	서태웅	인스파이어 경영진 직접 소통, 초기 씨드머니 담판, 인천 기업 스폰서십 유치
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 7 rows x 3 cols
++        R0: 직책 | 성명 | 핵심 역할
++        R1: 명예 위원장 | 이용관 (전 BIFF 이사장) | 상징적 권위 및 방패. BIFF 성공 신화를 인천에 이식하는 상징성. 정치적 외풍을 막는 '어른' 역할.
++        R2: 명예 위원장 | 저스틴 김 (메소드영화제 조직위원장) | 비버리힐즈 메소드영화제의 독립영화 정신을 대변. 헐리우드와의 가교 역할.
++        R3: 명예 위원장 | 돈 플랑캔 (메소드영화제 조직위원장) | 헐리우드 영화인 인맥 총동원. 영화 자본과 월가의 큰손들과의 교류 총괄.
++        R4: 추진 위원장 | 이청산 (전 BIFF 비대위원장) | 실질적 리더십 & 위기관리. '무'에서 '유'를 창조하는 추진위의 강력한 드라이브.
++        R5: 공동 위원장 | 박병용 (인스파이어 부회장) | 재정 및 조직, 업무 지원. 인스파이어 공간·설비 제공. 후원 조직 구성 관리.
++        R6: 공동 위원장 | 오석근 (전 영진위 위원장) | 정책 및 예산 설계. 영진위 네트워크 활용한 국비 지원. 문체부 행정 조율.
++  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++      P0: [B=None,S=None,C=None]1 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 컨트롤 타워 (Leadership)
+ 
+@@ -886,19 +942,40 @@
+   Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]2. Personnel
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=None,S=None,C=None]2 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 대외 협력 및 정무
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 4 rows x 3 cols
++        R0: 직책 | 성명 | 핵심역할
++        R1: 상임 고문 | 유동수 (국회의원) | 국회 차원 지원, 국비 예산 확보 교두보, 선거 국면 중립적 지원자 포지셔닝
++        R2: 자문 위원 | 조광희 (전 시의원) | 영종도 지역 민원 해결, 인근 주민 협조 유도, 소상공인 갈등 관리
++        R3: 대외협력 이사 | 서태웅 | 인스파이어 경영진 직접 소통, 초기 씨드머니 담판, 인천 기업 스폰서십 유치
++
++========== SLIDE 74 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]2. Personnel
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
+       P0: [B=None,S=None,C=None]3 글로벌 네트워크 (USA / Asia / Hollywood)
+-      P2: [B=None,S=None,C=None]직책	성명	핵심 역할
+-      P3: [B=None,S=None,C=None]해외 프로그래머	Justin Kim	메소드 섹션 총괄. 헐리우드 독립영화 감독·배우 섭외 창구.
+-      P4: [B=None,S=None,C=None]해외 프로그래머	Don Franken	헐리우드 스타 섭외. CAA, WME 등과 직접 접촉. A급 스타 및 심사위원단 섭외.
+-      P5: [B=None,S=None,C=None]아시아 전략 이사	김무전	중화권 톱스타 섭외 및 중국 거대 자본(알리바바 픽처스 등) 투자/스폰서십 연결.
+-      P6: [B=None,S=None,C=None]하와이 협력 이사	제니스 (Janice)	하와이 국제영화제 MOU 체결 실무. 교민 사회 후원 유도.
+-
+-========== SLIDE 74 ==========
+-  Layout: 제목 및 내용
+-  --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+-      P0: [B=None,S=None,C=None]4 실무 운영 및 기술/디자인
+-      P2: [B=None,S=None,C=None]직책	성명	핵심 역할
+-      P3: [B=None,S=None,C=None]총괄사업추진단장	황보진호 (최초 기안자)	Control Tower. 위원장 보좌, 전체 파트 업무 조율, 예산 집행 승인, 3개년 로드맵 관리. 모든 인맥의 허브.
+-      P4: [B=None,S=None,C=None]운영 본부장	강준 (제니스글로컬 회장)	현장 인력 및 자원봉사. 영종도 기획사 인프라 활용, 대학생 자원활동가 모집·교육.
+-      P5: [B=None,S=None,C=None]예술 감독 (AD)	노준석 (LA 디자이너)	글로벌 브랜딩. LA 트렌드 반영 CI/포스터/굿즈 디자인. 시각적 아이덴티티 '글로벌 스탠다드'로 격상.
+-      P6: [B=None,S=None,C=None]기술 감독 (CTO)	임춘우	모바일 영화제 구현. 디스커버리 파크 야외 상영 시스템, 모바일 출품 플랫폼, 아레나 영사 기술 자문.
+-      P7: [B=None,S=None,C=None]재무 감사	송승희 (세무법인 실장)	자금 투명성 확보. 예산 집행 감시, 기부금 세무 처리, 스폰서 기업 세제 혜택 자문.
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 5 rows x 3 cols
++        R0: 직책 | 성명 | 핵심 역할
++        R1: 해외 프로그래머 | Justin Kim | 메소드 섹션 총괄. 헐리우드 독립영화 감독·배우 섭외 창구.
++        R2: 해외 프로그래머 | Don Franken | 헐리우드 스타 섭외. CAA, WME 등과 직접 접촉. A급 스타 및 심사위원단 섭외.
++        R3: 아시아 전략 이사 | 김무전 | 중화권 톱스타 섭외 및 중국 거대 자본(알리바바 픽처스 등) 투자/스폰서십 연결.
++        R4: 하와이 협력 이사 | 제니스 (Janice) | 하와이 국제영화제 MOU 체결 실무. 교민 사회 후원 유도.
++
++========== SLIDE 75 ==========
++  Layout: 제목 및 내용
++  --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]2. Personnel
++  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++      P0: [B=None,S=None,C=None]4 | [B=None,S=None,C=None]. | [B=None,S=None,C=None]  실무 운영 및 기술/디자인
++  --- Shape: type=TABLE (19), name=표 4
++      TABLE: 6 rows x 3 cols
++        R0: 직책 | 성명 | 핵심역할
++        R1: 총괄사업추진단장 | 황보진호 (최초 기안자) | Control Tower. 위원장 보좌, 전체 파트 업무 조율, 예산 집행 승인, 3개년 로드맵 관리. 모든 인맥의 허브.
++        R2: 운영 본부장 | 강준 (제니스글로컬 회장) | 현장 인력 및 자원봉사. 영종도 기획사 인프라 활용, 대학생 자원활동가 모집·교육.
++        R3: 예술 감독 (AD) | 노준석 (LA 디자이너) | 글로벌 브랜딩. LA 트렌드 반영 CI/포스터/굿즈 디자인. 시각적 아이덴티티 '글로벌 스탠다드'로 격상.
++        R4: 기술 감독 (CTO) | 임춘우 | 모바일 영화제 구현. 디스커버리 파크 야외 상영 시스템, 모바일 출품 플랫폼, 아레나 영사 기술 자문.
++        R5: 재무 감사 | 송승희 (세무법인 실장) | 자금 투명성 확보. 예산 집행 감시, 기부금 세무 처리, 스폰서 기업 세제 혜택 자문.

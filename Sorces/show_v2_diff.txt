@@ -1,0 +1,427 @@
+--- show_v1
++++ show_v2
+@@ -32,10 +32,10 @@
+   --- Shape: type=AUTO_SHAPE (1), name=부제목 2
+       P0: [B=False,S=381000,C=8C8C8C]Cinematic Insights from  I | [B=False,S=381000,C=8C8C8C]NSPIRE | [B=False,S=381000,C=8C8C8C] Resort
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 13
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]영화 · 음악 · 테크놀로지 · K-컬처가  융합된 영화 플랫폼
+ 
+ ========== SLIDE 3 ==========
+   Layout: 제목 및 내용
+-  --- Shape: type=AUTO_SHAPE (1), name=직사각형 4
++  --- Shape: type=AUTO_SHAPE (1), name=
+       P0: [B=True,S=635000,C=BFBFBF]PART 1
+       P2: [B=False,S=228600,C=000000]                    | [B=False,S=228600,C=000000]소개 · Introduction
+@@ -74,11 +74,11 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. What is IIFF?
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]See, enjoy, create, evaluate each other, and spread it.
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]We meet across borders, dream together, and act together.
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]The one and only film festival in the universe that opens a new era
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 6
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]Incheon will now become the gateway to a new era, breaking down old boundaries.
+ 
+@@ -303,5 +303,5 @@
+ ========== SLIDE 26 ==========
+   Layout: 제목 및 내용
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=True,S=635000,C=BFBFBF]PART  | [B=True,S=635000,C=BFBFBF]2
+       P2: [B=False,S=228600,C=000000]                  프로그램 | [B=False,S=228600,C=000000] ·  | [B=False,S=228600,C=000000]programs
+@@ -366,8 +366,8 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Star Invitation & Camp
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None] 헐리우드 스타 초청 전략
+       P2: [B=None,S=None,C=None]헐리우드 현지 법인 또는 에이전시(CAA, WME, UTA)를 통한 직접적 초청 루트를 확보합니다. 출연료, 체류비, 의전 사항은 국제 기준의 Rider 계약으로 사전 합의합니다.
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 초청대상 (예시) | 섭외 채널 | 프로그램 연계
+@@ -404,5 +404,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Star Invitation & Camp
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 2 cols
+         R0: 항목 | 내용
+@@ -412,5 +412,5 @@
+         R4: Rider 사항 | 식이요법, 선호 차량, 동반인 체류, PR 제한 사항 등 사전 계약
+         R5: 보험 | 초청 게스트 상해보험, 배상 책임 보험 별도 가입
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None] 의전 및 VIP 관리
+ 
+@@ -419,5 +419,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]3. Daily Simulation
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 13 rows x 4 cols
+         R0: 시간 | 장소 | 프로그램 | 상세내용
+@@ -434,7 +434,7 @@
+         R11: 21:00~23:00 | 디스커버리 파크 | 🎶 K-팝 콘서트 & 야외 상영 | 미니 라이브 공연 후 야외 대형 스크린 상영
+         R12: 23:00~ | 디스커버리 파크 | 🔥 캠프파이어 & 네트워킹 | 영화인·관객·캠퍼 자유 교류, DJ 세트
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]"관객이 아침에 도착해서 밤늦게까지 머무르는" 체류형 영화제의 하루
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=177800,C=None]핵심 포인트: 관객은 CGV에서 영화를 보고, 아레나에서 갈라를 경험하고, 디스커버리 파크에서 캠핑과 K-컬처를 즐기며, MICE에서 비즈니스 미팅을 한다. 하루 종일 다양한 콘텐츠가 끊임없이 이어지는 체류형 영화제의 완성.
+ 
+@@ -443,5 +443,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. Civic Participation
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 4 cols
+         R0: 구분 | 프로그램 명 | 역할 및 혜택 | 연계 특징
+@@ -453,5 +453,5 @@
+ ========== SLIDE 37 ==========
+   Layout: 제목 및 내용
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=True,S=635000,C=BFBFBF]PART  | [B=True,S=635000,C=BFBFBF]3
+       P2: [B=False,S=228600,C=000000]                  실행전략 | [B=False,S=228600,C=000000] ·  | [B=False,S=228600,C=000000]stratery
+@@ -461,5 +461,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Core Strategy
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 7 rows x 4 cols
+         R0: 번호 | 핵심 특징 | 영화제 비젼 | 구체적 실현 전략
+@@ -485,5 +485,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Organization
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 9 rows x 3 cols
+         R0: 그룹 | 조직 역할 | 주요 임무 및 참여 명분
+@@ -536,5 +536,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. 공간 활용 및 프로그램 배치 계획
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 장소 | 주요 프로그램 | 활용특징
+@@ -568,4 +568,5 @@
+   Layout: 제목 및 내용
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]
+   --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+       P0: [B=None,S=None,C=None]2 조직위원회 구조
+@@ -587,5 +588,6 @@
+   Layout: 제목 및 내용
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+-  --- Shape: type=TABLE (19), name=표 3
++      P0: [B=None,S=None,C=None]
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 조직 | 확인 방법 (KPI) | 달성 기준
+@@ -594,5 +596,5 @@
+         R3: 운영팀 | 시설 안전 점검 필증 | D-1개월 전 모든 시설 안전 검사 '적합' 판정
+         R4: 대외협력팀 | 스폰서십 입금 달성률 | D-2개월 전 목표 후원금 100% 약정 체결
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3  팀별 KPI (핵심 성과 지표)
+ 
+@@ -601,5 +603,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]5. Space & Partners
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 공간 | 면적 / 규모 | 영화제 활용 프로그램
+@@ -613,4 +615,5 @@
+   Layout: 제목 및 내용
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
++      P0: [B=None,S=None,C=None]
+   --- Shape: type=PLACEHOLDER (14), name=내용 개체 틀 2
+       P0: [B=None,S=None,C=None]2 인천 도심 연계 전략
+@@ -625,5 +628,6 @@
+   Layout: 제목 및 내용
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+-  --- Shape: type=TABLE (19), name=표 3
++      P0: [B=None,S=None,C=None]
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 발굴 카테고리 | 잠재적 협력 파트너 (예시) | 영화제 기여 역할
+@@ -632,5 +636,5 @@
+         R3: K-팝·엔터 | 하이브, JYP, SM | 미니 콘서트, 팬미팅, K-팝 스타 레드카펫
+         R4: K-관광 | 인천관광공사, 한국관광공사 | 외국인 관광 패키지, 팸투어 운영
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3 K-컬처 파트너 네트워크
+ 
+@@ -655,5 +659,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]6. BIFF Comparison
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 8 rows x 3 cols
+         R0: 비교항목 | BIFF(부산국제영화제) | IIFF(인천국제영화제)
+@@ -665,10 +669,10 @@
+         R6: 헐리우드 연계 | 매년 할리우드 스타 초청 (수동적) | Method Fest 공동 운영 (구조적 연결)
+         R7: 차별화 무기 | 30년 축적된 권위와 네트워크 | 모바일 영화제, 야영 캠프, K-컬처 융합, 인스파이어 인프라
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]선배 영화제의 성과를 '벤치마크'로, IIFF만의 차별점을 '전략적 무기'로 삼는다
+ 
+ ========== SLIDE 53 ==========
+   Layout: 제목 및 내용
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=True,S=635000,C=BFBFBF]PART  | [B=True,S=635000,C=BFBFBF]4
+       P2: [B=False,S=228600,C=000000]                  재무 | [B=False,S=228600,C=000000] ·  | [B=False,S=228600,C=000000]Finance
+@@ -678,7 +682,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Budget Plan
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=165100,C=None]제1회 기준, 30억 원 규모
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 항목 | 금액 | 비율
+@@ -688,5 +692,5 @@
+         R4: 기타 (재단 기금 등) | 2억 원 | 6.7%
+         R5: 합계 | 30억 원 | 100%
+-  --- Shape: type=AUTO_SHAPE (1), name=직사각형 5
++  --- Shape: type=AUTO_SHAPE (1), name=
+       P0: [B=False,S=None,C=None]재원 확보 (Revenues)
+ 
+@@ -695,7 +699,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Budget Plan
+-  --- Shape: type=AUTO_SHAPE (1), name=직사각형 3
++  --- Shape: type=AUTO_SHAPE (1), name=
+       P0: [B=False,S=203200,C=None]지출 항목 (Expenses)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 7 rows x 3 cols
+         R0: 항목 | 금액 | 비율
+@@ -711,5 +715,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Budget Plan
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]재원 확보 전략
+       P2: [B=None,S=None,C=None]❶ 정부/지자체 지원: 인천시, 문체부, 영화진흥위원회 등 공적 지원금 유치
+@@ -722,5 +726,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Cash Flow
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 11 rows x 6 cols
+         R0: 구분 | 1분기 (D-12~9) / 추진위 단계 | 2분기 (D-8~6) / 조직위 출범 | 3분기 (D-5~3) / 본격 준비 | 4분기 (D-2~D+1) / 개최 및 정산 | 합계
+@@ -735,7 +739,7 @@
+         R9: › 시설/제작비 | 30 | 100 | 150 | 420 | 700
+         R10: 현금 잔액 | +50 | +250 | +350 | 0 | 0
+-  --- Shape: type=AUTO_SHAPE (1), name=직사각형 4
++  --- Shape: type=AUTO_SHAPE (1), name=
+       P0: [B=False,S=118110,C=None](단위: 백만 원)
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 7
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=165100,C=None]★ 3분기 관리 중요: 마케팅과 헐리우드 게스트 선급금이 대거 지출되므로, 스폰서십 2차 후원금이 제때 들어오도록 독려
+       P1: [B=None,S=165100,C=None]★ 예비비 확보: 전체 예산의 5~10%는 예비비로 편성하여 우천, 환율 변동, 안전 사고 등 돌발 변수 대비
+@@ -745,5 +749,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]3. Initial Budget
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 항목 | 금액  / (백만 원) | 용도
+@@ -753,5 +757,5 @@
+         R4: 홍보물 및 자료 제작 | 30 | 비전 선포 자료, 홈페이지, 로고/디자인
+         R5: 총계 | 250 | (한화 2억 5천만 원)
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]추진위원회 초기 경비 (약 6개월)
+ 
+@@ -760,7 +764,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]3. Initial Budget
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=False,S=228600,C=000000]50:50 매칭 펀딩 전략
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 4 rows x 3 cols
+         R0: 단계 | 전략 | 목표 금액
+@@ -773,7 +777,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. Sponsorship Plan
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]1 스폰서십 등급 (Tier System)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 등급 | 금액 기준 | 주요 혜택
+@@ -787,7 +791,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. Sponsorship Plan
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]2 타겟 스폰서 업종 및 접근 전략
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 7 rows x 4 cols
+         R0: 업종 | 타겟 기업 (예시) | 연계 가능 프로그램 | 접근 방식
+@@ -803,7 +807,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]4. Sponsorship Plan
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3개년 스폰서십 전략
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 4 rows x 3 cols
+         R0: 연차 | 전략 | 스폰서십 목표
+@@ -816,7 +820,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]5. Marketing Strategy
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]1 글로벌 인지도 확보 (전문성 강조)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 4 rows x 2 cols
+         R0: 전략 | 세부 활동
+@@ -829,7 +833,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]5. Marketing Strategy
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]2 대중 참여 및 바이럴 (참여성 강조)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 4 rows x 2 cols
+         R0: 전략 | 세부 활동
+@@ -842,7 +846,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]세부 활동
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3 홍보 콘텐츠 및 프로모션 타임라인
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 콘텐츠 | 내용 | 시기
+@@ -854,5 +858,5 @@
+ ========== SLIDE 66 ==========
+   Layout: 제목 및 내용
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=True,S=635000,C=BFBFBF]PART  | [B=True,S=635000,C=BFBFBF]5
+       P2: [B=False,S=228600,C=000000]                  거버넌스 | [B=False,S=228600,C=000000] ·  | [B=False,S=228600,C=000000]Governance
+@@ -862,9 +866,9 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]핵심 전략: "先 민간 주도(준비) → 後 관(官) 추인(개최)"
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]★ 2026년 6월 지방선거 변수는 영화제의 생존과 지속성을 결정짓는 가장 중요한 요소. '특정 정당이나 현직에 치우치지 않고, 선거 국면을 오히려 동력으로 활용하는' 고도의 정치적 솔루션이 필요하다.
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]★ 여야 후보 모두가 "내가 당선되면 이 영화제를 적극 지원하겠다"고 서약하게 만드는 '역제안 전략'
+ 
+@@ -873,5 +877,5 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=TABLE (19), name=표 3
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 4 cols
+         R0: 단계 | 시기 | 정치적 상황 | 영화제 추진 핵심 과제
+@@ -886,7 +890,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]1 | [B=None,S=None,C=None]. | [B=None,S=None,C=None]  비당파 추진위원회 구성 원칙
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]★ 위원장 : 영화제 관련 문화계 원로 (경제 활성화 명분은 여야 막론 반대 불가)
+       P2: [B=None,S=None,C=None]★ 공동 위원장 : 인스파이어 리조트 대표, 인천상공회의소 회장
+@@ -898,7 +902,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]2 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 후보 대상 MOU 전략
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 4
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None] 제안서 타이틀: 
+       P1: [B=None,S=None,C=None]"Global Incheon 2026: 아시아와 헐리우드를 잇는 문화 경제 플랫폼 제안"
+@@ -911,7 +915,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]1. Risk Management
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3 선거 전후 업무 분장 (Shadow Operation)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 시기 | 추진위원회 (민간)역할 | 정치권/인천시 역할
+@@ -925,7 +929,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Personnel
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]BIFF 노하우를 가진 '영화계 원로'를 전면에, '실무 전문가'가 허리가 되어 현장을 뛰는 구조
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 7 rows x 3 cols
+         R0: 직책 | 성명 | 핵심 역할
+@@ -936,5 +940,5 @@
+         R5: 공동 위원장 | 박병용 (인스파이어 부회장) | 재정 및 조직, 업무 지원. 인스파이어 공간·설비 제공. 후원 조직 구성 관리.
+         R6: 공동 위원장 | 오석근 (전 영진위 위원장) | 정책 및 예산 설계. 영진위 네트워크 활용한 국비 지원. 문체부 행정 조율.
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 5
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]1 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 컨트롤 타워 (Leadership)
+ 
+@@ -943,7 +947,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Personnel
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]2 | [B=None,S=None,C=None]. | [B=None,S=None,C=None] 대외 협력 및 정무
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 4 rows x 3 cols
+         R0: 직책 | 성명 | 핵심역할
+@@ -956,7 +960,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Personnel
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]3 글로벌 네트워크 (USA / Asia / Hollywood)
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 5 rows x 3 cols
+         R0: 직책 | 성명 | 핵심 역할
+@@ -970,7 +974,7 @@
+   --- Shape: type=PLACEHOLDER (14), name=제목 1
+       P0: [B=None,S=None,C=None]2. Personnel
+-  --- Shape: type=TEXT_BOX (17), name=TextBox 3
++  --- Shape: type=TEXT_BOX (17), name=
+       P0: [B=None,S=None,C=None]4 | [B=None,S=None,C=None]. | [B=None,S=None,C=None]  실무 운영 및 기술/디자인
+-  --- Shape: type=TABLE (19), name=표 4
++  --- Shape: type=TABLE (19), name=
+       TABLE: 6 rows x 3 cols
+         R0: 직책 | 성명 | 핵심역할
+@@ -980,2 +984,3 @@
+         R4: 기술 감독 (CTO) | 임춘우 | 모바일 영화제 구현. 디스커버리 파크 야외 상영 시스템, 모바일 출품 플랫폼, 아레나 영사 기술 자문.
+         R5: 재무 감사 | 송승희 (세무법인 실장) | 자금 투명성 확보. 예산 집행 감시, 기부금 세무 처리, 스폰서 기업 세제 혜택 자문.
++
