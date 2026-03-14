@@ -623,40 +623,7 @@
             z-index: 101;
         }
 
-        /* PRINT */
-        @media print {
-            @page {
-                size: 33.87cm 19.05cm;
-                margin: 0;
-            }
-
-            html,
-            body {
-                width: 33.87cm;
-                height: 19.05cm;
-                overflow: visible !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            .nav-bar,
-            .progress {
-                display: none !important;
-            }
-
-            .slides-wrapper {
-                position: static;
-            }
-
-            .slide {
-                position: relative !important;
-                display: flex !important;
-                width: 33.87cm !important;
-                height: 19.05cm !important;
-                page-break-after: always !important;
-                break-after: page !important;
-            }
-        }
+        
     
 
 /* FIX: Override base .slide to allow scrolling and clear nav bar */
@@ -724,58 +691,7 @@
 /* SPLIT */
 .split-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 2vh; position: relative; z-index:1; }
 
-/* PRINT: content flows to next page if needed */
-@media print {
-    @page { size: 33.87cm 19.05cm; margin: 0; }
-    html, body {
-        width: 33.87cm;
-        height: auto;
-        overflow: visible !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .nav-bar, .progress { display: none !important; }
-    .slides-wrapper {
-        position: static !important;
-        width: 33.87cm;
-        display: block !important;
-    }
-    .slide {
-        position: relative !important;
-        display: block !important;
-        width: 33.87cm !important;
-        min-height: 19.05cm !important;
-        height: auto !important;
-        max-height: none !important;
-        overflow: visible !important;
-        padding: 1.2cm 2cm !important;
-        padding-bottom: 1.5cm !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        box-sizing: border-box !important;
-        justify-content: flex-start !important;
-    }
-    .slide .print-inner {
-        width: 100%;
-        display: block;
-    }
-    /* Cover & section divider slides: fixed 1-page */
-    .slide-cover, .slide-section, .slide-end {
-        height: 19.05cm !important;
-        min-height: 19.05cm !important;
-        max-height: 19.05cm !important;
-        overflow: hidden !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    /* Prevent breaking inside key elements */
-    .s-card, .s-highlight, .s-phase, .org-box { break-inside: avoid; page-break-inside: avoid; }
-    table { page-break-inside: auto; }
-    tr { break-inside: avoid; page-break-inside: avoid; }
-    /* Ensure all slides visible */
-    .slide { opacity: 1 !important; display: block !important; }
-}
+
 
     
     /* Premium UI Overrides */
@@ -848,8 +764,11 @@
     }
 
 
+        
+
+    
         /* =========================================
-           PRINT OPTIMIZATION (PDF EXPORT)
+           GOLDEN PRINT OPTIMIZATION (PDF EXPORT)
            ========================================= */
         @media print {
             @page {
@@ -859,8 +778,8 @@
             
             html, body {
                 width: 100%;
-                height: auto !important;
-                background-color: var(--bg) !important;
+                height: 100% !important; /* Let content dictate height but reset it */
+                background-color: #FFFFFF !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 color-adjust: exact !important;
@@ -870,36 +789,56 @@
             }
             
             /* Break the absolute positioned slider constraints */
-            #slider {
+            .slides-wrapper, #slider {
                 width: 100% !important;
                 height: auto !important;
-                position: relative !important;
+                position: static !important;
                 overflow: visible !important;
                 display: block !important;
             }
             
-            /* Force all slides to be visible, stacked, and page-breaking */
+            /* Force all slides to be visible, stacked, and softly page-breaking */
             .slide {
                 position: relative !important;
                 width: 100vw !important;
-                height: 100vh !important; /* Force exact screen size per page */
-                max-height: 100vh !important;
+                height: auto !important;     /* ALLOW SLIDE TO GROW FOR PDF PAGINATION */
+                max-height: none !important; /* ALLOW SLIDE TO GROW FOR PDF PAGINATION */
                 min-height: 100vh !important;
+                box-sizing: border-box !important;
+                padding: 1.5cm 2cm !important; /* Provide print margin inside the slide */
+                margin: 0 !important;
+                
+                /* Page break logic */
                 page-break-after: always !important;
-                page-break-inside: avoid !important;
+                /* REMOVED: page-break-inside: avoid !important; -> Let browser paginate naturally! */
                 break-after: page !important;
+                
+                /* Visibility logic */
                 opacity: 1 !important;
                 visibility: visible !important;
-                display: flex !important;
                 transform: none !important;
                 z-index: 1 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                background-color: transparent !important; /* Managed by .slide before/after or inline */
+                
+                /* Flex layout logic - override original flex so content doesn't squeeze */
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+            }
+            
+            /* Center the cover and section slides perfectly */
+            .slide.slide-cover, .slide.slide-section, .slide.slide-end {
+                justify-content: center !important;
+            }
+            
+            /* The inner wrapper should take full width normally */
+            .slide .print-inner {
+                width: 100% !important;
+                display: block !important;
             }
             
             /* Hide UI controls */
-            #nav-bar, .controls, button, .nav-btn, .print-btn {
+            #nav-bar, .progress, .controls, button, .nav-btn, .print-btn {
                 display: none !important;
             }
             
@@ -912,9 +851,11 @@
             }
             
             /* Give cards crisp borders instead of shadows */
-            .s-card {
+            .s-card, .org-box {
                 border: 1px solid rgba(0, 0, 0, 0.2) !important;
                 background-color: #FFFFFF !important;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
             }
             
             /* Ensure charts fit */
@@ -963,22 +904,22 @@
     <div class="cover-ver">2026.02. — Insights from INSPIRE</div>
 </div>
 
-<div class="slide slide-cover" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#1a1a2e 100%)">
+<div class="slide slide-cover" style="background:linear-gradient(135deg,#F5F5F7 0%,#FFFFFF 50%,#F5F5F7 100%)">
     <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:clamp(60px,10vw,120px);margin:0 auto 1vh;display:block;position:relative;z-index:1;">
     <div class="cover-sub" style="color:rgba(201,168,76,0.7)">〔NEXT WAVE〕</div>
-    <div class="cover-tag" style="color:rgba(255,255,255,0.85);max-width:700px">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
+    <div class="cover-tag" style="color:var(--text-dim); font-weight: 600;;max-width:700px">아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</div>
     <div style="margin-top:4vh;display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;position:relative;z-index:1">
-        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
-            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">헐리우드와 공동제작, 투자, 배급 실전협업 영화제</p>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:#FFFFFF;border-color:rgba(0,0,0,0.15)">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:0.85rem">헐리우드와 공동제작, 투자, 배급 실전협업 영화제</p>
         </div>
-        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
-            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">상업영화와 독립영화가 공존하는 영화제</p>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:#FFFFFF;border-color:rgba(0,0,0,0.15)">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:0.85rem">상업영화와 독립영화가 공존하는 영화제</p>
         </div>
-        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
-            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">참여하고 공동창작하고 즐기는 잼보리형 영화제</p>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:#FFFFFF;border-color:rgba(0,0,0,0.15)">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:0.85rem">참여하고 공동창작하고 즐기는 잼보리형 영화제</p>
         </div>
-        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:rgba(255,255,255,0.05);border-color:rgba(201,168,76,0.2)">
-            <p style="color:rgba(255,255,255,0.8);font-size:0.85rem">온라인 오프라인 365일 영화제</p>
+        <div class="s-card" style="flex:1;min-width:200px;max-width:280px;background:#FFFFFF;border-color:rgba(0,0,0,0.15)">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:0.85rem">온라인 오프라인 365일 영화제</p>
         </div>
     </div>
     <div style="margin-top:3vh;position:relative;z-index:1">
@@ -1048,20 +989,20 @@
 <div class="slide slide-cover" style="background:linear-gradient(135deg,#F5F5F7 0%,#FFFFFF 50%,#F5F5F7 100%)">
     <img src="Sorces/IIFF dark.png" alt="IIFF" style="height:50px;margin:0 auto 2rem;display:block;position:relative;z-index:1;opacity:0.4">
     <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:2rem;position:relative;z-index:1">
-        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
-            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">See, enjoy, create, evaluate each other, and spread it.</p>
+        <div class="s-card" style="background:#FFFFFF;border-color:rgba(0,0,0,0.15);padding:2rem">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:1rem;line-height:1.7">See, enjoy, create, evaluate each other, and spread it.</p>
             <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">보고, 즐기고, 만들고, 서로 평가하고, 퍼뜨린다.</p>
         </div>
-        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
-            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">We meet across borders, dream together, and act together.</p>
+        <div class="s-card" style="background:#FFFFFF;border-color:rgba(0,0,0,0.15);padding:2rem">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:1rem;line-height:1.7">We meet across borders, dream together, and act together.</p>
             <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">국경을 넘어 만나고, 함께 꿈꾸고, 함께 행동한다.</p>
         </div>
-        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
-            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">The one and only film festival in the universe that opens a new era</p>
+        <div class="s-card" style="background:#FFFFFF;border-color:rgba(0,0,0,0.15);padding:2rem">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:1rem;line-height:1.7">The one and only film festival in the universe that opens a new era</p>
             <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">새로운 시대를 여는 세상에서 단 하나뿐인 영화제</p>
         </div>
-        <div class="s-card" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);padding:2rem">
-            <p style="color:rgba(255,255,255,0.9);font-size:1rem;line-height:1.7">Incheon will now become the gateway to a new era, breaking down old boundaries.</p>
+        <div class="s-card" style="background:#FFFFFF;border-color:rgba(0,0,0,0.15);padding:2rem">
+            <p style="color:var(--text-main); font-weight: 600;;font-size:1rem;line-height:1.7">Incheon will now become the gateway to a new era, breaking down old boundaries.</p>
             <p style="color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem">인천은 이제 낡은 경계를 허물고 새로운 시대의 관문이 됩니다.</p>
         </div>
     </div>
