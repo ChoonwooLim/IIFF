@@ -11,17 +11,22 @@ def css():
     *, *::before, *::after {{ margin:0; padding:0; box-sizing:border-box; }}
     html, body {{
         width:100vw; height:100vh;
-        display:flex; flex-direction:column; align-items:center; justify-content:center;
-        background:#d4d0c8;
+        display:flex; flex-direction:row;
+        background:#2a2825;
         font-family:'Inter','Noto Sans KR',sans-serif;
         overflow:hidden;
+    }}
+
+    /* ── Main area: fills space left of sidebar ────────── */
+    #main {{
+        flex:1; display:flex; align-items:center; justify-content:center;
+        background:#2a2825; overflow:hidden; position:relative;
     }}
 
     /* ── Slide scene: always A4 landscape, scaled to fit ── */
     .scene {{
         width:{A4_W}px; height:{A4_H}px;
-        /* Scale down so the slide fits the browser viewport */
-        transform-origin: top center;
+        transform-origin: center center;
         position:relative; flex-shrink:0;
     }}
 
@@ -202,32 +207,109 @@ def css():
     .pf    {{ height:100%; border-radius:4px; background:linear-gradient(90deg,#c9a84c,#9a7b2f); }}
     .pv    {{ font-size:9px; color:#9a7b2f; font-weight:600; min-width:32px; text-align:right; }}
 
-    /* ── Nav bar ──────────────────────────────────────── */
-    #nav {{
-        display:flex; align-items:center; justify-content:space-between;
-        width:{A4_W}px; height:40px; background:rgba(248,247,244,.95);
-        border-top:1px solid rgba(180,155,90,.2); padding:0 24px;
-        box-shadow:0 -4px 20px rgba(0,0,0,.06); flex-shrink:0; z-index:50;
+    /* ── Left Sidebar ────────────────────────────────────── */
+    #sidebar {{
+        width:92px; height:100vh; flex-shrink:0;
+        background:linear-gradient(180deg,#1c1a17 0%,#231f1b 100%);
+        border-right:1px solid rgba(201,168,76,.12);
+        display:flex; flex-direction:column; align-items:center;
+        padding:20px 0 16px; z-index:100;
+        box-shadow:4px 0 30px rgba(0,0,0,.5);
     }}
-    #nav .brand {{ font-size:7.5px; letter-spacing:3.5px; color:#aaa; text-transform:uppercase; }}
-    .ctrl {{ display:flex; align-items:center; gap:10px; }}
-    .btn {{ width:30px; height:30px; border-radius:50%; border:1px solid rgba(180,155,90,.3);
-        background:#fff; color:#333; cursor:pointer; display:flex; align-items:center;
-        justify-content:center; font-size:11px; transition:.2s; }}
-    .btn:hover {{ background:#c9a84c; color:#fff; border-color:#c9a84c; }}
-    .ctr {{ font-size:9px; font-weight:500; color:#666; min-width:50px; text-align:center; }}
-    .tls {{ display:flex; gap:6px; }}
-    .tbtn {{ padding:4px 12px; border-radius:14px; border:1px solid rgba(180,155,90,.25);
-        background:transparent; color:#777; font-size:8px; cursor:pointer; transition:.2s; }}
-    .tbtn:hover {{ background:rgba(201,168,76,.12); color:#9a7b2f; border-color:#c9a84c; }}
+    /* Logo at top */
+    .sb-logo {{ width:60px; filter:invert(1) brightness(.8); margin-bottom:20px; }}
+    /* Thin divider */
+    .sb-sep {{ width:36px; height:1px; background:rgba(201,168,76,.2); margin:10px 0; }}
+    /* Navigation buttons */
+    .sb-btn {{
+        width:50px; height:50px; border-radius:15px; border:none;
+        background:transparent; color:rgba(255,255,255,.45); cursor:pointer;
+        display:flex; align-items:center; justify-content:center;
+        font-size:18px; transition:.2s; margin:3px 0;
+    }}
+    .sb-btn:hover {{ background:rgba(201,168,76,.18); color:#c9a84c; }}
+    /* Progress ring */
+    .sb-ring {{ margin:10px 0; position:relative; width:62px; height:62px; }}
+    .sb-ring svg {{ position:absolute; inset:0; transform:rotate(-90deg); }}
+    .sb-ring-bg {{ fill:none; stroke:rgba(255,255,255,.06); stroke-width:5; }}
+    .sb-ring-fill {{ fill:none; stroke:#c9a84c; stroke-width:5; stroke-linecap:round;
+        stroke-dasharray:170; stroke-dashoffset:170; transition:stroke-dashoffset .45s ease; }}
+    .sb-ring-label {{ position:absolute; inset:0; display:flex; flex-direction:column;
+        align-items:center; justify-content:center; }}
+    .sb-ring-cur {{ font-size:16px; font-family:'Playfair Display',serif;
+        font-weight:700; color:#c9a84c; line-height:1; }}
+    .sb-ring-total {{ font-size:7px; color:rgba(255,255,255,.35); letter-spacing:1px; }}
+    /* Tool buttons at bottom */
+    .sb-tools {{ margin-top:auto; display:flex; flex-direction:column; align-items:center; gap:2px; }}
+    .sb-tool {{
+        width:52px; height:42px; border-radius:12px; border:none;
+        background:transparent; color:rgba(255,255,255,.3); cursor:pointer;
+        display:flex; flex-direction:column; align-items:center; justify-content:center;
+        font-size:15px; transition:.2s; gap:2px;
+    }}
+    .sb-tool-label {{ font-size:6px; letter-spacing:.5px; text-transform:uppercase;
+        color:rgba(255,255,255,.2); }}
+    .sb-tool:hover {{ background:rgba(201,168,76,.12); color:rgba(201,168,76,.9); }}
+    .sb-tool:hover .sb-tool-label {{ color:rgba(201,168,76,.6); }}
 
-    /* ── Progress strip ──────────────────────────────── */
-    #prg {{ width:{A4_W}px; height:3px; background:rgba(180,155,90,.15); flex-shrink:0; }}
-    #prg-fill {{ height:100%; background:linear-gradient(90deg,#c9a84c,#9a7b2f); transition:width .35s ease; }}
+    /* ── Thumbnail Panel ──────────────────────────────────── */
+    #thumb-panel {{
+        width:0; height:100vh; overflow:hidden; flex-shrink:0;
+        background:#18160f; border-right:1px solid rgba(201,168,76,.1);
+        transition:width .3s ease; z-index:90;
+        display:flex; flex-direction:column;
+    }}
+    #thumb-panel.open {{ width:160px; }}
+    #thumb-list {{
+        flex:1; overflow-y:auto; padding:12px 8px; display:flex;
+        flex-direction:column; gap:8px;
+        scrollbar-width:thin; scrollbar-color:rgba(201,168,76,.3) transparent;
+    }}
+    #thumb-list::-webkit-scrollbar {{ width:4px; }}
+    #thumb-list::-webkit-scrollbar-thumb {{ background:rgba(201,168,76,.3); border-radius:2px; }}
+    .th-item {{
+        flex-shrink:0; cursor:pointer; border-radius:8px; overflow:hidden;
+        border:2px solid transparent; transition:.2s;
+        position:relative;
+    }}
+    .th-item:hover {{ border-color:rgba(201,168,76,.5); }}
+    .th-item.th-active {{ border-color:#c9a84c; }}
+    /* Mini slide preview: aspect ratio 297:210 = ~1.414:1 */
+    .th-slide {{
+        width:140px; height:99px;
+        background:linear-gradient(135deg,#f9f8f5 60%,#f0ece3);
+        position:relative; overflow:hidden;
+        display:flex; flex-direction:column; justify-content:flex-end;
+        padding:6px 6px 4px;
+    }}
+    .th-slide .th-num {{
+        position:absolute; top:4px; left:6px;
+        font-size:9px; font-weight:700; color:rgba(201,168,76,.7);
+        font-family:'Playfair Display',serif;
+    }}
+    .th-slide .th-bar {{
+        position:absolute; top:0; left:0; width:3px; height:100%;
+        background:linear-gradient(180deg,#c9a84c,#9a7b2f);
+    }}
+    .th-slide .th-title {{
+        font-size:7px; font-weight:600; color:#1a1a2e;
+        line-height:1.35; word-break:keep-all;
+        display:-webkit-box; -webkit-line-clamp:3;
+        -webkit-box-orient:vertical; overflow:hidden;
+        padding-left:6px;
+    }}
+    .th-label {{
+        background:#111; padding:3px 6px;
+        font-size:6.5px; color:rgba(255,255,255,.35); text-align:center;
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }}
+    /* Thumb toggle button */
+    .sb-thumb-toggle {{ margin-bottom:4px; }}
 
     /* ── Print (true A4) ─────────────────────────────── */
     @media print {{
         html, body {{ background:#fff !important; display:block !important; }}
+        #sidebar {{ display:none !important; }}
         .scene {{
             width:{A4_W}px !important; height:{A4_H}px !important;
             transform:none !important; position:static !important;
@@ -235,8 +317,12 @@ def css():
         }}
         .slide {{ display:flex !important; opacity:1 !important; position:static !important;
             width:{A4_W}px !important; height:{A4_H}px !important; }}
-        #nav, #prg {{ display:none !important; }}
     }}
+
+    /* ── Logo usage ──────────────────────────────────── */
+    .logo-cover   {{ height:100px; margin-bottom:4px; }}
+    .logo-corner  {{ position:absolute; top:12px; right:18px; height:34px; opacity:.5; z-index:10; }}
+    .logo-section {{ height:64px; opacity:.8; margin-bottom:12px; }}
     """
 
 # ── SVG helpers ────────────────────────────────────────────────
@@ -382,30 +468,74 @@ def build():
 
         # ── COVER ──────────────────────────────────────────────
         if s['layout']=='제목 슬라이드' or idx==0:
-            sub = " ".join(all_txts[:2]) if all_txts else "인천국제영화제 추진위원회 2026"
-            h = f"""
-<div class="slide" id="s{idx}">
-  {deco(dv)}
-  <div class="layer">
-    <div class="cover-row">
-      <div class="cover-left">
-        <div class="cover-eyebrow">INCHEON INTERNATIONAL FILM FESTIVAL · 2026</div>
-        <h1 class="cover-h1">IIFF<br><em>NextWave</em></h1>
-        <p class="cover-tagline">{sub}</p>
-        <div class="cover-meta">
-          <div class="cover-meta-item"><label>개최 연도</label><span>2026</span></div>
-          <div class="cover-meta-item"><label>장소</label><span>인천광역시</span></div>
-          <div class="cover-meta-item"><label>파트너</label><span>Method Fest</span></div>
-        </div>
-      </div>
-      <div class="cover-right">{svg_ring()}</div>
-    </div>
-  </div>
-</div>"""
+            holes = ''.join(
+                f'<rect x="6" y="{16+i*34}" width="18" height="20" rx="3" fill="#e8e4da"/>'
+                for i in range(22)
+            )
+            film = (
+                f'<svg width="36" height="{A4_H}" viewBox="0 0 36 {A4_H}" xmlns="http://www.w3.org/2000/svg">'
+                f'<rect width="36" height="{A4_H}" fill="#e0dbd0"/>'
+                f'{holes}'
+                f'<rect x="34" y="0" width="2" height="{A4_H}" fill="rgba(0,0,0,.06)"/>'
+                f'</svg>'
+            )
+            title_div = (
+                '<div style="font-size:17px;letter-spacing:8px;text-transform:uppercase;'
+                'color:#9a7b2f;font-weight:700;font-family:\'Inter\',sans-serif;margin-bottom:28px;">'
+                'INCHEON INTERNATIONAL FILM FESTIVAL</div>'
+            )
+            sep = '<div style="width:80px;height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:0 auto 36px;"></div>'
+            logo = '<img src="Sorces/IIFF dark.png" style="height:180px;margin-bottom:48px;" alt="IIFF">'
+            line1 = '<p style="font-size:14px;color:#3a3a3a;letter-spacing:1.5px;margin-bottom:14px;">인첬국제영화제 IIFF 추진위원회</p>'
+            line2 = '<p style="font-size:12px;color:#8a8070;letter-spacing:1px;">2026.02. — Insights from INSPIRE</p>'
+            h = (
+                f'<div class="slide" id="s{idx}">'
+                f'<div style="position:absolute;inset:0;background:linear-gradient(160deg,#fdfcf8 60%,#f5efe0);z-index:0"></div>'
+                f'<div style="position:absolute;top:0;left:0;bottom:0;z-index:1;opacity:.9">{film}</div>'
+                f'<div style="position:absolute;top:0;right:0;bottom:0;z-index:1;opacity:.9;transform:scaleX(-1)">{film}</div>'
+                f'<div class="layer" style="align-items:center;justify-content:center;text-align:center;gap:0;padding:40px 90px;">'
+                f'{title_div}{sep}{logo}{line1}{line2}'
+                f'</div></div>'
+            )
+            slides_html.append(h); continue
+
+
+        # ── SLIDE 2 ── exact reference match ───────────────────────────────────
+        if idx == 1:
+            _c1 = "헐리우드와 공동제작, 투자, 배급 실전협업 영화제"
+            _c2 = "상업영화와 독립영화가 공존하는 영화제"
+            _c3 = "참여하고 공동창작하고 즐기는 잠보리형 영화제"
+            _c4 = "온라인 오프라인 365일 영화제"
+            _cs = "background:#fff;border-radius:18px;border:1px solid rgba(180,155,90,.15);padding:28px 22px;flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13.5px;color:#1a1a2e;font-weight:500;line-height:1.6;box-shadow:0 2px 16px rgba(0,0,0,.05);"
+            _logo    = '<img src="Sorces/IIFF dark.png" style="height:90px;margin-bottom:10px;" alt="IIFF">'
+            _nw      = ('<div style="font-size:11px;letter-spacing:10px;text-transform:uppercase;'
+                         'color:#c9a84c;font-weight:600;font-family:\'Inter\',sans-serif;margin-bottom:20px;">'
+                        '[ N E X T  W A V E ]</div>')
+            _sub     = ('<p style="font-size:15px;color:#2a2a2a;letter-spacing:0.5px;margin-bottom:32px;">'
+                        '아시아와 헐리우드, 그리고 미래 영화계의 새로운 물결</p>')
+            _cards   = (
+                f'<div style="display:flex;gap:16px;width:100%;margin-bottom:28px;">'
+                f'<div style="{_cs}">{_c1}</div>'
+                f'<div style="{_cs}">{_c2}</div>'
+                f'<div style="{_cs}">{_c3}</div>'
+                f'<div style="{_cs}">{_c4}</div>'
+                '</div>'
+            )
+            _gold    = ('<p style="font-size:14px;color:#c9a84c;font-weight:600;letter-spacing:0.5px;margin-bottom:18px;">'
+                        '영화 · 음악 · 테크놀로지 · K-컴쳐가 융합된 영화 플랫폼</p>')
+            _foot    = '<p style="font-size:11px;color:#b0a898;letter-spacing:1.5px;">Cinematic Insights from INSPIRE Resort</p>'
+            h = (
+                f'<div class="slide" id="s{idx}">'
+                '<div style="position:absolute;inset:0;background:linear-gradient(150deg,#fdfcfa 55%,#f6f0e4);z-index:0"></div>'
+                f'<div class="layer" style="align-items:center;justify-content:center;text-align:center;gap:0;padding:32px 60px 28px;">'
+                f'{_logo}{_nw}{_sub}{_cards}{_gold}{_foot}'
+                '</div></div>'
+            )
             slides_html.append(h); continue
 
         # ── Build inner slide ─────────────────────────────────
         head = f"""<div class="slide-head">
+          <img src="Sorces/IIFF dark.png" class="logo-corner" alt="IIFF">
           <div class="slide-label">{s['layout']}</div>
           <h2 class="slide-title">{title if title else 'Overview'}</h2>
           <div class="slide-divider"></div>
@@ -413,11 +543,12 @@ def build():
 
         # --- ZERO or very-sparse shapes → big statement slide
         if not cshapes or (len(all_txts)==1 and len(all_txts[0])<30):
-            # Part-divider style slide with a big number + text
+            # Section-divider slide with logo + SVG visual
             text = all_txts[0] if all_txts else title
             vis_svg = SVG_POOL[idx % len(SVG_POOL)]()
             body=f'''<div class="gsplit">
               <div style="display:flex;flex-direction:column;justify-content:center;gap:24px;">
+                <img src="Sorces/IIFF dark.png" class="logo-section" alt="IIFF">
                 <div style="font-size:90px;font-family:Playfair Display,serif;font-weight:700;color:rgba(201,168,76,.15);line-height:1">{(idx):02d}</div>
                 <div style="font-family:Playfair Display,serif;font-size:28px;font-weight:700;color:#1a1a2e;line-height:1.3">{text}</div>
                 <div style="width:50px;height:3px;background:linear-gradient(90deg,#c9a84c,transparent);border-radius:2px"></div>
@@ -519,55 +650,139 @@ def main():
 <style>{css()}</style>
 </head>
 <body>
-<div id="prg"><div id="prg-fill" style="width:{100/n:.1f}%"></div></div>
+<div id="sidebar">
+  <!-- Logo -->
+  <img src="Sorces/IIFF dark.png" class="sb-logo" alt="IIFF">
+  <div class="sb-sep"></div>
 
-<div class="scene" id="scene">
-{''.join(slides_html)}
+  <!-- Prev button -->
+  <button class="sb-btn" onclick="prev()" title="이전 슬라이드">&#9650;</button>
+
+  <!-- Progress ring with slide counter -->
+  <div class="sb-ring">
+    <svg viewBox="0 0 62 62" width="62" height="62">
+      <circle class="sb-ring-bg" cx="31" cy="31" r="27"/>
+      <circle class="sb-ring-fill" id="ring" cx="31" cy="31" r="27"/>
+    </svg>
+    <div class="sb-ring-label">
+      <span class="sb-ring-cur" id="ctr">1</span>
+      <span class="sb-ring-total">/ {n}</span>
+    </div>
+  </div>
+
+  <!-- Next button -->
+  <button class="sb-btn" onclick="next()" title="다음 슬라이드">&#9660;</button>
+
+  <div class="sb-sep"></div>
+
+  <!-- Tool buttons -->
+  <div class="sb-tools">
+    <button class="sb-tool sb-thumb-toggle" onclick="toggleThumbs()" id="thumbToggleBtn" title="슬라이드 목록">
+      &#9776;<span class="sb-tool-label">목록</span>
+    </button>
+    <button class="sb-tool" onclick="toggleFS()" title="전체화면">
+      ⛶<span class="sb-tool-label">전체화면</span>
+    </button>
+    <button class="sb-tool" onclick="window.print()" title="PDF 저장">
+      📥<span class="sb-tool-label">PDF</span>
+    </button>
+    <button class="sb-tool" onclick="location.href='index.html'" title="홈으로">
+      🏠<span class="sb-tool-label">HOME</span>
+    </button>
+  </div>
 </div>
 
-<div id="nav">
-  <div class="brand">IIFF NEXT WAVE — FINAL PRESENTATION</div>
-  <div class="ctrl">
-    <button class="btn" onclick="prev()">&#9664;</button>
-    <span class="ctr" id="ctr">1 / {n}</span>
-    <button class="btn" onclick="next()">&#9654;</button>
-  </div>
-  <div class="tls">
-    <button class="tbtn" onclick="toggleFS()">⛶ 전체화면</button>
-    <button class="tbtn" onclick="window.print()">📥 PDF</button>
-    <button class="tbtn" onclick="location.href='index.html'">🏠 HOME</button>
+<!-- Thumbnail Panel -->
+<div id="thumb-panel">
+  <div id="thumb-list"></div>
+</div>
+
+<div id="main">
+  <div class="scene" id="scene">
+{''.join(slides_html)}
   </div>
 </div>
 
 <script>
 const slides = document.querySelectorAll('.slide');
 const total  = slides.length;
+const SB_W   = 92; // sidebar width in px
+const THUMB_W = 160; // thumbnail panel width in px
 let cur = 0;
+let thumbOpen = false;
 
 function scale() {{
   const scene = document.getElementById('scene');
-  const nav   = document.getElementById('nav');
-  const prg   = document.getElementById('prg');
-  const navH  = nav.offsetHeight;
-  const prgH  = prg.offsetHeight;
-  const avW   = window.innerWidth;
-  const avH   = window.innerHeight - navH - prgH;
-  const sc = Math.min(avW / {A4_W}, avH / {A4_H});
-  scene.style.transform = `scale(${{sc}})`;
-  scene.style.transformOrigin = 'top center';
-  // centre the scene vertically if there's extra space
-  const usedH = {A4_H} * sc;
-  scene.style.marginTop = Math.max(0, (avH - usedH)/2) + 'px';
+  const extra = thumbOpen ? THUMB_W : 0;
+  const avW   = window.innerWidth - SB_W - extra;
+  const avH   = window.innerHeight;
+  const sc    = Math.min(avW / {A4_W}, avH / {A4_H}) * 0.96;
+  scene.style.transform       = `scale(${{sc}})`;
+  scene.style.transformOrigin = 'center center';
+}}
+
+function updateRing(idx) {{
+  const progress = (idx + 1) / total;
+  const circ = 2 * Math.PI * 27;
+  document.getElementById('ring').style.strokeDashoffset = circ * (1 - progress);
+  document.getElementById('ctr').textContent = idx + 1;
+}}
+
+function updateThumb(idx) {{
+  document.querySelectorAll('.th-item').forEach((el,i) => {{
+    el.classList.toggle('th-active', i === idx);
+  }});
+  const active = document.querySelector('.th-item.th-active');
+  if(active) active.scrollIntoView({{behavior:'smooth', block:'nearest'}});
 }}
 
 function go(n) {{
-  if(n<0||n>=total) return;
+  if(n < 0 || n >= total) return;
   slides[cur].classList.remove('active');
   slides[n].classList.add('active');
   cur = n;
-  document.getElementById('ctr').textContent = (cur+1)+' / '+total;
-  document.getElementById('prg-fill').style.width = ((cur+1)/total*100)+'%';
+  updateRing(cur);
+  updateThumb(cur);
 }}
+function next(){{ go(cur+1); }} function prev(){{ go(cur-1); }}
+
+function toggleThumbs() {{
+  thumbOpen = !thumbOpen;
+  const panel = document.getElementById('thumb-panel');
+  const btn   = document.getElementById('thumbToggleBtn');
+  panel.classList.toggle('open', thumbOpen);
+  btn.style.color = thumbOpen ? '#c9a84c' : '';
+  scale();
+}}
+
+// Build thumbnail cards dynamically from slide titles
+(function buildThumbs() {{
+  const list = document.getElementById('thumb-list');
+  slides.forEach((slide, i) => {{
+    const titleEl = slide.querySelector('.slide-title, .cover-h1');
+    const labelEl = slide.querySelector('.slide-label, .cover-eyebrow');
+    const titleTxt = titleEl ? titleEl.textContent.trim() : `Slide ${{i+1}}`;
+    const labelTxt = labelEl ? labelEl.textContent.trim() : '';
+    const isCover = slide.querySelector('.cover-h1') !== null;
+    const bgStyle = isCover
+      ? 'background:linear-gradient(135deg,#1a1a2e 40%,#2c2c4a);'
+      : 'background:linear-gradient(135deg,#f9f8f5 60%,#f0ece3)';;
+    const numColor = isCover ? 'rgba(201,168,76,.8)' : 'rgba(201,168,76,.7)';
+    const titleColor = isCover ? '#f9f8f5' : '#1a1a2e';
+    const item = document.createElement('div');
+    item.className = 'th-item';
+    item.dataset.idx = i;
+    item.innerHTML = `
+      <div class="th-slide" style="${{bgStyle}}">
+        <div class="th-bar"></div>
+        <div class="th-num" style="color:${{numColor}}">${{String(i+1).padStart(2,'0')}}</div>
+        <div class="th-title" style="color:${{titleColor}}">${{titleTxt}}</div>
+      </div>
+      <div class="th-label">${{labelTxt || 'SLIDE ' + (i+1)}}</div>`;
+    item.addEventListener('click', () => go(i));
+    list.appendChild(item);
+  }});
+}})();
 function next(){{ go(cur+1); }} function prev(){{ go(cur-1); }}
 
 document.addEventListener('keydown', e=>{{
@@ -580,8 +795,8 @@ let tx=0;
 document.addEventListener('touchstart',e=>tx=e.changedTouches[0].screenX);
 document.addEventListener('touchend',e=>{{const d=tx-e.changedTouches[0].screenX;if(Math.abs(d)>50)d>0?next():prev();}});
 document.addEventListener('click',e=>{{
-  if(e.target.closest('#nav')||e.target.closest('button')) return;
-  e.clientX>window.innerWidth/2?next():prev();
+  if(e.target.closest('#sidebar')||e.target.closest('button')) return;
+  e.clientX > (SB_W + window.innerWidth/2) ? next() : prev();
 }});
 function toggleFS(){{
   if(!document.fullscreenElement) document.documentElement.requestFullscreen();
