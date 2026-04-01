@@ -73,20 +73,23 @@ export default function Home() {
       {/* PART 1 — 소개 (Introduction)                                  */}
       {/* ============================================================ */}
 
-      {/* Image strip before Part 1 */}
-      <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-        <Image src={images.partDivider1} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-      </div>
+      {/* Part 1 wrapper — scroll target for "소개" nav */}
+      <section id="intro" className="scroll-mt-24">
+        {/* Image strip before Part 1 */}
+        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
+          <Image src={images.partDivider1} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
+        </div>
 
-      <PartDivider part={1} title="소개" />
+        <PartDivider part={1} title="소개" />
+      </section>
 
       {/* --- Section 1: What is IIFF? --- (Pattern B: subtle background) */}
-      <section className="relative overflow-hidden">
+      <section id="what-is-iiff" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.whatIsIiff} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="what-is-iiff">
+          <SectionWrapper>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 1 &bull; INTRODUCTION</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -177,6 +180,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 2: Festival Overview --- (Pattern A: image hero header) */}
+      <div id="overview" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <Image src={images.overview} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
@@ -196,7 +200,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionWrapper id="overview" alt>
+      <SectionWrapper alt>
         <FadeUp delay={0.1}>
           <div className="space-y-4 mb-12 max-w-4xl">
             <p className="text-body text-[var(--text-dim)]">
@@ -226,13 +230,14 @@ export default function Home() {
           ))}
         </StaggerChildren>
       </SectionWrapper>
+      </div>
 
       {/* --- Section 3: Why Participate? --- */}
-      <section className="relative overflow-hidden">
+      <section id="why-participate" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.whyParticipate} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="why-participate">
+          <SectionWrapper>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 1 &bull; INTRODUCTION</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-12">
@@ -267,6 +272,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 4: Why Incheon? --- (Pattern A: full image hero) */}
+      <div id="why-incheon" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <Image src={images.whyIncheon} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
@@ -286,7 +292,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionWrapper id="why-incheon" alt>
+      <SectionWrapper alt>
         <div className="space-y-8">
           {[
             { title: '\'거쳐가는 도시\'에서 "전 세계 영화인의 문화 종착지(Destination)"로', desc: '공항 → 서울로 이동하는 동선이 아닌 "인천에 머무르고, 인천을 경험하게 만드는 구조".', conclusion: '인천은 더 이상 \'통과 지점\'이 아닌 찾아오는 이유가 있는 도시가 됩니다.' },
@@ -316,13 +322,14 @@ export default function Home() {
           </div>
         </FadeUp>
       </SectionWrapper>
+      </div>
 
       {/* --- Section 5: Vision & Philosophy --- (Pattern B: subtle background) */}
-      <section className="relative overflow-hidden">
+      <section id="vision" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.vision} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="vision">
+          <SectionWrapper>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 1 &bull; INTRODUCTION</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-12">
@@ -426,15 +433,18 @@ export default function Home() {
       {/* ============================================================ */}
 
       {/* Image strip before Part 2 */}
-      <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-        <Image src={images.partDivider2} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-      </div>
+      {/* Part 2 wrapper — scroll target for "프로그램" nav */}
+      <section id="part-programs" className="scroll-mt-24">
+        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
+          <Image src={images.partDivider2} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
+        </div>
 
-      <PartDivider part={2} title="프로그램" />
+        <PartDivider part={2} title="프로그램" />
+      </section>
 
       {/* --- Section 6: Core Programs --- (ProgramCard with images) */}
-      <SectionWrapper id="programs" alt fullWidth>
+      <SectionWrapper id="programs" alt fullWidth className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 2 &bull; PROGRAMS</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-12">
@@ -463,6 +473,7 @@ export default function Home() {
       </SectionWrapper>
 
       {/* --- Section 7: Star Invitation & Camp --- (Pattern A: image hero header) */}
+      <div id="stars" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <Image src={images.stars} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
@@ -479,7 +490,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionWrapper id="stars">
+      <SectionWrapper>
         {/* 7.1 Star invitation strategy */}
         <FadeUp delay={0.1}>
           <div className="mb-12">
@@ -543,13 +554,14 @@ export default function Home() {
           </div>
         </FadeUp>
       </SectionWrapper>
+      </div>
 
       {/* --- Section 8: Daily Simulation --- */}
-      <section className="relative overflow-hidden">
+      <section id="simulation" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.simulation} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="simulation" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 2 &bull; PROGRAMS</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -593,7 +605,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 9: Civic Participation --- */}
-      <SectionWrapper id="volunteer">
+      <SectionWrapper id="volunteer" className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 2 &bull; PROGRAMS</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -619,19 +631,22 @@ export default function Home() {
       {/* ============================================================ */}
 
       {/* Image strip before Part 3 */}
-      <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-        <Image src={images.partDivider3} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-      </div>
+      {/* Part 3 wrapper — scroll target for "전략" nav */}
+      <section id="part-strategy" className="scroll-mt-24">
+        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
+          <Image src={images.partDivider3} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
+        </div>
 
-      <PartDivider part={3} title="전략" />
+        <PartDivider part={3} title="전략" />
+      </section>
 
       {/* --- Section 10: Core Strategy --- (Pattern B: subtle background) */}
-      <section className="relative overflow-hidden">
+      <section id="strategy" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.strategy} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="strategy" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 3 &bull; STRATEGY</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -657,7 +672,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 11: Organization --- */}
-      <SectionWrapper id="organization">
+      <SectionWrapper id="organization" className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 3 &bull; STRATEGY</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -711,11 +726,11 @@ export default function Home() {
       </SectionWrapper>
 
       {/* --- Section 12: 3-Year Roadmap --- */}
-      <section className="relative overflow-hidden">
+      <section id="roadmap" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.roadmap} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="roadmap" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 3 &bull; STRATEGY</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -781,7 +796,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 13: A-to-Z Roadmap --- */}
-      <SectionWrapper id="atoz-roadmap">
+      <SectionWrapper id="atoz-roadmap" className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 3 &bull; STRATEGY</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -879,6 +894,7 @@ export default function Home() {
       </SectionWrapper>
 
       {/* --- Section 14: Space & Partners --- (Pattern A: image hero for venues) */}
+      <div id="space" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <Image src={images.space} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
@@ -895,7 +911,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionWrapper id="space" alt>
+      <SectionWrapper alt>
         {/* 10.1 Space strategy */}
         <FadeUp delay={0.1}>
           <div className="mb-12">
@@ -949,13 +965,14 @@ export default function Home() {
           </div>
         </FadeUp>
       </SectionWrapper>
+      </div>
 
       {/* --- Section 15: BIFF Comparison --- */}
-      <section className="relative overflow-hidden">
+      <section id="biff" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.biff} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="biff">
+          <SectionWrapper>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 3 &bull; STRATEGY</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -997,19 +1014,22 @@ export default function Home() {
       {/* ============================================================ */}
 
       {/* Image strip before Part 4 */}
-      <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-        <Image src={images.partDivider4} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-      </div>
+      {/* Part 4 wrapper — scroll target for "재무" nav */}
+      <section id="part-finance" className="scroll-mt-24">
+        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
+          <Image src={images.partDivider4} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
+        </div>
 
-      <PartDivider part={4} title="재무" />
+        <PartDivider part={4} title="재무" />
+      </section>
 
       {/* --- Section 16: Budget Plan --- (Pattern B: subtle background) */}
-      <section className="relative overflow-hidden">
+      <section id="budget" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.budget} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="budget" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 4 &bull; FINANCE</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -1079,7 +1099,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 17: Cash Flow --- */}
-      <SectionWrapper id="cashflow">
+      <SectionWrapper id="cashflow" className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 4 &bull; FINANCE</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -1124,11 +1144,11 @@ export default function Home() {
       </SectionWrapper>
 
       {/* --- Section 18: Initial Budget --- */}
-      <section className="relative overflow-hidden">
+      <section id="seedmoney" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.sponsorship} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="seedmoney" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 4 &bull; FINANCE</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -1174,7 +1194,7 @@ export default function Home() {
       </section>
 
       {/* --- Section 19: Sponsorship Plan --- */}
-      <SectionWrapper id="sponsorship">
+      <SectionWrapper id="sponsorship" className="scroll-mt-24">
         <FadeUp>
           <p className="label-upper text-gold mb-4">PART 4 &bull; FINANCE</p>
           <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -1234,11 +1254,11 @@ export default function Home() {
       </SectionWrapper>
 
       {/* --- Section 20: Marketing Strategy --- */}
-      <section className="relative overflow-hidden">
+      <section id="marketing" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.marketing} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="marketing" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 4 &bull; FINANCE</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-8">
@@ -1301,19 +1321,22 @@ export default function Home() {
       {/* ============================================================ */}
 
       {/* Image strip before Part 5 */}
-      <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-        <Image src={images.partDivider5} alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-      </div>
+      {/* Part 5 wrapper — scroll target for "거버넌스" nav */}
+      <section id="part-governance" className="scroll-mt-24">
+        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
+          <Image src={images.partDivider5} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
+        </div>
 
-      <PartDivider part={5} title="거버넌스" />
+        <PartDivider part={5} title="거버넌스" />
+      </section>
 
       {/* --- Section 21: Risk Management --- */}
-      <section className="relative overflow-hidden">
+      <section id="political" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.governance} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="political">
+          <SectionWrapper>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 5 &bull; GOVERNANCE</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">
@@ -1392,11 +1415,11 @@ export default function Home() {
       </section>
 
       {/* --- Section 22: Personnel --- */}
-      <section className="relative overflow-hidden">
+      <section id="personnel" className="relative overflow-hidden scroll-mt-24">
         <Image src={images.organization} alt="" fill className="object-cover opacity-[0.06]" />
         <div className="absolute inset-0 bg-[var(--bg)]/90" />
         <div className="relative z-10">
-          <SectionWrapper id="personnel" alt>
+          <SectionWrapper alt>
             <FadeUp>
               <p className="label-upper text-gold mb-4">PART 5 &bull; GOVERNANCE</p>
               <h2 className="heading-section text-3xl md:text-5xl text-[var(--text)] mb-4">

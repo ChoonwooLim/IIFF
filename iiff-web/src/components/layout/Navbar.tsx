@@ -7,7 +7,7 @@ import ThemeToggle from '@/components/ui/ThemeToggle';
 const NAV_ITEMS = [
   {
     label: '소개',
-    href: '#what-is-iiff',
+    href: '#intro',
     children: [
       { label: 'IIFF란?', href: '#what-is-iiff' },
       { label: '페스티벌 개요', href: '#overview' },
@@ -18,7 +18,7 @@ const NAV_ITEMS = [
   },
   {
     label: '프로그램',
-    href: '#programs',
+    href: '#part-programs',
     children: [
       { label: '핵심 프로그램', href: '#programs' },
       { label: '스타 초청 & 캠프', href: '#stars' },
@@ -28,7 +28,7 @@ const NAV_ITEMS = [
   },
   {
     label: '전략',
-    href: '#strategy',
+    href: '#part-strategy',
     children: [
       { label: '핵심 전략', href: '#strategy' },
       { label: '조직', href: '#organization' },
@@ -39,7 +39,7 @@ const NAV_ITEMS = [
   },
   {
     label: '재무',
-    href: '#budget',
+    href: '#part-finance',
     children: [
       { label: '예산 계획', href: '#budget' },
       { label: '현금 흐름', href: '#cashflow' },
@@ -50,7 +50,7 @@ const NAV_ITEMS = [
   },
   {
     label: '거버넌스',
-    href: '#political',
+    href: '#part-governance',
     children: [
       { label: '리스크 관리', href: '#political' },
       { label: '인력', href: '#personnel' },

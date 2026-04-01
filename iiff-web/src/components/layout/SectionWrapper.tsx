@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 
 interface SectionWrapperProps {
-  id: string;
+  id?: string;
   children: ReactNode;
   className?: string;
   alt?: boolean;
@@ -14,6 +14,7 @@ export default function SectionWrapper({
   id,
   children,
   className = '',
+
   alt = false,
   fullWidth = false,
 }: SectionWrapperProps) {
