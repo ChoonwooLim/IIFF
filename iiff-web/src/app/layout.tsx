@@ -28,6 +28,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} ${notoSansKR.variable}`}
     >
       <body>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

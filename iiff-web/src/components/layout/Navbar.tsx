@@ -99,7 +99,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1" role="menubar">
           {NAV_ITEMS.map((item) => (
             <div
               key={item.label}
@@ -110,6 +110,9 @@ export default function Navbar() {
               <a
                 href={item.href}
                 className="px-4 py-5 text-sm font-light tracking-wide text-[var(--text-dim)] hover:text-[var(--text)] transition-colors duration-300"
+                role="menuitem"
+                aria-haspopup={item.children ? 'true' : undefined}
+                aria-expanded={item.children ? activeDropdown === item.label : undefined}
               >
                 {item.label}
               </a>
@@ -118,11 +121,13 @@ export default function Navbar() {
               {item.children && activeDropdown === item.label && (
                 <div className="absolute top-full left-0 pt-2 min-w-[200px]">
                   <div className="bg-[var(--bg-elevated)] border border-[var(--border)] rounded-xl p-2 shadow-[var(--shadow-elevated)]"
+                       role="menu"
                        style={{ backdropFilter: `blur(var(--glass-blur))` }}>
                     {item.children.map((child) => (
                       <a
                         key={child.href}
                         href={child.href}
+                        role="menuitem"
                         className="block px-4 py-2.5 text-sm text-[var(--text-dim)] hover:text-gold hover:bg-[var(--bg-card-hover)] rounded-lg transition-colors duration-200"
                       >
                         {child.label}
@@ -137,6 +142,30 @@ export default function Navbar() {
 
         {/* Right Controls */}
         <div className="flex items-center gap-3">
+          <a
+            href="/docs"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-[var(--text-dim)] text-xs label-upper rounded-[var(--radius-sm)] hover:text-gold border border-[var(--border)] hover:border-gold/40 transition-all duration-300"
+            title="기획서 PDF 보기"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+            <span className="hidden md:inline">PDF</span>
+          </a>
+          <a
+            href="/presentation"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 border border-gold/40 text-gold text-xs label-upper rounded-[var(--radius-sm)] hover:bg-gold hover:text-[var(--bg)] transition-all duration-300"
+            title="프레젠테이션 모드"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+            <span className="hidden md:inline">Present</span>
+          </a>
           <ThemeToggle />
 
           {/* Mobile Hamburger */}
@@ -164,7 +193,7 @@ export default function Navbar() {
 
       {/* Mobile Overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-16 bg-[var(--bg)]/95 backdrop-blur-xl z-40 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 top-16 bg-[var(--bg)]/95 backdrop-blur-xl z-40 overflow-y-auto" role="dialog" aria-label="Navigation menu">
           <div className="flex flex-col p-8 gap-6">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
@@ -191,6 +220,34 @@ export default function Navbar() {
                 )}
               </div>
             ))}
+
+            {/* Mobile: PDF & Presentation links */}
+            <div className="pt-6 mt-2 border-t border-[var(--border)] flex flex-col gap-4">
+              <a
+                href="/docs"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 text-lg text-[var(--text-dim)] hover:text-gold transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                기획서 PDF
+              </a>
+              <a
+                href="/presentation"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 text-lg text-gold hover:text-gold-light transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <path d="M8 21h8M12 17v4" />
+                </svg>
+                프레젠테이션
+              </a>
+            </div>
           </div>
         </div>
       )}

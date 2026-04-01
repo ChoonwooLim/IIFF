@@ -5,17 +5,19 @@ interface DataTableProps {
   rows: string[][];
   className?: string;
   compact?: boolean;
+  'aria-label'?: string;
 }
 
-export default function DataTable({ headers, rows, className = '', compact = false }: DataTableProps) {
+export default function DataTable({ headers, rows, className = '', compact = false, 'aria-label': ariaLabel }: DataTableProps) {
   return (
     <div className={`overflow-x-auto rounded-[var(--radius-card)] border border-[var(--border)] ${className}`}>
-      <table className="w-full text-left">
+      <table className="w-full text-left" aria-label={ariaLabel}>
         <thead>
           <tr className="bg-gradient-to-r from-gold/10 to-gold/5 border-b border-[var(--border)]">
             {headers.map((h, i) => (
               <th
                 key={i}
+                scope="col"
                 className={`${compact ? 'px-4 py-3 text-xs' : 'px-6 py-4 text-sm'} font-medium text-gold tracking-wide`}
               >
                 {h}

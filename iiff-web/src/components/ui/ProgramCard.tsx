@@ -12,7 +12,7 @@ interface ProgramCardProps {
 
 export default function ProgramCard({ num, title, desc, points, imageSrc }: ProgramCardProps) {
   return (
-    <div className="group relative rounded-[var(--radius-card)] overflow-hidden border border-[var(--border)] hover:border-[var(--border-gold)] transition-all duration-500 hover:-translate-y-1">
+    <div className="group relative rounded-[var(--radius-card)] overflow-hidden border border-[var(--border)] hover:border-[var(--border-gold)] transition-all duration-500 hover:-translate-y-1" role="article">
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--bg-alt)]">
         {imageSrc ? (

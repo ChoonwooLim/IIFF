@@ -22,6 +22,7 @@ export default function Home() {
     <>
       <Navbar />
 
+      <main id="main-content">
       {/* ============================================================ */}
       {/* HERO COVER — Full background image                           */}
       {/* ============================================================ */}
@@ -1498,6 +1499,7 @@ export default function Home() {
         <Image src={images.hero} alt="" fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
       </div>
+      </main>
 
       <Footer />
     </>

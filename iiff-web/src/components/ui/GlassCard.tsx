@@ -25,6 +25,8 @@ export default function GlassCard({
         ${className}
       `}
       style={{ backdropFilter: `blur(var(--glass-blur))` }}
+      role="article"
+      tabIndex={hover ? 0 : undefined}
     >
       {num && (
         <span className="absolute top-6 right-6 font-heading text-5xl font-bold text-[var(--border)] group-hover:text-gold/20 transition-colors duration-500 select-none">
