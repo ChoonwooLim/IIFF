@@ -13,6 +13,9 @@ import ComparisonTable from '@/components/ui/ComparisonTable';
 import OrgChart from '@/components/ui/OrgChart';
 import FadeUp from '@/components/animation/FadeUp';
 import StaggerChildren from '@/components/animation/StaggerChildren';
+import ParallaxImage from '@/components/animation/ParallaxImage';
+import GoldShimmer from '@/components/animation/GoldShimmer';
+import AnimatedCounter from '@/components/animation/AnimatedCounter';
 
 export default function Home() {
   return (
@@ -23,7 +26,7 @@ export default function Home() {
       {/* HERO COVER — Full background image                           */}
       {/* ============================================================ */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[var(--bg)]">
-        <Image src={images.hero} alt="" fill className="object-cover" priority />
+        <ParallaxImage src={images.hero} speed={0.3} fill overlay={false} priority />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.08),transparent_70%)]" />
@@ -36,7 +39,8 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.15}>
             <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-[var(--text)] mb-8">
-              NextWave<br />2026
+              <GoldShimmer as="span" className="heading-display text-5xl md:text-7xl lg:text-8xl">NextWave</GoldShimmer>
+              <br />2026
             </h1>
           </FadeUp>
           <FadeUp delay={0.3}>
@@ -63,7 +67,7 @@ export default function Home() {
           </FadeUp>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-scroll-bounce">
           <span className="text-[0.6rem] tracking-[4px] uppercase text-[var(--text-muted)]">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-gold/60 to-transparent" />
         </div>
@@ -75,12 +79,7 @@ export default function Home() {
 
       {/* Part 1 wrapper — scroll target for "소개" nav */}
       <section id="intro" className="scroll-mt-24">
-        {/* Image strip before Part 1 */}
-        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-          <Image src={images.partDivider1} alt="" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-        </div>
-
+        <ParallaxImage src={images.partDivider1} speed={0.15} className="w-full h-[30vh] md:h-[40vh]" />
         <PartDivider part={1} title="소개" />
       </section>
 
@@ -182,7 +181,7 @@ export default function Home() {
       {/* --- Section 2: Festival Overview --- (Pattern A: image hero header) */}
       <div id="overview" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
-        <Image src={images.overview} alt="" fill className="object-cover" />
+        <ParallaxImage src={images.overview} speed={0.2} fill overlay={false} />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
@@ -274,7 +273,7 @@ export default function Home() {
       {/* --- Section 4: Why Incheon? --- (Pattern A: full image hero) */}
       <div id="why-incheon" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
-        <Image src={images.whyIncheon} alt="" fill className="object-cover" />
+        <ParallaxImage src={images.whyIncheon} speed={0.2} fill overlay={false} />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
@@ -435,11 +434,7 @@ export default function Home() {
       {/* Image strip before Part 2 */}
       {/* Part 2 wrapper — scroll target for "프로그램" nav */}
       <section id="part-programs" className="scroll-mt-24">
-        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-          <Image src={images.partDivider2} alt="" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-        </div>
-
+        <ParallaxImage src={images.partDivider2} speed={0.15} className="w-full h-[30vh] md:h-[40vh]" />
         <PartDivider part={2} title="프로그램" />
       </section>
 
@@ -475,7 +470,7 @@ export default function Home() {
       {/* --- Section 7: Star Invitation & Camp --- (Pattern A: image hero header) */}
       <div id="stars" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
-        <Image src={images.stars} alt="" fill className="object-cover" />
+        <ParallaxImage src={images.stars} speed={0.2} fill overlay={false} />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
@@ -633,11 +628,7 @@ export default function Home() {
       {/* Image strip before Part 3 */}
       {/* Part 3 wrapper — scroll target for "전략" nav */}
       <section id="part-strategy" className="scroll-mt-24">
-        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-          <Image src={images.partDivider3} alt="" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-        </div>
-
+        <ParallaxImage src={images.partDivider3} speed={0.15} className="w-full h-[30vh] md:h-[40vh]" />
         <PartDivider part={3} title="전략" />
       </section>
 
@@ -896,7 +887,7 @@ export default function Home() {
       {/* --- Section 14: Space & Partners --- (Pattern A: image hero for venues) */}
       <div id="space" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
-        <Image src={images.space} alt="" fill className="object-cover" />
+        <ParallaxImage src={images.space} speed={0.2} fill overlay={false} />
         <div className="absolute inset-0 bg-[var(--bg)]/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
@@ -1016,11 +1007,7 @@ export default function Home() {
       {/* Image strip before Part 4 */}
       {/* Part 4 wrapper — scroll target for "재무" nav */}
       <section id="part-finance" className="scroll-mt-24">
-        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-          <Image src={images.partDivider4} alt="" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-        </div>
-
+        <ParallaxImage src={images.partDivider4} speed={0.15} className="w-full h-[30vh] md:h-[40vh]" />
         <PartDivider part={4} title="재무" />
       </section>
 
@@ -1039,6 +1026,13 @@ export default function Home() {
                 제1회 기준, 30억 원 규모
               </p>
             </FadeUp>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+              <AnimatedCounter end={30} suffix="억" label="총 예산" />
+              <AnimatedCounter end={10} suffix="억" label="공적 자금" />
+              <AnimatedCounter end={12} suffix="억" label="스폰서십" />
+              <AnimatedCounter end={6} suffix="억" label="수익 사업" />
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
               <FadeUp delay={0.1}>
@@ -1323,11 +1317,7 @@ export default function Home() {
       {/* Image strip before Part 5 */}
       {/* Part 5 wrapper — scroll target for "거버넌스" nav */}
       <section id="part-governance" className="scroll-mt-24">
-        <div className="relative w-full h-[30vh] md:h-[40vh] overflow-hidden">
-          <Image src={images.partDivider5} alt="" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
-        </div>
-
+        <ParallaxImage src={images.partDivider5} speed={0.15} className="w-full h-[30vh] md:h-[40vh]" />
         <PartDivider part={5} title="거버넌스" />
       </section>
 
