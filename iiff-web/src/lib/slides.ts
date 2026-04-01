@@ -7,6 +7,7 @@ export interface SlideData {
   title: string;
   content: string[];
   image?: string;
+  video?: string;
   type: 'cover' | 'part-divider' | 'content' | 'table' | 'stats';
 }
 
@@ -18,11 +19,11 @@ export const slides: SlideData[] = [
     partTitle: '',
     title: 'IIFF NextWave 2026',
     content: [
-      'Incheon International Film Festival',
-      '시네마, 문화, 그리고 기술이 만나는 곳',
-      '인천에서 시작되는 글로벌 영화의 새로운 물결',
+      '시네마, 문화, 그리고 기술이 만나는 곳.',
+      '인천에서 시작되는 글로벌 영화의 새로운 물결.',
     ],
     image: images.hero,
+    video: 'zYXrvyNtHlc',
     type: 'cover',
   },
 

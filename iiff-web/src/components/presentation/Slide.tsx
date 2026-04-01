@@ -65,7 +65,18 @@ export default function Slide({ slide, direction }: SlideProps) {
         transition={slideTransition}
         className="absolute inset-0 flex items-center justify-center bg-[var(--bg)]"
       >
-        {slide.image && (
+        {/* Background: video or image */}
+        {slide.video ? (
+          <div className="absolute inset-0 overflow-hidden">
+            <iframe
+              src={`https://www.youtube.com/embed/${slide.video}?autoplay=1&mute=1&loop=1&playlist=${slide.video}&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1`}
+              allow="autoplay; encrypted-media"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] h-[180%] pointer-events-none"
+              style={{ border: 0 }}
+              tabIndex={-1}
+            />
+          </div>
+        ) : slide.image ? (
           <motion.div
             initial={{ scale: 1.15 }}
             animate={{ scale: 1 }}
@@ -73,7 +84,7 @@ export default function Slide({ slide, direction }: SlideProps) {
             className="absolute inset-0 bg-cover bg-center opacity-20"
             style={{ backgroundImage: `url(${slide.image})` }}
           />
-        )}
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/40 via-[var(--bg)]/60 to-[var(--bg)]/90" />
 
         {/* Decorative ring */}
