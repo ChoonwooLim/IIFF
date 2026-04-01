@@ -1,0 +1,247 @@
+/* 
+ * IIFF Premium Cinematic Overhaul (Vanilla CSS)
+ * Injects modern luxury design tokens, ultra-refined typography, and glassmorphism.
+ */
+
+:root {
+    /* Deeper, more cinematic obsidian blacks */
+    --bg: #05050A;
+    --bg2: #080811;
+    --bg3: #0B0B16;
+    
+    /* Refined, muted champagne golds */
+    --gold: #D4AF37;
+    --gold-light: #F3E5AB;
+    --gold-dark: #996515;
+    
+    /* Elegant text contrasts */
+    --text: #F0F0F5;
+    --text-dim: #9A9AA6;
+    --text-bright: #FFFFFF;
+    
+    /* Modern structural glass */
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(212, 175, 55, 0.15); /* Gold tinted glass border */
+    --glass-blur: blur(24px);
+    
+    /* Transitions */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   GLOBAL TYPOGRAPHY & OVERRIDES
+   ========================================================================== */
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .hero-title, .section-title {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.02em;
+}
+
+/* Make highlighted text feel luxury rather than generic */
+::selection {
+    background: var(--gold-dark);
+    color: var(--text-bright);
+}
+
+/* ==========================================================================
+   ENHANCED GLASSMORPHISM (NAVIGATION & CARDS)
+   ========================================================================== */
+
+nav {
+    background: rgba(5, 5, 10, 0.75) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.nav-item .nav-label {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    transition: color 0.4s var(--ease-out-expo);
+}
+
+.nav-item:hover .nav-label {
+    color: var(--text-bright) !important;
+}
+
+/* Generic Section Cards (Program, Venues, etc.) */
+.section-card {
+    background: linear-gradient(145deg, rgba(15, 15, 30, 0.4), rgba(5, 5, 10, 0.8)) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px !important;
+    transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo), border-color 0.6s var(--ease-out-expo) !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.section-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out-expo);
+    pointer-events: none;
+}
+
+.section-card:hover {
+    transform: translateY(-8px) scale(1.01) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.1) !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
+}
+
+.section-card:hover::before {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   BUTTONS & CTAs
+   ========================================================================== */
+
+.btn {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem !important;
+    border-radius: 0 !important; /* Sharp corners for modern editorial look */
+    transition: all 0.5s var(--ease-out-expo) !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Primary Gold Button */
+.btn-primary {
+    background: transparent !important;
+    border: 1px solid var(--gold) !important;
+    color: var(--gold) !important;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 0%;
+    background: var(--gold);
+    transition: height 0.4s var(--ease-out-expo);
+    z-index: -1;
+}
+
+.btn-primary:hover {
+    color: var(--bg) !important;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.3) !important;
+}
+
+.btn-primary:hover::after {
+    height: 100%;
+}
+
+/* ==========================================================================
+   HERO SECTION OVERRIDES
+   ========================================================================== */
+
+.hero-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+    background: radial-gradient(circle at center, var(--bg2) 0%, var(--bg) 100%) !important;
+    overflow: hidden;
+}
+
+/* Subtle cinematic noise overlay */
+.hero-section::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 6vw, 6rem) !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.5rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.2em !important;
+    color: var(--gold-light) !important;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+/* Dynamic scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0.6;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+.scroll-text {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+}
+
+.scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold) 0%, transparent 100%);
+    animation: scroll-pulse 2s infinite;
+}
+
+@keyframes scroll-pulse {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    50.1% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ==========================================================================
+   UTILITY INJECTIONS
+   ========================================================================== */
+.fade-up-gsap {
+    opacity: 0;
+    transform: translateY(40px);
+}
