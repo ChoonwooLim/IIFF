@@ -7,7 +7,7 @@ import ThemeToggle from '@/components/ui/ThemeToggle';
 const NAV_ITEMS = [
   {
     label: '소개',
-    href: '#intro',
+    href: '#what-is-iiff',
     children: [
       { label: 'IIFF란?', href: '#what-is-iiff' },
       { label: '페스티벌 개요', href: '#overview' },
@@ -20,34 +20,41 @@ const NAV_ITEMS = [
     label: '프로그램',
     href: '#programs',
     children: [
-      { label: '핵심 프로그램', href: '#core-programs' },
-      { label: '스타 초청 & 캠프', href: '#star-camp' },
-      { label: '데일리 시뮬레이션', href: '#daily-simulation' },
-      { label: '시민 참여', href: '#civic-participation' },
+      { label: '핵심 프로그램', href: '#programs' },
+      { label: '스타 초청 & 캠프', href: '#stars' },
+      { label: '데일리 시뮬레이션', href: '#simulation' },
+      { label: '시민 참여', href: '#volunteer' },
     ],
   },
   {
     label: '전략',
     href: '#strategy',
     children: [
-      { label: '핵심 전략', href: '#core-strategy' },
+      { label: '핵심 전략', href: '#strategy' },
       { label: '조직', href: '#organization' },
       { label: '로드맵', href: '#roadmap' },
-      { label: '공간 & 파트너', href: '#space-partners' },
+      { label: '공간 & 파트너', href: '#space' },
+      { label: 'BIFF 비교', href: '#biff' },
     ],
   },
   {
     label: '재무',
-    href: '#finance',
+    href: '#budget',
     children: [
       { label: '예산 계획', href: '#budget' },
+      { label: '현금 흐름', href: '#cashflow' },
+      { label: '초기 예산', href: '#seedmoney' },
       { label: '스폰서십', href: '#sponsorship' },
       { label: '마케팅', href: '#marketing' },
     ],
   },
   {
     label: '거버넌스',
-    href: '#governance',
+    href: '#political',
+    children: [
+      { label: '리스크 관리', href: '#political' },
+      { label: '인력', href: '#personnel' },
+    ],
   },
 ];
 
