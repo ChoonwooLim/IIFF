@@ -45,12 +45,25 @@ export default function Home() {
             </h1>
           </FadeUp>
           <FadeUp delay={0.3}>
-            <p className="text-body text-[var(--text-dim)] text-lg md:text-xl max-w-2xl mx-auto mb-12">
+            <p className="text-body text-[var(--text-dim)] text-lg md:text-xl max-w-2xl mx-auto mb-4">
               시네마, 문화, 그리고 기술이 만나는 곳.
+            </p>
+            <p className="text-body text-[var(--text-dim)] text-lg md:text-xl max-w-2xl mx-auto mb-10">
               인천에서 시작되는 글로벌 영화의 새로운 물결.
             </p>
           </FadeUp>
-          <FadeUp delay={0.45}>
+          <FadeUp delay={0.4}>
+            <div className="relative w-full max-w-3xl mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
+              <iframe
+                src="https://www.youtube.com/embed/zYXrvyNtHlc?rel=0&modestbranding=1&playsinline=1"
+                title="IIFF Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
+          </FadeUp>
+          <FadeUp delay={0.55}>
             <div className="flex items-center justify-center gap-6">
               <a
                 href="#what-is-iiff"

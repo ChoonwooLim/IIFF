@@ -65,18 +65,8 @@ export default function Slide({ slide, direction }: SlideProps) {
         transition={slideTransition}
         className="absolute inset-0 flex items-center justify-center bg-[var(--bg)]"
       >
-        {/* Background: video or image */}
-        {slide.video ? (
-          <div className="absolute inset-0 overflow-hidden">
-            <iframe
-              src={`https://www.youtube.com/embed/${slide.video}?autoplay=1&mute=1&loop=1&playlist=${slide.video}&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1`}
-              allow="autoplay; encrypted-media"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] h-[180%] pointer-events-none"
-              style={{ border: 0 }}
-              tabIndex={-1}
-            />
-          </div>
-        ) : slide.image ? (
+        {/* Background image */}
+        {slide.image && (
           <motion.div
             initial={{ scale: 1.15 }}
             animate={{ scale: 1 }}
@@ -84,7 +74,7 @@ export default function Slide({ slide, direction }: SlideProps) {
             className="absolute inset-0 bg-cover bg-center opacity-20"
             style={{ backgroundImage: `url(${slide.image})` }}
           />
-        ) : null}
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/40 via-[var(--bg)]/60 to-[var(--bg)]/90" />
 
         {/* Decorative ring */}
@@ -96,7 +86,7 @@ export default function Slide({ slide, direction }: SlideProps) {
         />
 
         <motion.div
-          className="relative z-10 text-center px-8 max-w-4xl mx-auto"
+          className="relative z-10 text-center px-8 max-w-5xl mx-auto"
           variants={stagger}
           initial="initial"
           animate="animate"
@@ -112,7 +102,24 @@ export default function Slide({ slide, direction }: SlideProps) {
             {slide.id === 'closing' ? '' : '2026'}
           </motion.h1>
           <motion.div variants={lineExpand} className="w-24 h-[1px] bg-[var(--color-gold)] mx-auto mb-8 origin-center" />
-          <div className="space-y-3">
+
+          {/* Video Player */}
+          {slide.video && (
+            <motion.div
+              variants={fadeUp}
+              className="relative w-full max-w-3xl mx-auto mb-8 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]"
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/${slide.video}?rel=0&modestbranding=1&playsinline=1`}
+                title="IIFF Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </motion.div>
+          )}
+
+          <div className="space-y-2">
             {slide.content.map((line, i) => (
               <motion.p
                 key={i}
