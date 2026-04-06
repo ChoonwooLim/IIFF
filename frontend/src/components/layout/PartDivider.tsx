@@ -16,6 +16,7 @@ export default function PartDivider({ part, title }: PartDividerProps) {
   const numRef = useRef<HTMLSpanElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -34,9 +35,19 @@ export default function PartDivider({ part, title }: PartDividerProps) {
     if (numRef.current) {
       tl.fromTo(
         numRef.current,
-        { scale: 0.6, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.2, ease: 'expo.out' },
+        { scale: 0.5, opacity: 0 },
+        { scale: 1, opacity: 0.06, duration: 1.4, ease: 'expo.out' },
         0
+      );
+    }
+
+    // Gold line expands
+    if (lineRef.current) {
+      tl.fromTo(
+        lineRef.current,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: 'expo.out' },
+        0.2
       );
     }
 
@@ -46,7 +57,7 @@ export default function PartDivider({ part, title }: PartDividerProps) {
         labelRef.current,
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out' },
-        0.2
+        0.3
       );
     }
 
@@ -56,30 +67,88 @@ export default function PartDivider({ part, title }: PartDividerProps) {
         titleRef.current,
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out' },
-        0.35
+        0.45
       );
     }
   }, { scope: containerRef });
 
+  const num = String(part).padStart(2, '0');
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full py-24 md:py-32 flex items-center justify-center overflow-hidden bg-[var(--bg)]"
+      style={{
+        position: 'relative',
+        width: '100%',
+        padding: '96px 0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        background: '#05050a',
+      }}
     >
-      {/* Large background number */}
+      {/* Large background number — very subtle, behind everything */}
       <span
         ref={numRef}
-        className="absolute text-[20vw] md:text-[15vw] font-heading font-bold text-[var(--border)] select-none pointer-events-none leading-none"
-        style={{ opacity: 0 }}
+        style={{
+          position: 'absolute',
+          fontSize: 'clamp(10rem, 20vw, 22rem)',
+          fontFamily: 'var(--font-display)',
+          fontWeight: 900,
+          color: '#ffffff',
+          opacity: 0,
+          lineHeight: 0.85,
+          letterSpacing: '-0.04em',
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
       >
-        {String(part).padStart(2, '0')}
+        {num}
       </span>
 
-      <div className="relative z-10 text-center">
-        <p ref={labelRef} className="label-upper text-gold mb-4" style={{ opacity: 0 }}>
+      {/* Foreground content — always readable */}
+      <div style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
+        {/* Gold line */}
+        <div
+          ref={lineRef}
+          style={{
+            width: 48,
+            height: 1,
+            background: '#c9a96e',
+            margin: '0 auto 20px',
+            transformOrigin: 'center',
+            transform: 'scaleX(0)',
+          }}
+        />
+
+        <p
+          ref={labelRef}
+          style={{
+            fontSize: '0.6875rem',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: '#c9a96e',
+            marginBottom: 12,
+            opacity: 0,
+          }}
+        >
           Part {part}
         </p>
-        <h2 ref={titleRef} className="heading-display text-4xl md:text-6xl text-[var(--text)]" style={{ opacity: 0 }}>
+
+        <h2
+          ref={titleRef}
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+            fontWeight: 700,
+            color: '#f0f0f5',
+            lineHeight: 1.2,
+            letterSpacing: '-0.01em',
+            opacity: 0,
+            textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
+          }}
+        >
           {title}
         </h2>
       </div>

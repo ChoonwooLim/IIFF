@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/AuthContext";
 import FileList from "@/components/board/FileList";
 import ImageGallery from "@/components/board/ImageGallery";
 import CommentSection from "@/components/board/CommentSection";
+import BoardLayout from "@/components/board/BoardLayout";
 
 interface PostDetail {
   id: number;
@@ -65,13 +66,12 @@ export default function PostDetailPage() {
   const otherFiles = post.files.filter((f) => !f.mime_type.startsWith("image/"));
 
   return (
-    <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
-      {/* Header */}
-      <div style={{ paddingTop: 120, paddingBottom: 32 }}>
+    <BoardLayout currentSlug={boardSlug!}>
+      <div style={{ paddingTop: 20, paddingBottom: 32 }}>
         <Link
           to={`/boards/${boardSlug}`}
           style={{
-            fontSize: 11,
+            fontSize: '0.6875rem',
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
             color: '#c9a96e',
@@ -80,7 +80,7 @@ export default function PostDetailPage() {
             marginBottom: 24,
           }}
         >
-          ← {boardName || 'Back'}
+          ← {boardName || '목록'}
         </Link>
 
         <article>
@@ -106,6 +106,7 @@ export default function PostDetailPage() {
             lineHeight: 1.4,
             paddingBottom: 24,
             borderBottom: '1px solid rgba(255,255,255,0.06)',
+            flexWrap: 'wrap',
           }}>
             <span>{post.user.nickname}</span>
             <span>{new Date(post.created_at).toLocaleDateString("ko-KR")}</span>
@@ -120,7 +121,7 @@ export default function PostDetailPage() {
                   background: 'none',
                   border: 'none',
                   color: deleteHovered ? '#f87171' : '#6a4a4a',
-                  fontSize: 12,
+                  fontSize: '0.75rem',
                   cursor: 'pointer',
                   transition: 'color 0.3s ease',
                 }}
@@ -165,6 +166,6 @@ export default function PostDetailPage() {
           <CommentSection postId={post.id} postUserId={post.user.id} boardType={boardType} />
         </div>
       </div>
-    </div>
+    </BoardLayout>
   );
 }

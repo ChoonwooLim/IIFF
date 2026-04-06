@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import api from "@/services/api";
 import { useAuth } from "@/hooks/AuthContext";
 import PostCard from "@/components/board/PostCard";
+import BoardLayout from "@/components/board/BoardLayout";
 
 interface Post {
   id: number;
@@ -36,7 +37,6 @@ function ImageCard({ post, boardSlug, index }: { post: Post; boardSlug: string; 
         animation: `fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) ${index * 0.06}s both`,
       }}
     >
-      {/* Thumbnail image */}
       {post.thumbnail_id ? (
         <img
           src={`/api/files/${post.thumbnail_id}/download`}
@@ -66,7 +66,6 @@ function ImageCard({ post, boardSlug, index }: { post: Post; boardSlug: string; 
         </div>
       )}
 
-      {/* Gold accent line on hover */}
       <div style={{
         position: 'absolute',
         bottom: 0,
@@ -79,7 +78,6 @@ function ImageCard({ post, boardSlug, index }: { post: Post; boardSlug: string; 
         transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
       }} />
 
-      {/* Overlay with title */}
       <div style={{
         position: 'absolute',
         bottom: 0,
@@ -117,7 +115,6 @@ function ImageCard({ post, boardSlug, index }: { post: Post; boardSlug: string; 
         </div>
       </div>
 
-      {/* Pinned badge */}
       {post.is_pinned && (
         <div style={{
           position: 'absolute',
@@ -166,6 +163,7 @@ export default function PostListPage() {
         setBoardType(board.board_type);
       }
     });
+    setSearch("");
     fetchPosts();
   }, [boardSlug]);
 
@@ -177,41 +175,25 @@ export default function PostListPage() {
   const isImageBoard = boardType === "image";
 
   return (
-    <div style={{ maxWidth: isImageBoard ? 960 : 720, margin: '0 auto', padding: '0 24px' }}>
+    <BoardLayout currentSlug={boardSlug!}>
       {/* Page header */}
       <div style={{
-        paddingTop: 120,
-        paddingBottom: 48,
+        paddingTop: 20,
+        paddingBottom: 32,
         borderBottom: '1px solid rgba(255,255,255,0.06)',
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'space-between',
       }}>
-        <div>
-          <Link
-            to="/boards"
-            style={{
-              fontSize: '0.6875rem',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: '#c9a96e',
-              marginBottom: 12,
-              display: 'block',
-              textDecoration: 'none',
-            }}
-          >
-            ← Boards
-          </Link>
-          <h1 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
-            fontWeight: 700,
-            color: '#f0f0f5',
-            lineHeight: 1.2,
-          }}>
-            {boardName}
-          </h1>
-        </div>
+        <h1 style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
+          fontWeight: 700,
+          color: '#f0f0f5',
+          lineHeight: 1.2,
+        }}>
+          {boardName}
+        </h1>
         {user && (
           <Link
             to={`/boards/${boardSlug}/write`}
@@ -236,12 +218,12 @@ export default function PostListPage() {
 
       {/* Search */}
       <form onSubmit={handleSearch} style={{
-        padding: '24px 0',
+        padding: '20px 0',
         display: 'flex',
         alignItems: 'center',
         gap: 12,
       }}>
-        <div style={{ flex: 1, position: 'relative' }}>
+        <div style={{ flex: 1 }}>
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -279,11 +261,11 @@ export default function PostListPage() {
         </button>
       </form>
 
-      {/* Post list — image grid or editorial list */}
+      {/* Post list */}
       {isImageBoard ? (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
           gap: 4,
           paddingBottom: 64,
         }}>
@@ -307,11 +289,7 @@ export default function PostListPage() {
       )}
 
       {posts.length === 0 && (
-        <div style={{
-          textAlign: 'center',
-          padding: '80px 0',
-          color: '#3a3a4a',
-        }}>
+        <div style={{ textAlign: 'center', padding: '80px 0', color: '#3a3a4a' }}>
           <p style={{ fontSize: '0.875rem', marginBottom: 8 }}>게시글이 없습니다</p>
           {user && (
             <p style={{ fontSize: '0.8125rem', color: '#5a5a6a' }}>
@@ -323,12 +301,7 @@ export default function PostListPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 4,
-          paddingBottom: 64,
-        }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 4, paddingBottom: 64 }}>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <button
               key={p}
@@ -353,6 +326,6 @@ export default function PostListPage() {
           ))}
         </div>
       )}
-    </div>
+    </BoardLayout>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "@/services/api";
 import FileUploader from "@/components/board/FileUploader";
+import BoardLayout from "@/components/board/BoardLayout";
 
 export default function PostCreatePage() {
   const { boardSlug } = useParams<{ boardSlug: string }>();
@@ -58,7 +59,7 @@ export default function PostCreatePage() {
 
   const labelStyle = (focused: boolean) => ({
     display: 'block' as const,
-    fontSize: 11,
+    fontSize: '0.6875rem',
     letterSpacing: '0.12em',
     textTransform: 'uppercase' as const,
     color: focused ? '#c9a96e' : '#5a5a6a',
@@ -73,21 +74,21 @@ export default function PostCreatePage() {
     border: 'none',
     borderBottom: `1px solid ${focused ? '#c9a96e' : 'rgba(255,255,255,0.12)'}`,
     color: '#f0f0f5',
-    fontSize: 15,
+    fontSize: '0.9375rem',
     outline: 'none',
     transition: 'border-color 0.3s ease',
   });
 
   return (
-    <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
+    <BoardLayout currentSlug={boardSlug!}>
       {/* Header */}
       <div style={{
-        paddingTop: 120,
+        paddingTop: 20,
         paddingBottom: 48,
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
         <p style={{
-          fontSize: 11,
+          fontSize: '0.6875rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           color: '#c9a96e',
@@ -96,7 +97,7 @@ export default function PostCreatePage() {
           {boardName}
         </p>
         <h1 style={{
-          fontFamily: '"Playfair Display", serif',
+          fontFamily: 'var(--font-display)',
           fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
           fontWeight: 700,
           color: '#f0f0f5',
@@ -111,14 +112,14 @@ export default function PostCreatePage() {
           padding: '14px 20px',
           border: '1px solid rgba(248,113,113,0.3)',
           color: '#f87171',
-          fontSize: 13,
+          fontSize: '0.8125rem',
         }}>
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} style={{ paddingTop: 32, paddingBottom: 64 }}>
-        {/* Title field */}
+        {/* Title */}
         <div style={{ marginBottom: 32 }}>
           <label style={labelStyle(titleFocused)}>제목</label>
           <input
@@ -132,7 +133,7 @@ export default function PostCreatePage() {
           />
         </div>
 
-        {/* YouTube URL field */}
+        {/* YouTube URL */}
         {boardType === "video" && (
           <div style={{ marginBottom: 32 }}>
             <label style={labelStyle(youtubeFocused)}>YouTube URL</label>
@@ -148,7 +149,7 @@ export default function PostCreatePage() {
           </div>
         )}
 
-        {/* Content field */}
+        {/* Content */}
         <div style={{ marginBottom: 32 }}>
           <label style={labelStyle(contentFocused)}>내용</label>
           <textarea
@@ -174,7 +175,7 @@ export default function PostCreatePage() {
           <FileUploader files={files} onChange={setFiles} />
         </div>
 
-        {/* Submit button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={isLoading}
@@ -183,7 +184,7 @@ export default function PostCreatePage() {
             background: isLoading ? 'rgba(201,169,110,0.5)' : '#c9a96e',
             color: '#05050a',
             border: 'none',
-            fontSize: 12,
+            fontSize: '0.75rem',
             fontWeight: 600,
             letterSpacing: '0.08em',
             textTransform: 'uppercase',
@@ -194,6 +195,6 @@ export default function PostCreatePage() {
           {isLoading ? "등록 중..." : "등록"}
         </button>
       </form>
-    </div>
+    </BoardLayout>
   );
 }

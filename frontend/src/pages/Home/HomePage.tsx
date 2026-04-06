@@ -21,7 +21,7 @@ export default function HomePage() {
       {/* ============================================================ */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[var(--bg)]">
         <ParallaxImage src={images.hero} speed={0.3} fill overlay={false} priority />
-        <div className="absolute inset-0 bg-[var(--bg)]/70" />
+        <div className="absolute inset-0 bg-[var(--bg)]/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-transparent to-[var(--bg)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(201,169,110,0.08),transparent_70%)]" />
 
@@ -189,7 +189,7 @@ export default function HomePage() {
       <div id="overview" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <ParallaxImage src={images.overview} speed={0.2} fill overlay={false} />
-        <div className="absolute inset-0 bg-[var(--bg)]/70" />
+        <div className="absolute inset-0 bg-[var(--bg)]/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-24 text-center">
@@ -281,7 +281,7 @@ export default function HomePage() {
       <div id="why-incheon" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <ParallaxImage src={images.whyIncheon} speed={0.2} fill overlay={false} />
-        <div className="absolute inset-0 bg-[var(--bg)]/70" />
+        <div className="absolute inset-0 bg-[var(--bg)]/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-24 text-center">
@@ -477,7 +477,7 @@ export default function HomePage() {
       <div id="stars" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <ParallaxImage src={images.stars} speed={0.2} fill overlay={false} />
-        <div className="absolute inset-0 bg-[var(--bg)]/70" />
+        <div className="absolute inset-0 bg-[var(--bg)]/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-24 text-center">
@@ -893,7 +893,7 @@ export default function HomePage() {
       <div id="space" className="scroll-mt-24">
       <section className="relative w-full min-h-[50vh] flex items-center overflow-hidden">
         <ParallaxImage src={images.space} speed={0.2} fill overlay={false} />
-        <div className="absolute inset-0 bg-[var(--bg)]/70" />
+        <div className="absolute inset-0 bg-[var(--bg)]/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/80" />
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-24 text-center">

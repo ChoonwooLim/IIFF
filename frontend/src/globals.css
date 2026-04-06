@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
 :root {
+  /* ── Core palette ── */
+  --bg: #05050a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --text: #f0f0f5;
+  --text-dim: #8a8a9a;
+  --text-muted: #5a5a6a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(201, 169, 110, 0.3);
+  --radius-card: 1rem;
+
   --color-gold: #c9a96e;
   --color-gold-light: #e0c992;
   --color-gold-dark: #a07c3f;
@@ -34,6 +44,13 @@
 }
 
 [data-theme="light"] {
+  --bg: #fafaf5;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --text: #1a1a2e;
+  --text-dim: #5a5a6a;
+  --text-muted: #8a8a9a;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-gold: rgba(160, 124, 63, 0.3);
   --dropdown-bg: #ffffff;
   --dropdown-border: rgba(0, 0, 0, 0.1);
 }
@@ -63,6 +80,24 @@ body {
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
+}
+
+.heading-section {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.label-upper {
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.text-body {
+  line-height: var(--leading-body);
 }
 
 .text-gold {
