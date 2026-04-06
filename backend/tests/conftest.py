@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from database import Base
 from deps import get_db
 from main import app
+import models.user  # noqa: F401 — ensure User table is registered with Base
 
 SQLALCHEMY_TEST_URL = "sqlite:///./test.db"
 engine_test = create_engine(SQLALCHEMY_TEST_URL, connect_args={"check_same_thread": False})
@@ -36,3 +37,14 @@ def client(db_session):
     with TestClient(app) as c:
         yield c
     app.dependency_overrides.clear()
+
+
+def override_activate_user(client, username: str):
+    """Test helper: directly activate a user in the DB."""
+    from sqlalchemy import text
+    db = next(app.dependency_overrides[get_db]())
+    db.execute(
+        text("UPDATE users SET status = 'active' WHERE username = :username"),
+        {"username": username},
+    )
+    db.commit()
