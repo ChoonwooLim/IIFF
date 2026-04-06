@@ -15,6 +15,11 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import MeetingListPage from "@/pages/Meeting/MeetingListPage";
 import VideoRoomPage from "@/pages/Meeting/VideoRoomPage";
 import TextChatPage from "@/pages/Meeting/TextChatPage";
+import AdminLayout from "@/components/admin/AdminLayout";
+import AdminDashboardPage from "@/pages/Admin/AdminDashboardPage";
+import UserManagementPage from "@/pages/Admin/UserManagementPage";
+import PostModerationPage from "@/pages/Admin/PostModerationPage";
+import MeetingManagementPage from "@/pages/Admin/MeetingManagementPage";
 
 export default function App() {
   return (
@@ -43,6 +48,16 @@ export default function App() {
         <Route path="/meetings/chat/:meetingId" element={
           <ProtectedRoute><TextChatPage /></ProtectedRoute>
         } />
+
+        {/* Admin routes */}
+        <Route path="/admin" element={
+          <ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>
+        }>
+          <Route index element={<AdminDashboardPage />} />
+          <Route path="users" element={<UserManagementPage />} />
+          <Route path="posts" element={<PostModerationPage />} />
+          <Route path="meetings" element={<MeetingManagementPage />} />
+        </Route>
       </Route>
     </Routes>
   );
