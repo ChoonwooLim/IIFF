@@ -13,6 +13,7 @@ export default function ImageGallery({ files }: { files: ImageFile[] }) {
       {images.map((img) => (
         <a key={img.id} href={`/api/files/${img.id}/download`} target="_blank" rel="noopener noreferrer">
           <img src={`/api/files/${img.id}/download`} alt={img.original_name}
+            loading="lazy"
             className="w-full h-48 object-cover rounded-lg border border-white/10" />
         </a>
       ))}
