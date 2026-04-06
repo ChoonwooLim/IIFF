@@ -19,6 +19,7 @@ from routers.posts import router as posts_router
 from routers.comments import router as comments_router
 from routers.meetings import router as meetings_router
 from routers.chat import router as chat_router
+from routers.admin import router as admin_router
 
 app.include_router(auth_router)
 app.include_router(boards_router)
@@ -26,6 +27,7 @@ app.include_router(posts_router)
 app.include_router(comments_router)
 app.include_router(meetings_router)
 app.include_router(chat_router)
+app.include_router(admin_router)
 
 
 @app.get("/api/health")
