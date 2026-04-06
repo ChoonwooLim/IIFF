@@ -34,3 +34,6 @@ Thumbs.db
 
 # Test DB
 test.db
+
+# Backups
+backups/*.sql.gz
