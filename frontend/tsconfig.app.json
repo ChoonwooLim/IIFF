@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "emitDeclarationOnly": true,
+    "declarationDir": "./node_modules/.tmp/declarations",
     "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,

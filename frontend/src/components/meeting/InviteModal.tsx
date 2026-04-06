@@ -19,7 +19,7 @@ export default function InviteModal({ meetingId, meetingName, onClose }: { meeti
   const [results, setResults] = useState<SearchUser[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [searching, setSearching] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const fetchInvitations = () => {
     api.get(`/meetings/${meetingId}/invitations`).then(({ data }) => setInvitations(data));

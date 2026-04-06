@@ -90,7 +90,6 @@ function renderMarkdown(md: string) {
 
 function formatInline(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  const regex = /\*\*\[(\d{2}:\d{2})\]\s*(.+?):\*\*\s*(.*)|(\*\*(.+?)\*\*)|(\*(.+?)\*)/g;
   let lastIndex = 0;
   let match;
 
