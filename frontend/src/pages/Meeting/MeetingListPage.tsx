@@ -307,35 +307,47 @@ export default function MeetingListPage() {
           fontSize: 20,
           fontWeight: 600,
           color: '#f0f0f5',
-          marginBottom: 32,
+          marginBottom: 40,
         }}>
           회의실 사용 가이드
         </h2>
+
+        {/* 공통 사용법 */}
+        <h3 style={{
+          fontSize: 13,
+          fontWeight: 600,
+          color: '#c9a96e',
+          letterSpacing: '0.08em',
+          marginBottom: 20,
+        }}>
+          기본 사용법
+        </h3>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 24,
+          gap: 20,
+          marginBottom: 48,
         }}>
           {[
             {
               step: '01',
               title: '회의실 생성',
-              desc: '"새 회의실" 버튼을 클릭하여 텍스트 채팅 또는 화상 회의 타입을 선택하고 회의실을 만드세요.',
+              desc: '"새 회의실" 버튼을 클릭 → 문자 채팅 또는 화상 회의 타입 선택 → 회의실 이름 입력 후 생성합니다.',
             },
             {
               step: '02',
               title: '멤버 초대',
-              desc: '회의실 카드의 ⋮ 메뉴에서 "멤버 초대"를 선택하고, 이름 또는 닉네임으로 검색하여 초대하세요.',
+              desc: '회의실 카드의 ⋮ 메뉴에서 "멤버 초대" 선택 → 이름/닉네임 검색 → 초대합니다. 비밀번호를 설정하면 비밀번호로도 입장 가능합니다.',
             },
             {
               step: '03',
-              title: '입장 및 참여',
-              desc: '초대받은 멤버만 회의실에 입장할 수 있습니다. 회의실 카드를 클릭하여 입장하세요.',
+              title: '입장',
+              desc: '회의실 카드를 클릭하면 입장됩니다. 비밀번호가 설정된 경우 비밀번호 입력 후 입장합니다. 개설자/관리자/초대받은 멤버는 바로 입장 가능합니다.',
             },
             {
               step: '04',
-              title: '회의실 관리',
-              desc: '개설자는 회의실 이름 수정, 삭제, 종료가 가능합니다. 관리자는 모든 회의실을 관리할 수 있습니다.',
+              title: '관리',
+              desc: '개설자는 ⋮ 메뉴에서 이름 수정, 삭제, 비밀번호 설정/제거가 가능합니다. 관리자는 모든 회의실을 관리할 수 있습니다.',
             },
           ].map((item, i) => (
             <div key={item.step} style={{
@@ -370,6 +382,104 @@ export default function MeetingListPage() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* 문자 채팅 & 화상 회의 비교 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: 24,
+        }}>
+          {/* 문자 채팅 */}
+          <div style={{
+            border: '1px solid rgba(201,169,110,0.15)',
+            animation: 'cardStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
+          }}>
+            <div style={{
+              padding: '20px 24px',
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+            }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: 'rgba(201,169,110,0.12)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="1.5">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: '#f0f0f5' }}>문자 채팅</h3>
+                <p style={{ fontSize: 11, color: '#6a6a7a', marginTop: 2 }}>Text Chat</p>
+              </div>
+            </div>
+            <div style={{ padding: '20px 24px' }}>
+              {[
+                { label: '실시간 메시지', desc: '텍스트 메시지를 실시간으로 주고받습니다. Shift+Enter로 줄바꿈, Enter로 전송합니다.' },
+                { label: '파일 공유', desc: '이미지, 동영상, 문서(PDF, HWP, PPT 등)를 첨부하여 전송할 수 있습니다. 이미지와 동영상은 채팅 내에서 바로 미리보기/재생됩니다.' },
+                { label: '대화 기록', desc: '모든 대화 내용은 자동으로 서버에 저장됩니다. 재입장 시 이전 대화 내용을 확인할 수 있습니다.' },
+                { label: '회의록 생성', desc: '회의 종료 시 대화 내용을 바탕으로 회의록을 자동 생성합니다. 회의록 목록 페이지에서 조회/삭제할 수 있습니다.' },
+                { label: '참여자 확인', desc: '오른쪽 상단의 참여자 아이콘을 클릭하면 현재 접속 중인 멤버 목록을 확인할 수 있습니다.' },
+              ].map((feat, i) => (
+                <div key={i} style={{
+                  padding: '12px 0',
+                  borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                }}>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: '#e0e0e8', marginBottom: 4 }}>{feat.label}</p>
+                  <p style={{ fontSize: 12, color: '#5a5a6a', lineHeight: 1.6 }}>{feat.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 화상 회의 */}
+          <div style={{
+            border: '1px solid rgba(100,149,237,0.15)',
+            animation: 'cardStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both',
+          }}>
+            <div style={{
+              padding: '20px 24px',
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+            }}>
+              <div style={{
+                width: 36, height: 36, borderRadius: '50%',
+                background: 'rgba(100,149,237,0.12)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6495ed" strokeWidth="1.5">
+                  <polygon points="23 7 16 12 23 17 23 7" strokeLinecap="round" strokeLinejoin="round"/>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: '#f0f0f5' }}>화상 회의</h3>
+                <p style={{ fontSize: 11, color: '#6a6a7a', marginTop: 2 }}>Video Conference</p>
+              </div>
+            </div>
+            <div style={{ padding: '20px 24px' }}>
+              {[
+                { label: '영상 통화', desc: 'Jitsi Meet 기반 화상 회의입니다. 웹캠과 마이크를 사용하여 실시간으로 대화합니다. 별도 프로그램 설치가 필요 없습니다.' },
+                { label: '화면 공유', desc: '발표 자료나 작업 화면을 참여자들에게 실시간으로 공유할 수 있습니다. 하단 도구모음의 화면 공유 버튼을 클릭하세요.' },
+                { label: '내장 채팅', desc: '화상 회의 중에도 Jitsi 내장 텍스트 채팅을 사용할 수 있습니다. 하단 도구모음에서 채팅 아이콘을 클릭하세요.' },
+                { label: '카메라/마이크 제어', desc: '하단 도구모음에서 카메라 ON/OFF, 마이크 음소거/해제를 자유롭게 전환할 수 있습니다.' },
+                { label: '최대 참여자', desc: '회의실 생성 시 설정한 최대 인원까지 참여할 수 있습니다 (2~50명). 입장 시 자동으로 참여자 수가 체크됩니다.' },
+              ].map((feat, i) => (
+                <div key={i} style={{
+                  padding: '12px 0',
+                  borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                }}>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: '#e0e0e8', marginBottom: 4 }}>{feat.label}</p>
+                  <p style={{ fontSize: 12, color: '#5a5a6a', lineHeight: 1.6 }}>{feat.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
