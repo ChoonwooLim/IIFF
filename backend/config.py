@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     max_files_per_post: int = 10
     allowed_image_extensions: list[str] = [".jpg", ".jpeg", ".png", ".gif", ".webp"]
     allowed_document_extensions: list[str] = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".hwp"]
+    jitsi_domain: str = "meet.jit.si"
 
     model_config = {"env_file": "../.env", "extra": "ignore"}
 
