@@ -1,5 +1,36 @@
-# Original PDF files (too large for GitHub)
-original/*.pdf
+# Environment
+.env
+.env.local
+.env.*.local
 
-# Extracted text (not needed in repo)
-original/*.txt
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+
+# Next.js (legacy)
+.next/
+
+# Docker
+pgdata/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Superpowers
+.superpowers/
+
+# Test DB
+test.db
