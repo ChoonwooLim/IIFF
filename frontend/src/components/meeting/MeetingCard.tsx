@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface MeetingCardProps {
@@ -11,22 +12,64 @@ interface MeetingCardProps {
 }
 
 export default function MeetingCard({ id, name, type, participantCount, maxParticipants, creator, createdAt }: MeetingCardProps) {
+  const [hovered, setHovered] = useState(false);
   const icon = type === "video" ? "🎥" : "💬";
   const path = type === "video" ? `/meetings/video/${id}` : `/meetings/chat/${id}`;
 
   return (
-    <Link to={path} className="glass-card p-5 hover:border-[var(--color-gold)]/30 transition block">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="text-2xl">{icon}</span>
-        <h3 className="text-white font-semibold truncate">{name}</h3>
-        <span className="text-xs px-2 py-0.5 bg-white/10 rounded text-gray-400 ml-auto">
+    <Link
+      to={path}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'block',
+        padding: '24px',
+        border: `1px solid ${hovered ? 'rgba(201,169,110,0.25)' : 'rgba(255,255,255,0.06)'}`,
+        background: hovered ? 'rgba(201,169,110,0.03)' : 'transparent',
+        textDecoration: 'none',
+        transition: 'all 0.3s ease',
+      }}
+    >
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 14,
+        marginBottom: 16,
+      }}>
+        <span style={{ fontSize: 22 }}>{icon}</span>
+        <h3 style={{
+          flex: 1,
+          fontSize: 16,
+          fontWeight: 500,
+          color: hovered ? '#f0f0f5' : '#c0c0ca',
+          transition: 'color 0.3s ease',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}>{name}</h3>
+        <span style={{
+          fontSize: 10,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          padding: '4px 10px',
+          border: '1px solid rgba(255,255,255,0.08)',
+          color: '#6a6a7a',
+        }}>
           {type === "video" ? "화상" : "텍스트"}
         </span>
       </div>
-      <div className="flex items-center gap-4 text-sm text-gray-500">
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 20,
+        fontSize: 12,
+        color: '#5a5a6a',
+      }}>
         <span>{creator.nickname}</span>
-        <span>{participantCount}/{maxParticipants}명</span>
-        <span>{new Date(createdAt).toLocaleDateString("ko-KR")}</span>
+        <span style={{ color: '#c9a96e' }}>{participantCount}/{maxParticipants}</span>
+        <span style={{ marginLeft: 'auto' }}>
+          {new Date(createdAt).toLocaleDateString("ko-KR")}
+        </span>
       </div>
     </Link>
   );

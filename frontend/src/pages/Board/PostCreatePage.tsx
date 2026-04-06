@@ -15,6 +15,9 @@ export default function PostCreatePage() {
   const [boardName, setBoardName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [titleFocused, setTitleFocused] = useState(false);
+  const [contentFocused, setContentFocused] = useState(false);
+  const [youtubeFocused, setYoutubeFocused] = useState(false);
 
   useEffect(() => {
     api.get("/boards").then(({ data }) => {
@@ -53,43 +56,141 @@ export default function PostCreatePage() {
     }
   };
 
+  const labelStyle = (focused: boolean) => ({
+    display: 'block' as const,
+    fontSize: 11,
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase' as const,
+    color: focused ? '#c9a96e' : '#5a5a6a',
+    marginBottom: 4,
+    transition: 'color 0.3s ease',
+  });
+
+  const inputStyle = (focused: boolean) => ({
+    width: '100%',
+    padding: '14px 0',
+    background: 'transparent',
+    border: 'none',
+    borderBottom: `1px solid ${focused ? '#c9a96e' : 'rgba(255,255,255,0.12)'}`,
+    color: '#f0f0f5',
+    fontSize: 15,
+    outline: 'none',
+    transition: 'border-color 0.3s ease',
+  });
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="heading-display text-2xl text-gold mb-8">{boardName} — 글쓰기</h1>
+    <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
+      {/* Header */}
+      <div style={{
+        paddingTop: 120,
+        paddingBottom: 48,
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}>
+        <p style={{
+          fontSize: 11,
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: '#c9a96e',
+          marginBottom: 12,
+        }}>
+          {boardName}
+        </p>
+        <h1 style={{
+          fontFamily: '"Playfair Display", serif',
+          fontSize: 40,
+          fontWeight: 700,
+          color: '#f0f0f5',
+        }}>
+          글쓰기
+        </h1>
+      </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">{error}</div>
+        <div style={{
+          marginTop: 24,
+          padding: '14px 20px',
+          border: '1px solid rgba(248,113,113,0.3)',
+          color: '#f87171',
+          fontSize: 13,
+        }}>
+          {error}
+        </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm text-gray-400 mb-1">제목</label>
-          <input value={title} onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:border-[var(--color-gold)] focus:outline-none"
-            required maxLength={200} />
+      <form onSubmit={handleSubmit} style={{ paddingTop: 32, paddingBottom: 64 }}>
+        {/* Title field */}
+        <div style={{ marginBottom: 32 }}>
+          <label style={labelStyle(titleFocused)}>제목</label>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onFocus={() => setTitleFocused(true)}
+            onBlur={() => setTitleFocused(false)}
+            required
+            maxLength={200}
+            style={inputStyle(titleFocused)}
+          />
         </div>
 
+        {/* YouTube URL field */}
         {boardType === "video" && (
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">YouTube URL</label>
-            <input value={youtubeUrl} onChange={(e) => setYoutubeUrl(e.target.value)}
+          <div style={{ marginBottom: 32 }}>
+            <label style={labelStyle(youtubeFocused)}>YouTube URL</label>
+            <input
+              value={youtubeUrl}
+              onChange={(e) => setYoutubeUrl(e.target.value)}
+              onFocus={() => setYoutubeFocused(true)}
+              onBlur={() => setYoutubeFocused(false)}
               placeholder="https://www.youtube.com/watch?v=..."
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:border-[var(--color-gold)] focus:outline-none"
-              required />
+              required
+              style={inputStyle(youtubeFocused)}
+            />
           </div>
         )}
 
-        <div>
-          <label className="block text-sm text-gray-400 mb-1">내용</label>
-          <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={12}
-            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:border-[var(--color-gold)] focus:outline-none resize-y"
-            required />
+        {/* Content field */}
+        <div style={{ marginBottom: 32 }}>
+          <label style={labelStyle(contentFocused)}>내용</label>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            onFocus={() => setContentFocused(true)}
+            onBlur={() => setContentFocused(false)}
+            rows={12}
+            required
+            style={{
+              ...inputStyle(contentFocused),
+              borderBottom: 'none',
+              border: `1px solid ${contentFocused ? 'rgba(201,169,110,0.4)' : 'rgba(255,255,255,0.08)'}`,
+              padding: '16px',
+              resize: 'vertical' as const,
+              lineHeight: 1.7,
+            }}
+          />
         </div>
 
-        <FileUploader files={files} onChange={setFiles} />
+        {/* File uploader */}
+        <div style={{ marginBottom: 40 }}>
+          <FileUploader files={files} onChange={setFiles} />
+        </div>
 
-        <button type="submit" disabled={isLoading}
-          className="w-full py-3 bg-[var(--color-gold)] text-black font-semibold rounded-lg hover:bg-[var(--color-gold-light)] transition disabled:opacity-50">
+        {/* Submit button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          style={{
+            padding: '14px 40px',
+            background: isLoading ? 'rgba(201,169,110,0.5)' : '#c9a96e',
+            color: '#05050a',
+            border: 'none',
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
+            transition: 'all 0.3s ease',
+          }}
+        >
           {isLoading ? "등록 중..." : "등록"}
         </button>
       </form>

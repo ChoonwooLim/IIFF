@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "@/services/api";
 import { useAuth } from "@/hooks/AuthContext";
 import FileList from "@/components/board/FileList";
@@ -26,12 +26,17 @@ export default function PostDetailPage() {
   const navigate = useNavigate();
   const [post, setPost] = useState<PostDetail | null>(null);
   const [boardType, setBoardType] = useState("general");
+  const [boardName, setBoardName] = useState("");
+  const [deleteHovered, setDeleteHovered] = useState(false);
 
   useEffect(() => {
     api.get(`/posts/${postId}`).then(({ data }) => setPost(data));
     api.get("/boards").then(({ data }) => {
-      const board = data.find((b: { slug: string; board_type: string }) => b.slug === boardSlug);
-      if (board) setBoardType(board.board_type);
+      const board = data.find((b: { slug: string; board_type: string; name: string }) => b.slug === boardSlug);
+      if (board) {
+        setBoardType(board.board_type);
+        setBoardName(board.name);
+      }
     });
   }, [postId, boardSlug]);
 
@@ -41,7 +46,18 @@ export default function PostDetailPage() {
     navigate(`/boards/${boardSlug}`);
   };
 
-  if (!post) return <div className="min-h-screen flex items-center justify-center text-gray-400">로딩 중...</div>;
+  if (!post) return (
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#5a5a6a',
+      fontSize: 14,
+    }}>
+      로딩 중...
+    </div>
+  );
 
   const isAuthor = user?.id === post.user.id;
   const isAdmin = user && ["admin", "superadmin"].includes(user.role);
@@ -49,32 +65,103 @@ export default function PostDetailPage() {
   const otherFiles = post.files.filter((f) => !f.mime_type.startsWith("image/"));
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <article>
-        <h1 className="text-2xl text-white font-bold mb-4">{post.title}</h1>
-        <div className="flex items-center gap-4 text-sm text-gray-500 mb-6 pb-6 border-b border-white/10">
-          <span>{post.user.nickname}</span>
-          <span>{new Date(post.created_at).toLocaleDateString("ko-KR")}</span>
-          <span>조회 {post.view_count}</span>
-          {(isAuthor || isAdmin) && (
-            <button onClick={handleDelete} className="text-red-400 hover:text-red-300 ml-auto">삭제</button>
-          )}
-        </div>
+    <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
+      {/* Header */}
+      <div style={{ paddingTop: 120, paddingBottom: 32 }}>
+        <Link
+          to={`/boards/${boardSlug}`}
+          style={{
+            fontSize: 11,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: '#c9a96e',
+            textDecoration: 'none',
+            display: 'block',
+            marginBottom: 24,
+          }}
+        >
+          ← {boardName || 'Back'}
+        </Link>
 
-        {post.youtube_url && (
-          <div className="mb-6 aspect-video">
-            <iframe src={post.youtube_url.replace("watch?v=", "embed/")}
-              className="w-full h-full rounded-lg" allowFullScreen />
+        <article>
+          <h1 style={{
+            fontFamily: '"Playfair Display", serif',
+            fontSize: 32,
+            fontWeight: 700,
+            color: '#f0f0f5',
+            lineHeight: 1.3,
+            marginBottom: 24,
+          }}>
+            {post.title}
+          </h1>
+
+          {/* Post meta */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 20,
+            fontSize: 12,
+            color: '#5a5a6a',
+            paddingBottom: 24,
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+          }}>
+            <span>{post.user.nickname}</span>
+            <span>{new Date(post.created_at).toLocaleDateString("ko-KR")}</span>
+            <span>조회 {post.view_count}</span>
+            {(isAuthor || isAdmin) && (
+              <button
+                onClick={handleDelete}
+                onMouseEnter={() => setDeleteHovered(true)}
+                onMouseLeave={() => setDeleteHovered(false)}
+                style={{
+                  marginLeft: 'auto',
+                  background: 'none',
+                  border: 'none',
+                  color: deleteHovered ? '#f87171' : '#6a4a4a',
+                  fontSize: 12,
+                  cursor: 'pointer',
+                  transition: 'color 0.3s ease',
+                }}
+              >
+                삭제
+              </button>
+            )}
           </div>
-        )}
 
-        <div className="text-gray-300 whitespace-pre-wrap mb-6">{post.content}</div>
+          {/* YouTube embed */}
+          {post.youtube_url && (
+            <div style={{ margin: '32px 0', aspectRatio: '16 / 9' }}>
+              <iframe
+                src={post.youtube_url.replace("watch?v=", "embed/")}
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                allowFullScreen
+              />
+            </div>
+          )}
 
-        {imageFiles.length > 0 && <ImageGallery files={imageFiles} />}
-        {otherFiles.length > 0 && <FileList files={otherFiles} />}
-      </article>
+          {/* Content */}
+          <div style={{
+            color: '#b0b0ba',
+            whiteSpace: 'pre-wrap',
+            fontSize: 15,
+            lineHeight: 1.8,
+            padding: '32px 0',
+          }}>
+            {post.content}
+          </div>
 
-      <CommentSection postId={post.id} postUserId={post.user.id} boardType={boardType} />
+          {/* Files */}
+          {imageFiles.length > 0 && <ImageGallery files={imageFiles} />}
+          {otherFiles.length > 0 && <FileList files={otherFiles} />}
+        </article>
+
+        <div style={{
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          marginTop: 32,
+        }}>
+          <CommentSection postId={post.id} postUserId={post.user.id} boardType={boardType} />
+        </div>
+      </div>
     </div>
   );
 }
