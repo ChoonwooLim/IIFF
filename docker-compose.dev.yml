@@ -1,0 +1,23 @@
+# Usage: docker compose -f docker-compose.dev.yml up -d
+# Starts only PostgreSQL for local development
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: iiff-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-iiff_db}
+      POSTGRES_USER: ${POSTGRES_USER:-iiff_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-iiff_secret_2026}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-iiff_user} -d ${POSTGRES_DB:-iiff_db}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:
