@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     allowed_document_extensions: list[str] = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".hwp"]
     jitsi_domain: str = "meet.jit.si"
 
-    model_config = {"env_file": "../.env", "extra": "ignore"}
+    model_config = {"env_file": [".env", "../.env"], "extra": "ignore"}
 
 
 settings = Settings()

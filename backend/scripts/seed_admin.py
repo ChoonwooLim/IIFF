@@ -18,7 +18,7 @@ def seed_admin():
         admin = User(
             auth_provider="local",
             username="admin",
-            password_hash=hash_password("Admin1234!"),
+            password_hash=hash_password("admin1234"),
             email="admin@iiff.twinverse.org",
             name="관리자",
             nickname="IIFF관리자",

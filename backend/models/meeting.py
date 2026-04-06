@@ -27,3 +27,4 @@ class Meeting(Base):
     creator: Mapped["User"] = relationship()
     participants: Mapped[list["MeetingParticipant"]] = relationship(back_populates="meeting", cascade="all, delete-orphan")
     messages: Mapped[list["ChatMessage"]] = relationship(back_populates="meeting", cascade="all, delete-orphan")
+    invitations: Mapped[list["MeetingInvitation"]] = relationship(cascade="all, delete-orphan")

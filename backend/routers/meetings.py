@@ -8,18 +8,41 @@ from config import settings
 from deps import get_db, require_active, require_admin
 from models.meeting import Meeting
 from models.meeting_participant import MeetingParticipant
+from models.meeting_invitation import MeetingInvitation
 from models.chat_message import ChatMessage
 from models.user import User
 from schemas.meeting import (
     MeetingCreateRequest,
+    MeetingUpdateRequest,
+    MeetingInviteRequest,
     MeetingResponse,
     MeetingDetailResponse,
     MeetingUserResponse,
+    MeetingInvitationResponse,
     ParticipantResponse,
     ChatMessageResponse,
 )
 
 router = APIRouter(prefix="/api/meetings", tags=["meetings"])
+
+
+# --- User search for invitations ---
+
+@router.get("/users/search")
+def search_users(q: str, db: Session = Depends(get_db), current_user: User = Depends(require_active)):
+    if len(q.strip()) < 1:
+        return []
+    users = (
+        db.query(User)
+        .filter(
+            User.status == "active",
+            User.id != current_user.id,
+            (User.nickname.ilike(f"%{q}%") | User.name.ilike(f"%{q}%")),
+        )
+        .limit(10)
+        .all()
+    )
+    return [{"id": u.id, "nickname": u.nickname, "name": u.name, "profile_image": u.profile_image} for u in users]
 
 
 @router.get("", response_model=list[MeetingResponse])
@@ -97,6 +120,128 @@ def get_meeting(meeting_id: int, db: Session = Depends(get_db)):
     return meeting
 
 
+@router.patch("/{meeting_id}")
+def update_meeting(
+    meeting_id: int,
+    req: MeetingUpdateRequest,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="수정 권한이 없습니다")
+
+    meeting.name = req.name
+    db.commit()
+    return {"message": "회의실 이름이 수정되었습니다"}
+
+
+@router.delete("/{meeting_id}", status_code=status.HTTP_200_OK)
+def delete_meeting(
+    meeting_id: int,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="삭제 권한이 없습니다")
+
+    db.delete(meeting)
+    db.commit()
+    return {"message": "회의실이 삭제되었습니다"}
+
+
+# --- Invitation endpoints ---
+
+@router.get("/{meeting_id}/invitations", response_model=list[MeetingInvitationResponse])
+def list_invitations(
+    meeting_id: int,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    invitations = (
+        db.query(MeetingInvitation)
+        .options(joinedload(MeetingInvitation.user))
+        .filter(MeetingInvitation.meeting_id == meeting_id)
+        .order_by(MeetingInvitation.invited_at.desc())
+        .all()
+    )
+    return invitations
+
+
+@router.post("/{meeting_id}/invite", status_code=status.HTTP_201_CREATED)
+def invite_user(
+    meeting_id: int,
+    req: MeetingInviteRequest,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="초대 권한이 없습니다")
+
+    target = db.query(User).filter(User.id == req.user_id, User.status == "active").first()
+    if not target:
+        raise HTTPException(status_code=404, detail="사용자를 찾을 수 없습니다")
+
+    existing = db.query(MeetingInvitation).filter(
+        MeetingInvitation.meeting_id == meeting_id,
+        MeetingInvitation.user_id == req.user_id,
+    ).first()
+    if existing:
+        return {"message": "이미 초대된 사용자입니다"}
+
+    invitation = MeetingInvitation(
+        meeting_id=meeting_id,
+        user_id=req.user_id,
+        invited_by=current_user.id,
+    )
+    db.add(invitation)
+    db.commit()
+    return {"message": f"{target.nickname}님을 초대했습니다"}
+
+
+@router.delete("/{meeting_id}/invite/{user_id}")
+def remove_invitation(
+    meeting_id: int,
+    user_id: int,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="초대 취소 권한이 없습니다")
+
+    invitation = db.query(MeetingInvitation).filter(
+        MeetingInvitation.meeting_id == meeting_id,
+        MeetingInvitation.user_id == user_id,
+    ).first()
+    if not invitation:
+        raise HTTPException(status_code=404, detail="초대 기록을 찾을 수 없습니다")
+
+    db.delete(invitation)
+    db.commit()
+    return {"message": "초대가 취소되었습니다"}
+
+
+# --- Join / Leave / Close ---
+
 @router.post("/{meeting_id}/join")
 def join_meeting(
     meeting_id: int,
@@ -106,6 +251,17 @@ def join_meeting(
     meeting = db.query(Meeting).filter(Meeting.id == meeting_id, Meeting.status == "active").first()
     if not meeting:
         raise HTTPException(status_code=404, detail="활성화된 회의실을 찾을 수 없습니다")
+
+    # Check invitation: creator, admin, or invited user only
+    is_creator = meeting.created_by == current_user.id
+    is_admin = current_user.role in ("admin", "superadmin")
+    is_invited = db.query(MeetingInvitation).filter(
+        MeetingInvitation.meeting_id == meeting_id,
+        MeetingInvitation.user_id == current_user.id,
+    ).first() is not None
+
+    if not (is_creator or is_admin or is_invited):
+        raise HTTPException(status_code=403, detail="초대받은 사용자만 입장할 수 있습니다")
 
     active_count = db.query(MeetingParticipant).filter(
         MeetingParticipant.meeting_id == meeting_id,

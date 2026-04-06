@@ -29,6 +29,17 @@ class MeetingCreateRequest(BaseModel):
         return v
 
 
+class MeetingUpdateRequest(BaseModel):
+    name: str
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str) -> str:
+        if len(v.strip()) < 1 or len(v) > 200:
+            raise ValueError("회의실 이름은 1~200자여야 합니다")
+        return v.strip()
+
+
 class MeetingUserResponse(BaseModel):
     id: int
     nickname: str
@@ -69,6 +80,17 @@ class MeetingDetailResponse(BaseModel):
     participants: list[ParticipantResponse] = []
     created_at: datetime
     closed_at: datetime | None
+    model_config = {"from_attributes": True}
+
+
+class MeetingInviteRequest(BaseModel):
+    user_id: int
+
+
+class MeetingInvitationResponse(BaseModel):
+    id: int
+    user: MeetingUserResponse
+    invited_at: datetime
     model_config = {"from_attributes": True}
 
 
