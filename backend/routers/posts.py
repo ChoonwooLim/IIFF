@@ -18,6 +18,7 @@ from schemas.post import (
     PostUserResponse,
     PostFileResponse,
 )
+from config import settings
 from services.storage import get_storage, validate_file, get_upload_directory
 
 router = APIRouter(prefix="/api", tags=["posts"])
@@ -197,9 +198,12 @@ def delete_post(
     if post.user_id != current_user.id and current_user.role not in ("subadmin", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="삭제 권한이 없습니다")
 
-    storage = get_storage()
     for file in post.files:
-        storage.delete(file.file_path)
+        ext = os.path.splitext(file.stored_name)[1].lower()
+        directory = "images" if ext in settings.allowed_image_extensions else "documents"
+        file_abs = os.path.join(settings.storage_base_path, directory, file.stored_name)
+        if os.path.exists(file_abs):
+            os.remove(file_abs)
 
     db.delete(post)
     db.commit()
@@ -211,8 +215,10 @@ def download_file(file_id: int, db: Session = Depends(get_db)):
     if not file:
         raise HTTPException(status_code=404, detail="파일을 찾을 수 없습니다")
 
-    storage = get_storage()
-    path = storage.get_path(file.file_path)
+    # Resolve path from stored_name to handle different environments
+    ext = os.path.splitext(file.stored_name)[1].lower()
+    directory = "images" if ext in settings.allowed_image_extensions else "documents"
+    path = os.path.join(settings.storage_base_path, directory, file.stored_name)
 
     if not os.path.exists(path):
         raise HTTPException(status_code=404, detail="파일이 존재하지 않습니다")
