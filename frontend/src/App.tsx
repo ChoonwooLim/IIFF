@@ -12,6 +12,9 @@ import PostListPage from "@/pages/Board/PostListPage";
 import PostDetailPage from "@/pages/Board/PostDetailPage";
 import PostCreatePage from "@/pages/Board/PostCreatePage";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import MeetingListPage from "@/pages/Meeting/MeetingListPage";
+import VideoRoomPage from "@/pages/Meeting/VideoRoomPage";
+import TextChatPage from "@/pages/Meeting/TextChatPage";
 
 export default function App() {
   return (
@@ -32,6 +35,13 @@ export default function App() {
         <Route path="/boards/:boardSlug/posts/:postId" element={<PostDetailPage />} />
         <Route path="/boards/:boardSlug/write" element={
           <ProtectedRoute><PostCreatePage /></ProtectedRoute>
+        } />
+        <Route path="/meetings" element={<MeetingListPage />} />
+        <Route path="/meetings/video/:meetingId" element={
+          <ProtectedRoute><VideoRoomPage /></ProtectedRoute>
+        } />
+        <Route path="/meetings/chat/:meetingId" element={
+          <ProtectedRoute><TextChatPage /></ProtectedRoute>
         } />
       </Route>
     </Routes>
