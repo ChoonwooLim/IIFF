@@ -3,8 +3,12 @@ interface Props {
   content: string;
   timestamp: string;
   isOwn: boolean;
-  showAvatar: boolean; // false when consecutive messages from same user
+  showAvatar: boolean;
   showName: boolean;
+  fileUrl?: string | null;
+  fileName?: string | null;
+  fileType?: string | null;
+  fileSize?: number | null;
 }
 
 function formatTime(ts: string) {
@@ -15,8 +19,109 @@ function formatTime(ts: string) {
   return `${ampm} ${h % 12 || 12}:${m}`;
 }
 
-export default function ChatMessage({ user, content, timestamp, isOwn, showAvatar, showName }: Props) {
+function formatFileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes}B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)}KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
+}
+
+function FileContent({ fileUrl, fileName, fileType, fileSize }: {
+  fileUrl: string; fileName: string; fileType: string; fileSize?: number | null;
+}) {
+  const isImage = fileType.startsWith("image/");
+  const isVideo = fileType.startsWith("video/");
+
+  if (isImage) {
+    return (
+      <a href={fileUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
+        <img
+          src={fileUrl}
+          alt={fileName}
+          style={{
+            maxWidth: '100%',
+            maxHeight: 280,
+            borderRadius: 6,
+            objectFit: 'contain',
+            display: 'block',
+          }}
+        />
+      </a>
+    );
+  }
+
+  if (isVideo) {
+    return (
+      <video
+        src={fileUrl}
+        controls
+        preload="metadata"
+        style={{
+          maxWidth: '100%',
+          maxHeight: 280,
+          borderRadius: 6,
+          display: 'block',
+        }}
+      />
+    );
+  }
+
+  // Document / other file
+  return (
+    <a
+      href={fileUrl}
+      download={fileName}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        padding: '10px 12px',
+        background: 'rgba(255,255,255,0.04)',
+        borderRadius: 6,
+        textDecoration: 'none',
+        transition: 'background 0.2s',
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <p style={{ fontSize: 13, color: '#e0e0e8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{fileName}</p>
+        {fileSize != null && <p style={{ fontSize: 11, color: '#5a5a6a', marginTop: 2 }}>{formatFileSize(fileSize)}</p>}
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6a6a7a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </svg>
+    </a>
+  );
+}
+
+function BubbleContent({ content, fileUrl, fileName, fileType, fileSize }: {
+  content: string; fileUrl?: string | null; fileName?: string | null; fileType?: string | null; fileSize?: number | null;
+}) {
+  if (fileUrl && fileName && fileType) {
+    return <FileContent fileUrl={fileUrl} fileName={fileName} fileType={fileType} fileSize={fileSize} />;
+  }
+  return (
+    <p style={{
+      fontSize: 14,
+      color: '#e0e0e8',
+      lineHeight: 1.6,
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'break-word',
+    }}>{content}</p>
+  );
+}
+
+export default function ChatMessage({ user, content, timestamp, isOwn, showAvatar, showName, fileUrl, fileName, fileType, fileSize }: Props) {
   const time = formatTime(timestamp);
+  const hasFile = !!(fileUrl && fileName && fileType);
 
   if (isOwn) {
     return (
@@ -40,16 +145,11 @@ export default function ChatMessage({ user, content, timestamp, isOwn, showAvata
           background: 'rgba(201,169,110,0.2)',
           border: '1px solid rgba(201,169,110,0.15)',
           borderRadius: '12px 4px 12px 12px',
-          padding: '10px 14px',
+          padding: hasFile ? '6px' : '10px 14px',
           maxWidth: '70%',
+          overflow: 'hidden',
         }}>
-          <p style={{
-            fontSize: 14,
-            color: '#f0f0f5',
-            lineHeight: 1.6,
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-word',
-          }}>{content}</p>
+          <BubbleContent content={content} fileUrl={fileUrl} fileName={fileName} fileType={fileType} fileSize={fileSize} />
         </div>
       </div>
     );
@@ -102,16 +202,11 @@ export default function ChatMessage({ user, content, timestamp, isOwn, showAvata
             background: 'rgba(255,255,255,0.06)',
             border: '1px solid rgba(255,255,255,0.06)',
             borderRadius: '4px 12px 12px 12px',
-            padding: '10px 14px',
+            padding: hasFile ? '6px' : '10px 14px',
             maxWidth: '70%',
+            overflow: 'hidden',
           }}>
-            <p style={{
-              fontSize: 14,
-              color: '#e0e0e8',
-              lineHeight: 1.6,
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word',
-            }}>{content}</p>
+            <BubbleContent content={content} fileUrl={fileUrl} fileName={fileName} fileType={fileType} fileSize={fileSize} />
           </div>
           <span style={{
             fontSize: 10,

@@ -11,6 +11,10 @@ interface ChatMsg {
   user: { id: number; nickname: string; profile_image?: string | null };
   content: string;
   timestamp: string;
+  file_url?: string | null;
+  file_name?: string | null;
+  file_type?: string | null;
+  file_size?: number | null;
 }
 
 export default function TextChatPage() {
@@ -28,9 +32,11 @@ export default function TextChatPage() {
   const [creatorId, setCreatorId] = useState<number | null>(null);
   const [wsConnected, setWsConnected] = useState(false);
   const [wsError, setWsError] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,6 +56,10 @@ export default function TextChatPage() {
         user: m.user,
         content: m.content,
         timestamp: m.created_at,
+        file_url: m.file_url,
+        file_name: m.file_name,
+        file_type: m.file_type,
+        file_size: m.file_size,
       })));
     });
 
@@ -82,12 +92,16 @@ export default function TextChatPage() {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      if (data.type === "new_message" && data.user && data.content) {
+      if (data.type === "new_message" && data.user) {
         setMessages((prev) => [...prev, {
           type: "message",
           user: data.user,
-          content: data.content,
+          content: data.content || "",
           timestamp: data.timestamp || new Date().toISOString(),
+          file_url: data.file_url,
+          file_name: data.file_name,
+          file_type: data.file_type,
+          file_size: data.file_size,
         }]);
       } else if (data.type === "participants" && data.users) {
         setParticipants(data.users);
@@ -149,6 +163,31 @@ export default function TextChatPage() {
     }
   };
 
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+    e.target.value = "";
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const { data } = await api.post(`/meetings/${meetingId}/chat-files`, formData);
+      wsRef.current.send(JSON.stringify({
+        type: "file_message",
+        file_url: data.file_url,
+        file_name: data.file_name,
+        file_type: data.file_type,
+        file_size: data.file_size,
+      }));
+    } catch (err: any) {
+      const detail = err.response?.data?.detail || "파일 업로드에 실패했습니다";
+      alert(detail);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleClose = async () => {
     if (!confirm("회의를 종료하시겠습니까? 모든 참여자가 퇴장됩니다.")) return;
     await api.post(`/meetings/${meetingId}/close`);
@@ -186,7 +225,7 @@ export default function TextChatPage() {
       {/* Chat container */}
       <div style={{
         width: '100%',
-        maxWidth: 520,
+        maxWidth: 940,
         display: 'flex',
         flexDirection: 'column',
         background: '#08080e',
@@ -332,6 +371,10 @@ export default function TextChatPage() {
                     isOwn={msg.user.id === user?.id}
                     showAvatar={!isSameUser}
                     showName={!isSameUser}
+                    fileUrl={msg.file_url}
+                    fileName={msg.file_name}
+                    fileType={msg.file_type}
+                    fileSize={msg.file_size}
                   />
                 )}
               </div>
@@ -347,6 +390,13 @@ export default function TextChatPage() {
           borderTop: '1px solid rgba(255,255,255,0.06)',
           flexShrink: 0,
         }}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*,video/mp4,video/webm,video/quicktime,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.hwp"
+            onChange={handleFileSelect}
+            style={{ display: 'none' }}
+          />
           <div style={{
             display: 'flex',
             alignItems: 'flex-end',
@@ -358,6 +408,29 @@ export default function TextChatPage() {
             opacity: wsConnected ? 1 : 0.4,
             transition: 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           }}>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={!wsConnected || isUploading}
+              style={{
+                background: 'none', border: 'none', cursor: wsConnected ? 'pointer' : 'default',
+                color: '#6a6a7a', padding: '4px', flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => { if (wsConnected) e.currentTarget.style.color = '#c9a96e'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#6a6a7a'; }}
+              title="파일 첨부"
+            >
+              {isUploading ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" style={{ animation: 'spin 1s linear infinite' }}>
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="31 31" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                </svg>
+              )}
+            </button>
             <textarea
               ref={inputRef}
               value={input}

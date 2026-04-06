@@ -63,10 +63,14 @@ def register_local(req: LocalRegisterRequest, db: Session = Depends(get_db)):
         name=req.name,
         nickname=req.nickname,
         phone=req.phone,
+        role="guest",
+        status="active",
     )
     db.add(user)
     db.commit()
-    return MessageResponse(message="회원가입이 완료되었습니다. 관리자 승인을 기다려주세요.", status="pending")
+
+    access_token = create_access_token(data={"sub": str(user.id), "role": user.role})
+    return {"access_token": access_token, "message": "회원가입이 완료되었습니다.", "status": "active"}
 
 
 @router.post("/login", response_model=TokenResponse)
@@ -76,10 +80,6 @@ def login_local(req: LocalLoginRequest, response: Response, db: Session = Depend
         raise HTTPException(status_code=401, detail="아이디 또는 비밀번호가 올바르지 않습니다")
     if not verify_password(req.password, user.password_hash):
         raise HTTPException(status_code=401, detail="아이디 또는 비밀번호가 올바르지 않습니다")
-    if user.status == "pending":
-        raise HTTPException(status_code=403, detail="관리자 승인을 기다리고 있습니다")
-    if user.status == "rejected":
-        raise HTTPException(status_code=403, detail="가입이 거부되었습니다")
     if user.status == "banned":
         raise HTTPException(status_code=403, detail="계정이 정지되었습니다")
 
@@ -106,7 +106,7 @@ def refresh_access_token(request: Request, response: Response, db: Session = Dep
     if not payload or payload.get("type") != "refresh":
         raise HTTPException(status_code=401, detail="유효하지 않은 리프레시 토큰입니다")
     user = db.query(User).filter(User.id == int(payload["sub"])).first()
-    if not user or user.status != "active":
+    if not user or user.status == "banned":
         raise HTTPException(status_code=401, detail="유효하지 않은 사용자입니다")
     new_access = create_access_token(data={"sub": str(user.id), "role": user.role})
     new_refresh = create_refresh_token(data={"sub": str(user.id)})
@@ -130,18 +130,13 @@ def google_callback(req: GoogleCallbackRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.google_id == google_user["sub"]).first()
 
     if existing:
-        if existing.status == "active":
-            access_token = create_access_token(data={"sub": str(existing.id), "role": existing.role})
-            return {"access_token": access_token, "token_type": "bearer", "is_new": False}
-        if existing.status == "pending":
-            if not existing.nickname or not existing.phone:
-                temp_token = create_access_token(data={"sub": str(existing.id), "role": "user", "temp": True})
-                return {"is_new": False, "needs_profile": True, "temp_token": temp_token}
-            return {"message": "관리자 승인을 기다리고 있습니다", "status": "pending", "is_new": False}
-        if existing.status == "rejected":
-            raise HTTPException(status_code=403, detail="가입이 거부되었습니다")
         if existing.status == "banned":
             raise HTTPException(status_code=403, detail="계정이 정지되었습니다")
+        if not existing.nickname or not existing.phone:
+            temp_token = create_access_token(data={"sub": str(existing.id), "role": existing.role, "temp": True})
+            return {"is_new": False, "needs_profile": True, "temp_token": temp_token}
+        access_token = create_access_token(data={"sub": str(existing.id), "role": existing.role})
+        return {"access_token": access_token, "token_type": "bearer", "is_new": False}
 
     # Check if email already exists (local signup with same email)
     email_exists = db.query(User).filter(User.email == google_user["email"]).first()
@@ -157,6 +152,8 @@ def google_callback(req: GoogleCallbackRequest, db: Session = Depends(get_db)):
         nickname="",
         phone="",
         profile_image=google_user.get("picture"),
+        role="guest",
+        status="active",
     )
     db.add(user)
     db.commit()
@@ -179,4 +176,4 @@ def google_complete_profile(
     current_user.nickname = req.nickname
     current_user.phone = req.phone
     db.commit()
-    return MessageResponse(message="프로필이 완성되었습니다. 관리자 승인을 기다려주세요.", status="pending")
+    return MessageResponse(message="프로필이 완성되었습니다.", status="active")

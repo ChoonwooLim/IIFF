@@ -86,3 +86,27 @@
 - **애니메이션**: 10개 신규 @keyframes (msgSlideLeft/Right, modalScaleIn, drawerSlideIn, cardStagger 등), 모든 ease-out-expo 커브, prefers-reduced-motion 글로벌 대응
 
 ---
+
+### 추가 작업 (세션 4)
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| feat | 로그아웃 기능 (Navbar에 로그아웃 버튼 추가, 데스크톱/모바일) | 완료 |
+| feat | 등급제 전환 (승인제 → 등급제: guest/vip/vvip, 가입 즉시 활성화) | 완료 |
+| feat | 가입 시 자동 로그인 (register에서 access_token 반환 → 즉시 로그인) | 완료 |
+| feat | 부관리자(subadmin) 등급 추가 (게시글/공지 관리 권한) | 완료 |
+| feat | 게시글 고정/해제 기능 (관리자/부관리자 전용) | 완료 |
+| feat | 채팅 파일 전송 (이미지/동영상/문서 업로드 및 인라인 표시) | 완료 |
+| style | Navbar 로고 변경 (IIFF 텍스트 → NextWave 2026) | 완료 |
+| style | 텍스트 채팅방 가로 폭 확대 (520px → 940px) | 완료 |
+| fix | 백엔드 500 에러 (모델 변경 후 서버 미재시작) | 완료 |
+
+### 세부 내용
+
+- **등급제 전환**: User 모델 role/status를 Enum에서 String으로 변경, 기본값 guest/active, 승인 대기(pending) 플로우 완전 제거, PendingPage 라우트 제거
+- **부관리자(subadmin)**: deps.py에 `require_moderator` 의존성 추가 (subadmin/admin/superadmin), 공지사항 작성/게시글 관리 권한 부여, AdminLayout에서 부관리자는 게시글 관리만 표시
+- **게시글 고정**: admin.py에 `PATCH /posts/{post_id}/pin` 엔드포인트 추가, PostModerationPage에 고정/해제 버튼 및 고정 뱃지 표시
+- **채팅 파일 전송**: ChatMessage 모델에 file_url/file_name/file_type/file_size 컬럼 추가, REST 파일 업로드 엔드포인트 + WebSocket 파일 메시지 브로드캐스트, 프론트엔드에서 이미지 인라인 미리보기/동영상 플레이어/문서 다운로드 카드 렌더링
+- **프론트엔드 정리**: ProtectedRoute/LoginPage/ProfileCompletePage에서 pending 관련 코드 제거, AdminDashboardPage 등급별 통계 표시, UserManagementPage 등급 드롭다운 (guest/vip/vvip/subadmin/admin)
+
+---

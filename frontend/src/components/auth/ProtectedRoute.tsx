@@ -22,11 +22,11 @@ export default function ProtectedRoute({ children, requireActive = true, require
     return <Navigate to="/login" replace />;
   }
 
-  if (requireActive && user.status !== "active") {
-    return <Navigate to="/pending" replace />;
+  if (requireActive && user.status === "banned") {
+    return <Navigate to="/login" replace />;
   }
 
-  if (requireAdmin && !["admin", "superadmin"].includes(user.role)) {
+  if (requireAdmin && !["subadmin", "admin", "superadmin"].includes(user.role)) {
     return <Navigate to="/" replace />;
   }
 

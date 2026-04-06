@@ -23,8 +23,6 @@ function GoogleLoginButton({ onError, onLoading }: { onError: (msg: string) => v
         } else if (data.access_token) {
           await login(data.access_token);
           navigate("/");
-        } else if (data.status === "pending") {
-          navigate("/pending");
         }
       } catch (err: any) {
         onError(err.response?.data?.detail || "Google 로그인에 실패했습니다");

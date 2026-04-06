@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import { useAuth } from "@/hooks/AuthContext";
 
 // Critical path — loaded eagerly
 import HomePage from "@/pages/Home/HomePage";
@@ -11,7 +12,6 @@ const PresentationPage = lazy(() => import("@/pages/Presentation/PresentationPag
 const DocsPage = lazy(() => import("@/pages/Docs/DocsPage"));
 const LoginPage = lazy(() => import("@/pages/Auth/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/Auth/RegisterPage"));
-const PendingPage = lazy(() => import("@/pages/Auth/PendingPage"));
 const ProfileCompletePage = lazy(() => import("@/pages/Auth/ProfileCompletePage"));
 const BoardListPage = lazy(() => import("@/pages/Board/BoardListPage"));
 const PostListPage = lazy(() => import("@/pages/Board/PostListPage"));
@@ -28,6 +28,12 @@ const UserManagementPage = lazy(() => import("@/pages/Admin/UserManagementPage")
 const PostModerationPage = lazy(() => import("@/pages/Admin/PostModerationPage"));
 const MeetingManagementPage = lazy(() => import("@/pages/Admin/MeetingManagementPage"));
 
+function AdminIndex() {
+  const { user } = useAuth();
+  if (user?.role === "subadmin") return <Navigate to="/admin/posts" replace />;
+  return <AdminDashboardPage />;
+}
+
 function PageFallback() {
   return (
     <div className="min-h-[50vh] flex items-center justify-center">
@@ -43,7 +49,6 @@ export default function App() {
         {/* Public routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/pending" element={<PendingPage />} />
         <Route path="/complete-profile" element={<ProfileCompletePage />} />
 
         {/* Main site routes */}
@@ -75,7 +80,7 @@ export default function App() {
           <Route path="/admin" element={
             <ProtectedRoute requireAdmin><AdminLayout /></ProtectedRoute>
           }>
-            <Route index element={<AdminDashboardPage />} />
+            <Route index element={<AdminIndex />} />
             <Route path="users" element={<UserManagementPage />} />
             <Route path="posts" element={<PostModerationPage />} />
             <Route path="meetings" element={<MeetingManagementPage />} />

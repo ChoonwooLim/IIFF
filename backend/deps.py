@@ -35,6 +35,12 @@ def require_active(current_user=Depends(get_current_user)):
         raise HTTPException(status_code=403, detail="활성화된 계정이 필요합니다")
     return current_user
 
+def require_moderator(current_user=Depends(get_current_user)):
+    """부관리자 이상 (subadmin, admin, superadmin)"""
+    if current_user.role not in ("subadmin", "admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="관리 권한이 필요합니다")
+    return current_user
+
 def require_admin(current_user=Depends(get_current_user)):
     if current_user.role not in ("admin", "superadmin"):
         raise HTTPException(status_code=403, detail="관리자 권한이 필요합니다")

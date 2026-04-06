@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "@/services/api";
+import { useAuth } from "@/hooks/AuthContext";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -11,6 +12,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const updateField = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -25,12 +27,15 @@ export default function RegisterPage() {
     }
     setIsLoading(true);
     try {
-      await api.post("/auth/register", {
+      const { data } = await api.post("/auth/register", {
         username: form.username, password: form.password,
         email: form.email, name: form.name,
         nickname: form.nickname, phone: form.phone,
       });
-      navigate("/pending");
+      if (data.access_token) {
+        await login(data.access_token);
+      }
+      navigate("/");
     } catch (err: any) {
       const detail = err.response?.data?.detail;
       if (typeof detail === "string") setError(detail);

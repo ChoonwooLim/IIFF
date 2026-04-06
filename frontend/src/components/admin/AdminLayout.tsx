@@ -1,20 +1,24 @@
 import { NavLink, Outlet } from "react-router-dom";
-
-const ADMIN_NAV = [
-  { label: "대시보드", path: "/admin" },
-  { label: "회원 관리", path: "/admin/users" },
-  { label: "게시글 관리", path: "/admin/posts" },
-  { label: "회의실 관리", path: "/admin/meetings" },
-];
+import { useAuth } from "@/hooks/AuthContext";
 
 export default function AdminLayout() {
+  const { user } = useAuth();
+  const isFullAdmin = user && ["admin", "superadmin"].includes(user.role);
+
+  const navItems = [
+    ...(isFullAdmin ? [{ label: "대시보드", path: "/admin" }] : []),
+    ...(isFullAdmin ? [{ label: "회원 관리", path: "/admin/users" }] : []),
+    { label: "게시글 관리", path: "/admin/posts" },
+    ...(isFullAdmin ? [{ label: "회의실 관리", path: "/admin/meetings" }] : []),
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 flex gap-6 min-h-[calc(100vh-120px)]">
       {/* Sidebar */}
       <aside className="w-56 shrink-0 hidden md:block">
         <h2 className="text-lg font-bold text-[var(--color-gold)] mb-6">관리자</h2>
         <nav className="space-y-1">
-          {ADMIN_NAV.map((item) => (
+          {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}

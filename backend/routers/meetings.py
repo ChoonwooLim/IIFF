@@ -1,7 +1,9 @@
+import os
 import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File as FastAPIFile, status
+from fastapi.responses import FileResponse as FastAPIFileResponse
 from sqlalchemy.orm import Session, joinedload
 
 from config import settings
@@ -80,6 +82,16 @@ def delete_minutes(
     db.delete(minutes)
     db.commit()
     return {"message": "회의록이 삭제되었습니다"}
+
+
+@router.get("/chat-files/{stored_name}")
+def serve_chat_file(stored_name: str):
+    from services.storage import get_storage
+    storage = get_storage()
+    path = storage.get_path(os.path.join(settings.storage_base_path, "chat", stored_name))
+    if not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="파일을 찾을 수 없습니다")
+    return FastAPIFileResponse(path=path)
 
 
 @router.get("", response_model=list[MeetingResponse])
@@ -428,6 +440,66 @@ def get_messages(meeting_id: int, db: Session = Depends(get_db)):
         .all()
     )
     return messages
+
+
+# --- Chat file upload ---
+
+
+@router.post("/{meeting_id}/chat-files")
+def upload_chat_file(
+    meeting_id: int,
+    file: UploadFile = FastAPIFile(...),
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="파일 이름이 없습니다")
+
+    ext = os.path.splitext(file.filename)[1].lower()
+    allowed = settings.allowed_image_extensions + settings.allowed_document_extensions + [".mp4", ".webm", ".mov"]
+    if ext not in allowed:
+        raise HTTPException(status_code=400, detail=f"허용되지 않는 파일 형식입니다: {ext}")
+
+    content = file.file.read()
+    file_size = len(content)
+    file.file.seek(0)
+
+    max_size = settings.max_file_size_image if ext in settings.allowed_image_extensions else 50 * 1024 * 1024
+    if file_size > max_size:
+        raise HTTPException(status_code=400, detail="파일 크기가 초과되었습니다")
+
+    from services.storage import get_storage
+    storage = get_storage()
+    directory = "chat"
+    stored_name, file_path, _ = storage.upload(file, directory)
+
+    serve_url = f"/api/meetings/chat-files/{stored_name}"
+
+    msg = ChatMessage(
+        meeting_id=meeting_id,
+        user_id=current_user.id,
+        content=file.filename,
+        file_url=serve_url,
+        file_name=file.filename,
+        file_type=file.content_type or "application/octet-stream",
+        file_size=file_size,
+    )
+    db.add(msg)
+    db.commit()
+    db.refresh(msg)
+
+    return {
+        "id": msg.id,
+        "file_url": serve_url,
+        "file_name": file.filename,
+        "file_type": file.content_type,
+        "file_size": file_size,
+    }
+
 
 
 # --- Meeting Minutes ---

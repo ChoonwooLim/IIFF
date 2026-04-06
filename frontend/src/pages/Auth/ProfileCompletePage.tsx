@@ -18,7 +18,7 @@ export default function ProfileCompletePage() {
     try {
       await api.post("/auth/google/complete-profile", { nickname, phone },
         { headers: { Authorization: `Bearer ${tempToken}` } });
-      navigate("/pending");
+      navigate("/");
     } catch (err: any) {
       setError(err.response?.data?.detail || "프로필 저장에 실패했습니다");
     } finally {

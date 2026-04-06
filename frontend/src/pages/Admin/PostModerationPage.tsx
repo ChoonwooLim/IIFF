@@ -6,6 +6,7 @@ interface PostItem {
   title: string;
   board_name: string;
   author_nickname: string;
+  is_pinned: boolean;
   is_hidden: boolean;
   view_count: number;
   created_at: string;
@@ -26,6 +27,11 @@ export default function PostModerationPage() {
 
   const toggleHide = async (postId: number) => {
     await api.patch(`/admin/posts/${postId}/hide`);
+    fetchPosts();
+  };
+
+  const togglePin = async (postId: number) => {
+    await api.patch(`/admin/posts/${postId}/pin`);
     fetchPosts();
   };
 
@@ -60,6 +66,7 @@ export default function PostModerationPage() {
               <th className="py-3 px-2">게시판</th>
               <th className="py-3 px-2">작성자</th>
               <th className="py-3 px-2">조회</th>
+              <th className="py-3 px-2">고정</th>
               <th className="py-3 px-2">상태</th>
               <th className="py-3 px-2">작성일</th>
               <th className="py-3 px-2">액션</th>
@@ -73,6 +80,9 @@ export default function PostModerationPage() {
                 <td className="py-3 px-2 text-gray-400">{p.author_nickname}</td>
                 <td className="py-3 px-2 text-gray-500">{p.view_count}</td>
                 <td className="py-3 px-2">
+                  {p.is_pinned && <span className="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">고정</span>}
+                </td>
+                <td className="py-3 px-2">
                   <span className={`text-xs px-2 py-0.5 rounded ${p.is_hidden ? "bg-red-500/20 text-red-400" : "bg-green-500/20 text-green-400"}`}>
                     {p.is_hidden ? "숨김" : "공개"}
                   </span>
@@ -82,6 +92,10 @@ export default function PostModerationPage() {
                 </td>
                 <td className="py-3 px-2">
                   <div className="flex gap-1">
+                    <button onClick={() => togglePin(p.id)}
+                      className="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 rounded hover:bg-blue-500/30">
+                      {p.is_pinned ? "고정해제" : "고정"}
+                    </button>
                     <button onClick={() => toggleHide(p.id)}
                       className="px-2 py-1 text-xs bg-yellow-500/20 text-yellow-400 rounded hover:bg-yellow-500/30">
                       {p.is_hidden ? "공개" : "숨김"}

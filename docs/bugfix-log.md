@@ -8,3 +8,4 @@
 | 2026-04-06 | React StrictMode WebSocket 이중 연결로 채팅 안됨 | StrictMode 더블 마운트로 첫 WS가 cleanup에서 닫힘 | cancelled 플래그 패턴으로 cleanup 시 상태 업데이트 방지 | frontend/src/pages/Meeting/TextChatPage.tsx |
 | 2026-04-06 | FastAPI /minutes/list가 /{meeting_id}에 매칭됨 | 정적 라우트가 동적 라우트 뒤에 등록되어 meeting_id="minutes"로 파싱 | /minutes/list, /minutes/{id} 라우트를 /{meeting_id} 앞으로 이동 | backend/routers/meetings.py |
 | 2026-04-06 | 포트 8001 좀비 프로세스로 백엔드 시작 불가 | 기존 프로세스가 kill 후에도 포트를 점유 | 백엔드 포트를 8002로 변경, vite proxy 업데이트 | backend, frontend/vite.config.ts |
+| 2026-04-06 | 백엔드 로그인 500 에러 | 모델/스키마 변경 후 서버 미재시작 | uvicorn 프로세스 재시작 | backend 전체 |

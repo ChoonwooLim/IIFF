@@ -133,5 +133,9 @@ class ChatMessageResponse(BaseModel):
     id: int
     user: MeetingUserResponse
     content: str
+    file_url: str | None = None
+    file_name: str | None = None
+    file_type: str | None = None
+    file_size: int | None = None
     created_at: datetime
     model_config = {"from_attributes": True}

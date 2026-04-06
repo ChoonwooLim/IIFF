@@ -281,10 +281,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [logoHovered, setLogoHovered] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const isAdmin = user?.role === 'admin' || user?.role === 'superadmin';
+  const isAdmin = ['subadmin', 'admin', 'superadmin'].includes(user?.role || '');
 
   const handleAnchorClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -387,22 +387,17 @@ export default function Navbar() {
           />
           <span
             style={{
-              fontSize: '1.4rem',
-              fontWeight: 800,
-              letterSpacing: '0.12em',
-              /* Animated shimmer gradient — wider background sweeps across */
-              background: 'linear-gradient(90deg, #a07c3f 0%, #c9a96e 20%, #f5d9a0 40%, #fffbe6 50%, #f5d9a0 60%, #c9a96e 80%, #a07c3f 100%)',
-              backgroundSize: '200% 100%',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'goldShimmer 4s ease-in-out infinite',
-              filter: logoHovered
-                ? 'drop-shadow(0 2px 12px rgba(201,169,110,0.5)) drop-shadow(0 0 24px rgba(224,201,146,0.35))'
-                : 'drop-shadow(0 2px 8px rgba(201,169,110,0.35)) drop-shadow(0 0 16px rgba(224,201,146,0.2))',
+              fontSize: 11,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase' as const,
+              color: '#c9a96e',
               transition: 'filter 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+              filter: logoHovered
+                ? 'drop-shadow(0 2px 12px rgba(201,169,110,0.5))'
+                : 'none',
             }}
           >
-            IIFF
+            NextWave 2026
           </span>
         </Link>
 
@@ -532,13 +527,52 @@ export default function Navbar() {
           </IconButton>
 
           {user ? (
-            <IconButton to="/boards" title={user.nickname || user.name} delayIndex={2}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <span className="hidden md:inline">{user.nickname || user.name}</span>
-            </IconButton>
+            <>
+              <IconButton to="/boards" title={user.nickname || user.name} delayIndex={2}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span className="hidden md:inline">{user.nickname || user.name}</span>
+              </IconButton>
+              <button
+                onClick={async () => { await logout(); navigate('/'); }}
+                title="로그아웃"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '6px 12px',
+                  borderRadius: 8,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.6)',
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+                  animation: `fadeUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.72s both`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#dc5050';
+                  e.currentTarget.style.borderColor = 'rgba(220,80,80,0.3)';
+                  e.currentTarget.style.background = 'rgba(220,80,80,0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </button>
+            </>
           ) : (
             <IconButton to="/login" title="로그인" gold delayIndex={2}>
               로그인
@@ -714,9 +748,25 @@ export default function Navbar() {
               }}
             >
               {user ? (
-                <span style={{ fontSize: 14, color: '#8a8a9a' }}>
-                  {user.nickname || user.name} 님
-                </span>
+                <>
+                  <span style={{ fontSize: 14, color: '#8a8a9a' }}>
+                    {user.nickname || user.name} 님
+                  </span>
+                  <button
+                    onClick={async () => { setMobileOpen(false); await logout(); navigate('/'); }}
+                    style={{
+                      fontSize: 16,
+                      color: '#dc5050',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      textAlign: 'left',
+                    }}
+                  >
+                    로그아웃
+                  </button>
+                </>
               ) : (
                 <Link
                   to="/login"

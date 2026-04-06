@@ -15,14 +15,25 @@ interface UserItem {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  pending: "대기", active: "활성", rejected: "거절", banned: "차단",
+  active: "활성", banned: "차단",
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  pending: "bg-yellow-500/20 text-yellow-400",
   active: "bg-green-500/20 text-green-400",
-  rejected: "bg-gray-500/20 text-gray-400",
   banned: "bg-red-500/20 text-red-400",
+};
+
+const ROLE_LABELS: Record<string, string> = {
+  guest: "Guest", vip: "VIP", vvip: "VVIP", subadmin: "부관리자", admin: "관리자", superadmin: "슈퍼관리자",
+};
+
+const ROLE_COLORS: Record<string, string> = {
+  guest: "bg-gray-500/20 text-gray-300",
+  vip: "bg-yellow-500/20 text-yellow-400",
+  vvip: "bg-purple-500/20 text-purple-400",
+  subadmin: "bg-teal-500/20 text-teal-400",
+  admin: "bg-blue-500/20 text-blue-400",
+  superadmin: "bg-red-500/20 text-red-400",
 };
 
 export default function UserManagementPage() {
@@ -60,7 +71,7 @@ export default function UserManagementPage() {
       <h1 className="heading-display text-2xl text-gold mb-6">회원 관리</h1>
 
       <div className="flex gap-2 mb-6">
-        {["", "pending", "active", "rejected", "banned"].map((s) => (
+        {["", "active", "banned"].map((s) => (
           <button key={s} onClick={() => { setStatusFilter(s); setPage(1); }}
             className={`px-3 py-1.5 rounded-lg text-sm transition ${
               statusFilter === s ? "bg-[var(--color-gold)] text-black font-semibold" : "bg-white/5 text-gray-400 hover:bg-white/10"
@@ -90,7 +101,9 @@ export default function UserManagementPage() {
                 <td className="py-3 px-2 text-gray-400">{u.email}</td>
                 <td className="py-3 px-2 text-gray-400">{u.auth_provider}</td>
                 <td className="py-3 px-2">
-                  <span className="text-xs px-2 py-0.5 rounded bg-white/10 text-gray-300">{u.role}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded ${ROLE_COLORS[u.role] || "bg-white/10 text-gray-300"}`}>
+                    {ROLE_LABELS[u.role] || u.role}
+                  </span>
                 </td>
                 <td className="py-3 px-2">
                   <span className={`text-xs px-2 py-0.5 rounded ${STATUS_COLORS[u.status] || ""}`}>
@@ -101,15 +114,7 @@ export default function UserManagementPage() {
                   {u.created_at ? new Date(u.created_at).toLocaleDateString("ko-KR") : ""}
                 </td>
                 <td className="py-3 px-2">
-                  <div className="flex gap-1 flex-wrap">
-                    {u.status === "pending" && (
-                      <>
-                        <button onClick={() => updateStatus(u.id, "active")}
-                          className="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded hover:bg-green-500/30">승인</button>
-                        <button onClick={() => updateStatus(u.id, "rejected")}
-                          className="px-2 py-1 text-xs bg-red-500/20 text-red-400 rounded hover:bg-red-500/30">거절</button>
-                      </>
-                    )}
+                  <div className="flex gap-1 flex-wrap items-center">
                     {u.status === "active" && u.role !== "superadmin" && (
                       <button onClick={() => updateStatus(u.id, "banned")}
                         className="px-2 py-1 text-xs bg-red-500/20 text-red-400 rounded hover:bg-red-500/30">차단</button>
@@ -119,10 +124,17 @@ export default function UserManagementPage() {
                         className="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded hover:bg-green-500/30">해제</button>
                     )}
                     {currentUser?.role === "superadmin" && u.role !== "superadmin" && (
-                      <button onClick={() => updateRole(u.id, u.role === "admin" ? "user" : "admin")}
-                        className="px-2 py-1 text-xs bg-blue-500/20 text-blue-400 rounded hover:bg-blue-500/30">
-                        {u.role === "admin" ? "관리자 해제" : "관리자 지정"}
-                      </button>
+                      <select
+                        value={u.role}
+                        onChange={(e) => updateRole(u.id, e.target.value)}
+                        className="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded text-gray-300 focus:outline-none focus:border-[var(--color-gold)]"
+                      >
+                        <option value="guest">Guest</option>
+                        <option value="vip">VIP</option>
+                        <option value="vvip">VVIP</option>
+                        <option value="subadmin">부관리자</option>
+                        <option value="admin">관리자</option>
+                      </select>
                     )}
                   </div>
                 </td>

@@ -38,3 +38,9 @@
 | 2026-04-06 | 회의록 목록/상세 페이지 | feat | frontend/src/pages/Meeting/MeetingMinutesListPage.tsx, MeetingMinutesDetailPage.tsx |
 | 2026-04-06 | 회의실 비밀번호 입장 기능 | feat | backend/models/meeting.py, backend/routers/meetings.py, frontend/src/components/meeting/MeetingCard.tsx |
 | 2026-04-06 | 회의 기능 애니메이션 (10개 keyframes, 카드/채팅/모달/드로어) | style | frontend/src/globals.css, 전체 meeting 컴포넌트 |
+| 2026-04-06 | 로그아웃 기능 (데스크톱/모바일) | feat | frontend/src/components/layout/Navbar.tsx |
+| 2026-04-06 | 등급제 전환 (승인제 → guest/vip/vvip, 즉시 활성화) | feat | backend/models/user.py, backend/routers/auth.py, frontend 전체 Auth 페이지 |
+| 2026-04-06 | 가입 시 자동 로그인 | feat | backend/routers/auth.py, frontend/src/pages/Auth/RegisterPage.tsx |
+| 2026-04-06 | 부관리자(subadmin) 등급 + 게시글/공지 관리 권한 | feat | backend/deps.py, backend/routers/admin.py, frontend/src/components/admin/AdminLayout.tsx |
+| 2026-04-06 | 게시글 고정/해제 기능 | feat | backend/routers/admin.py, frontend/src/pages/Admin/PostModerationPage.tsx |
+| 2026-04-06 | 채팅 파일 전송 (이미지/동영상/문서) | feat | backend/models/chat_message.py, backend/routers/meetings.py, frontend/src/components/meeting/ChatMessage.tsx |

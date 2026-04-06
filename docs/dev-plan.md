@@ -19,7 +19,7 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | Phase | 내용 | 상태 | 완료일 |
 |-------|------|------|--------|
 | Phase 1 | 프로젝트 기반 (FastAPI + React + DB + 홈페이지) | 완료 | 2026-04-06 |
-| Phase 2 | 인증 시스템 (로컬 + Google OAuth + 관리자 승인) | 완료 | 2026-04-06 |
+| Phase 2 | 인증 시스템 (로컬 + Google OAuth + 등급제) | 완료 | 2026-04-06 |
 | Phase 3 | 게시판 시스템 (6종 + 파일 업로드 + Q&A) | 완료 | 2026-04-06 |
 | Phase 4 | 미팅 시스템 (Jitsi 비디오 + WebSocket 채팅) | 완료 | 2026-04-06 |
 | Phase 5 | 관리자 대시보드 (유저/게시글/회의실 관리) | 완료 | 2026-04-06 |
@@ -31,7 +31,7 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 |------|------|-------|------|
 | 헬스체크 API | GET /api/health | 1 | 완료 |
 | 홈페이지 | IIFF 소개 + 프레젠테이션 뷰어 | 1 | 완료 |
-| 로컬 회원가입/로그인 | username/password + 관리자 승인 | 2 | 완료 |
+| 로컬 회원가입/로그인 | username/password + 등급제 (즉시 활성화) | 2 | 완료 |
 | Google OAuth | 구글 계정 로그인 + 프로필 완성 | 2 | 완료 |
 | JWT 인증 | access token 30분 + refresh token 7일 | 2 | 완료 |
 | 게시판 6종 | 공지/건의/이미지/동영상/자료실/Q&A | 3 | 완료 |
@@ -43,7 +43,7 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | 텍스트 채팅 | WebSocket 실시간 채팅 + DB 저장 | 4 | 완료 |
 | 참여자 추적 | 입장/퇴장 시간 기록 | 4 | 완료 |
 | 관리자 대시보드 | 통계 카드 (유저/게시글/회의실) | 5 | 완료 |
-| 유저 관리 | 승인/거절/차단 + 역할 변경 | 5 | 완료 |
+| 유저 관리 | 차단/해제 + 등급 변경 (guest/vip/vvip/subadmin/admin) | 5 | 완료 |
 | 게시글 관리 | 숨김/공개 토글 + 삭제 | 5 | 완료 |
 | 회의실 관리 | 강제 종료 | 5 | 완료 |
 | Docker 프로덕션 | 4-service compose (PG + API + FE + Nginx) | 6 | 완료 |
@@ -60,6 +60,11 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | 회의록 자동 생성 | 종료된 회의 채팅 → 마크다운 문서 | 4 | 완료 |
 | 회의실 비밀번호 | 비밀번호 설정/제거 + 비밀번호 입장 | 4 | 완료 |
 | 회의 애니메이션 | 카드/채팅/모달/드로어 모션 디자인 | 4 | 완료 |
+| 로그아웃 기능 | Navbar 로그아웃 버튼 (데스크톱/모바일) | - | 완료 |
+| 등급제 시스템 | guest/vip/vvip 등급, 가입 즉시 활성화 | 2 | 완료 |
+| 부관리자(subadmin) | 게시글/공지 관리 권한 (회원관리 제외) | 5 | 완료 |
+| 게시글 고정/해제 | 관리자/부관리자 전용 pin/unpin | 5 | 완료 |
+| 채팅 파일 전송 | 이미지/동영상/문서 업로드 및 인라인 표시 | 4 | 완료 |
 
 ## 테스트 현황
 

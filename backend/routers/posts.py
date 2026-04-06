@@ -92,7 +92,7 @@ def create_post(
     if not board:
         raise HTTPException(status_code=404, detail="게시판을 찾을 수 없습니다")
 
-    if board.slug == "notice" and current_user.role not in ("admin", "superadmin"):
+    if board.slug == "notice" and current_user.role not in ("subadmin", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="공지사항은 관리자만 작성할 수 있습니다")
 
     if board.board_type == "video" and not youtube_url:
@@ -170,7 +170,7 @@ def update_post(
     if not post:
         raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")
 
-    if post.user_id != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if post.user_id != current_user.id and current_user.role not in ("subadmin", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="수정 권한이 없습니다")
 
     if title is not None:
@@ -194,7 +194,7 @@ def delete_post(
     if not post:
         raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")
 
-    if post.user_id != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if post.user_id != current_user.id and current_user.role not in ("subadmin", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="삭제 권한이 없습니다")
 
     storage = get_storage()

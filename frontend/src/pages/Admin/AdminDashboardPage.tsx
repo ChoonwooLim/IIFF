@@ -3,7 +3,9 @@ import api from "@/services/api";
 
 interface Stats {
   total_users: number;
-  pending_users: number;
+  guest_users: number;
+  vip_users: number;
+  vvip_users: number;
   active_users: number;
   total_posts: number;
   hidden_posts: number;
@@ -21,7 +23,9 @@ export default function AdminDashboardPage() {
 
   const cards = [
     { label: "전체 회원", value: stats.total_users, color: "text-white" },
-    { label: "승인 대기", value: stats.pending_users, color: "text-yellow-400" },
+    { label: "Guest", value: stats.guest_users, color: "text-gray-400" },
+    { label: "VIP", value: stats.vip_users, color: "text-yellow-400" },
+    { label: "VVIP", value: stats.vvip_users, color: "text-purple-400" },
     { label: "활성 회원", value: stats.active_users, color: "text-green-400" },
     { label: "전체 게시글", value: stats.total_posts, color: "text-white" },
     { label: "숨김 게시글", value: stats.hidden_posts, color: "text-red-400" },

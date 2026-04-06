@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, joinedload
 from datetime import datetime, timezone
 
-from deps import get_db, require_admin
+from deps import get_db, require_admin, require_moderator
 from models.user import User
 from models.post import Post
 from models.comment import Comment
@@ -18,7 +18,9 @@ router = APIRouter(prefix="/api/admin", tags=["admin"])
 def get_dashboard_stats(db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
     return DashboardStats(
         total_users=db.query(User).count(),
-        pending_users=db.query(User).filter(User.status == "pending").count(),
+        guest_users=db.query(User).filter(User.role == "guest").count(),
+        vip_users=db.query(User).filter(User.role == "vip").count(),
+        vvip_users=db.query(User).filter(User.role == "vvip").count(),
         active_users=db.query(User).filter(User.status == "active").count(),
         total_posts=db.query(Post).count(),
         hidden_posts=db.query(Post).filter(Post.is_hidden == True).count(),
@@ -86,7 +88,7 @@ def list_posts_admin(
     page: int = Query(1, ge=1),
     per_page: int = Query(20, ge=1, le=100),
     db: Session = Depends(get_db),
-    current_user: User = Depends(require_admin),
+    current_user: User = Depends(require_moderator),
 ):
     query = db.query(Post).options(joinedload(Post.board), joinedload(Post.user))
     if hidden_only:
@@ -99,7 +101,8 @@ def list_posts_admin(
                 "id": p.id, "title": p.title,
                 "board_name": p.board.name if p.board else "",
                 "author_nickname": p.user.nickname if p.user else "",
-                "is_hidden": p.is_hidden, "view_count": p.view_count,
+                "is_pinned": p.is_pinned, "is_hidden": p.is_hidden,
+                "view_count": p.view_count,
                 "created_at": p.created_at.isoformat() if p.created_at else None,
             }
             for p in posts
@@ -109,7 +112,7 @@ def list_posts_admin(
 
 
 @router.patch("/posts/{post_id}/hide")
-def toggle_post_visibility(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
+def toggle_post_visibility(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(require_moderator)):
     post = db.query(Post).filter(Post.id == post_id).first()
     if not post:
         raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")
@@ -118,8 +121,18 @@ def toggle_post_visibility(post_id: int, db: Session = Depends(get_db), current_
     return {"message": f"게시글이 {'숨김' if post.is_hidden else '공개'} 처리되었습니다", "is_hidden": post.is_hidden}
 
 
+@router.patch("/posts/{post_id}/pin")
+def toggle_post_pin(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(require_moderator)):
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if not post:
+        raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")
+    post.is_pinned = not post.is_pinned
+    db.commit()
+    return {"message": f"게시글이 {'고정' if post.is_pinned else '고정 해제'} 처리되었습니다", "is_pinned": post.is_pinned}
+
+
 @router.delete("/posts/{post_id}")
-def delete_post_admin(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
+def delete_post_admin(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(require_moderator)):
     post = db.query(Post).filter(Post.id == post_id).first()
     if not post:
         raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")

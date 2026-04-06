@@ -21,14 +21,14 @@ class User(Base):
     phone: Mapped[str] = mapped_column(String(20), nullable=False)
     profile_image: Mapped[str | None] = mapped_column(String(500), nullable=True)
     role: Mapped[str] = mapped_column(
-        Enum("user", "admin", "superadmin", name="role_enum", create_constraint=True),
-        default="user",
-        server_default="user",
+        String(20),
+        default="guest",
+        server_default="guest",
     )
     status: Mapped[str] = mapped_column(
-        Enum("pending", "active", "rejected", "banned", name="status_enum", create_constraint=True),
-        default="pending",
-        server_default="pending",
+        String(20),
+        default="active",
+        server_default="active",
     )
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())

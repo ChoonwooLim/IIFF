@@ -97,6 +97,19 @@ async def websocket_chat(websocket: WebSocket, meeting_id: int):
                             "timestamp": datetime.now(timezone.utc).isoformat(),
                         })
 
+                elif data.get("type") == "file_message":
+                    # File already uploaded via REST, just broadcast to others
+                    await manager.broadcast(meeting_id, {
+                        "type": "new_message",
+                        "user": user_info,
+                        "content": data.get("file_name", ""),
+                        "file_url": data.get("file_url"),
+                        "file_name": data.get("file_name"),
+                        "file_type": data.get("file_type"),
+                        "file_size": data.get("file_size"),
+                        "timestamp": datetime.now(timezone.utc).isoformat(),
+                    })
+
         except WebSocketDisconnect:
             pass
         finally:
