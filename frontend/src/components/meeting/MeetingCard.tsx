@@ -39,8 +39,9 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
         <span style={{ fontSize: 22 }}>{icon}</span>
         <h3 style={{
           flex: 1,
-          fontSize: 16,
+          fontSize: '1rem',
           fontWeight: 500,
+          lineHeight: 1.4,
           color: hovered ? '#f0f0f5' : '#c0c0ca',
           transition: 'color 0.3s ease',
           overflow: 'hidden',
@@ -48,7 +49,7 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
           whiteSpace: 'nowrap',
         }}>{name}</h3>
         <span style={{
-          fontSize: 10,
+          fontSize: '0.6875rem',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           padding: '4px 10px',
@@ -62,7 +63,7 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
         display: 'flex',
         alignItems: 'center',
         gap: 20,
-        fontSize: 12,
+        fontSize: '0.8125rem',
         color: '#5a5a6a',
       }}>
         <span>{creator.nickname}</span>

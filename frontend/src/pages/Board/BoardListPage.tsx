@@ -66,19 +66,21 @@ function BoardCard({ board, index }: { board: Board; index: number }) {
         </span>
         <div style={{ flex: 1 }}>
           <h2 style={{
-            fontSize: 18,
+            fontSize: '1.125rem',
             fontWeight: 500,
             color: hovered ? '#f0f0f5' : '#c0c0ca',
             transition: 'color 0.3s ease',
             letterSpacing: '0.01em',
+            lineHeight: 1.4,
           }}>
             {board.name}
           </h2>
           {board.description && (
             <p style={{
-              fontSize: 13,
+              fontSize: '0.8125rem',
               color: '#5a5a6a',
               marginTop: 4,
+              lineHeight: 1.5,
             }}>
               {board.description}
             </p>
@@ -123,7 +125,7 @@ export default function BoardListPage() {
         </p>
         <h1 style={{
           fontFamily: '"Playfair Display", serif',
-          fontSize: 40,
+          fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
           fontWeight: 700,
           color: '#f0f0f5',
         }}>

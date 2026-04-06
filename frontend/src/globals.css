@@ -7,6 +7,30 @@
   --color-gold-muted: rgba(201, 169, 110, 0.15);
   --dropdown-bg: #12121f;
   --dropdown-border: rgba(255, 255, 255, 0.1);
+
+  /* ── Type scale (1.25 ratio) ── */
+  --text-micro: 0.6875rem;   /* 11px — badges, micro labels */
+  --text-caption: 0.8125rem; /* 13px — captions, meta */
+  --text-body: 0.9375rem;    /* 15px — body text */
+  --text-sub: 1.125rem;      /* 18px — subheadings */
+  --text-heading: clamp(1.75rem, 2.5vw, 2.5rem); /* 28-40px — page titles */
+  --text-display: clamp(2.25rem, 3vw, 3rem);     /* 36-48px — hero display */
+
+  /* ── Line heights ── */
+  --leading-tight: 1.2;
+  --leading-snug: 1.4;
+  --leading-body: 1.7;
+  --leading-loose: 1.85;
+
+  /* ── Letter spacing ── */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-caps: 0.12em;
+
+  /* ── Font stacks ── */
+  --font-body: "Inter", "Noto Sans KR", sans-serif;
+  --font-display: "Playfair Display", serif;
 }
 
 [data-theme="light"] {
@@ -21,7 +45,12 @@ html {
 body {
   background-color: #05050a;
   color: #f0f0f5;
-  font-family: "Inter", "Noto Sans KR", sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
 }
 
 [data-theme="light"] body {
@@ -30,8 +59,10 @@ body {
 }
 
 .heading-display {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
 }
 
 .text-gold {

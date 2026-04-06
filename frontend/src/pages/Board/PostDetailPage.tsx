@@ -85,11 +85,12 @@ export default function PostDetailPage() {
 
         <article>
           <h1 style={{
-            fontFamily: '"Playfair Display", serif',
-            fontSize: 32,
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
             fontWeight: 700,
             color: '#f0f0f5',
-            lineHeight: 1.3,
+            lineHeight: 1.2,
+            letterSpacing: '-0.01em',
             marginBottom: 24,
           }}>
             {post.title}
@@ -100,8 +101,9 @@ export default function PostDetailPage() {
             display: 'flex',
             alignItems: 'center',
             gap: 20,
-            fontSize: 12,
+            fontSize: '0.8125rem',
             color: '#5a5a6a',
+            lineHeight: 1.4,
             paddingBottom: 24,
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}>
@@ -143,9 +145,10 @@ export default function PostDetailPage() {
           <div style={{
             color: '#b0b0ba',
             whiteSpace: 'pre-wrap',
-            fontSize: 15,
-            lineHeight: 1.8,
+            fontSize: '0.9375rem',
+            lineHeight: 1.85,
             padding: '32px 0',
+            maxWidth: '65ch',
           }}>
             {post.content}
           </div>

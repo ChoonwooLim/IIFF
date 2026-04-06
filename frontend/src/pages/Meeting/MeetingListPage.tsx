@@ -59,7 +59,7 @@ export default function MeetingListPage() {
           </p>
           <h1 style={{
             fontFamily: '"Playfair Display", serif',
-            fontSize: 40,
+            fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)',
             fontWeight: 700,
             color: '#f0f0f5',
           }}>

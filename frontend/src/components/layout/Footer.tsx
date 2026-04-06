@@ -49,7 +49,7 @@ export default function Footer() {
               paddingLeft: 16,
             }}>
               <span style={{
-                fontSize: 10,
+                fontSize: '0.6875rem',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 color: 'rgba(201,169,110,0.5)',
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           {/* Social links */}
-          <div style={{ display: 'flex', gap: 24, fontSize: 13 }}>
+          <div style={{ display: 'flex', gap: 24, fontSize: '0.8125rem' }}>
             <FooterLink href="#">Instagram</FooterLink>
             <FooterLink href="#">YouTube</FooterLink>
             <FooterLink href="#">LinkedIn</FooterLink>
@@ -75,7 +75,7 @@ export default function Footer() {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: 16,
-          fontSize: 11,
+          fontSize: '0.6875rem',
           color: '#3a3a4a',
         }}>
           <p>&copy; 2026 Incheon International Film Festival. All rights reserved.</p>

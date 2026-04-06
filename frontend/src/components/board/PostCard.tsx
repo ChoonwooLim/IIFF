@@ -50,7 +50,7 @@ export default function PostCard({
       {/* Pinned badge */}
       {isPinned && (
         <span style={{
-          fontSize: 10,
+          fontSize: '0.6875rem',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           padding: '3px 8px',
@@ -65,7 +65,7 @@ export default function PostCard({
       {/* Title */}
       <h3 style={{
         flex: 1,
-        fontSize: 15,
+        fontSize: '0.9375rem',
         fontWeight: 500,
         color: hovered ? '#f0f0f5' : '#c0c0ca',
         transition: 'color 0.3s ease',
@@ -82,7 +82,7 @@ export default function PostCard({
         display: 'flex',
         alignItems: 'center',
         gap: 16,
-        fontSize: 12,
+        fontSize: '0.8125rem',
         color: '#5a5a6a',
         flexShrink: 0,
       }}>

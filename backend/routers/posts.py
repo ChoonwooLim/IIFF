@@ -54,6 +54,13 @@ def list_posts(
 
     items = []
     for post in posts:
+        # Find first image file for thumbnail
+        thumbnail_id = None
+        for f in post.files:
+            if f.mime_type and f.mime_type.startswith("image/"):
+                thumbnail_id = f.id
+                break
+
         items.append(PostListResponse(
             id=post.id,
             board_id=post.board_id,
@@ -63,6 +70,7 @@ def list_posts(
             view_count=post.view_count,
             comment_count=len([c for c in post.comments if not c.is_hidden]),
             file_count=len(post.files),
+            thumbnail_id=thumbnail_id,
             user=PostUserResponse.model_validate(post.user),
             created_at=post.created_at,
         ))

@@ -57,6 +57,7 @@ class PostListResponse(BaseModel):
     view_count: int
     comment_count: int = 0
     file_count: int = 0
+    thumbnail_id: int | None = None
     user: PostUserResponse
     created_at: datetime
     model_config = {"from_attributes": True}
