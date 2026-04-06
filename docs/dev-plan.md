@@ -49,9 +49,15 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | Docker 프로덕션 | 4-service compose (PG + API + FE + Nginx) | 6 | 완료 |
 | Nginx 리버스 프록시 | API/WS/업로드/프론트엔드 라우팅 | 6 | 완료 |
 | DB 백업 | pg_dump + rclone Google Drive | 6 | 완료 |
+| 이미지 WebP 최적화 | JPG → WebP 변환 (-46%) | - | 완료 |
+| Navbar 커뮤니티 링크 | 게시판/회의실/관리자/로그인 링크 | - | 완료 |
+| Google OAuth 프론트엔드 | @react-oauth/google 연동 | 2 | 완료 |
+| HTTPS/SSL | Let's Encrypt + Nginx SSL 설정 | 6 | 완료 |
+| E2E 테스트 | Playwright + Chromium (12 테스트) | - | 완료 |
 
 ## 테스트 현황
 
 - Backend: 63 tests passing
 - Frontend: TypeScript 컴파일 + Vite 빌드 성공
+- Frontend E2E: Playwright 12 tests (homepage, auth, navigation)
 - Docker: 이미지 빌드 성공

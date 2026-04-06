@@ -2,45 +2,45 @@
 
 export const images = {
   // Hero & Cover
-  hero: '/images/hero/cinema.jpg',
+  hero: '/images/hero/cinema.webp',
 
   // Part Dividers
-  partDivider1: '/images/decorative/projector.jpg',
-  partDivider2: '/images/decorative/filmreel.jpg',
-  partDivider3: '/images/decorative/skyline.jpg',
-  partDivider4: '/images/decorative/finance.jpg',
-  partDivider5: '/images/decorative/meeting.jpg',
+  partDivider1: '/images/decorative/projector.webp',
+  partDivider2: '/images/decorative/filmreel.webp',
+  partDivider3: '/images/decorative/skyline.webp',
+  partDivider4: '/images/decorative/finance.webp',
+  partDivider5: '/images/decorative/meeting.webp',
 
   // Section backgrounds
-  whatIsIiff: '/images/hero/director.jpg',
-  overview: '/images/hero/aerial.jpg',
-  whyParticipate: '/images/hero/redcarpet.jpg',
-  whyIncheon: '/images/hero/korea-night.jpg',
+  whatIsIiff: '/images/hero/director.webp',
+  overview: '/images/hero/aerial.webp',
+  whyParticipate: '/images/hero/redcarpet.webp',
+  whyIncheon: '/images/hero/korea-night.webp',
   vision: '/images/hero/sunrise.jpg',
 
   // Programs
-  program1: '/images/programs/filmset.jpg',
-  program2: '/images/programs/camera.jpg',
-  program3: '/images/programs/mobile.jpg',
-  program4: '/images/programs/workshop.jpg',
-  program5: '/images/programs/kculture.jpg',
+  program1: '/images/programs/filmset.webp',
+  program2: '/images/programs/camera.webp',
+  program3: '/images/programs/mobile.webp',
+  program4: '/images/programs/workshop.webp',
+  program5: '/images/programs/kculture.webp',
 
-  stars: '/images/hero/awards.jpg',
-  simulation: '/images/hero/audience.jpg',
-  volunteer: '/images/hero/community.jpg',
+  stars: '/images/hero/awards.webp',
+  simulation: '/images/hero/audience.webp',
+  volunteer: '/images/hero/community.webp',
 
   // Strategy
-  strategy: '/images/hero/strategy.jpg',
-  organization: '/images/hero/teamwork.jpg',
-  roadmap: '/images/hero/planning.jpg',
-  space: '/images/venues/modern.jpg',
-  biff: '/images/decorative/filmreel.jpg',
+  strategy: '/images/hero/strategy.webp',
+  organization: '/images/hero/teamwork.webp',
+  roadmap: '/images/hero/planning.webp',
+  space: '/images/venues/modern.webp',
+  biff: '/images/decorative/filmreel.webp',
 
   // Finance
-  budget: '/images/decorative/finance.jpg',
-  sponsorship: '/images/hero/handshake.jpg',
-  marketing: '/images/hero/marketing.jpg',
+  budget: '/images/decorative/finance.webp',
+  sponsorship: '/images/hero/handshake.webp',
+  marketing: '/images/hero/marketing.webp',
 
   // Governance
-  governance: '/images/hero/leadership.jpg',
+  governance: '/images/hero/leadership.webp',
 } as const;

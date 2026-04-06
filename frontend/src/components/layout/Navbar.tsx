@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { useAuth } from '@/hooks/AuthContext';
 
 const NAV_ITEMS = [
   {
@@ -56,10 +57,18 @@ const NAV_ITEMS = [
   },
 ];
 
+const COMMUNITY_LINKS = [
+  { label: '게시판', to: '/boards' },
+  { label: '회의실', to: '/meetings' },
+];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const { user } = useAuth();
+  const location = useLocation();
+  const isAdmin = user?.role === 'admin' || user?.role === 'superadmin';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -136,6 +145,34 @@ export default function Navbar() {
               )}
             </div>
           ))}
+
+          {/* Community Links */}
+          <div className="h-5 w-px bg-[var(--border)] mx-2" />
+          {COMMUNITY_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`px-4 py-5 text-sm font-light tracking-wide transition-colors duration-300 ${
+                location.pathname.startsWith(link.to)
+                  ? 'text-gold'
+                  : 'text-[var(--text-dim)] hover:text-[var(--text)]'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className={`px-4 py-5 text-sm font-light tracking-wide transition-colors duration-300 ${
+                location.pathname.startsWith('/admin')
+                  ? 'text-gold'
+                  : 'text-[var(--text-dim)] hover:text-[var(--text)]'
+              }`}
+            >
+              관리자
+            </Link>
+          )}
         </div>
 
         {/* Right Controls */}
@@ -164,6 +201,26 @@ export default function Navbar() {
             </svg>
             <span className="hidden md:inline">Present</span>
           </Link>
+          {user ? (
+            <Link
+              to="/boards"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-[var(--text-dim)] text-xs label-upper rounded-[var(--radius-sm)] hover:text-gold transition-all duration-300"
+              title={user.nickname || user.name}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span className="hidden md:inline">{user.nickname || user.name}</span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-[var(--text-dim)] text-xs label-upper rounded-[var(--radius-sm)] hover:text-gold border border-[var(--border)] hover:border-gold/40 transition-all duration-300"
+            >
+              로그인
+            </Link>
+          )}
           <ThemeToggle />
 
           {/* Mobile Hamburger */}
@@ -218,6 +275,52 @@ export default function Navbar() {
                 )}
               </div>
             ))}
+
+            {/* Mobile: Community links */}
+            <div className="pt-6 mt-2 border-t border-[var(--border)] flex flex-col gap-4">
+              {COMMUNITY_LINKS.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`text-2xl font-heading block ${
+                    location.pathname.startsWith(link.to)
+                      ? 'text-gold'
+                      : 'text-[var(--text)] hover:text-gold'
+                  } transition-colors`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  onClick={() => setMobileOpen(false)}
+                  className={`text-2xl font-heading block ${
+                    location.pathname.startsWith('/admin')
+                      ? 'text-gold'
+                      : 'text-[var(--text)] hover:text-gold'
+                  } transition-colors`}
+                >
+                  관리자
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile: Auth link */}
+            <div className="flex flex-col gap-4">
+              {user ? (
+                <span className="text-sm text-[var(--text-dim)]">{user.nickname || user.name} 님</span>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 text-lg text-gold hover:text-gold-light transition-colors"
+                >
+                  로그인
+                </Link>
+              )}
+            </div>
 
             {/* Mobile: PDF & Presentation links */}
             <div className="pt-6 mt-2 border-t border-[var(--border)] flex flex-col gap-4">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/hooks/AuthContext";
 import api from "@/services/api";
 
@@ -10,6 +11,33 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      setError("");
+      setIsLoading(true);
+      try {
+        const { data } = await api.post("/auth/google/callback", {
+          code: codeResponse.code,
+        });
+        if (data.needs_profile) {
+          localStorage.setItem("temp_token", data.temp_token);
+          navigate("/complete-profile");
+        } else if (data.access_token) {
+          await login(data.access_token);
+          navigate("/");
+        } else if (data.status === "pending") {
+          navigate("/pending");
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.detail || "Google 로그인에 실패했습니다");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    onError: () => setError("Google 로그인이 취소되었습니다"),
+    flow: "auth-code",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +84,7 @@ export default function LoginPage() {
           <span className="text-sm text-gray-500">또는</span>
           <div className="flex-1 h-px bg-white/10" />
         </div>
-        <button onClick={() => {}} className="w-full py-3 bg-white/5 border border-white/10 rounded-lg text-white hover:bg-white/10 transition flex items-center justify-center gap-2">
+        <button onClick={() => googleLogin()} disabled={isLoading} className="w-full py-3 bg-white/5 border border-white/10 rounded-lg text-white hover:bg-white/10 transition flex items-center justify-center gap-2 disabled:opacity-50">
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

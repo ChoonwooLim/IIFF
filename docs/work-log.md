@@ -39,3 +39,24 @@
 - **성능 최적화**: React.lazy() 코드 스플리팅 (17개 라우트), 벤더 청크 분리 (react/animation/i18n), 메인 번들 754KB → 142KB (-81%)
 
 ---
+
+### 추가 작업 (세션 2)
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| perf | 이미지 WebP 변환 (25개 JPG → WebP, 7MB → 3.8MB, -46%) | 완료 |
+| feat | Navbar에 게시판/회의실/관리자 링크 + 로그인 버튼 추가 | 완료 |
+| feat | Google OAuth 프론트엔드 연동 (@react-oauth/google + LoginPage 연결) | 완료 |
+| infra | HTTPS/SSL Let's Encrypt 설정 (nginx-ssl.conf, certbot, init-ssl.sh) | 완료 |
+| feat | Playwright E2E 테스트 프레임워크 설정 + 3개 테스트 파일 (12 테스트) | 완료 |
+| docs | Google OAuth 설정 가이드 작성 | 완료 |
+
+### 세부 내용
+
+- **이미지 최적화**: sharp 라이브러리로 25개 JPG를 WebP(quality 82)로 변환, images.ts/images.d.ts 참조 일괄 업데이트
+- **Navbar 확장**: 커뮤니티 링크 (게시판, 회의실), 관리자 링크 (admin/superadmin만 표시), 로그인/사용자 표시, 활성 경로 하이라이트, 모바일 메뉴 대응
+- **Google OAuth**: @react-oauth/google 설치, GoogleOAuthProvider 래핑, LoginPage에 useGoogleLogin 훅 연결 (auth-code flow)
+- **HTTPS/SSL**: nginx-ssl.conf (HTTP→HTTPS 리다이렉트, TLS 1.2/1.3, HSTS), docker-compose.ssl.yml (certbot 컨테이너 + 자동갱신), init-ssl.sh (초기 인증서 발급 스크립트)
+- **E2E 테스트**: Playwright + Chromium, homepage.spec.ts (4 테스트), auth.spec.ts (4 테스트), navigation.spec.ts (4 테스트)
+
+---

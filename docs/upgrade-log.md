@@ -25,3 +25,9 @@
 | 2026-04-06 | Nginx 리버스 프록시 | infra | nginx/nginx.conf |
 | 2026-04-06 | DB 백업 스크립트 (pg_dump + rclone) | infra | scripts/backup-db.sh |
 | 2026-04-06 | 프론트엔드 코드 스플리팅 + 벤더 청크 최적화 (메인 번들 -81%) | perf | frontend/src/App.tsx, frontend/vite.config.ts |
+| 2026-04-06 | 이미지 WebP 변환 (25개 JPG → WebP, -46%) | perf | frontend/public/images/, frontend/src/lib/images.ts |
+| 2026-04-06 | Navbar 커뮤니티/관리자 링크 + 로그인 버튼 | feat | frontend/src/components/layout/Navbar.tsx |
+| 2026-04-06 | Google OAuth 프론트엔드 연동 (@react-oauth/google) | feat | frontend/src/main.tsx, frontend/src/pages/Auth/LoginPage.tsx |
+| 2026-04-06 | HTTPS/SSL Let's Encrypt 설정 | infra | nginx/nginx-ssl.conf, docker-compose.ssl.yml, scripts/init-ssl.sh |
+| 2026-04-06 | Playwright E2E 테스트 프레임워크 | feat | frontend/e2e/, frontend/playwright.config.ts |
+| 2026-04-06 | Google OAuth 설정 가이드 | docs | docs/google-oauth-setup.md |
