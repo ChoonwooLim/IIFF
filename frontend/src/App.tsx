@@ -7,6 +7,11 @@ import LoginPage from "@/pages/Auth/LoginPage";
 import RegisterPage from "@/pages/Auth/RegisterPage";
 import PendingPage from "@/pages/Auth/PendingPage";
 import ProfileCompletePage from "@/pages/Auth/ProfileCompletePage";
+import BoardListPage from "@/pages/Board/BoardListPage";
+import PostListPage from "@/pages/Board/PostListPage";
+import PostDetailPage from "@/pages/Board/PostDetailPage";
+import PostCreatePage from "@/pages/Board/PostCreatePage";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function App() {
   return (
@@ -22,6 +27,12 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/presentation" element={<PresentationPage />} />
         <Route path="/docs" element={<DocsPage />} />
+        <Route path="/boards" element={<BoardListPage />} />
+        <Route path="/boards/:boardSlug" element={<PostListPage />} />
+        <Route path="/boards/:boardSlug/posts/:postId" element={<PostDetailPage />} />
+        <Route path="/boards/:boardSlug/write" element={
+          <ProtectedRoute><PostCreatePage /></ProtectedRoute>
+        } />
       </Route>
     </Routes>
   );
