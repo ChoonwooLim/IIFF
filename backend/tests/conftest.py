@@ -10,6 +10,9 @@ import models.board  # noqa: F401
 import models.post  # noqa: F401
 import models.comment  # noqa: F401
 import models.file  # noqa: F401
+import models.meeting  # noqa: F401
+import models.meeting_participant  # noqa: F401
+import models.chat_message  # noqa: F401
 
 SQLALCHEMY_TEST_URL = "sqlite:///./test.db"
 engine_test = create_engine(SQLALCHEMY_TEST_URL, connect_args={"check_same_thread": False})
