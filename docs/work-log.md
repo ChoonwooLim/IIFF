@@ -110,3 +110,28 @@
 - **프론트엔드 정리**: ProtectedRoute/LoginPage/ProfileCompletePage에서 pending 관련 코드 제거, AdminDashboardPage 등급별 통계 표시, UserManagementPage 등급 드롭다운 (guest/vip/vvip/subadmin/admin)
 
 ---
+
+### 추가 작업 (세션 5) - 배포/인프라 안정화
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| fix | TypeScript 빌드 에러 수정 (useRef strict mode, 미사용 변수, stale .d.ts) | 완료 |
+| fix | models/__init__.py에 MeetingInvitation/MeetingMinutes 임포트 누락 수정 | 완료 |
+| fix | 배포 DB 인증 실패 수정 (orbitron_user → iiff_user 불일치) | 완료 |
+| fix | 배포 DB 스키마 누락 (meeting_invitations, meeting_minutes 테이블, password/file 컬럼) | 완료 |
+| fix | 파일 경로 크로스 환경 호환 (절대경로 → 상대경로 저장) | 완료 |
+| infra | 로컬/배포 DB 통일 (orbitron-iiff-db 공유) | 완료 |
+| infra | Docker 볼륨 → 호스트 바인드 마운트 변경 (./uploads) | 완료 |
+| infra | 서버 Samba 공유 설정 (iiff-uploads) | 완료 |
+| feat | 파일 업로드 시 서버 자동 SCP 동기화 기능 | 완료 |
+| feat | 회의실 사용 가이드 업그레이드 (문자회의실/화상회의실 분리 상세 설명) | 완료 |
+
+### 세부 내용
+
+- **빌드 에러 수정**: `InviteModal.tsx` useRef strict mode, `MeetingMinutesDetailPage.tsx` 미사용 변수, tsconfig `declarationDir` 설정으로 stale .d.ts 문제 해결
+- **배포 DB 통일**: docker-compose의 DATABASE_URL을 `.env`에서 주입하도록 변경, 로컬/배포 모두 orbitron-iiff-db (192.168.219.101:3590) 사용
+- **배포 스키마 동기화**: meeting_invitations, meeting_minutes 테이블 생성, meetings.password, chat_messages 파일 컬럼 추가
+- **파일 시스템 통합**: storage.py에서 상대경로(images/xxx.webp) 저장, get_path()에서 STORAGE_BASE_PATH + 상대경로 조합, 로컬→서버 자동 SCP 동기화
+- **서버 인프라**: Samba 설치/설정, Docker 바인드 마운트로 전환, admin 비밀번호 재설정
+
+---

@@ -44,3 +44,7 @@
 | 2026-04-06 | 부관리자(subadmin) 등급 + 게시글/공지 관리 권한 | feat | backend/deps.py, backend/routers/admin.py, frontend/src/components/admin/AdminLayout.tsx |
 | 2026-04-06 | 게시글 고정/해제 기능 | feat | backend/routers/admin.py, frontend/src/pages/Admin/PostModerationPage.tsx |
 | 2026-04-06 | 채팅 파일 전송 (이미지/동영상/문서) | feat | backend/models/chat_message.py, backend/routers/meetings.py, frontend/src/components/meeting/ChatMessage.tsx |
+| 2026-04-07 | 파일 업로드 시 서버 자동 SCP 동기화 | feat | backend/services/storage.py, scripts/sync-uploads.sh |
+| 2026-04-07 | 로컬/배포 DB 통일 (orbitron-iiff-db 공유) | infra | docker-compose.yml, .env |
+| 2026-04-07 | Docker 바인드 마운트 전환 (named volume → ./uploads) | infra | docker-compose.yml |
+| 2026-04-07 | 파일 경로 크로스 환경 호환 (상대경로 저장) | feat | backend/services/storage.py, backend/routers/posts.py |

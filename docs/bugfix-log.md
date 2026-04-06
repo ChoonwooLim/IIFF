@@ -9,3 +9,9 @@
 | 2026-04-06 | FastAPI /minutes/list가 /{meeting_id}에 매칭됨 | 정적 라우트가 동적 라우트 뒤에 등록되어 meeting_id="minutes"로 파싱 | /minutes/list, /minutes/{id} 라우트를 /{meeting_id} 앞으로 이동 | backend/routers/meetings.py |
 | 2026-04-06 | 포트 8001 좀비 프로세스로 백엔드 시작 불가 | 기존 프로세스가 kill 후에도 포트를 점유 | 백엔드 포트를 8002로 변경, vite proxy 업데이트 | backend, frontend/vite.config.ts |
 | 2026-04-06 | 백엔드 로그인 500 에러 | 모델/스키마 변경 후 서버 미재시작 | uvicorn 프로세스 재시작 | backend 전체 |
+| 2026-04-07 | TypeScript 빌드 에러 (useRef strict mode) | TS6 strict 모드에서 useRef() 초기값 필수 | useRef(undefined)로 변경 | frontend/src/components/meeting/InviteModal.tsx |
+| 2026-04-07 | TypeScript 빌드 에러 (미사용 변수) | noUnusedLocals에서 regex 변수 감지 | 미사용 regex 변수 제거 | frontend/src/pages/Meeting/MeetingMinutesDetailPage.tsx |
+| 2026-04-07 | stale .d.ts 파일로 TS6305 빌드 에러 | composite 모드에서 src/에 .d.ts 생성 | declarationDir을 node_modules/.tmp로 변경 | frontend/tsconfig.app.json |
+| 2026-04-07 | 배포 백엔드 SQLAlchemy mapper 에러 | MeetingInvitation/MeetingMinutes 모델 미임포트 | models/__init__.py에 import 추가 | backend/models/__init__.py |
+| 2026-04-07 | 배포 DB 인증 실패 (password authentication failed) | .env의 orbitron_user와 실제 DB의 iiff_user 불일치 | .env 수정 → orbitron-iiff-db 공유로 통일 | docker-compose.yml, .env |
+| 2026-04-07 | 배포 이미지 미표시 | 파일이 서버에 없고 DB에 절대경로(Windows) 저장 | 상대경로 저장 + 서버에 파일 복사 + SCP 자동 동기화 | backend/services/storage.py, backend/routers/posts.py |

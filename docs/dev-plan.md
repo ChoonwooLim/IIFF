@@ -65,6 +65,9 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | 부관리자(subadmin) | 게시글/공지 관리 권한 (회원관리 제외) | 5 | 완료 |
 | 게시글 고정/해제 | 관리자/부관리자 전용 pin/unpin | 5 | 완료 |
 | 채팅 파일 전송 | 이미지/동영상/문서 업로드 및 인라인 표시 | 4 | 완료 |
+| 파일 SCP 자동 동기화 | 로컬 업로드 시 배포 서버에 자동 SCP 전송 | 6 | 완료 |
+| 로컬/배포 DB 통일 | 로컬+배포 모두 orbitron-iiff-db 공유 | 6 | 완료 |
+| 파일 경로 크로스 환경 호환 | DB에 상대경로 저장 + STORAGE_BASE_PATH 조합 | 6 | 완료 |
 
 ## 테스트 현황
 
