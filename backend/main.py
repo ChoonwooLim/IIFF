@@ -17,11 +17,13 @@ from routers.auth import router as auth_router
 from routers.boards import router as boards_router
 from routers.posts import router as posts_router
 from routers.comments import router as comments_router
+from routers.meetings import router as meetings_router
 
 app.include_router(auth_router)
 app.include_router(boards_router)
 app.include_router(posts_router)
 app.include_router(comments_router)
+app.include_router(meetings_router)
 
 
 @app.get("/api/health")
