@@ -158,12 +158,15 @@ c:\WORK\IIFF\
 | Column | Type | Description |
 |--------|------|-------------|
 | id | SERIAL PK | |
-| google_id | VARCHAR UNIQUE | Google OAuth sub |
-| email | VARCHAR UNIQUE NOT NULL | Google 이메일 |
+| auth_provider | ENUM('local','google') NOT NULL | 가입 방식 |
+| google_id | VARCHAR UNIQUE (nullable) | Google OAuth sub (Google 가입 시) |
+| username | VARCHAR UNIQUE (nullable) | 로그인 아이디 (일반 가입 시) |
+| password_hash | VARCHAR (nullable) | bcrypt 해시 (일반 가입 시) |
+| email | VARCHAR UNIQUE NOT NULL | 이메일 |
 | name | VARCHAR NOT NULL | 실명 |
 | nickname | VARCHAR UNIQUE NOT NULL | 닉네임 |
 | phone | VARCHAR NOT NULL | 전화번호 |
-| profile_image | VARCHAR | Google 프로필 이미지 URL |
+| profile_image | VARCHAR | 프로필 이미지 URL |
 | role | ENUM('user','admin','superadmin') | 기본값 'user' |
 | status | ENUM('pending','active','rejected','banned') | 기본값 'pending' |
 | created_at | TIMESTAMP | |
@@ -282,30 +285,67 @@ c:\WORK\IIFF\
 
 ## 5. Authentication Flow
 
-### 5.1 Google OAuth + 관리자 승인제
+### 5.1 회원가입 (두 가지 방식)
+
+사용자는 가입 화면에서 **Google 가입** 또는 **일반 가입** 중 선택할 수 있다.
+
+#### A) Google OAuth 가입
 
 ```
-1. 사용자가 "Google로 로그인" 클릭
+1. "Google로 가입" 클릭
 2. Google OAuth 2.0 consent screen → 인증 코드 반환
 3. Backend: 인증 코드 → access_token → 사용자 정보(email, name, picture)
 4. DB에 google_id로 조회:
-   - 신규 사용자 → users 테이블에 INSERT (status: 'pending')
-     → 프로필 완성 화면으로 이동 (실명, 닉네임, 전화번호 입력)
-     → 입력 완료 → "승인 대기 중" 안내 화면
-   - 기존 사용자 (status: 'active') → JWT 발급 → 메인 페이지 이동
-   - 기존 사용자 (status: 'pending') → "승인 대기 중" 안내 화면
-   - 기존 사용자 (status: 'rejected') → "가입이 거부되었습니다" 안내
-   - 기존 사용자 (status: 'banned') → "계정이 정지되었습니다" 안내
-5. 관리자: Admin 대시보드에서 pending 사용자 목록 확인 → 승인/거부
+   - 신규 → users INSERT (auth_provider: 'google', status: 'pending')
+     → 추가 정보 입력 화면 (닉네임, 전화번호)
+     → 입력 완료 → "승인 대기 중" 안내
+   - 기존 → 로그인 처리 (아래 5.2 참조)
+5. 관리자 승인 → status: 'active'
 ```
 
-### 5.2 JWT 토큰 구조
+#### B) 일반 회원가입
+
+```
+1. "일반 가입" 클릭
+2. 가입 폼 입력: 실명, 아이디(username), 비밀번호, 이메일, 닉네임, 전화번호
+3. 유효성 검사:
+   - 아이디: 4~20자, 영문+숫자, 중복 확인
+   - 비밀번호: 8자 이상, 영문+숫자+특수문자 포함
+   - 이메일: 형식 검증, 중복 확인
+   - 닉네임: 2~20자, 중복 확인
+4. Backend: password → bcrypt 해시 → users INSERT (auth_provider: 'local', status: 'pending')
+5. "승인 대기 중" 안내
+6. 관리자 승인 → status: 'active'
+```
+
+### 5.2 로그인 (두 가지 방식)
+
+```
+A) Google 로그인: "Google로 로그인" → OAuth → google_id로 조회 → JWT 발급
+B) 일반 로그인: 아이디 + 비밀번호 입력 → bcrypt 검증 → JWT 발급
+
+공통 상태 체크:
+- status: 'active' → JWT 발급 → 메인 페이지
+- status: 'pending' → "승인 대기 중" 안내
+- status: 'rejected' → "가입이 거부되었습니다" 안내
+- status: 'banned' → "계정이 정지되었습니다" 안내
+```
+
+### 5.3 DB 제약조건
+
+```
+- auth_provider='google' → google_id NOT NULL, username/password_hash NULL
+- auth_provider='local'  → username/password_hash NOT NULL, google_id NULL
+- email 중복 불가 (Google 가입과 일반 가입에서 동일 이메일 사용 방지)
+```
+
+### 5.4 JWT 토큰 구조
 
 - **Access Token**: 30분 만료, payload에 user_id + role
 - **Refresh Token**: 7일 만료, httpOnly cookie로 저장
 - 모든 API 요청에 Authorization: Bearer {access_token} 헤더 포함
 
-### 5.3 권한 체계
+### 5.5 권한 체계
 
 | Role | 프레젠테이션 | 게시판 읽기 | 게시판 쓰기 | 회의실 | 관리자 |
 |------|---|---|---|---|---|
@@ -463,14 +503,20 @@ class S3Storage(StorageBackend):
 
 ## 10. Automated Backup
 
-### 10.1 파일 백업
+### 10.1 Google Drive 백업 대상
+
+- **소유자**: choonwoo49@gmail.com
+- **백업 폴더**: https://drive.google.com/drive/folders/1e8lak6p54FQDkHfwFdQr9y8GTikE8fuY
+- rclone remote 설정 시 위 계정으로 인증, 해당 폴더를 루트로 지정
+
+### 10.2 파일 백업
 
 ```bash
 # 매일 03:00 — DATA 드라이브 → Google Drive (변경분만)
 rclone sync D:/DATA/iiff-uploads gdrive:IIFF-Backup/uploads
 ```
 
-### 10.2 DB 백업
+### 10.3 DB 백업
 
 ```bash
 # 매일 03:30 — PostgreSQL 전체 덤프 → 압축 → Google Drive
@@ -480,7 +526,7 @@ rclone copy /tmp/iiff_db_$(date +%Y%m%d).sql.gz gdrive:IIFF-Backup/db/
 rclone delete gdrive:IIFF-Backup/db/ --min-age 30d
 ```
 
-### 10.3 스케줄
+### 10.4 스케줄
 
 Windows Task Scheduler 또는 Docker cron 컨테이너로 자동 실행.
 백업 실패 시 로그 기록.
