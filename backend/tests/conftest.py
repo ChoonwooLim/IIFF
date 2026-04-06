@@ -6,6 +6,10 @@ from database import Base
 from deps import get_db
 from main import app
 import models.user  # noqa: F401 — ensure User table is registered with Base
+import models.board  # noqa: F401
+import models.post  # noqa: F401
+import models.comment  # noqa: F401
+import models.file  # noqa: F401
 
 SQLALCHEMY_TEST_URL = "sqlite:///./test.db"
 engine_test = create_engine(SQLALCHEMY_TEST_URL, connect_args={"check_same_thread": False})
