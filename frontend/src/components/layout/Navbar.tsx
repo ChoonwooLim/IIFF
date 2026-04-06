@@ -70,11 +70,13 @@ function NavLink({
   href,
   onClick,
   active,
+  index,
   children,
 }: {
   href: string;
   onClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   active: boolean;
+  index: number;
   children: React.ReactNode;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -106,10 +108,12 @@ function NavLink({
           ? `0 8px 32px ${GLOW_GOLD}, 0 4px 16px ${GLOW_WARM}, 0 0 48px rgba(201,169,110,0.2), inset 0 1px 0 rgba(255,255,255,0.2)`
           : 'none',
         transform: isActive ? 'translateY(-2px) scale(1.04)' : 'none',
-        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
         textDecoration: 'none',
         cursor: 'pointer',
         whiteSpace: 'nowrap',
+        /* Staggered entrance */
+        animation: `fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) ${0.15 + index * 0.06}s both`,
       }}
     >
       {children}
@@ -120,10 +124,12 @@ function NavLink({
 function DropdownItem({
   href,
   onClick,
+  index,
   children,
 }: {
   href: string;
   onClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
+  index: number;
   children: React.ReactNode;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -155,9 +161,11 @@ function DropdownItem({
           ? `0 6px 24px ${GLOW_GOLD}, 0 3px 12px ${GLOW_WARM}, inset 0 1px 0 rgba(255,255,255,0.15)`
           : 'none',
         transform: hovered ? 'translateX(8px) scale(1.01)' : 'none',
-        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
         textDecoration: 'none',
         cursor: 'pointer',
+        /* Staggered cascade entrance */
+        animation: `dropItemIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) ${index * 0.05}s both`,
       }}
     >
       {children}
@@ -168,10 +176,12 @@ function DropdownItem({
 function CommunityLink({
   to,
   active,
+  delayIndex,
   children,
 }: {
   to: string;
   active: boolean;
+  delayIndex: number;
   children: React.ReactNode;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -197,9 +207,11 @@ function CommunityLink({
           ? `0 6px 24px ${GLOW_GOLD}, inset 0 1px 0 rgba(255,255,255,0.15)`
           : 'none',
         transform: isActive ? 'translateY(-2px) scale(1.04)' : 'none',
-        transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
         textDecoration: 'none',
         textShadow: isActive ? 'none' : '0 2px 6px rgba(0,0,0,0.6)',
+        /* Staggered entrance after nav items */
+        animation: `fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) ${0.5 + delayIndex * 0.06}s both`,
       }}
     >
       {children}
@@ -211,11 +223,13 @@ function IconButton({
   to,
   title,
   gold,
+  delayIndex,
   children,
 }: {
   to: string;
   title: string;
   gold?: boolean;
+  delayIndex: number;
   children: React.ReactNode;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -252,7 +266,9 @@ function IconButton({
           ? `0 4px 16px ${GLOW_GOLD}`
           : 'none',
         transform: hovered ? 'translateY(-1px)' : 'none',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'all 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+        /* Staggered entrance */
+        animation: `fadeUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${0.6 + delayIndex * 0.06}s both`,
       }}
     >
       {children}
@@ -264,6 +280,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [logoHovered, setLogoHovered] = useState(false);
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -299,7 +316,6 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 1000,
-        /* Glassmorphic background with image texture */
         backgroundImage: `linear-gradient(135deg, rgba(5,5,14,0.5), rgba(10,10,25,0.35), rgba(5,5,14,0.5)), url('/images/hero/cinema.webp')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center top',
@@ -308,9 +324,26 @@ export default function Navbar() {
         boxShadow: scrolled
           ? `0 8px 40px rgba(0,0,0,0.5), 0 2px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06)`
           : `0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)`,
-        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1), border-bottom 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
+        /* Navbar entrance animation */
+        animation: 'navSlideDown 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
       }}
     >
+      {/* Scroll-activated border glow */}
+      {scrolled && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -1,
+            left: 0,
+            right: 0,
+            height: 1,
+            background: 'linear-gradient(90deg, transparent, rgba(201,169,110,0.4), rgba(224,201,146,0.5), rgba(201,169,110,0.4), transparent)',
+            animation: 'borderGlow 3s ease-in-out infinite',
+          }}
+        />
+      )}
+
       <div
         style={{
           maxWidth: 1920,
@@ -326,12 +359,18 @@ export default function Navbar() {
         {/* ── Logo ── */}
         <Link
           to="/"
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: 12,
             textDecoration: 'none',
             flexShrink: 0,
+            transform: logoHovered ? 'scale(1.06)' : 'none',
+            transition: 'transform 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+            /* Logo entrance */
+            animation: 'fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.05s both',
           }}
         >
           <img
@@ -339,17 +378,28 @@ export default function Navbar() {
             alt="IIFF Logo"
             width={44}
             height={44}
-            style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))' }}
+            style={{
+              filter: logoHovered
+                ? 'drop-shadow(0 2px 12px rgba(201,169,110,0.5)) drop-shadow(0 0 20px rgba(201,169,110,0.3))'
+                : 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
+              transition: 'filter 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+            }}
           />
           <span
             style={{
               fontSize: '1.4rem',
               fontWeight: 800,
               letterSpacing: '0.12em',
-              background: 'linear-gradient(135deg, #c9a96e 0%, #e0c992 25%, #f5d9a0 50%, #c9a96e 75%, #a07c3f 100%)',
+              /* Animated shimmer gradient — wider background sweeps across */
+              background: 'linear-gradient(90deg, #a07c3f 0%, #c9a96e 20%, #f5d9a0 40%, #fffbe6 50%, #f5d9a0 60%, #c9a96e 80%, #a07c3f 100%)',
+              backgroundSize: '200% 100%',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              filter: 'drop-shadow(0 2px 8px rgba(201,169,110,0.35)) drop-shadow(0 0 16px rgba(224,201,146,0.2))',
+              animation: 'goldShimmer 4s ease-in-out infinite',
+              filter: logoHovered
+                ? 'drop-shadow(0 2px 12px rgba(201,169,110,0.5)) drop-shadow(0 0 24px rgba(224,201,146,0.35))'
+                : 'drop-shadow(0 2px 8px rgba(201,169,110,0.35)) drop-shadow(0 0 16px rgba(224,201,146,0.2))',
+              transition: 'filter 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
             }}
           >
             IIFF
@@ -368,7 +418,7 @@ export default function Navbar() {
           }}
           className="hidden lg:flex"
         >
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.map((item, i) => (
             <div
               key={item.label}
               style={{ position: 'relative' }}
@@ -379,6 +429,7 @@ export default function Navbar() {
                 href={item.href}
                 onClick={handleAnchorClick}
                 active={activeDropdown === item.label}
+                index={i}
               >
                 {item.label}
               </NavLink>
@@ -406,11 +457,18 @@ export default function Navbar() {
                       borderRadius: 16,
                       padding: '10px 0',
                       boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 8px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08)`,
-                      animation: 'dropIn 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                      animation: 'dropIn 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+                      /* Subtle glow pulse on the dropdown container */
+                      overflow: 'hidden',
                     }}
                   >
-                    {item.children.map((child) => (
-                      <DropdownItem key={child.href} href={child.href} onClick={handleAnchorClick}>
+                    {item.children.map((child, ci) => (
+                      <DropdownItem
+                        key={child.href}
+                        href={child.href}
+                        onClick={handleAnchorClick}
+                        index={ci}
+                      >
                         {child.label}
                       </DropdownItem>
                     ))}
@@ -427,15 +485,17 @@ export default function Navbar() {
               height: 24,
               background: 'rgba(255,255,255,0.15)',
               margin: '0 8px',
+              animation: 'fadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.45s both',
             }}
           />
 
           {/* Community links */}
-          {COMMUNITY_LINKS.map((link) => (
+          {COMMUNITY_LINKS.map((link, i) => (
             <CommunityLink
               key={link.to}
               to={link.to}
               active={location.pathname.startsWith(link.to)}
+              delayIndex={i}
             >
               {link.label}
             </CommunityLink>
@@ -444,6 +504,7 @@ export default function Navbar() {
             <CommunityLink
               to="/admin"
               active={location.pathname.startsWith('/admin')}
+              delayIndex={COMMUNITY_LINKS.length}
             >
               관리자
             </CommunityLink>
@@ -452,7 +513,7 @@ export default function Navbar() {
 
         {/* ── Right Controls ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="hidden sm:flex">
-          <IconButton to="/docs" title="기획서 PDF 보기">
+          <IconButton to="/docs" title="기획서 PDF 보기" delayIndex={0}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
               <polyline points="14 2 14 8 20 8" />
@@ -462,7 +523,7 @@ export default function Navbar() {
             <span className="hidden md:inline">PDF</span>
           </IconButton>
 
-          <IconButton to="/presentation" title="프레젠테이션 모드" gold>
+          <IconButton to="/presentation" title="프레젠테이션 모드" gold delayIndex={1}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="3" width="20" height="14" rx="2" />
               <path d="M8 21h8M12 17v4" />
@@ -471,7 +532,7 @@ export default function Navbar() {
           </IconButton>
 
           {user ? (
-            <IconButton to="/boards" title={user.nickname || user.name}>
+            <IconButton to="/boards" title={user.nickname || user.name} delayIndex={2}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
@@ -479,7 +540,7 @@ export default function Navbar() {
               <span className="hidden md:inline">{user.nickname || user.name}</span>
             </IconButton>
           ) : (
-            <IconButton to="/login" title="로그인" gold>
+            <IconButton to="/login" title="로그인" gold delayIndex={2}>
               로그인
             </IconButton>
           )}
@@ -510,7 +571,7 @@ export default function Navbar() {
                 height: 2,
                 borderRadius: 1,
                 background: '#fff',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
                 transform: mobileOpen ? 'rotate(45deg) translateY(3.5px)' : 'none',
               }}
             />
@@ -520,7 +581,7 @@ export default function Navbar() {
                 height: 2,
                 borderRadius: 1,
                 background: '#fff',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
                 transform: mobileOpen ? 'rotate(-45deg) translateY(-3.5px)' : 'none',
               }}
             />
@@ -543,13 +604,17 @@ export default function Navbar() {
             backdropFilter: 'blur(20px)',
             overflowY: 'auto',
             padding: '32px 24px',
-            animation: 'fadeUp 0.3s ease',
           }}
         >
-          {/* Nav sections */}
+          {/* Nav sections — staggered entrance */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {NAV_ITEMS.map((item) => (
-              <div key={item.label}>
+            {NAV_ITEMS.map((item, i) => (
+              <div
+                key={item.label}
+                style={{
+                  animation: `mobileSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${i * 0.06}s both`,
+                }}
+              >
                 <a
                   href={item.href}
                   onClick={(e) => handleAnchorClick(e, item.href)}
@@ -575,7 +640,7 @@ export default function Navbar() {
                       borderLeft: '2px solid rgba(201,169,110,0.3)',
                     }}
                   >
-                    {item.children.map((child) => (
+                    {item.children.map((child, ci) => (
                       <a
                         key={child.href}
                         href={child.href}
@@ -585,6 +650,7 @@ export default function Navbar() {
                           color: '#8a8a9a',
                           textDecoration: 'none',
                           padding: '4px 0',
+                          animation: `mobileSlideIn 0.3s cubic-bezier(0.25, 1, 0.5, 1) ${i * 0.06 + 0.1 + ci * 0.03}s both`,
                         }}
                       >
                         {child.label}
@@ -604,6 +670,7 @@ export default function Navbar() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 12,
+                animation: `mobileSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${NAV_ITEMS.length * 0.06 + 0.1}s both`,
               }}
             >
               {COMMUNITY_LINKS.map((link) => (
@@ -638,7 +705,14 @@ export default function Navbar() {
             </div>
 
             {/* Auth */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 12,
+                animation: `mobileSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${NAV_ITEMS.length * 0.06 + 0.2}s both`,
+              }}
+            >
               {user ? (
                 <span style={{ fontSize: 14, color: '#8a8a9a' }}>
                   {user.nickname || user.name} 님
@@ -667,6 +741,7 @@ export default function Navbar() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 16,
+                animation: `mobileSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) ${NAV_ITEMS.length * 0.06 + 0.3}s both`,
               }}
             >
               <Link
