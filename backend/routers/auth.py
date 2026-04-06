@@ -12,6 +12,7 @@ from schemas.auth import (
     GoogleCallbackRequest,
     GoogleProfileCompleteRequest,
 )
+from config import settings
 from services.auth_service import (
     hash_password,
     verify_password,
@@ -26,7 +27,6 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 def exchange_google_code(code: str) -> dict:
     """Synchronous Google code exchange — can be mocked in tests."""
     import httpx
-    from config import settings
 
     resp = httpx.post(
         "https://oauth2.googleapis.com/token",
@@ -87,7 +87,7 @@ def login_local(req: LocalLoginRequest, response: Response, db: Session = Depend
     refresh_token = create_refresh_token(data={"sub": str(user.id)})
     response.set_cookie(
         key="refresh_token", value=refresh_token, httponly=True,
-        secure=False, samesite="lax", max_age=7 * 24 * 60 * 60,
+        secure=settings.cookie_secure, samesite="lax", max_age=7 * 24 * 60 * 60,
     )
     return TokenResponse(access_token=access_token)
 
@@ -112,7 +112,7 @@ def refresh_access_token(request: Request, response: Response, db: Session = Dep
     new_refresh = create_refresh_token(data={"sub": str(user.id)})
     response.set_cookie(
         key="refresh_token", value=new_refresh, httponly=True,
-        secure=False, samesite="lax", max_age=7 * 24 * 60 * 60,
+        secure=settings.cookie_secure, samesite="lax", max_age=7 * 24 * 60 * 60,
     )
     return TokenResponse(access_token=new_access)
 

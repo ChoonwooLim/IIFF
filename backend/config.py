@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_url: str = "postgresql://iiff_user:iiff_secret_2026@localhost:5433/iiff_db"
+    database_url: str = "postgresql://orbitron_user:orbitron_db_pass@192.168.219.101:3590/orbitron_db"
     jwt_secret_key: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     google_client_secret: str = ""
     storage_base_path: str = "D:/DATA/iiff-uploads"
     allowed_origins: list[str] = ["http://localhost:5173"]
+    cookie_secure: bool = False  # True in production (HTTPS)
 
     # File upload
     max_file_size_image: int = 10 * 1024 * 1024      # 10 MB

@@ -1,0 +1,63 @@
+# Orbitron Deployment Configuration
+# IIFF - Incheon International Film Festival Platform
+# Backend (FastAPI) + Frontend (React/Vite) + PostgreSQL + Nginx
+
+project:
+  name: iiff
+  region: ap-northeast-2  # Seoul
+
+services:
+  # ─────────────────────────────────────────────
+  # Backend API (FastAPI + PostgreSQL)
+  # ─────────────────────────────────────────────
+  - name: iiff-backend
+    type: web
+    runtime: python
+    rootDir: backend
+    build:
+      command: "pip install -r requirements.txt"
+    start:
+      command: "alembic upgrade head && python scripts/seed_boards.py && python scripts/seed_admin.py && python scripts/seed_posts.py && python scripts/seed_images.py && uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2"
+    env:
+      - key: DATABASE_URL
+        value: "postgresql://orbitron_user:orbitron_db_pass@orbitron-iiff-db:3590/orbitron_db"
+      - key: JWT_SECRET_KEY
+        generate: true
+      - key: ALLOWED_ORIGINS
+        value: '["http://localhost","https://iiff.twinverse.org"]'
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: STORAGE_BASE_PATH
+        value: "/data/uploads"
+      - key: GOOGLE_CLIENT_ID
+        value: ""  # Set via Orbitron secrets
+      - key: GOOGLE_CLIENT_SECRET
+        value: ""  # Set via Orbitron secrets
+    healthCheck:
+      path: /api/health
+      interval: 30
+    disk:
+      name: iiff-uploads
+      mountPath: /data/uploads
+      sizeGB: 1
+
+  # ─────────────────────────────────────────────
+  # Frontend (Vite + React)
+  # ─────────────────────────────────────────────
+  - name: iiff-frontend
+    type: static
+    rootDir: frontend
+    build:
+      command: "npm install && npm run build"
+    publish: ./dist
+    routes:
+      - source: "/*"
+        rewrite: /index.html
+
+# ─────────────────────────────────────────────
+# Nginx reverse proxy is managed by docker-compose
+# Cloudflare Tunnel: iiff.twinverse.org -> 127.0.0.1:3473
+# ─────────────────────────────────────────────
+
+# Database: Orbitron 관리형 PostgreSQL (orbitron-iiff-db:3590/orbitron_db)
+# External URL: postgresql://orbitron_user:orbitron_db_pass@192.168.219.101:3590/orbitron_db
