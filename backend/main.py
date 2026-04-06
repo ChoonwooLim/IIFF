@@ -33,3 +33,12 @@ app.include_router(admin_router)
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "service": "iiff-api"}
+
+
+# Serve uploaded files
+import os
+from fastapi.staticfiles import StaticFiles
+
+upload_path = settings.storage_base_path
+if os.path.isdir(upload_path):
+    app.mount("/uploads", StaticFiles(directory=upload_path), name="uploads")
