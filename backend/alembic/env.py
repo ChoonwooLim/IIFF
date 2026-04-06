@@ -2,6 +2,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from database import Base
+from models import User  # noqa: F401 - registers models with Base.metadata for autogenerate
 
 config = context.config
 
