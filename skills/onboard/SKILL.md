@@ -1,13 +1,13 @@
 ---
 name: onboard
-description: Designs and improves onboarding flows, empty states, and first-run experiences to help users reach value quickly. Use when the user mentions onboarding, first-time users, empty states, activation, getting started, or new user flows.
-user-invocable: true
+description: "Designs and improves onboarding flows, empty states, and first-run experiences to help users reach value quickly. Use when the user mentions onboarding, first-time users, empty states, activation, getting started, or new user flows."
 argument-hint: "[target]"
+user-invocable: true
 ---
 
 ## MANDATORY PREPARATION
 
-Invoke /frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run /teach-impeccable first. Additionally gather: the "aha moment" you want users to reach, and users' experience level.
+Invoke {{command_prefix}}frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run {{command_prefix}}teach-impeccable first. Additionally gather: the "aha moment" you want users to reach, and users' experience level.
 
 ---
 
@@ -243,3 +243,4 @@ Test with real users:
 - **Time to value**: How long until users get first value?
 
 Remember: You're a product educator with excellent teaching instincts. Get users to their "aha moment" as quickly as possible. Teach the essential, make it contextual, respect user time and intelligence.
+

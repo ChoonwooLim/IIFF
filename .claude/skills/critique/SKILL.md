@@ -1,13 +1,13 @@
 ---
 name: critique
-description: Evaluate design from a UX perspective, assessing visual hierarchy, information architecture, emotional resonance, cognitive load, and overall quality with quantitative scoring, persona-based testing, and actionable feedback. Use when the user asks to review, critique, evaluate, or give feedback on a design or component.
-user-invocable: true
+description: "Evaluate design from a UX perspective, assessing visual hierarchy, information architecture, emotional resonance, cognitive load, and overall quality with quantitative scoring, persona-based testing, and actionable feedback. Use when the user asks to review, critique, evaluate, or give feedback on a design or component."
 argument-hint: "[area (feature, page, component...)]"
+user-invocable: true
 ---
 
 ## MANDATORY PREPARATION
 
-Invoke /frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run /teach-impeccable first. Additionally gather: what the interface is trying to accomplish.
+Invoke {{command_prefix}}frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run {{command_prefix}}teach-impeccable first. Additionally gather: what the interface is trying to accomplish.
 
 ---
 
@@ -126,12 +126,12 @@ For each issue, tag with **P0–P3 severity** (consult [heuristics-scoring](refe
 - **[P?] What**: Name the problem clearly
 - **Why it matters**: How this hurts users or undermines goals
 - **Fix**: What to do about it (be concrete)
-- **Suggested command**: Which command could address this (from: /animate, /quieter, /optimize, /adapt, /clarify, /distill, /delight, /onboard, /normalize, /audit, /harden, /polish, /extract, /bolder, /arrange, /typeset, /critique, /colorize, /overdrive)
+- **Suggested command**: Which command could address this (from: {{available_commands}})
 
 ### Persona Red Flags
 > *Consult [personas](reference/personas.md)*
 
-Auto-select 2–3 personas most relevant to this interface type (use the selection table in the reference). If `.github/copilot-instructions.md` contains a `## Design Context` section from `teach-impeccable`, also generate 1–2 project-specific personas from the audience/brand info.
+Auto-select 2–3 personas most relevant to this interface type (use the selection table in the reference). If `{{config_file}}` contains a `## Design Context` section from `teach-impeccable`, also generate 1–2 project-specific personas from the audience/brand info.
 
 For each selected persona, walk through the primary user action and list specific red flags found:
 
@@ -154,7 +154,7 @@ Quick notes on smaller issues worth addressing.
 
 ## Phase 3: Ask the User
 
-**After presenting findings**, use targeted questions based on what was actually found. ask the user directly to clarify what you cannot infer. These answers will shape the action plan.
+**After presenting findings**, use targeted questions based on what was actually found. {{ask_instruction}} These answers will shape the action plan.
 
 Ask questions along these lines (adapt to the specific findings — do NOT ask generic questions):
 
@@ -180,22 +180,22 @@ Ask questions along these lines (adapt to the specific findings — do NOT ask g
 
 List recommended commands in priority order, based on the user's answers:
 
-1. **`/command-name`** — Brief description of what to fix (specific context from critique findings)
-2. **`/command-name`** — Brief description (specific context)
+1. **`{{command_prefix}}command-name`** — Brief description of what to fix (specific context from critique findings)
+2. **`{{command_prefix}}command-name`** — Brief description (specific context)
 ...
 
 **Rules for recommendations**:
-- Only recommend commands from: /animate, /quieter, /optimize, /adapt, /clarify, /distill, /delight, /onboard, /normalize, /audit, /harden, /polish, /extract, /bolder, /arrange, /typeset, /critique, /colorize, /overdrive
+- Only recommend commands from: {{available_commands}}
 - Order by the user's stated priorities first, then by impact
 - Each item's description should carry enough context that the command knows what to focus on
 - Map each Priority Issue to the appropriate command
 - Skip commands that would address zero issues
 - If the user chose a limited scope, only include items within that scope
 - If the user marked areas as off-limits, exclude commands that would touch those areas
-- End with `/polish` as the final step if any fixes were recommended
+- End with `{{command_prefix}}polish` as the final step if any fixes were recommended
 
 After presenting the summary, tell the user:
 
 > You can ask me to run these one at a time, all at once, or in any order you prefer.
 >
-> Re-run `/critique` after fixes to see your score improve.
+> Re-run `{{command_prefix}}critique` after fixes to see your score improve.

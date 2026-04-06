@@ -1,15 +1,15 @@
 ---
 name: bolder
-description: Amplify safe or boring designs to make them more visually interesting and stimulating. Increases impact while maintaining usability. Use when the user says the design looks bland, generic, too safe, lacks personality, or wants more visual impact and character.
-user-invocable: true
+description: "Amplify safe or boring designs to make them more visually interesting and stimulating. Increases impact while maintaining usability. Use when the user says the design looks bland, generic, too safe, lacks personality, or wants more visual impact and character."
 argument-hint: "[target]"
+user-invocable: true
 ---
 
 Increase visual impact and personality in designs that are too safe, generic, or visually underwhelming, creating more engaging and memorable experiences.
 
 ## MANDATORY PREPARATION
 
-Invoke /frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run /teach-impeccable first.
+Invoke {{command_prefix}}frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run {{command_prefix}}teach-impeccable first.
 
 ---
 
@@ -31,7 +31,7 @@ Analyze what makes the design feel too safe or boring:
    - Who's the audience? (What will resonate?)
    - What are the constraints? (Brand guidelines, accessibility, performance)
 
-If any of these are unclear from the codebase, ask the user directly to clarify what you cannot infer.
+If any of these are unclear from the codebase, {{ask_instruction}}
 
 **CRITICAL**: "Bolder" doesn't mean chaotic or garish. It means distinctive, memorable, and confident. Think intentional drama, not random chaos.
 

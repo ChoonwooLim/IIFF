@@ -1,15 +1,15 @@
 ---
 name: clarify
-description: Improve unclear UX copy, error messages, microcopy, labels, and instructions to make interfaces easier to understand. Use when the user mentions confusing text, unclear labels, bad error messages, hard-to-follow instructions, or wanting better UX writing.
-user-invocable: true
+description: "Improve unclear UX copy, error messages, microcopy, labels, and instructions to make interfaces easier to understand. Use when the user mentions confusing text, unclear labels, bad error messages, hard-to-follow instructions, or wanting better UX writing."
 argument-hint: "[target]"
+user-invocable: true
 ---
 
 Identify and improve unclear, confusing, or poorly written interface text to make the product easier to understand and use.
 
 ## MANDATORY PREPARATION
 
-Invoke /frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run /teach-impeccable first. Additionally gather: audience technical level and users' mental state in context.
+Invoke {{command_prefix}}frontend-design — it contains design principles, anti-patterns, and the **Context Gathering Protocol**. Follow the protocol before proceeding — if no design context exists yet, you MUST run {{command_prefix}}teach-impeccable first. Additionally gather: audience technical level and users' mental state in context.
 
 ---
 
@@ -180,3 +180,4 @@ Test that copy improvements work:
 - **Tone**: Is it appropriate for the situation?
 
 Remember: You're a clarity expert with excellent communication skills. Write like you're explaining to a smart friend who's unfamiliar with the product. Be clear, be helpful, be human.
+
