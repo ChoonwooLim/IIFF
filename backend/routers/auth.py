@@ -9,6 +9,8 @@ from schemas.auth import (
     TokenResponse,
     UserResponse,
     MessageResponse,
+    GoogleCallbackRequest,
+    GoogleProfileCompleteRequest,
 )
 from services.auth_service import (
     hash_password,
@@ -19,6 +21,29 @@ from services.auth_service import (
 )
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
+
+
+def exchange_google_code(code: str) -> dict:
+    """Synchronous Google code exchange — can be mocked in tests."""
+    import httpx
+    from config import settings
+
+    resp = httpx.post(
+        "https://oauth2.googleapis.com/token",
+        data={
+            "code": code,
+            "client_id": settings.google_client_id,
+            "client_secret": settings.google_client_secret,
+            "redirect_uri": "postmessage",
+            "grant_type": "authorization_code",
+        },
+    )
+    tokens = resp.json()
+    userinfo = httpx.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        headers={"Authorization": f"Bearer {tokens['access_token']}"},
+    )
+    return userinfo.json()
 
 
 @router.post("/register", response_model=MessageResponse, status_code=status.HTTP_201_CREATED)
@@ -96,3 +121,62 @@ def refresh_access_token(request: Request, response: Response, db: Session = Dep
 def logout(response: Response):
     response.delete_cookie("refresh_token")
     return {"message": "로그아웃되었습니다"}
+
+
+@router.post("/google/callback")
+def google_callback(req: GoogleCallbackRequest, db: Session = Depends(get_db)):
+    google_user = exchange_google_code(req.code)
+
+    existing = db.query(User).filter(User.google_id == google_user["sub"]).first()
+
+    if existing:
+        if existing.status == "active":
+            access_token = create_access_token(data={"sub": str(existing.id), "role": existing.role})
+            return {"access_token": access_token, "token_type": "bearer", "is_new": False}
+        if existing.status == "pending":
+            if not existing.nickname or not existing.phone:
+                temp_token = create_access_token(data={"sub": str(existing.id), "role": "user", "temp": True})
+                return {"is_new": False, "needs_profile": True, "temp_token": temp_token}
+            return {"message": "관리자 승인을 기다리고 있습니다", "status": "pending", "is_new": False}
+        if existing.status == "rejected":
+            raise HTTPException(status_code=403, detail="가입이 거부되었습니다")
+        if existing.status == "banned":
+            raise HTTPException(status_code=403, detail="계정이 정지되었습니다")
+
+    # Check if email already exists (local signup with same email)
+    email_exists = db.query(User).filter(User.email == google_user["email"]).first()
+    if email_exists:
+        raise HTTPException(status_code=409, detail="이미 일반 가입으로 등록된 이메일입니다")
+
+    # New Google user
+    user = User(
+        auth_provider="google",
+        google_id=google_user["sub"],
+        email=google_user["email"],
+        name=google_user.get("name", ""),
+        nickname="",
+        phone="",
+        profile_image=google_user.get("picture"),
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    temp_token = create_access_token(data={"sub": str(user.id), "role": "user", "temp": True})
+    return {"is_new": True, "needs_profile": True, "temp_token": temp_token}
+
+
+@router.post("/google/complete-profile", response_model=MessageResponse)
+def google_complete_profile(
+    req: GoogleProfileCompleteRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if current_user.auth_provider != "google":
+        raise HTTPException(status_code=400, detail="Google 계정만 프로필 완성이 가능합니다")
+    if db.query(User).filter(User.nickname == req.nickname, User.id != current_user.id).first():
+        raise HTTPException(status_code=409, detail="이미 사용 중인 닉네임입니다")
+    current_user.nickname = req.nickname
+    current_user.phone = req.phone
+    db.commit()
+    return MessageResponse(message="프로필이 완성되었습니다. 관리자 승인을 기다려주세요.", status="pending")

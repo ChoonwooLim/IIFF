@@ -48,3 +48,13 @@ def override_activate_user(client, username: str):
         {"username": username},
     )
     db.commit()
+
+
+def override_activate_user_by_email(client, email: str):
+    from sqlalchemy import text
+    db = next(app.dependency_overrides[get_db]())
+    db.execute(
+        text("UPDATE users SET status = 'active' WHERE email = :email"),
+        {"email": email},
+    )
+    db.commit()
