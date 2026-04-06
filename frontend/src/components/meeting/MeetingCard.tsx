@@ -7,15 +7,18 @@ interface MeetingCardProps {
   type: "video" | "text";
   participantCount: number;
   maxParticipants: number;
+  hasPassword: boolean;
   creator: { id: number; nickname: string };
   createdAt: string;
   canManage?: boolean;
   onRename?: (id: number, newName: string) => void;
   onDelete?: (id: number) => void;
   onInvite?: (id: number, name: string) => void;
+  onSetPassword?: (id: number) => void;
+  onRemovePassword?: (id: number) => void;
 }
 
-export default function MeetingCard({ id, name, type, participantCount, maxParticipants, creator, createdAt, canManage, onRename, onDelete, onInvite }: MeetingCardProps) {
+export default function MeetingCard({ id, name, type, participantCount, maxParticipants, hasPassword, creator, createdAt, canManage, onRename, onDelete, onInvite, onSetPassword, onRemovePassword }: MeetingCardProps) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -53,7 +56,13 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
 
   const handleCardClick = () => {
     if (editing || showMenu) return;
-    navigate(path);
+    if (hasPassword) {
+      const pw = prompt("회의실 비밀번호를 입력하세요:");
+      if (!pw) return;
+      navigate(path + `?password=${encodeURIComponent(pw.trim())}`);
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -68,7 +77,9 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
         background: hovered || editing ? 'rgba(201,169,110,0.03)' : 'transparent',
         textDecoration: 'none',
         cursor: editing ? 'default' : 'pointer',
-        transition: 'all 0.3s ease',
+        transition: 'border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        transform: hovered && !editing ? 'translateY(-2px)' : 'translateY(0)',
+        boxShadow: hovered && !editing ? '0 4px 20px rgba(201,169,110,0.06)' : 'none',
       }}
     >
       <div style={{
@@ -143,6 +154,7 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
                 border: '1px solid rgba(255,255,255,0.1)',
                 zIndex: 20,
                 minWidth: 120,
+                animation: 'menuDropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
               }}>
                 <button
                   onClick={(e) => {
@@ -165,6 +177,32 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
                   onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
                 >
                   멤버 초대
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                    if (hasPassword && onRemovePassword) {
+                      onRemovePassword(id);
+                    } else if (onSetPassword) {
+                      onSetPassword(id);
+                    }
+                  }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '10px 16px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#c0c0ca',
+                    fontSize: 13,
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = 'none'}
+                >
+                  {hasPassword ? '비밀번호 제거' : '비밀번호 설정'}
                 </button>
                 <button
                   onClick={(e) => {
@@ -214,6 +252,11 @@ export default function MeetingCard({ id, name, type, participantCount, maxParti
               </div>
             )}
           </div>
+        )}
+        {hasPassword && (
+          <span style={{ fontSize: 14, color: '#c9a96e', flexShrink: 0 }} title="비밀번호 설정됨">
+            🔒
+          </span>
         )}
         <span style={{
           fontSize: '0.6875rem',

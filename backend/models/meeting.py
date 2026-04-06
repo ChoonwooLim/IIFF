@@ -20,6 +20,7 @@ class Meeting(Base):
         server_default="active",
     )
     max_participants: Mapped[int] = mapped_column(Integer, default=10, server_default="10")
+    password: Mapped[str | None] = mapped_column(String(100), nullable=True)
     jitsi_room_id: Mapped[str | None] = mapped_column(String(255), unique=True, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     closed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)

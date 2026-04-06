@@ -16,6 +16,6 @@ class MeetingInvitation(Base):
     invited_by: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     invited_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
-    meeting: Mapped["Meeting"] = relationship()
+    meeting: Mapped["Meeting"] = relationship(overlaps="invitations")
     user: Mapped["User"] = relationship(foreign_keys=[user_id])
     inviter: Mapped["User"] = relationship(foreign_keys=[invited_by])

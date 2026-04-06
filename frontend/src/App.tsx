@@ -20,6 +20,8 @@ const PostCreatePage = lazy(() => import("@/pages/Board/PostCreatePage"));
 const MeetingListPage = lazy(() => import("@/pages/Meeting/MeetingListPage"));
 const VideoRoomPage = lazy(() => import("@/pages/Meeting/VideoRoomPage"));
 const TextChatPage = lazy(() => import("@/pages/Meeting/TextChatPage"));
+const MeetingMinutesListPage = lazy(() => import("@/pages/Meeting/MeetingMinutesListPage"));
+const MeetingMinutesDetailPage = lazy(() => import("@/pages/Meeting/MeetingMinutesDetailPage"));
 const AdminLayout = lazy(() => import("@/components/admin/AdminLayout"));
 const AdminDashboardPage = lazy(() => import("@/pages/Admin/AdminDashboardPage"));
 const UserManagementPage = lazy(() => import("@/pages/Admin/UserManagementPage"));
@@ -61,6 +63,12 @@ export default function App() {
           } />
           <Route path="/meetings/chat/:meetingId" element={
             <ProtectedRoute><TextChatPage /></ProtectedRoute>
+          } />
+          <Route path="/meetings/minutes" element={
+            <ProtectedRoute><MeetingMinutesListPage /></ProtectedRoute>
+          } />
+          <Route path="/meetings/:meetingId/minutes" element={
+            <ProtectedRoute><MeetingMinutesDetailPage /></ProtectedRoute>
           } />
 
           {/* Admin routes */}

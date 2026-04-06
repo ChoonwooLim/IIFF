@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from database import SessionLocal
 from models.chat_message import ChatMessage
 from models.meeting import Meeting
+from models.meeting_invitation import MeetingInvitation
 from models.user import User
 from services.auth_service import decode_token
 from services.connection_manager import manager
@@ -44,6 +45,20 @@ async def websocket_chat(websocket: WebSocket, meeting_id: int):
 
         if meeting.type != "text":
             await websocket.close(code=4005, reason="Not a text meeting")
+            return
+
+        # Check access: creator, admin, invited, or correct password
+        is_creator = meeting.created_by == user.id
+        is_admin = user.role in ("admin", "superadmin")
+        is_invited = db.query(MeetingInvitation).filter(
+            MeetingInvitation.meeting_id == meeting_id,
+            MeetingInvitation.user_id == user.id,
+        ).first() is not None
+        ws_password = websocket.query_params.get("password", "")
+        password_ok = bool(meeting.password and ws_password and ws_password == meeting.password)
+
+        if not (is_creator or is_admin or is_invited or password_ok):
+            await websocket.close(code=4006, reason="Not invited")
             return
 
         user_info = {"id": user.id, "nickname": user.nickname, "profile_image": user.profile_image}

@@ -54,6 +54,12 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | Google OAuth 프론트엔드 | @react-oauth/google 연동 | 2 | 완료 |
 | HTTPS/SSL | Let's Encrypt + Nginx SSL 설정 | 6 | 완료 |
 | E2E 테스트 | Playwright + Chromium (12 테스트) | - | 완료 |
+| 회의실 관리 메뉴 | 이름 수정/삭제/⋮ 메뉴 | 4 | 완료 |
+| 채팅방 KakaoTalk 스타일 | 메시지 그룹핑, 버블, 시스템 메시지 | 4 | 완료 |
+| 회의실 초대 시스템 | 초대 전용 입장 + 유저 검색 + 초대 모달 | 4 | 완료 |
+| 회의록 자동 생성 | 종료된 회의 채팅 → 마크다운 문서 | 4 | 완료 |
+| 회의실 비밀번호 | 비밀번호 설정/제거 + 비밀번호 입장 | 4 | 완료 |
+| 회의 애니메이션 | 카드/채팅/모달/드로어 모션 디자인 | 4 | 완료 |
 
 ## 테스트 현황
 

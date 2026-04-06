@@ -55,12 +55,28 @@ class ParticipantResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class MeetingPasswordRequest(BaseModel):
+    password: str
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, v: str) -> str:
+        if len(v.strip()) < 1 or len(v) > 50:
+            raise ValueError("비밀번호는 1~50자여야 합니다")
+        return v.strip()
+
+
+class MeetingJoinRequest(BaseModel):
+    password: str | None = None
+
+
 class MeetingResponse(BaseModel):
     id: int
     name: str
     type: str
     status: str
     max_participants: int
+    has_password: bool = False
     jitsi_room_id: str | None
     creator: MeetingUserResponse
     participant_count: int = 0
@@ -91,6 +107,25 @@ class MeetingInvitationResponse(BaseModel):
     id: int
     user: MeetingUserResponse
     invited_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class MeetingMinutesResponse(BaseModel):
+    id: int
+    meeting_id: int
+    title: str
+    content: str
+    creator: MeetingUserResponse
+    created_at: datetime
+    model_config = {"from_attributes": True}
+
+
+class MeetingMinutesListItem(BaseModel):
+    id: int
+    meeting_id: int
+    title: str
+    creator: MeetingUserResponse
+    created_at: datetime
     model_config = {"from_attributes": True}
 
 

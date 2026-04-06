@@ -31,3 +31,10 @@
 | 2026-04-06 | HTTPS/SSL Let's Encrypt 설정 | infra | nginx/nginx-ssl.conf, docker-compose.ssl.yml, scripts/init-ssl.sh |
 | 2026-04-06 | Playwright E2E 테스트 프레임워크 | feat | frontend/e2e/, frontend/playwright.config.ts |
 | 2026-04-06 | Google OAuth 설정 가이드 | docs | docs/google-oauth-setup.md |
+| 2026-04-06 | 회의실 이름 수정/삭제 + ⋮ 관리 메뉴 | feat | frontend/src/components/meeting/MeetingCard.tsx, backend/routers/meetings.py |
+| 2026-04-06 | 텍스트 채팅방 KakaoTalk 스타일 리디자인 | feat | frontend/src/pages/Meeting/TextChatPage.tsx, frontend/src/components/meeting/ChatMessage.tsx |
+| 2026-04-06 | 회의실 초대 시스템 (초대 전용 입장) | feat | backend/models/meeting_invitation.py, backend/routers/meetings.py, frontend/src/components/meeting/InviteModal.tsx |
+| 2026-04-06 | 회의록 자동 생성 (채팅 내용 → 마크다운) | feat | backend/models/meeting_minutes.py, backend/routers/meetings.py |
+| 2026-04-06 | 회의록 목록/상세 페이지 | feat | frontend/src/pages/Meeting/MeetingMinutesListPage.tsx, MeetingMinutesDetailPage.tsx |
+| 2026-04-06 | 회의실 비밀번호 입장 기능 | feat | backend/models/meeting.py, backend/routers/meetings.py, frontend/src/components/meeting/MeetingCard.tsx |
+| 2026-04-06 | 회의 기능 애니메이션 (10개 keyframes, 카드/채팅/모달/드로어) | style | frontend/src/globals.css, 전체 meeting 컴포넌트 |

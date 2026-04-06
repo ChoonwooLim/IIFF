@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/AuthContext";
 import api from "@/services/api";
 import MeetingCard from "@/components/meeting/MeetingCard";
+import InviteModal from "@/components/meeting/InviteModal";
 
 interface MeetingCreator {
   id: number;
@@ -15,205 +17,16 @@ interface Meeting {
   type: "video" | "text";
   status: string;
   max_participants: number;
+  has_password: boolean;
   participant_count: number;
   creator: MeetingCreator;
   created_at: string;
 }
 
-interface SearchUser {
-  id: number;
-  nickname: string;
-  name: string;
-  profile_image: string | null;
-}
-
-interface Invitation {
-  id: number;
-  user: { id: number; nickname: string; profile_image: string | null };
-  invited_at: string;
-}
-
-/* ── Invite Modal ── */
-function InviteModal({ meetingId, meetingName, onClose }: { meetingId: number; meetingName: string; onClose: () => void }) {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchUser[]>([]);
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
-  const [searching, setSearching] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
-
-  const fetchInvitations = () => {
-    api.get(`/meetings/${meetingId}/invitations`).then(({ data }) => setInvitations(data));
-  };
-
-  useEffect(() => { fetchInvitations(); }, [meetingId]);
-
-  const handleSearch = (q: string) => {
-    setQuery(q);
-    clearTimeout(timerRef.current);
-    if (q.trim().length < 1) { setResults([]); return; }
-    setSearching(true);
-    timerRef.current = setTimeout(() => {
-      api.get("/meetings/users/search", { params: { q } })
-        .then(({ data }) => setResults(data))
-        .finally(() => setSearching(false));
-    }, 300);
-  };
-
-  const handleInvite = async (userId: number) => {
-    await api.post(`/meetings/${meetingId}/invite`, { user_id: userId });
-    setResults((prev) => prev.filter((u) => u.id !== userId));
-    fetchInvitations();
-  };
-
-  const handleRemove = async (userId: number) => {
-    await api.delete(`/meetings/${meetingId}/invite/${userId}`);
-    fetchInvitations();
-  };
-
-  const invitedIds = new Set(invitations.map((inv) => inv.user.id));
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(0,0,0,0.6)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 24,
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: '#12121a',
-          border: '1px solid rgba(255,255,255,0.08)',
-          width: '100%',
-          maxWidth: 480,
-          maxHeight: '80vh',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Header */}
-        <div style={{
-          padding: '24px 24px 16px',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 16, fontWeight: 600, color: '#f0f0f5' }}>
-              멤버 초대
-            </h3>
-            <button onClick={onClose} style={{
-              background: 'none', border: 'none', color: '#5a5a6a', fontSize: 20, cursor: 'pointer',
-            }}>&times;</button>
-          </div>
-          <p style={{ fontSize: 12, color: '#5a5a6a', marginBottom: 16 }}>
-            {meetingName}
-          </p>
-          <input
-            value={query}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="이름 또는 닉네임으로 검색"
-            autoFocus
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              color: '#f0f0f5',
-              fontSize: 14,
-              outline: 'none',
-            }}
-          />
-        </div>
-
-        {/* Search results */}
-        {results.length > 0 && (
-          <div style={{
-            padding: '8px 24px',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            maxHeight: 200,
-            overflowY: 'auto',
-          }}>
-            <p style={{ fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#5a5a6a', marginBottom: 8 }}>
-              검색 결과
-            </p>
-            {results.map((u) => (
-              <div key={u.id} style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: '8px 0',
-                borderBottom: '1px solid rgba(255,255,255,0.03)',
-              }}>
-                <div>
-                  <span style={{ color: '#f0f0f5', fontSize: 14 }}>{u.nickname}</span>
-                  <span style={{ color: '#5a5a6a', fontSize: 12, marginLeft: 8 }}>{u.name}</span>
-                </div>
-                {invitedIds.has(u.id) ? (
-                  <span style={{ fontSize: 11, color: '#5a5a6a' }}>초대됨</span>
-                ) : (
-                  <button
-                    onClick={() => handleInvite(u.id)}
-                    style={{
-                      padding: '4px 12px',
-                      background: 'rgba(201,169,110,0.15)',
-                      border: '1px solid rgba(201,169,110,0.3)',
-                      color: '#c9a96e',
-                      fontSize: 12,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    초대
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {searching && (
-          <div style={{ padding: '16px 24px', color: '#5a5a6a', fontSize: 13 }}>검색 중...</div>
-        )}
-
-        {/* Invited list */}
-        <div style={{
-          padding: '16px 24px',
-          flex: 1,
-          overflowY: 'auto',
-        }}>
-          <p style={{ fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#5a5a6a', marginBottom: 12 }}>
-            초대된 멤버 ({invitations.length})
-          </p>
-          {invitations.length === 0 && (
-            <p style={{ color: '#3a3a4a', fontSize: 13 }}>아직 초대된 멤버가 없습니다</p>
-          )}
-          {invitations.map((inv) => (
-            <div key={inv.id} style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '8px 0',
-              borderBottom: '1px solid rgba(255,255,255,0.03)',
-            }}>
-              <span style={{ color: '#c0c0ca', fontSize: 14 }}>{inv.user.nickname}</span>
-              <button
-                onClick={() => handleRemove(inv.user.id)}
-                style={{
-                  background: 'none', border: 'none', color: '#dc5050',
-                  fontSize: 12, cursor: 'pointer',
-                }}
-              >
-                취소
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
 /* ── Main Page ── */
 export default function MeetingListPage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [showCreate, setShowCreate] = useState(false);
   const [name, setName] = useState("");
@@ -245,6 +58,23 @@ export default function MeetingListPage() {
   const handleDelete = async (meetingId: number) => {
     try {
       await api.delete(`/meetings/${meetingId}`);
+      fetchMeetings();
+    } catch { /* ignore */ }
+  };
+
+  const handleSetPassword = async (meetingId: number) => {
+    const pw = prompt("회의실 비밀번호를 입력하세요:");
+    if (!pw || !pw.trim()) return;
+    try {
+      await api.put(`/meetings/${meetingId}/password`, { password: pw.trim() });
+      fetchMeetings();
+    } catch { /* ignore */ }
+  };
+
+  const handleRemovePassword = async (meetingId: number) => {
+    if (!confirm("비밀번호를 제거하시겠습니까?")) return;
+    try {
+      await api.delete(`/meetings/${meetingId}/password`);
       fetchMeetings();
     } catch { /* ignore */ }
   };
@@ -282,25 +112,46 @@ export default function MeetingListPage() {
             회의실
           </h1>
         </div>
-        {user && (
-          <button
-            onClick={() => setShowCreate(!showCreate)}
-            style={{
-              padding: '10px 20px',
-              background: showCreate ? 'transparent' : '#c9a96e',
-              color: showCreate ? '#c9a96e' : '#05050a',
-              border: showCreate ? '1px solid rgba(201,169,110,0.4)' : '1px solid #c9a96e',
-              fontSize: 12,
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-          >
-            {showCreate ? '취소' : '새 회의실'}
-          </button>
-        )}
+        <div style={{ display: 'flex', gap: 8 }}>
+          {user && (
+            <button
+              onClick={() => navigate("/meetings/minutes")}
+              style={{
+                padding: '10px 20px',
+                background: 'transparent',
+                color: '#c9a96e',
+                border: '1px solid rgba(201,169,110,0.4)',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              회의록
+            </button>
+          )}
+          {user && (
+            <button
+              onClick={() => setShowCreate(!showCreate)}
+              style={{
+                padding: '10px 20px',
+                background: showCreate ? 'transparent' : '#c9a96e',
+                color: showCreate ? '#c9a96e' : '#05050a',
+                border: showCreate ? '1px solid rgba(201,169,110,0.4)' : '1px solid #c9a96e',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+              }}
+            >
+              {showCreate ? '취소' : '새 회의실'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Create form */}
@@ -310,7 +161,7 @@ export default function MeetingListPage() {
           style={{
             padding: '32px 0',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
-            animation: 'fadeUp 0.3s ease',
+            animation: 'fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
           <div style={{ marginBottom: 24 }}>
@@ -406,13 +257,20 @@ export default function MeetingListPage() {
         paddingTop: 32,
         paddingBottom: 32,
       }}>
-        {meetings.map((m) => (
-          <MeetingCard key={m.id} id={m.id} name={m.name} type={m.type}
-            participantCount={m.participant_count} maxParticipants={m.max_participants}
-            creator={m.creator} createdAt={m.created_at}
-            canManage={canManage(m.creator.id)}
-            onRename={handleRename} onDelete={handleDelete}
-            onInvite={(id, name) => setInviteTarget({ id, name })} />
+        {meetings.map((m, i) => (
+          <div key={m.id} style={{
+            animation: `cardStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.06}s both`,
+          }}>
+            <MeetingCard id={m.id} name={m.name} type={m.type}
+              participantCount={m.participant_count} maxParticipants={m.max_participants}
+              hasPassword={m.has_password}
+              creator={m.creator} createdAt={m.created_at}
+              canManage={canManage(m.creator.id)}
+              onRename={handleRename} onDelete={handleDelete}
+              onInvite={(id, name) => setInviteTarget({ id, name })}
+              onSetPassword={handleSetPassword}
+              onRemovePassword={handleRemovePassword} />
+          </div>
         ))}
       </div>
       {meetings.length === 0 && (
@@ -479,10 +337,11 @@ export default function MeetingListPage() {
               title: '회의실 관리',
               desc: '개설자는 회의실 이름 수정, 삭제, 종료가 가능합니다. 관리자는 모든 회의실을 관리할 수 있습니다.',
             },
-          ].map((item) => (
+          ].map((item, i) => (
             <div key={item.step} style={{
               padding: '24px',
               border: '1px solid rgba(255,255,255,0.06)',
+              animation: `cardStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.08}s both`,
             }}>
               <span style={{
                 display: 'inline-block',

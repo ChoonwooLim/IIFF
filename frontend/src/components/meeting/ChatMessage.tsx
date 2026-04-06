@@ -28,6 +28,7 @@ export default function ChatMessage({ user, content, timestamp, isOwn, showAvata
         marginTop: showName ? 12 : 2,
         paddingRight: 16,
         paddingLeft: 60,
+        animation: 'msgSlideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
         <span style={{
           fontSize: 10,
@@ -62,6 +63,7 @@ export default function ChatMessage({ user, content, timestamp, isOwn, showAvata
       marginTop: showName ? 12 : 2,
       paddingLeft: 16,
       paddingRight: 60,
+      animation: 'msgSlideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
     }}>
       {/* Avatar */}
       <div style={{ width: 36, flexShrink: 0 }}>
@@ -130,6 +132,7 @@ export function SystemMessage({ text }: { text: string }) {
     <div style={{
       textAlign: 'center',
       padding: '8px 0',
+      animation: 'msgFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     }}>
       <span style={{
         display: 'inline-block',

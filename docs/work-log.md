@@ -60,3 +60,29 @@
 - **E2E 테스트**: Playwright + Chromium, homepage.spec.ts (4 테스트), auth.spec.ts (4 테스트), navigation.spec.ts (4 테스트)
 
 ---
+
+### 추가 작업 (세션 3)
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| feat | 회의실 이름 수정/삭제 (⋮ 메뉴), 회의실 사용 가이드 섹션 | 완료 |
+| feat | 텍스트 채팅방 카카오톡 스타일 리디자인 (메시지 그룹핑, 시스템 메시지, 날짜 구분선) | 완료 |
+| feat | 회의실 초대 시스템 (초대받은 사용자만 입장 가능, 멤버 초대 모달) | 완료 |
+| feat | 회의록 생성 기능 (종료된 회의에서 대화 내용을 마크다운 문서로 자동 생성) | 완료 |
+| feat | 회의록 목록/상세 페이지 (프론트엔드) | 완료 |
+| feat | 회의실 비밀번호 설정/제거 기능 (비밀번호로 입장 가능) | 완료 |
+| style | 회의 기능 전체 애니메이션 추가 (카드 입장, 채팅 버블, 모달, 드로어 등) | 완료 |
+| fix | FastAPI 라우트 순서 충돌 (minutes/list가 {meeting_id}에 매칭되는 문제) | 완료 |
+| fix | React StrictMode WebSocket 이중 연결 문제 (cancelled 플래그 패턴) | 완료 |
+| fix | Vite 프록시 포트 변경 (8001→8002, 좀비 프로세스 회피) | 완료 |
+
+### 세부 내용
+
+- **회의실 관리**: MeetingCard에 ⋮ 메뉴 추가 (멤버 초대, 비밀번호 설정, 이름 수정, 삭제), 인라인 이름 수정 (Enter 저장, Escape 취소)
+- **채팅방 리디자인**: KakaoTalk 스타일 — 내 메시지 오른쪽 골드 버블, 상대 메시지 왼쪽 다크 버블, 연속 메시지 아바타/닉네임 그룹핑, 시스템 메시지 (입장/퇴장), 날짜 구분선, 최대 520px 너비
+- **초대 시스템**: MeetingInvitation 모델, 유저 검색 API, 초대/제거 API, 채팅방 내 초대 모달, WebSocket 핸들러 초대 확인
+- **회의록**: MeetingMinutes 모델, 종료된 회의에서 POST 호출 시 채팅 내용을 마크다운으로 자동 생성, 회의록 목록/상세 페이지, 마크다운 렌더러 (볼드, 이탤릭, 채팅 메시지 스타일링)
+- **비밀번호 입장**: Meeting 모델에 password 컬럼, PUT/DELETE 비밀번호 관리 API, 입장 시 초대 OR 비밀번호 OR 개설자/어드민 3가지 중 하나 충족 시 허용
+- **애니메이션**: 10개 신규 @keyframes (msgSlideLeft/Right, modalScaleIn, drawerSlideIn, cardStagger 등), 모든 ease-out-expo 커브, prefers-reduced-motion 글로벌 대응
+
+---
