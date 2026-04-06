@@ -24,3 +24,4 @@
 | 2026-04-06 | Docker Compose 프로덕션 스택 | infra | docker-compose.yml, backend/Dockerfile, frontend/Dockerfile |
 | 2026-04-06 | Nginx 리버스 프록시 | infra | nginx/nginx.conf |
 | 2026-04-06 | DB 백업 스크립트 (pg_dump + rclone) | infra | scripts/backup-db.sh |
+| 2026-04-06 | 프론트엔드 코드 스플리팅 + 벤더 청크 최적화 (메인 번들 -81%) | perf | frontend/src/App.tsx, frontend/vite.config.ts |
