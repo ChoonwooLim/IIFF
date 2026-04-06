@@ -1,13 +1,18 @@
 import os
 import uuid
+import subprocess
+import logging
 from abc import ABC, abstractmethod
 from fastapi import UploadFile, HTTPException
 from config import settings
 
+logger = logging.getLogger(__name__)
+
+
 class StorageBackend(ABC):
     @abstractmethod
     def upload(self, file: UploadFile, directory: str) -> tuple[str, str, int]:
-        """Upload file. Returns (stored_name, file_path, file_size)."""
+        """Upload file. Returns (stored_name, rel_path, file_size)."""
 
     @abstractmethod
     def delete(self, file_path: str) -> bool:
@@ -16,6 +21,7 @@ class StorageBackend(ABC):
     @abstractmethod
     def get_path(self, file_path: str) -> str:
         """Get absolute path for serving."""
+
 
 class LocalStorage(StorageBackend):
     def __init__(self, base_path: str | None = None):
@@ -30,24 +36,51 @@ class LocalStorage(StorageBackend):
         full_dir = self._ensure_dir(directory)
         ext = os.path.splitext(file.filename or "")[1].lower()
         stored_name = f"{uuid.uuid4()}{ext}"
-        file_path = os.path.join(full_dir, stored_name)
+        abs_path = os.path.join(full_dir, stored_name)
         content = file.file.read()
         file_size = len(content)
-        with open(file_path, "wb") as f:
+        with open(abs_path, "wb") as f:
             f.write(content)
-        return stored_name, file_path, file_size
+        # Store relative path for cross-environment compatibility
+        rel_path = f"{directory}/{stored_name}"
+        # Sync to remote server if configured
+        _sync_to_remote(abs_path, rel_path)
+        return stored_name, rel_path, file_size
 
     def delete(self, file_path: str) -> bool:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        abs_path = os.path.join(self.base_path, file_path) if not os.path.isabs(file_path) else file_path
+        if os.path.exists(abs_path):
+            os.remove(abs_path)
             return True
         return False
 
     def get_path(self, file_path: str) -> str:
-        return file_path
+        if os.path.isabs(file_path):
+            return file_path
+        return os.path.join(self.base_path, file_path)
+
+
+def _sync_to_remote(local_path: str, rel_path: str) -> None:
+    """SCP file to remote server for deployment sync."""
+    remote_host = os.environ.get("REMOTE_UPLOADS_HOST")
+    remote_path = os.environ.get("REMOTE_UPLOADS_PATH")
+    if not remote_host or not remote_path:
+        return
+    dest = f"{remote_host}:{remote_path}/{rel_path}"
+    try:
+        subprocess.Popen(
+            ["scp", "-o", "StrictHostKeyChecking=no", local_path, dest],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+        )
+        logger.info(f"SCP sync started: {rel_path} -> {dest}")
+    except Exception as e:
+        logger.warning(f"SCP sync failed for {rel_path}: {e}")
+
 
 def get_storage() -> StorageBackend:
     return LocalStorage()
+
 
 def validate_file(file: UploadFile, board_type: str) -> None:
     if not file.filename:
@@ -65,6 +98,7 @@ def validate_file(file: UploadFile, board_type: str) -> None:
     else:
         if file_size > settings.max_file_size_document:
             raise HTTPException(status_code=400, detail="문서 파일은 50MB 이하여야 합니다")
+
 
 def get_upload_directory(board_type: str, ext: str) -> str:
     if ext in settings.allowed_image_extensions:
