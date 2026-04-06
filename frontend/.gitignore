@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# TypeScript build output (emitted by composite builds)
+src/**/*.d.ts
+!src/vite-env.d.ts
+vite.config.d.ts
+*.tsbuildinfo
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
