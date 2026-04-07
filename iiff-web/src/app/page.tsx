@@ -53,7 +53,7 @@ export default function Home() {
             </p>
           </FadeUp>
           <FadeUp delay={0.4}>
-            <div className="relative w-full max-w-3xl mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
+            <div className="relative w-full max-w-6xl mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
               <iframe
                 src="https://www.youtube.com/embed/zYXrvyNtHlc?rel=0&modestbranding=1&playsinline=1"
                 title="IIFF Video"
