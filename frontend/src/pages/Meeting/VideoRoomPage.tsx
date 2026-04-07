@@ -8,7 +8,6 @@ import VideoControlBar from "@/components/meeting/VideoControlBar";
 import PreJoinLobby from "@/components/meeting/PreJoinLobby";
 import VideoChatPanel from "@/components/meeting/VideoChatPanel";
 import DeviceSettingsModal from "@/components/meeting/DeviceSettingsModal";
-import ParticipantList from "@/components/meeting/ParticipantList";
 import InviteModal from "@/components/meeting/InviteModal";
 
 interface MeetingDetail {
@@ -36,8 +35,6 @@ export default function VideoRoomPage() {
   const [joinSettings, setJoinSettings] = useState<JoinSettings | null>(null);
   const [joined, setJoined] = useState(false);
 
-  // Sidebar state: 'participants' | 'chat' | null
-  const [sidebarTab, setSidebarTab] = useState<'participants' | 'chat'>('participants');
   const [showSettings, setShowSettings] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
   const [chatUnread, setChatUnread] = useState(0);
@@ -165,10 +162,10 @@ export default function VideoRoomPage() {
         )}
       </div>
 
-      {/* ── Main area: Video + Sidebar ── */}
+      {/* ── Main area: Video + Thumbnails + Chat ── */}
       <div style={{ flex: 1, display: "flex", overflow: "hidden", minHeight: 0 }}>
 
-        {/* Video area */}
+        {/* Video area (main large view) */}
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', padding: 12 }}>
           <div style={{ flex: 1, position: 'relative', minHeight: 0, borderRadius: 12, overflow: 'hidden' }}>
             <VideoGrid
@@ -184,170 +181,200 @@ export default function VideoRoomPage() {
           </div>
         </div>
 
-        {/* ── Right Sidebar ── */}
+        {/* ── Participant Thumbnails Panel ── */}
         <div style={{
-          width: 320, flexShrink: 0,
+          width: 300, flexShrink: 0,
           display: 'flex', flexDirection: 'column',
-          background: '#0a0a12',
+          background: '#08080f',
           borderLeft: '1px solid rgba(255,255,255,0.06)',
         }}>
-          {/* Sidebar Tabs */}
+          {/* Header */}
           <div style={{
-            display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)', flexShrink: 0,
+            padding: '10px 14px', flexShrink: 0,
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <button
-              onClick={() => setSidebarTab('participants')}
-              style={{
-                flex: 1, padding: '12px 0', border: 'none', cursor: 'pointer',
-                background: sidebarTab === 'participants' ? 'rgba(201,169,110,0.08)' : 'transparent',
-                borderBottom: sidebarTab === 'participants' ? '2px solid #c9a96e' : '2px solid transparent',
-                color: sidebarTab === 'participants' ? '#c9a96e' : '#5a5a6a',
-                fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#c9a96e', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
                 <path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
               </svg>
               참가자 ({activeParticipants.length})
-            </button>
-            <button
-              onClick={() => { setSidebarTab('chat'); setChatUnread(0); }}
-              style={{
-                flex: 1, padding: '12px 0', border: 'none', cursor: 'pointer',
-                background: sidebarTab === 'chat' ? 'rgba(201,169,110,0.08)' : 'transparent',
-                borderBottom: sidebarTab === 'chat' ? '2px solid #c9a96e' : '2px solid transparent',
-                color: sidebarTab === 'chat' ? '#c9a96e' : '#5a5a6a',
-                fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                position: 'relative',
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-              </svg>
-              채팅
-              {chatUnread > 0 && sidebarTab !== 'chat' && (
-                <span style={{
-                  position: 'absolute', top: 6, right: '20%',
-                  minWidth: 18, height: 18, borderRadius: 9,
-                  background: '#ef4444', color: '#fff', fontSize: 10, fontWeight: 700,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px',
-                }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
-              )}
-            </button>
+            </span>
+            {isCreatorOrAdmin && (
+              <button onClick={() => setShowInvite(true)} style={{
+                padding: '4px 10px', borderRadius: 6, background: 'rgba(201,169,110,0.1)',
+                border: '1px solid rgba(201,169,110,0.2)', color: '#c9a96e', fontSize: 11, cursor: 'pointer',
+              }}>+ 초대</button>
+            )}
           </div>
 
-          {/* Sidebar Content */}
-          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            {sidebarTab === 'participants' && (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Participant List */}
-                <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
-                  {activeParticipants.map(p => {
-                    const peerState = peers.get(p.id);
-                    const isLocal = p.id === user?.id;
-                    const isHandRaised = isLocal ? handRaised : (peerState?.handRaised ?? false);
-                    return (
-                      <div key={p.id} style={{
-                        display: 'flex', alignItems: 'center', gap: 10,
-                        padding: '10px 16px',
-                        background: isHandRaised ? 'rgba(201,169,110,0.06)' : 'transparent',
-                      }}>
-                        <div style={{
-                          width: 32, height: 32, borderRadius: '50%',
-                          background: 'rgba(201,169,110,0.12)',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          overflow: 'hidden', flexShrink: 0,
-                        }}>
-                          {p.profile_image ? (
-                            <img src={p.profile_image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                          ) : (
-                            <span style={{ fontSize: 13, color: '#c9a96e' }}>{p.nickname.charAt(0)}</span>
-                          )}
-                        </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <span style={{ fontSize: 13, color: '#c0c0ca' }}>
-                            {p.nickname}
-                            {isLocal && <span style={{ color: '#5a5a6a', marginLeft: 4 }}>(나)</span>}
-                          </span>
-                        </div>
-                        {isHandRaised && <span style={{ fontSize: 16 }}>&#9995;</span>}
-                        <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                          {/* Audio indicator */}
-                          {isLocal ? (
-                            !audioEnabled && (
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
-                                <line x1="1" y1="1" x2="23" y2="23" />
-                                <path d="M9 9v3a3 3 0 005.12 2.12" />
-                              </svg>
-                            )
-                          ) : (
-                            peerState && !peerState.audioEnabled && (
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
-                                <line x1="1" y1="1" x2="23" y2="23" />
-                                <path d="M9 9v3a3 3 0 005.12 2.12" />
-                              </svg>
-                            )
-                          )}
-                          {/* Video indicator */}
-                          {isLocal ? (
-                            !videoEnabled && (
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
-                                <path d="M16.88 3.549L7.12 20.451" />
-                                <rect x="1" y="5" width="15" height="14" rx="2" />
-                              </svg>
-                            )
-                          ) : (
-                            peerState && !peerState.videoEnabled && (
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
-                                <path d="M16.88 3.549L7.12 20.451" />
-                                <rect x="1" y="5" width="15" height="14" rx="2" />
-                              </svg>
-                            )
-                          )}
-                        </div>
-                        <div style={{
-                          width: 6, height: 6, borderRadius: '50%',
-                          background: '#4ade80', flexShrink: 0,
-                        }} />
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Invite button at bottom of participants */}
-                {isCreatorOrAdmin && (
-                  <div style={{
-                    padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)', flexShrink: 0,
-                  }}>
-                    <button onClick={() => setShowInvite(true)} style={{
-                      width: '100%', padding: '10px 0', borderRadius: 8,
-                      background: 'rgba(201,169,110,0.1)', border: '1px solid rgba(201,169,110,0.25)',
-                      color: '#c9a96e', fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+          {/* Thumbnail Grid */}
+          <div style={{
+            flex: 1, overflowY: 'auto', padding: 8,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridAutoRows: 'minmax(0, 1fr)',
+            gap: 6,
+            alignContent: 'start',
+          }}>
+            {/* Local user thumbnail */}
+            {(() => {
+              const isHandUp = handRaised;
+              return (
+                <div key="local" style={{
+                  aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
+                  position: 'relative', background: '#0c0c18',
+                  border: isHandUp ? '2px solid rgba(201,169,110,0.5)' : '1px solid rgba(255,255,255,0.08)',
+                }}>
+                  {localStream && videoEnabled ? (
+                    <video
+                      ref={(el) => { if (el && localStream) el.srcObject = localStream; }}
+                      autoPlay playsInline muted
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                        <circle cx="8.5" cy="7" r="4" />
-                        <line x1="20" y1="8" x2="20" y2="14" />
-                        <line x1="23" y1="11" x2="17" y2="11" />
+                      <div style={{
+                        width: 36, height: 36, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
+                        border: '1.5px solid rgba(201,169,110,0.3)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 15, fontWeight: 700, color: '#c9a96e',
+                      }}>
+                        {(user?.nickname || user?.name || '나').charAt(0)}
+                      </div>
+                    </div>
+                  )}
+                  {/* Name + status overlay */}
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '4px 6px',
+                    background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                    display: 'flex', alignItems: 'center', gap: 3,
+                  }}>
+                    <span style={{ fontSize: 10, color: '#e0e0ea', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {user?.nickname || user?.name || '나'} (나)
+                    </span>
+                    {!audioEnabled && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5">
+                        <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
                       </svg>
-                      멤버 초대
-                    </button>
+                    )}
                   </div>
-                )}
-              </div>
-            )}
+                  {isHandUp && (
+                    <div style={{
+                      position: 'absolute', top: 3, right: 3, fontSize: 12,
+                      background: 'rgba(0,0,0,0.5)', borderRadius: 4, padding: '1px 3px',
+                    }}>&#9995;</div>
+                  )}
+                </div>
+              );
+            })()}
 
-            {sidebarTab === 'chat' && (
-              <VideoChatPanel
-                meetingId={mid}
-                currentUserId={user?.id || 0}
-                onClose={() => setSidebarTab('participants')}
-                unreadCount={chatUnread}
-                onResetUnread={() => setChatUnread(0)}
-              />
+            {/* Remote peer thumbnails */}
+            {Array.from(peers.values()).map(peer => {
+              const isHandUp = peer.handRaised;
+              return (
+                <div key={peer.userId} style={{
+                  aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
+                  position: 'relative', background: '#0c0c18',
+                  border: isHandUp ? '2px solid rgba(201,169,110,0.5)' : '1px solid rgba(255,255,255,0.08)',
+                }}>
+                  {peer.stream && peer.videoEnabled ? (
+                    <video
+                      ref={(el) => { if (el && peer.stream) el.srcObject = peer.stream; }}
+                      autoPlay playsInline
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <div style={{
+                        width: 36, height: 36, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
+                        border: '1.5px solid rgba(201,169,110,0.3)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 15, fontWeight: 700, color: '#c9a96e',
+                      }}>
+                        {peer.nickname.charAt(0)}
+                      </div>
+                    </div>
+                  )}
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '4px 6px',
+                    background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                    display: 'flex', alignItems: 'center', gap: 3,
+                  }}>
+                    <span style={{ fontSize: 10, color: '#e0e0ea', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {peer.nickname}
+                    </span>
+                    {!peer.audioEnabled && (
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5">
+                        <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
+                      </svg>
+                    )}
+                  </div>
+                  {isHandUp && (
+                    <div style={{
+                      position: 'absolute', top: 3, right: 3, fontSize: 12,
+                      background: 'rgba(0,0,0,0.5)', borderRadius: 4, padding: '1px 3px',
+                    }}>&#9995;</div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Empty placeholder slots (always show at least 6 total slots) */}
+            {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
+              <div key={`empty-${i}`} style={{
+                aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
+                background: '#0c0c18', border: '1px dashed rgba(255,255,255,0.06)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Chat Panel (always visible) ── */}
+        <div style={{
+          width: 300, flexShrink: 0,
+          display: 'flex', flexDirection: 'column',
+          background: '#0a0a12',
+          borderLeft: '1px solid rgba(255,255,255,0.06)',
+        }}>
+          {/* Chat Header */}
+          <div style={{
+            padding: '10px 14px', flexShrink: 0,
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            display: 'flex', alignItems: 'center', gap: 6,
+          }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg>
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#c9a96e' }}>채팅</span>
+            {chatUnread > 0 && (
+              <span style={{
+                minWidth: 18, height: 18, borderRadius: 9,
+                background: '#ef4444', color: '#fff', fontSize: 10, fontWeight: 700,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px',
+              }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
             )}
+          </div>
+
+          {/* Chat Content */}
+          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <VideoChatPanel
+              meetingId={mid}
+              currentUserId={user?.id || 0}
+              onClose={() => {}}
+              unreadCount={chatUnread}
+              onResetUnread={() => setChatUnread(0)}
+            />
           </div>
         </div>
       </div>
@@ -360,15 +387,15 @@ export default function VideoRoomPage() {
         handRaised={handRaised}
         peerCount={peers.size}
         isCreatorOrAdmin={isCreatorOrAdmin}
-        showChat={sidebarTab === 'chat'}
-        showParticipants={sidebarTab === 'participants'}
+        showChat={false}
+        showParticipants={false}
         chatUnread={chatUnread}
         onToggleMic={toggleMic}
         onToggleCamera={toggleCamera}
         onToggleScreenShare={toggleScreenShare}
         onToggleHandRaise={toggleHandRaise}
-        onToggleChat={() => setSidebarTab(sidebarTab === 'chat' ? 'participants' : 'chat')}
-        onToggleParticipants={() => setSidebarTab(sidebarTab === 'participants' ? 'chat' : 'participants')}
+        onToggleChat={() => {}}
+        onToggleParticipants={() => {}}
         onOpenSettings={() => setShowSettings(true)}
         onToggleFullscreen={handleToggleFullscreen}
         onLeave={handleLeave}
