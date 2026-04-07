@@ -410,125 +410,124 @@ export default function VideoRoomPage() {
           ))}
         </div>
 
-        {/* ── Right Sidebar: Thumbnails + Chat ── */}
+        {/* ── Participant Thumbnails Panel ── */}
         <div style={{
-          width: 300, flexShrink: 0,
+          width: 240, flexShrink: 0,
           display: 'flex', flexDirection: 'column',
           background: '#08080f',
           borderLeft: '1px solid rgba(255,255,255,0.06)',
         }}>
-          {/* ── Participant Thumbnails (top half) ── */}
+          {/* Header */}
           <div style={{
-            flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column',
+            padding: '8px 12px', flexShrink: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
           }}>
-            {/* Header */}
-            <div style={{
-              padding: '8px 12px', flexShrink: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              borderBottom: '1px solid rgba(255,255,255,0.06)',
-            }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e', display: 'flex', alignItems: 'center', gap: 5 }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
-                  <path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
-                </svg>
-                참가자 ({activeParticipants.length})
-              </span>
-              {isCreatorOrAdmin && (
-                <button onClick={() => setShowInvite(true)} style={{
-                  padding: '3px 8px', borderRadius: 5, background: 'rgba(201,169,110,0.1)',
-                  border: '1px solid rgba(201,169,110,0.2)', color: '#c9a96e', fontSize: 10, cursor: 'pointer',
-                }}>+ 초대</button>
-              )}
-            </div>
-
-            {/* Thumbnail Grid */}
-            <div style={{
-              flex: 1, overflowY: 'auto', padding: 6,
-              display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 5,
-              alignContent: 'start',
-            }}>
-              {/* Local */}
-              {(() => {
-                const inSpotlight = spotlightSlots.includes(localUserId);
-                return (
-                  <ThumbnailCell
-                    key="local"
-                    stream={localStream} nickname={user?.nickname || user?.name || '나'}
-                    profileImage={user?.profile_image || null}
-                    videoOn={videoEnabled} audioOn={audioEnabled} isLocal handRaised={handRaised}
-                    inSpotlight={inSpotlight}
-                    onClick={() => {
-                      if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, localUserId); }
-                    }}
-                    picking={pickerForSlot >= 0}
-                  />
-                );
-              })()}
-
-              {/* Remote peers */}
-              {Array.from(peers.values()).map(peer => {
-                const inSpotlight = spotlightSlots.includes(peer.userId);
-                return (
-                  <ThumbnailCell
-                    key={peer.userId}
-                    stream={peer.stream} nickname={peer.nickname}
-                    profileImage={peer.profileImage}
-                    videoOn={peer.videoEnabled} audioOn={peer.audioEnabled} isLocal={false}
-                    handRaised={peer.handRaised} inSpotlight={inSpotlight}
-                    onClick={() => {
-                      if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, peer.userId); }
-                    }}
-                    picking={pickerForSlot >= 0}
-                  />
-                );
-              })}
-
-              {/* Empty placeholders */}
-              {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
-                <div key={`e-${i}`} style={{
-                  aspectRatio: '4/3', borderRadius: 6, background: '#0c0c18',
-                  border: '1px dashed rgba(255,255,255,0.05)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5">
-                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
-                  </svg>
-                </div>
-              ))}
-            </div>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e', display: 'flex', alignItems: 'center', gap: 5 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
+              </svg>
+              참가자 ({activeParticipants.length})
+            </span>
+            {isCreatorOrAdmin && (
+              <button onClick={() => setShowInvite(true)} style={{
+                padding: '3px 8px', borderRadius: 5, background: 'rgba(201,169,110,0.1)',
+                border: '1px solid rgba(201,169,110,0.2)', color: '#c9a96e', fontSize: 10, cursor: 'pointer',
+              }}>+ 초대</button>
+            )}
           </div>
 
-          {/* ── Chat (bottom half) ── */}
-          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-            {/* Chat Header */}
-            <div style={{
-              padding: '8px 12px', flexShrink: 0,
-              borderBottom: '1px solid rgba(255,255,255,0.06)',
-              display: 'flex', alignItems: 'center', gap: 5,
-            }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-              </svg>
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e' }}>채팅</span>
-              {chatUnread > 0 && (
-                <span style={{
-                  minWidth: 16, height: 16, borderRadius: 8,
-                  background: '#ef4444', color: '#fff', fontSize: 9, fontWeight: 700,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px',
-                }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
-              )}
-            </div>
-            <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-              <VideoChatPanel
-                meetingId={mid}
-                currentUserId={user?.id || 0}
-                onClose={() => {}}
-                unreadCount={chatUnread}
-                onResetUnread={() => setChatUnread(0)}
-              />
-            </div>
+          {/* Thumbnail Grid */}
+          <div style={{
+            flex: 1, overflowY: 'auto', padding: 6,
+            display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 5,
+            alignContent: 'start',
+          }}>
+            {/* Local */}
+            {(() => {
+              const inSpotlight = spotlightSlots.includes(localUserId);
+              return (
+                <ThumbnailCell
+                  key="local"
+                  stream={localStream} nickname={user?.nickname || user?.name || '나'}
+                  profileImage={user?.profile_image || null}
+                  videoOn={videoEnabled} audioOn={audioEnabled} isLocal handRaised={handRaised}
+                  inSpotlight={inSpotlight}
+                  onClick={() => {
+                    if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, localUserId); }
+                  }}
+                  picking={pickerForSlot >= 0}
+                />
+              );
+            })()}
+
+            {/* Remote peers */}
+            {Array.from(peers.values()).map(peer => {
+              const inSpotlight = spotlightSlots.includes(peer.userId);
+              return (
+                <ThumbnailCell
+                  key={peer.userId}
+                  stream={peer.stream} nickname={peer.nickname}
+                  profileImage={peer.profileImage}
+                  videoOn={peer.videoEnabled} audioOn={peer.audioEnabled} isLocal={false}
+                  handRaised={peer.handRaised} inSpotlight={inSpotlight}
+                  onClick={() => {
+                    if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, peer.userId); }
+                  }}
+                  picking={pickerForSlot >= 0}
+                />
+              );
+            })}
+
+            {/* Empty placeholders */}
+            {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
+              <div key={`e-${i}`} style={{
+                aspectRatio: '4/3', borderRadius: 6, background: '#0c0c18',
+                border: '1px dashed rgba(255,255,255,0.05)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5">
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Chat Panel ── */}
+        <div style={{
+          width: 280, flexShrink: 0,
+          display: 'flex', flexDirection: 'column',
+          background: '#0a0a12',
+          borderLeft: '1px solid rgba(255,255,255,0.06)',
+        }}>
+          {/* Chat Header */}
+          <div style={{
+            padding: '8px 12px', flexShrink: 0,
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            display: 'flex', alignItems: 'center', gap: 5,
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e' }}>채팅</span>
+            {chatUnread > 0 && (
+              <span style={{
+                minWidth: 16, height: 16, borderRadius: 8,
+                background: '#ef4444', color: '#fff', fontSize: 9, fontWeight: 700,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px',
+              }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
+            )}
+          </div>
+          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <VideoChatPanel
+              meetingId={mid}
+              currentUserId={user?.id || 0}
+              onClose={() => {}}
+              unreadCount={chatUnread}
+              onResetUnread={() => setChatUnread(0)}
+            />
           </div>
         </div>
       </div>
