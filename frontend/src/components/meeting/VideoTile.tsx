@@ -27,7 +27,7 @@ export default function VideoTile({
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
     }
-  }, [stream]);
+  }, [stream, videoEnabled]);
 
   const initial = nickname?.charAt(0)?.toUpperCase() || '?';
 

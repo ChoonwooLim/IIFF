@@ -31,7 +31,7 @@ function SpotlightCell({
   videoOn: boolean; audioOn: boolean; isLocal: boolean; handRaised: boolean;
 }) {
   const vidRef = useRef<HTMLVideoElement>(null);
-  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream]);
+  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream, videoOn]);
 
   return (
     <div style={{
@@ -591,7 +591,7 @@ function ThumbnailCell({
   inSpotlight: boolean; onClick: () => void; picking: boolean;
 }) {
   const vidRef = useRef<HTMLVideoElement>(null);
-  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream]);
+  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream, videoOn]);
 
   return (
     <div
