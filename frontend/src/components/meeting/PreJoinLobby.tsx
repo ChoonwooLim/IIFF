@@ -7,6 +7,10 @@ interface DeviceInfo {
 
 interface PreJoinLobbyProps {
   meetingName: string;
+  meetingStatus: string;
+  startedAt: string | null;
+  autoMinutes: boolean;
+  isCreatorOrAdmin: boolean;
   onJoin: (settings: {
     audioDeviceId: string;
     videoDeviceId: string;
@@ -14,9 +18,44 @@ interface PreJoinLobbyProps {
     videoEnabled: boolean;
   }) => void;
   onCancel: () => void;
+  onStartMeeting: (autoMinutes: boolean) => Promise<void>;
+  onEndMeeting: () => Promise<void>;
 }
 
-export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinLobbyProps) {
+export default function PreJoinLobby({ meetingName, meetingStatus, startedAt, autoMinutes, isCreatorOrAdmin, onJoin, onCancel, onStartMeeting, onEndMeeting }: PreJoinLobbyProps) {
+  // Meeting control state
+  const [isStarting, setIsStarting] = useState(false);
+  const [isEnding, setIsEnding] = useState(false);
+  const [elapsed, setElapsed] = useState('');
+  const [autoMode, setAutoMode] = useState(autoMinutes);
+
+  // Elapsed time ticker
+  useEffect(() => {
+    if (!startedAt || meetingStatus === 'closed') { setElapsed(''); return; }
+    const tick = () => {
+      const diff = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
+      if (diff < 0) { setElapsed('00:00:00'); return; }
+      const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+      const s = String(diff % 60).padStart(2, '0');
+      setElapsed(`${h}:${m}:${s}`);
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [startedAt, meetingStatus]);
+
+  const handleStart = async () => {
+    setIsStarting(true);
+    try { await onStartMeeting(autoMode); } finally { setIsStarting(false); }
+  };
+
+  const handleEnd = async () => {
+    if (!window.confirm('회의를 종료하시겠습니까?')) return;
+    setIsEnding(true);
+    try { await onEndMeeting(); } finally { setIsEnding(false); }
+  };
+
   const [cameras, setCameras] = useState<DeviceInfo[]>([]);
   const [mics, setMics] = useState<DeviceInfo[]>([]);
   const [speakers, setSpeakers] = useState<DeviceInfo[]>([]);
@@ -203,12 +242,140 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
         width: '100%', maxWidth: 720,
         display: 'flex', flexDirection: 'column', gap: 24,
       }}>
-        {/* Title */}
+        {/* Title + Meeting Controls */}
         <div style={{ textAlign: 'center' }}>
           <h2 style={{ fontSize: 20, fontWeight: 600, color: '#f0f0f5', marginBottom: 4 }}>
             {meetingName || '화상 회의'}
           </h2>
-          <p style={{ fontSize: 13, color: '#6a6a7a' }}>입장 전 카메라와 마이크를 확인하세요</p>
+          <p style={{ fontSize: 13, color: '#6a6a7a', marginBottom: 16 }}>입장 전 카메라와 마이크를 확인하세요</p>
+
+          {/* Meeting status bar */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
+            padding: '12px 20px',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: 12,
+          }}>
+            {/* OnAir indicator */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{
+                width: 10, height: 10, borderRadius: '50%',
+                background: startedAt && meetingStatus !== 'closed'
+                  ? '#3b82f6'
+                  : meetingStatus === 'closed' ? '#5a5a6a' : '#3a3a4a',
+                boxShadow: startedAt && meetingStatus !== 'closed'
+                  ? '0 0 8px rgba(59,130,246,0.6), 0 0 20px rgba(59,130,246,0.3)'
+                  : 'none',
+                animation: startedAt && meetingStatus !== 'closed' ? 'onAirPulse 2s ease-in-out infinite' : 'none',
+              }} />
+              <span style={{
+                fontSize: 13, fontWeight: 600, letterSpacing: '0.05em',
+                color: startedAt && meetingStatus !== 'closed'
+                  ? '#3b82f6'
+                  : meetingStatus === 'closed' ? '#5a5a6a' : '#4a4a5a',
+              }}>
+                {meetingStatus === 'closed' ? 'OFF AIR' : startedAt ? 'ON AIR' : 'STANDBY'}
+              </span>
+              {elapsed && (
+                <span style={{
+                  fontSize: 14, fontWeight: 600, color: '#93c5fd',
+                  fontVariantNumeric: 'tabular-nums',
+                  letterSpacing: '0.04em',
+                }}>
+                  {elapsed}
+                </span>
+              )}
+            </div>
+
+            {/* Control buttons - only for creator/admin */}
+            {isCreatorOrAdmin && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                {/* Auto/Manual toggle — only before meeting starts */}
+                {!startedAt && meetingStatus !== 'closed' && (
+                  <button
+                    onClick={() => setAutoMode(!autoMode)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 6,
+                      padding: '5px 12px', borderRadius: 8,
+                      background: autoMode ? 'rgba(74,222,128,0.1)' : 'rgba(255,255,255,0.04)',
+                      border: `1px solid ${autoMode ? 'rgba(74,222,128,0.25)' : 'rgba(255,255,255,0.08)'}`,
+                      color: autoMode ? '#4ade80' : '#5a5a6a',
+                      fontSize: 11, fontWeight: 500, cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                    title={autoMode ? '자동 회의록: 녹음 → STT → AI 회의록 생성' : '수동 회의록: 채팅 기반 회의록'}
+                  >
+                    {/* Toggle track */}
+                    <div style={{
+                      width: 28, height: 16, borderRadius: 8,
+                      background: autoMode ? 'rgba(74,222,128,0.3)' : 'rgba(255,255,255,0.1)',
+                      position: 'relative', transition: 'background 0.2s',
+                    }}>
+                      <div style={{
+                        width: 12, height: 12, borderRadius: '50%',
+                        background: autoMode ? '#4ade80' : '#5a5a6a',
+                        position: 'absolute', top: 2,
+                        left: autoMode ? 14 : 2,
+                        transition: 'left 0.2s, background 0.2s',
+                      }} />
+                    </div>
+                    {autoMode ? '자동' : '수동'}
+                  </button>
+                )}
+
+                {/* Show current mode indicator after meeting started */}
+                {startedAt && meetingStatus !== 'closed' && autoMode && (
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 4,
+                    padding: '4px 10px', borderRadius: 6,
+                    background: 'rgba(239,68,68,0.08)',
+                    border: '1px solid rgba(239,68,68,0.2)',
+                  }}>
+                    <div style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: '#ef4444',
+                      animation: 'onAirPulse 1.5s ease-in-out infinite',
+                    }} />
+                    <span style={{ fontSize: 11, color: '#f87171', fontWeight: 500 }}>REC</span>
+                  </div>
+                )}
+
+                {!startedAt && meetingStatus !== 'closed' && (
+                  <button
+                    onClick={handleStart}
+                    disabled={isStarting}
+                    style={{
+                      padding: '6px 16px', borderRadius: 8,
+                      background: 'rgba(59,130,246,0.15)',
+                      border: '1px solid rgba(59,130,246,0.3)',
+                      color: '#60a5fa', fontSize: 12, fontWeight: 600,
+                      cursor: isStarting ? 'default' : 'pointer',
+                      opacity: isStarting ? 0.6 : 1,
+                    }}
+                  >
+                    {isStarting ? '시작 중...' : '회의 시작'}
+                  </button>
+                )}
+                {startedAt && meetingStatus !== 'closed' && (
+                  <button
+                    onClick={handleEnd}
+                    disabled={isEnding}
+                    style={{
+                      padding: '6px 16px', borderRadius: 8,
+                      background: 'rgba(239,68,68,0.12)',
+                      border: '1px solid rgba(239,68,68,0.3)',
+                      color: '#f87171', fontSize: 12, fontWeight: 600,
+                      cursor: isEnding ? 'default' : 'pointer',
+                      opacity: isEnding ? 0.6 : 1,
+                    }}
+                  >
+                    {isEnding ? '종료 중...' : '회의 종료'}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Preview + Settings */}

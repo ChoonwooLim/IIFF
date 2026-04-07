@@ -8,6 +8,15 @@ interface VideoControlBarProps {
   showChat: boolean;
   showParticipants: boolean;
   chatUnread: number;
+  // Recording (manual mode)
+  isAutoMinutes: boolean;
+  isRecording: boolean;
+  clipCount: number;
+  minutesStatus: 'idle' | 'uploading' | 'done' | 'error';
+  onRecordStart: () => void;
+  onRecordStop: () => void;
+  onGenerateMinutes: () => void;
+  // Actions
   onToggleMic: () => void;
   onToggleCamera: () => void;
   onToggleScreenShare: () => void;
@@ -106,6 +115,13 @@ export default function VideoControlBar({
   showChat,
   showParticipants,
   chatUnread,
+  isAutoMinutes,
+  isRecording,
+  clipCount,
+  minutesStatus,
+  onRecordStart,
+  onRecordStop,
+  onGenerateMinutes,
   onToggleMic,
   onToggleCamera,
   onToggleScreenShare,
@@ -170,6 +186,92 @@ export default function VideoControlBar({
             <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
           </svg>
         </ControlButton>
+      </div>
+
+      {/* Divider */}
+      <div style={{ width: 1, height: 28, background: 'rgba(255,255,255,0.08)', margin: '0 4px' }} />
+
+      {/* Recording controls */}
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        {/* Auto mode: show REC indicator */}
+        {isAutoMinutes && isRecording && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 4,
+            padding: '6px 10px', borderRadius: 10,
+            background: 'rgba(239,68,68,0.08)',
+            border: '1px solid rgba(239,68,68,0.2)',
+          }}>
+            <div style={{
+              width: 8, height: 8, borderRadius: '50%',
+              background: '#ef4444',
+              animation: 'onAirPulse 1.5s ease-in-out infinite',
+            }} />
+            <span style={{ fontSize: 11, color: '#f87171', fontWeight: 600 }}>REC</span>
+          </div>
+        )}
+
+        {/* Manual mode: record start/stop + generate minutes */}
+        {!isAutoMinutes && (
+          <>
+            {!isRecording ? (
+              <button
+                onClick={onRecordStart}
+                title="녹음 시작"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '6px 12px', borderRadius: 10,
+                  background: 'rgba(239,68,68,0.08)',
+                  border: '1px solid rgba(239,68,68,0.2)',
+                  color: '#f87171', fontSize: 11, fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444' }} />
+                녹음
+              </button>
+            ) : (
+              <button
+                onClick={onRecordStop}
+                title="녹음 정지"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '6px 12px', borderRadius: 10,
+                  background: 'rgba(239,68,68,0.15)',
+                  border: '1px solid rgba(239,68,68,0.3)',
+                  color: '#ef4444', fontSize: 11, fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{
+                  width: 8, height: 8, borderRadius: '50%',
+                  background: '#ef4444',
+                  animation: 'onAirPulse 1.5s ease-in-out infinite',
+                }} />
+                정지
+              </button>
+            )}
+
+            {clipCount > 0 && (
+              <button
+                onClick={onGenerateMinutes}
+                disabled={minutesStatus === 'uploading'}
+                title="녹음 클립으로 회의록 생성"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '6px 12px', borderRadius: 10,
+                  background: minutesStatus === 'uploading' ? 'rgba(250,204,21,0.08)' : 'rgba(74,222,128,0.08)',
+                  border: `1px solid ${minutesStatus === 'uploading' ? 'rgba(250,204,21,0.25)' : 'rgba(74,222,128,0.25)'}`,
+                  color: minutesStatus === 'uploading' ? '#facc15' : '#4ade80',
+                  fontSize: 11, fontWeight: 600,
+                  cursor: minutesStatus === 'uploading' ? 'default' : 'pointer',
+                  opacity: minutesStatus === 'uploading' ? 0.7 : 1,
+                }}
+              >
+                {minutesStatus === 'uploading' ? '생성 중...' : `회의록 작성 (${clipCount})`}
+              </button>
+            )}
+          </>
+        )}
       </div>
 
       {/* Divider */}

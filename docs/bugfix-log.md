@@ -17,3 +17,9 @@
 | 2026-04-07 | 배포 이미지 미표시 | 파일이 서버에 없고 DB에 절대경로(Windows) 저장 | 상대경로 저장 + 서버에 파일 복사 + SCP 자동 동기화 | backend/services/storage.py, backend/routers/posts.py |
 | 2026-04-07 | 로컬 개발 서버 로그인 불가 | Vite 프록시 포트 8002로 잘못 설정 (백엔드는 8000) | vite.config.ts 프록시 target을 localhost:8000으로 수정 | frontend/vite.config.ts |
 | 2026-04-07 | 라이트 모드 전환 시 브라우저 기본 UI 다크 유지 | color-scheme이 dark로 고정 | [data-theme="light"]에 color-scheme: light 추가 | frontend/src/globals.css |
+| 2026-04-07 | 화상회의 화면이 네비게이션 바에 가려짐 | position: fixed; inset: 0이 전체 화면 점유 | top을 navbar 높이(56px/72px)로 변경 | frontend/src/pages/Meeting/VideoRoomPage.tsx, PreJoinLobby.tsx |
+| 2026-04-07 | 화상회의 채팅 연결 불가 | chat.py에서 video 타입 회의를 거부 | meeting.type not in ("text", "video")로 수정 | backend/routers/chat.py |
+| 2026-04-07 | 카메라 끄기 후 다시 켜기 불가 (트랙 미존재) | 카메라 없이 입장 시 video track 없음 | toggleCamera에서 getUserMedia로 새 트랙 획득 | frontend/src/hooks/useWebRTC.ts |
+| 2026-04-07 | 카메라 끄기 후 다시 켜기 불가 (srcObject 미갱신) | useEffect가 [stream]만 감시, videoEnabled 변경 감지 안 됨 | dependency에 videoEnabled 추가 | VideoRoomPage.tsx, VideoTile.tsx |
+| 2026-04-07 | 배포 빌드 TS 에러 (미사용 import/타입 불일치) | PeerState 미사용, handRaised 누락, 미사용 변수 | 미사용 제거, 타입 수정 | frontend/src/pages/Meeting/VideoRoomPage.tsx |
+| 2026-04-07 | 멤버 초대 모달에 확인 버튼 없음 | 모달 닫기 버튼만 있고 확인 버튼 미구현 | 골드 확인 버튼 추가 | frontend/src/components/meeting/InviteModal.tsx |

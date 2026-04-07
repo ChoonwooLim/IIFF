@@ -21,6 +21,12 @@ class Settings(BaseSettings):
     allowed_document_extensions: list[str] = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".hwp"]
     jitsi_domain: str = "meet.jit.si"
 
+    # OpenAI (Whisper STT + GPT minutes)
+    openai_api_key: str = ""
+    openai_model: str = "gpt-4o-mini"
+    whisper_model: str = "whisper-1"
+    max_recording_size: int = 100 * 1024 * 1024  # 100 MB
+
     model_config = {"env_file": [".env", "../.env"], "extra": "ignore"}
 
 

@@ -17,6 +17,7 @@ from models.user import User
 from schemas.meeting import (
     MeetingCreateRequest,
     MeetingUpdateRequest,
+    MeetingStartRequest,
     MeetingInviteRequest,
     MeetingPasswordRequest,
     MeetingJoinRequest,
@@ -26,7 +27,6 @@ from schemas.meeting import (
     MeetingInvitationResponse,
     MeetingMinutesResponse,
     MeetingMinutesListItem,
-    ParticipantResponse,
     ChatMessageResponse,
 )
 
@@ -411,6 +411,36 @@ def leave_meeting(
     return {"message": "회의에서 나갔습니다"}
 
 
+@router.post("/{meeting_id}/start")
+def start_meeting(
+    meeting_id: int,
+    req: MeetingStartRequest,
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    meeting = db.query(Meeting).filter(Meeting.id == meeting_id).first()
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
+        raise HTTPException(status_code=403, detail="시작 권한이 없습니다")
+
+    if meeting.started_at:
+        raise HTTPException(status_code=400, detail="이미 시작된 회의입니다")
+
+    if meeting.status == "closed":
+        raise HTTPException(status_code=400, detail="종료된 회의입니다")
+
+    meeting.started_at = datetime.now(timezone.utc)
+    meeting.auto_minutes = req.auto_minutes
+    db.commit()
+    return {
+        "message": "회의가 시작되었습니다",
+        "started_at": meeting.started_at.isoformat(),
+        "auto_minutes": meeting.auto_minutes,
+    }
+
+
 @router.post("/{meeting_id}/close")
 def close_meeting(
     meeting_id: int,
@@ -433,7 +463,79 @@ def close_meeting(
     ).update({"left_at": datetime.now(timezone.utc)})
 
     db.commit()
-    return {"message": "회의가 종료되었습니다"}
+    return {"message": "회의가 종료되었습니다", "auto_minutes": meeting.auto_minutes}
+
+
+@router.post("/{meeting_id}/upload-recording")
+async def upload_recording(
+    meeting_id: int,
+    file: UploadFile = FastAPIFile(...),
+    current_user: User = Depends(require_active),
+    db: Session = Depends(get_db),
+):
+    """녹음 파일 업로드 → Whisper STT → GPT 회의록 자동 생성"""
+    from services.transcription import transcribe_audio, generate_minutes_from_transcript
+
+    meeting = (
+        db.query(Meeting)
+        .options(joinedload(Meeting.creator))
+        .filter(Meeting.id == meeting_id)
+        .first()
+    )
+    if not meeting:
+        raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
+
+    if not meeting.auto_minutes:
+        raise HTTPException(status_code=400, detail="자동 회의록 모드가 아닙니다")
+
+    # Check if minutes already exist
+    existing = db.query(MeetingMinutes).filter(MeetingMinutes.meeting_id == meeting_id).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="이미 회의록이 생성되었습니다")
+
+    # Read audio data
+    audio_bytes = await file.read()
+    if len(audio_bytes) > settings.max_recording_size:
+        raise HTTPException(status_code=413, detail="녹음 파일이 너무 큽니다 (최대 100MB)")
+
+    if len(audio_bytes) < 1000:
+        raise HTTPException(status_code=400, detail="녹음 파일이 너무 작습니다")
+
+    # Gather participants
+    participants = (
+        db.query(MeetingParticipant)
+        .options(joinedload(MeetingParticipant.user))
+        .filter(MeetingParticipant.meeting_id == meeting_id)
+        .all()
+    )
+    participant_names = sorted({p.user.nickname for p in participants if p.user})
+
+    started_str = meeting.started_at.strftime("%Y년 %m월 %d일 %H:%M") if meeting.started_at else ""
+    ended_str = meeting.closed_at.strftime("%Y년 %m월 %d일 %H:%M") if meeting.closed_at else ""
+
+    # STT
+    transcript = transcribe_audio(audio_bytes, filename=file.filename or "recording.webm")
+
+    # Generate minutes
+    title, content = generate_minutes_from_transcript(
+        transcript=transcript,
+        meeting_name=meeting.name,
+        participants=participant_names,
+        started_at=started_str,
+        ended_at=ended_str,
+    )
+
+    minutes = MeetingMinutes(
+        meeting_id=meeting_id,
+        title=title,
+        content=content,
+        created_by=current_user.id,
+    )
+    db.add(minutes)
+    db.commit()
+    db.refresh(minutes)
+
+    return {"message": "회의록이 자동 생성되었습니다", "minutes_id": minutes.id}
 
 
 @router.get("/{meeting_id}/messages", response_model=list[ChatMessageResponse])

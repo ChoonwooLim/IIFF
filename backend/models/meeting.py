@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import String, Integer, Enum, DateTime, ForeignKey, func
+from sqlalchemy import String, Integer, Boolean, Enum, DateTime, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
 
@@ -23,6 +23,8 @@ class Meeting(Base):
     password: Mapped[str | None] = mapped_column(String(100), nullable=True)
     jitsi_room_id: Mapped[str | None] = mapped_column(String(255), unique=True, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    auto_minutes: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
+    started_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     closed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
     creator: Mapped["User"] = relationship()

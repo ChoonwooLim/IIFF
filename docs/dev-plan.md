@@ -11,7 +11,8 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | Backend | FastAPI, SQLAlchemy 2.0, Alembic, PostgreSQL 16 |
 | Frontend | React 19, Vite 8, TypeScript 6, Tailwind CSS 4 |
 | Auth | JWT (access + refresh), Google OAuth 2.0, bcrypt |
-| Realtime | FastAPI WebSocket, Jitsi Meet (public) |
+| Realtime | FastAPI WebSocket, WebRTC (native, Mesh) |
+| AI | OpenAI Whisper (STT), GPT-4o-mini (회의록) |
 | Infra | Docker Compose, Nginx, rclone |
 
 ## 마일스톤
@@ -39,7 +40,7 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | 파일 업로드 | 이미지/문서 + 용량/확장자 검증 | 3 | 완료 |
 | 댓글 시스템 | 댓글 + 대댓글 (depth 2) | 3 | 완료 |
 | Q&A 채택 | 질문자가 답변 채택 | 3 | 완료 |
-| 화상 회의 | Jitsi Meet 공개 서버 iframe | 4 | 완료 |
+| 화상 회의 | WebRTC 자체 구현 (Mesh, 시그널링 서버) | 4 | 완료 |
 | 텍스트 채팅 | WebSocket 실시간 채팅 + DB 저장 | 4 | 완료 |
 | 참여자 추적 | 입장/퇴장 시간 기록 | 4 | 완료 |
 | 관리자 대시보드 | 통계 카드 (유저/게시글/회의실) | 5 | 완료 |
@@ -68,6 +69,14 @@ IIFF (Incheon International Film Festival) 플랫폼 — FastAPI + React + Postg
 | 파일 SCP 자동 동기화 | 로컬 업로드 시 배포 서버에 자동 SCP 전송 | 6 | 완료 |
 | 로컬/배포 DB 통일 | 로컬+배포 모두 orbitron-iiff-db 공유 | 6 | 완료 |
 | 파일 경로 크로스 환경 호환 | DB에 상대경로 저장 + STORAGE_BASE_PATH 조합 | 6 | 완료 |
+| WebRTC 자체 화상회의 | Jitsi 제거, Mesh 토폴로지, 시그널링 서버 | 4 | 완료 |
+| Pre-join 로비 | 디바이스 미리보기, 마이크 레벨, 스피커 테스트 | 4 | 완료 |
+| 2x2 스팟라이트 그리드 | 참가자 배치/교체 + 3컬럼 레이아웃 | 4 | 완료 |
+| 실시간 팝업 알림 | WebSocket per-user 알림 (초대 등) | 4 | 완료 |
+| 온/오프라인 상태 | 초대 시 상대방 온라인 여부 피드백 | 4 | 완료 |
+| 회의 시작/OnAir/종료 | started_at 기록, ON AIR 경과시간, 종료 | 4 | 완료 |
+| 자동/수동 회의록 | 녹음→Whisper STT→GPT 구조화 회의록 | 4 | 완료 |
+| 모바일 반응형 | 랜딩/프레젠테이션 전면 모바일 대응 | - | 완료 |
 
 ## 테스트 현황
 

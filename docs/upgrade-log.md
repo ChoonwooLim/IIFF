@@ -54,3 +54,13 @@
 | 2026-04-07 | Navbar 오디오 뮤트 토글 버튼 | feat | frontend/src/components/layout/Navbar.tsx |
 | 2026-04-07 | Navbar 다크/라이트 모드 토글 | feat | frontend/src/components/layout/Navbar.tsx, frontend/src/components/ui/ThemeToggle.tsx |
 | 2026-04-07 | Git LFS 설정 (*.mp4 추적) | infra | .gitattributes |
+| 2026-04-07 | WebRTC 자체 화상회의 (Jitsi 제거, Mesh 토폴로지) | feat | backend/routers/video_signaling.py, backend/services/video_connection_manager.py, frontend/src/hooks/useWebRTC.ts |
+| 2026-04-07 | Pre-join 로비 (디바이스 미리보기, 스피커 테스트) | feat | frontend/src/components/meeting/PreJoinLobby.tsx |
+| 2026-04-07 | 2x2 스팟라이트 그리드 + 참가자 배치 | feat | frontend/src/pages/Meeting/VideoRoomPage.tsx |
+| 2026-04-07 | 실시간 팝업 알림 시스템 | feat | backend/services/notification_manager.py, backend/routers/notifications.py, frontend/src/hooks/useNotifications.ts, frontend/src/components/common/NotificationToast.tsx |
+| 2026-04-07 | 초대 시 온/오프라인 상태 피드백 | feat | backend/routers/meetings.py, frontend/src/components/meeting/InviteModal.tsx |
+| 2026-04-07 | VVIP 회의실 관리 권한 | feat | backend/routers/meetings.py |
+| 2026-04-07 | npm run dev 프론트+백엔드 동시 실행 | feat | frontend/package.json |
+| 2026-04-07 | 회의 시작/OnAir/종료 컨트롤 | feat | backend/routers/meetings.py, backend/models/meeting.py, frontend/src/components/meeting/PreJoinLobby.tsx |
+| 2026-04-07 | 자동/수동 회의록 (녹음→Whisper STT→GPT) | feat | backend/services/transcription.py, frontend/src/hooks/useAudioRecorder.ts, backend/routers/meetings.py |
+| 2026-04-07 | 모바일 반응형 전면 적용 | style | frontend/src/pages/, frontend/src/components/ |

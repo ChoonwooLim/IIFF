@@ -81,7 +81,9 @@ class MeetingResponse(BaseModel):
     jitsi_room_id: str | None
     creator: MeetingUserResponse
     participant_count: int = 0
+    auto_minutes: bool = False
     created_at: datetime
+    started_at: datetime | None = None
     closed_at: datetime | None
     model_config = {"from_attributes": True}
 
@@ -95,9 +97,15 @@ class MeetingDetailResponse(BaseModel):
     jitsi_room_id: str | None
     creator: MeetingUserResponse
     participants: list[ParticipantResponse] = []
+    auto_minutes: bool = False
     created_at: datetime
+    started_at: datetime | None = None
     closed_at: datetime | None
     model_config = {"from_attributes": True}
+
+
+class MeetingStartRequest(BaseModel):
+    auto_minutes: bool = False
 
 
 class MeetingInviteRequest(BaseModel):

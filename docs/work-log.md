@@ -160,3 +160,37 @@
 - **로컬 개발 환경**: Vite 프록시를 8000으로 수정, 백엔드 pip 의존성 설치, 배포 서버 DB 연결로 로그인 정상화
 
 ---
+
+## 2026-04-07 (세션 8 - 화상회의 시스템 고도화)
+
+### 작업 요약
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| feat | WebRTC 자체 화상회의 시스템 구축 (Jitsi 제거) | 완료 |
+| feat | Pre-join 로비 (디바이스 미리보기, 스피커 테스트) | 완료 |
+| feat | 화상회의 2x2 스팟라이트 + 3컬럼 레이아웃 | 완료 |
+| feat | 실시간 팝업 알림 시스템 (회의 초대) | 완료 |
+| feat | 초대 시 온/오프라인 상태 피드백 | 완료 |
+| feat | VVIP 회의실 관리 권한 | 완료 |
+| feat | npm run dev 프론트+백엔드 동시 실행 | 완료 |
+| feat | 회의 시작/OnAir/종료 버튼 (PreJoinLobby) | 완료 |
+| feat | 자동/수동 회의록 시스템 (녹음→STT→GPT 회의록) | 완료 |
+| fix | 채팅 연결 불가 수정 (video 타입 허용) | 완료 |
+| fix | 카메라 토글 후 영상 안 나오는 문제 (2단계 수정) | 완료 |
+| fix | 네비게이션 바 가림 방지 여백 | 완료 |
+| fix | 배포 빌드 TS 에러 수정 | 완료 |
+| fix | 멤버 초대 모달 확인 버튼 추가 | 완료 |
+| style | 모바일 반응형 전면 적용 | 완료 |
+
+### 세부 내용
+
+- **WebRTC 자체 구현**: Jitsi Meet iframe을 제거하고 브라우저 네이티브 WebRTC API(RTCPeerConnection, getUserMedia)로 Mesh 토폴로지 화상회의 구현. 시그널링 서버(video_signaling.py), useWebRTC 훅, VideoGrid/VideoTile/VideoControlBar 컴포넌트
+- **스팟라이트 그리드**: 2x2 고정 화면 + 참가자 썸네일 사이드바 + 채팅 패널의 3컬럼 레이아웃. 사용자가 슬롯에 참가자 배치/교체 가능
+- **알림 시스템**: WebSocket 기반 per-user 실시간 알림 (NotificationManager → NotificationToast). 회의 초대 시 온라인이면 즉시 팝업, 오프라인이면 초대자에게 피드백
+- **회의 시작/종료 컨트롤**: PreJoinLobby에 회의 시작(started_at 기록), ON AIR 경과시간 표시(파란 LED), 회의 종료 버튼. DB에 started_at 컬럼 추가
+- **자동/수동 회의록**: 자동 모드 — 회의 시작 시 전체 오디오 녹음 시작, 종료 시 Whisper STT → GPT로 구조화된 회의록 자동 생성. 수동 모드 — 필요 구간만 녹음 시작/정지 반복, 회의록 작성 버튼으로 클립 합산 후 STT → 회의록 생성
+- **카메라 토글 수정**: 1차(트랙 미존재 시 getUserMedia 획득), 2차(videoEnabled 변경 시 srcObject 재할당)
+- **모바일 반응형**: 랜딩 페이지 + 프레젠테이션 페이지 전면 모바일 대응
+
+---

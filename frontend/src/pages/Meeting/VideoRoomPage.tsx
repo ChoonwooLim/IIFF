@@ -3,6 +3,7 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import api from "@/services/api";
 import { useAuth } from "@/hooks/AuthContext";
 import useWebRTC from "@/hooks/useWebRTC";
+import useAudioRecorder from "@/hooks/useAudioRecorder";
 import VideoControlBar from "@/components/meeting/VideoControlBar";
 import PreJoinLobby from "@/components/meeting/PreJoinLobby";
 import VideoChatPanel from "@/components/meeting/VideoChatPanel";
@@ -13,6 +14,8 @@ interface MeetingDetail {
   id: number;
   name: string;
   status: string;
+  started_at: string | null;
+  auto_minutes: boolean;
   creator: { id: number; nickname: string };
 }
 
@@ -99,6 +102,11 @@ export default function VideoRoomPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
   const [chatUnread, setChatUnread] = useState(0);
+  const [minutesStatus, setMinutesStatus] = useState<'idle' | 'uploading' | 'done' | 'error'>('idle');
+
+  // Audio recorder
+  const { isRecording, clipCount, startRecording, stopRecording, getFullRecording, clearClips } = useAudioRecorder();
+  const autoRecordStartedRef = useRef(false);
 
   // Spotlight: 4 slots, each holds a userId or null
   const [spotlightSlots, setSpotlightSlots] = useState<(number | null)[]>([null, null, null, null]);
@@ -124,6 +132,14 @@ export default function VideoRoomPage() {
     api.post(`/meetings/${meetingId}/join`).catch(() => {});
     return () => { api.post(`/meetings/${meetingId}/leave`).catch(() => {}); };
   }, [meetingId, joined]);
+
+  // Auto-start recording when meeting is in auto_minutes mode
+  useEffect(() => {
+    if (!joined || !meeting?.auto_minutes || !localStream || autoRecordStartedRef.current) return;
+    autoRecordStartedRef.current = true;
+    const peerStreams = Array.from(peers.values()).map(p => p.stream).filter(Boolean) as MediaStream[];
+    startRecording(localStream, peerStreams);
+  }, [joined, meeting?.auto_minutes, localStream]);
 
   // All participant IDs
   const localUserId = user?.id ?? 0;
@@ -164,12 +180,63 @@ export default function VideoRoomPage() {
 
   const handleLeave = () => { disconnect(); navigate("/meetings"); };
 
+  /** 녹음 파일 업로드 → STT → 회의록 자동 생성 */
+  const uploadRecordingAndGenerateMinutes = async () => {
+    await stopRecording();
+    const blob = getFullRecording();
+    if (!blob || blob.size < 1000) return false;
+    setMinutesStatus('uploading');
+    try {
+      const formData = new FormData();
+      formData.append('file', blob, 'recording.webm');
+      await api.post(`/meetings/${meetingId}/upload-recording`, formData);
+      clearClips();
+      setMinutesStatus('done');
+      return true;
+    } catch {
+      setMinutesStatus('error');
+      return false;
+    }
+  };
+
   const handleEndMeeting = async () => {
+    const isAutoMinutes = meeting?.auto_minutes;
     disconnect();
     await api.post(`/meetings/${meetingId}/close`).catch(() => {});
+
+    if (isAutoMinutes && (isRecording || clipCount > 0)) {
+      // 자동 모드: 녹음 업로드 → STT → 회의록
+      const ok = await uploadRecordingAndGenerateMinutes();
+      if (ok) { navigate(`/meetings/${meetingId}/minutes`); return; }
+    }
+
+    // 수동 모드 또는 자동 실패 시
     if (window.confirm("회의록을 생성하시겠습니까?")) {
       try { await api.post(`/meetings/${meetingId}/minutes`); navigate(`/meetings/${meetingId}/minutes`); return; } catch {}
     }
+    navigate("/meetings");
+  };
+
+  /** 수동 녹음 시작 */
+  const handleManualRecordStart = () => {
+    if (!localStream) return;
+    const peerStreams = Array.from(peers.values()).map(p => p.stream).filter(Boolean) as MediaStream[];
+    startRecording(localStream, peerStreams);
+  };
+
+  /** 수동 녹음 정지 */
+  const handleManualRecordStop = async () => {
+    await stopRecording();
+  };
+
+  /** 수동 모드: 녹음 클립으로 회의록 생성 */
+  const handleManualGenerateMinutes = async () => {
+    if (clipCount === 0) return;
+    // 먼저 회의 종료
+    disconnect();
+    await api.post(`/meetings/${meetingId}/close`).catch(() => {});
+    const ok = await uploadRecordingAndGenerateMinutes();
+    if (ok) { navigate(`/meetings/${meetingId}/minutes`); return; }
     navigate("/meetings");
   };
 
@@ -231,13 +298,29 @@ export default function VideoRoomPage() {
   // Participants NOT in any spotlight slot (available for picking)
   const unassignedParticipants = activeParticipants.filter(p => !spotlightSlots.includes(p.id));
 
+  const handleStartMeeting = async (autoMinutes: boolean) => {
+    const { data } = await api.post(`/meetings/${meetingId}/start`, { auto_minutes: autoMinutes });
+    setMeeting(prev => prev ? { ...prev, status: 'active', started_at: data.started_at, auto_minutes: data.auto_minutes } : prev);
+  };
+
+  const handleEndMeetingFromLobby = async () => {
+    await api.post(`/meetings/${meetingId}/close`);
+    navigate("/meetings");
+  };
+
   // Pre-join lobby
   if (!joined) {
     return (
       <PreJoinLobby
         meetingName={meeting?.name || "화상 회의"}
+        meetingStatus={meeting?.status || "active"}
+        startedAt={meeting?.started_at || null}
+        autoMinutes={meeting?.auto_minutes || false}
+        isCreatorOrAdmin={isCreatorOrAdmin}
         onJoin={handleJoin}
         onCancel={() => navigate("/meetings")}
+        onStartMeeting={handleStartMeeting}
+        onEndMeeting={handleEndMeetingFromLobby}
       />
     );
   }
@@ -544,6 +627,13 @@ export default function VideoRoomPage() {
         showChat={false}
         showParticipants={false}
         chatUnread={chatUnread}
+        isAutoMinutes={meeting?.auto_minutes || false}
+        isRecording={isRecording}
+        clipCount={clipCount}
+        minutesStatus={minutesStatus}
+        onRecordStart={handleManualRecordStart}
+        onRecordStop={handleManualRecordStop}
+        onGenerateMinutes={handleManualGenerateMinutes}
         onToggleMic={toggleMic}
         onToggleCamera={toggleCamera}
         onToggleScreenShare={toggleScreenShare}
