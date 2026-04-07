@@ -15,3 +15,5 @@
 | 2026-04-07 | 배포 백엔드 SQLAlchemy mapper 에러 | MeetingInvitation/MeetingMinutes 모델 미임포트 | models/__init__.py에 import 추가 | backend/models/__init__.py |
 | 2026-04-07 | 배포 DB 인증 실패 (password authentication failed) | .env의 orbitron_user와 실제 DB의 iiff_user 불일치 | .env 수정 → orbitron-iiff-db 공유로 통일 | docker-compose.yml, .env |
 | 2026-04-07 | 배포 이미지 미표시 | 파일이 서버에 없고 DB에 절대경로(Windows) 저장 | 상대경로 저장 + 서버에 파일 복사 + SCP 자동 동기화 | backend/services/storage.py, backend/routers/posts.py |
+| 2026-04-07 | 로컬 개발 서버 로그인 불가 | Vite 프록시 포트 8002로 잘못 설정 (백엔드는 8000) | vite.config.ts 프록시 target을 localhost:8000으로 수정 | frontend/vite.config.ts |
+| 2026-04-07 | 라이트 모드 전환 시 브라우저 기본 UI 다크 유지 | color-scheme이 dark로 고정 | [data-theme="light"]에 color-scheme: light 추가 | frontend/src/globals.css |

@@ -48,3 +48,9 @@
 | 2026-04-07 | 로컬/배포 DB 통일 (orbitron-iiff-db 공유) | infra | docker-compose.yml, .env |
 | 2026-04-07 | Docker 바인드 마운트 전환 (named volume → ./uploads) | infra | docker-compose.yml |
 | 2026-04-07 | 파일 경로 크로스 환경 호환 (상대경로 저장) | feat | backend/services/storage.py, backend/routers/posts.py |
+| 2026-04-07 | 히어로 비디오 YouTube → 로컬 MP4 교체 (자동재생+컨트롤) | feat | frontend/src/pages/Home/HomePage.tsx, frontend/public/iiff-part2.mp4 |
+| 2026-04-07 | 비디오 플레이어 180% 확대 (컨테이너 브레이크아웃) | feat | frontend/src/pages/Home/HomePage.tsx |
+| 2026-04-07 | 로고 클릭 시 홈 최상단 스크롤 | feat | frontend/src/components/layout/Navbar.tsx |
+| 2026-04-07 | Navbar 오디오 뮤트 토글 버튼 | feat | frontend/src/components/layout/Navbar.tsx |
+| 2026-04-07 | Navbar 다크/라이트 모드 토글 | feat | frontend/src/components/layout/Navbar.tsx, frontend/src/components/ui/ThemeToggle.tsx |
+| 2026-04-07 | Git LFS 설정 (*.mp4 추적) | infra | .gitattributes |

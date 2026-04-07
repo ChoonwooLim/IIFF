@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/AuthContext';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 const NAV_ITEMS = [
   {
@@ -273,6 +274,63 @@ function IconButton({
     >
       {children}
     </Link>
+  );
+}
+
+function AudioMuteButton() {
+  const [muted, setMuted] = useState(() => {
+    return localStorage.getItem('audio-muted') === 'true';
+  });
+
+  const toggle = useCallback(() => {
+    setMuted((prev) => {
+      const next = !prev;
+      localStorage.setItem('audio-muted', String(next));
+      // Mute/unmute all video and audio elements on the page
+      document.querySelectorAll('video, audio').forEach((el) => {
+        (el as HTMLMediaElement).muted = next;
+      });
+      return next;
+    });
+  }, []);
+
+  // Apply mute state to new media elements
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (muted) {
+        document.querySelectorAll('video, audio').forEach((el) => {
+          (el as HTMLMediaElement).muted = true;
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    // Apply immediately
+    document.querySelectorAll('video, audio').forEach((el) => {
+      (el as HTMLMediaElement).muted = muted;
+    });
+    return () => observer.disconnect();
+  }, [muted]);
+
+  return (
+    <button
+      onClick={toggle}
+      className="relative w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--border-gold)] transition-colors duration-300"
+      aria-label={muted ? 'Unmute audio' : 'Mute audio'}
+      title={muted ? '음소거 해제' : '음소거'}
+    >
+      {muted ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+          <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+        </svg>
+      )}
+    </button>
   );
 }
 
@@ -579,6 +637,12 @@ export default function Navbar() {
               로그인
             </IconButton>
           )}
+
+          {/* Audio Mute Toggle */}
+          <AudioMuteButton />
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </div>
 
         {/* ── Mobile Hamburger ── */}

@@ -59,6 +59,10 @@ html {
   color-scheme: dark;
 }
 
+[data-theme="light"] {
+  color-scheme: light;
+}
+
 body {
   background-color: #05050a;
   color: #f0f0f5;

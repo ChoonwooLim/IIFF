@@ -135,3 +135,28 @@
 - **서버 인프라**: Samba 설치/설정, Docker 바인드 마운트로 전환, admin 비밀번호 재설정
 
 ---
+
+## 2026-04-07 (세션 7 - 프론트엔드 UX 개선)
+
+### 작업 요약
+
+| 카테고리 | 작업 내용 | 상태 |
+|----------|----------|------|
+| feat | 히어로 비디오 YouTube → 로컬 MP4 교체 (자동재생, 컨트롤) | 완료 |
+| feat | 비디오 플레이어 크기 180% 확대 (컨테이너 브레이크아웃) | 완료 |
+| feat | 로고 클릭 시 홈 최상단 스크롤 | 완료 |
+| feat | Navbar 오디오 뮤트 토글 버튼 추가 | 완료 |
+| feat | Navbar 다크/라이트 모드 토글 추가 (ThemeToggle) | 완료 |
+| fix | Vite 프록시 포트 불일치 수정 (8002 → 8000) | 완료 |
+| fix | 라이트 모드 color-scheme 미적용 수정 | 완료 |
+| infra | Git LFS 설정 (*.mp4 파일 추적) | 완료 |
+
+### 세부 내용
+
+- **히어로 비디오**: YouTube iframe을 로컬 `iiff-part2.mp4`로 교체, `useRef`+`useEffect`로 muted 자동재생 후 즉시 음소거 해제 구현
+- **비디오 크기**: 부모 컨테이너(`max-w-4xl`) 밖으로 확장, `width: 180%` + `translateX(-50%)` 중앙정렬, `maxWidth: 96vw`로 뷰포트 제한
+- **오디오 뮤트**: MutationObserver로 동적 생성 미디어 요소도 감지, localStorage에 상태 저장
+- **다크/라이트 모드**: 기존 ThemeToggle 컴포넌트를 Navbar에 배치, `color-scheme: light` CSS 추가로 브라우저 기본 UI 라이트 모드 대응
+- **로컬 개발 환경**: Vite 프록시를 8000으로 수정, 백엔드 pip 의존성 설치, 배포 서버 DB 연결로 로그인 정상화
+
+---
