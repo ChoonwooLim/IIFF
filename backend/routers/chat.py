@@ -43,8 +43,8 @@ async def websocket_chat(websocket: WebSocket, meeting_id: int):
             await websocket.close(code=4004, reason="Meeting not found")
             return
 
-        if meeting.type != "text":
-            await websocket.close(code=4005, reason="Not a text meeting")
+        if meeting.type not in ("text", "video"):
+            await websocket.close(code=4005, reason="Unsupported meeting type")
             return
 
         # Check access: creator, admin, invited, or correct password

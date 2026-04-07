@@ -17,9 +17,10 @@ interface VideoChatPanelProps {
   onClose: () => void;
   unreadCount: number;
   onResetUnread: () => void;
+  password?: string;
 }
 
-export default function VideoChatPanel({ meetingId, currentUserId, onClose, unreadCount: _, onResetUnread }: VideoChatPanelProps) {
+export default function VideoChatPanel({ meetingId, currentUserId, onClose, unreadCount: _, onResetUnread, password }: VideoChatPanelProps) {
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState('');
   const [connected, setConnected] = useState(false);
@@ -48,7 +49,8 @@ export default function VideoChatPanel({ meetingId, currentUserId, onClose, unre
     const token = localStorage.getItem('access_token');
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const host = window.location.host;
-    const ws = new WebSocket(`${protocol}//${host}/ws/meetings/${meetingId}?token=${token}`);
+    const pwParam = password ? `&password=${encodeURIComponent(password)}` : '';
+    const ws = new WebSocket(`${protocol}//${host}/ws/meetings/${meetingId}?token=${token}${pwParam}`);
     wsRef.current = ws;
 
     ws.onopen = () => setConnected(true);

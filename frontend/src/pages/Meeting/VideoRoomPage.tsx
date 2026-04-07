@@ -527,6 +527,7 @@ export default function VideoRoomPage() {
               onClose={() => {}}
               unreadCount={chatUnread}
               onResetUnread={() => setChatUnread(0)}
+              password={password}
             />
           </div>
         </div>
