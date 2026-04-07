@@ -1,3 +1,4 @@
+import asyncio
 import os
 from datetime import datetime, timezone
 
@@ -7,6 +8,7 @@ from sqlalchemy.orm import Session, joinedload
 
 from config import settings
 from deps import get_db, require_active, require_admin
+from services.notification_manager import notification_manager
 from models.meeting import Meeting
 from models.meeting_participant import MeetingParticipant
 from models.meeting_invitation import MeetingInvitation
@@ -295,6 +297,17 @@ def invite_user(
     )
     db.add(invitation)
     db.commit()
+
+    # Send real-time notification to the invited user
+    asyncio.ensure_future(notification_manager.send_to_user(req.user_id, {
+        "type": "meeting_invite",
+        "meeting_id": meeting.id,
+        "meeting_name": meeting.name,
+        "meeting_type": meeting.type,
+        "invited_by": {"id": current_user.id, "nickname": current_user.nickname},
+        "password": meeting.password,
+    }))
+
     return {"message": f"{target.nickname}님을 초대했습니다"}
 
 

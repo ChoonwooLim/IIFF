@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { useAuth } from "@/hooks/AuthContext";
+import { useNotifications } from "@/hooks/useNotifications";
+import NotificationToast from "@/components/common/NotificationToast";
 
 // Critical path — loaded eagerly
 import HomePage from "@/pages/Home/HomePage";
@@ -43,8 +45,12 @@ function PageFallback() {
 }
 
 export default function App() {
+  const { user } = useAuth();
+  const { notifications, removeNotification } = useNotifications(!!user);
+
   return (
     <Suspense fallback={<PageFallback />}>
+      <NotificationToast notifications={notifications} removeNotification={removeNotification} />
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<LoginPage />} />

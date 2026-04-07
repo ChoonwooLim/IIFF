@@ -21,6 +21,7 @@ from routers.meetings import router as meetings_router
 from routers.chat import router as chat_router
 from routers.video_signaling import router as video_signaling_router
 from routers.admin import router as admin_router
+from routers.notifications import router as notifications_router
 
 app.include_router(auth_router)
 app.include_router(boards_router)
@@ -30,6 +31,7 @@ app.include_router(meetings_router)
 app.include_router(chat_router)
 app.include_router(video_signaling_router)
 app.include_router(admin_router)
+app.include_router(notifications_router)
 
 
 @app.get("/api/health")
