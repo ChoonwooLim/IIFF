@@ -31,6 +31,7 @@ export default function MeetingListPage() {
   const [showCreate, setShowCreate] = useState(false);
   const [name, setName] = useState("");
   const [type, setType] = useState<"video" | "text">("text");
+  const [password, setPassword] = useState("");
   const [focused, setFocused] = useState(false);
   const [inviteTarget, setInviteTarget] = useState<{ id: number; name: string } | null>(null);
 
@@ -42,8 +43,9 @@ export default function MeetingListPage() {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
-    await api.post("/meetings", { name, type });
+    await api.post("/meetings", { name, type, password: password.trim() || undefined });
     setName("");
+    setPassword("");
     setShowCreate(false);
     fetchMeetings();
   };
@@ -187,6 +189,33 @@ export default function MeetingListPage() {
                 background: 'transparent',
                 border: 'none',
                 borderBottom: `1px solid ${focused ? '#c9a96e' : 'rgba(255,255,255,0.12)'}`,
+                color: '#f0f0f5',
+                fontSize: 15,
+                outline: 'none',
+                transition: 'border-color 0.3s ease',
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: 24 }}>
+            <label style={{
+              display: 'block',
+              fontSize: 11,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: '#5a5a6a',
+              marginBottom: 4,
+            }}>비밀번호 (선택)</label>
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호 없이 생성하려면 비워두세요"
+              type="password"
+              style={{
+                width: '100%',
+                padding: '14px 0',
+                background: 'transparent',
+                border: 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.12)',
                 color: '#f0f0f5',
                 fontSize: 15,
                 outline: 'none',
@@ -420,13 +449,15 @@ export default function MeetingListPage() {
               {[
                 { label: '실시간 메시지', desc: '텍스트 메시지를 실시간으로 주고받습니다. Shift+Enter로 줄바꿈, Enter로 전송합니다.' },
                 { label: '파일 공유', desc: '이미지, 동영상, 문서(PDF, HWP, PPT 등)를 첨부하여 전송할 수 있습니다. 이미지와 동영상은 채팅 내에서 바로 미리보기/재생됩니다.' },
+                { label: '멤버 초대', desc: '채팅방 상단의 "초대" 버튼 또는 회의실 카드의 ⋮ 메뉴에서 멤버를 초대할 수 있습니다. 이름/닉네임으로 검색하여 초대하면 해당 멤버가 바로 입장할 수 있습니다.' },
+                { label: '비밀번호 설정', desc: '회의실 생성 시 비밀번호를 설정하거나, 생성 후 카드 메뉴에서 비밀번호를 추가/변경/제거할 수 있습니다. 초대된 멤버와 관리자는 비밀번호 없이 입장 가능합니다.' },
                 { label: '대화 기록', desc: '모든 대화 내용은 자동으로 서버에 저장됩니다. 재입장 시 이전 대화 내용을 확인할 수 있습니다.' },
                 { label: '회의록 생성', desc: '회의 종료 시 대화 내용을 바탕으로 회의록을 자동 생성합니다. 회의록 목록 페이지에서 조회/삭제할 수 있습니다.' },
                 { label: '참여자 확인', desc: '오른쪽 상단의 참여자 아이콘을 클릭하면 현재 접속 중인 멤버 목록을 확인할 수 있습니다.' },
               ].map((feat, i) => (
                 <div key={i} style={{
                   padding: '12px 0',
-                  borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                  borderBottom: i < 6 ? '1px solid rgba(255,255,255,0.04)' : 'none',
                 }}>
                   <p style={{ fontSize: 13, fontWeight: 600, color: '#e0e0e8', marginBottom: 4 }}>{feat.label}</p>
                   <p style={{ fontSize: 12, color: '#5a5a6a', lineHeight: 1.6 }}>{feat.desc}</p>
@@ -464,15 +495,18 @@ export default function MeetingListPage() {
             </div>
             <div style={{ padding: '20px 24px' }}>
               {[
-                { label: '영상 통화', desc: 'Jitsi Meet 기반 화상 회의입니다. 웹캠과 마이크를 사용하여 실시간으로 대화합니다. 별도 프로그램 설치가 필요 없습니다.' },
+                { label: '영상 통화', desc: 'WebRTC 기반 화상 회의입니다. 웹캠과 마이크를 사용하여 실시간으로 대화합니다. 별도 프로그램 설치가 필요 없습니다.' },
+                { label: '입장 전 설정', desc: '입장 전 카메라/마이크 미리보기, 디바이스 선택, 오디오 레벨 테스트를 할 수 있습니다.' },
+                { label: '멤버 초대', desc: '회의 중 상단의 "초대" 버튼으로 멤버를 검색하여 초대할 수 있습니다. 초대된 멤버는 비밀번호 없이 바로 입장 가능합니다.' },
+                { label: '비밀번호 설정', desc: '생성 시 비밀번호를 설정하거나, 카드 메뉴에서 추가/변경/제거할 수 있습니다. 초대된 멤버와 관리자는 비밀번호 없이 입장 가능합니다.' },
                 { label: '화면 공유', desc: '발표 자료나 작업 화면을 참여자들에게 실시간으로 공유할 수 있습니다. 하단 도구모음의 화면 공유 버튼을 클릭하세요.' },
-                { label: '내장 채팅', desc: '화상 회의 중에도 Jitsi 내장 텍스트 채팅을 사용할 수 있습니다. 하단 도구모음에서 채팅 아이콘을 클릭하세요.' },
-                { label: '카메라/마이크 제어', desc: '하단 도구모음에서 카메라 ON/OFF, 마이크 음소거/해제를 자유롭게 전환할 수 있습니다.' },
-                { label: '최대 참여자', desc: '회의실 생성 시 설정한 최대 인원까지 참여할 수 있습니다 (2~50명). 입장 시 자동으로 참여자 수가 체크됩니다.' },
+                { label: '내장 채팅', desc: '화상 회의 중에도 사이드 패널 텍스트 채팅을 사용할 수 있습니다. 하단 도구모음에서 채팅 아이콘을 클릭하세요.' },
+                { label: '카메라/마이크 제어', desc: '하단 도구모음에서 카메라 ON/OFF, 마이크 음소거/해제를 자유롭게 전환할 수 있습니다. 통화 중 디바이스 변경도 가능합니다.' },
+                { label: '손들기', desc: '하단 도구모음의 손들기 버튼으로 발언 의사를 표시할 수 있습니다. 모든 참가자 화면에 실시간으로 반영됩니다.' },
               ].map((feat, i) => (
                 <div key={i} style={{
                   padding: '12px 0',
-                  borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                  borderBottom: i < 7 ? '1px solid rgba(255,255,255,0.04)' : 'none',
                 }}>
                   <p style={{ fontSize: 13, fontWeight: 600, color: '#e0e0e8', marginBottom: 4 }}>{feat.label}</p>
                   <p style={{ fontSize: 12, color: '#5a5a6a', lineHeight: 1.6 }}>{feat.desc}</p>

@@ -6,6 +6,7 @@ class MeetingCreateRequest(BaseModel):
     name: str
     type: str  # "video" or "text"
     max_participants: int = 10
+    password: str | None = None
 
     @field_validator("name")
     @classmethod

@@ -134,6 +134,7 @@ def create_meeting(
         type=req.type,
         created_by=current_user.id,
         max_participants=req.max_participants,
+        password=req.password.strip() if req.password and req.password.strip() else None,
     )
     db.add(meeting)
     db.commit()
