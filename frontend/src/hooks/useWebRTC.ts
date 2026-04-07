@@ -379,10 +379,12 @@ export default function useWebRTC(
     }
   }, [videoEnabled]);
 
-  const toggleCamera = useCallback(() => {
+  const toggleCamera = useCallback(async () => {
     if (!localStreamRef.current) return;
     const videoTrack = localStreamRef.current.getVideoTracks()[0];
+
     if (videoTrack) {
+      // Track exists — just toggle enabled
       videoTrack.enabled = !videoTrack.enabled;
       setVideoEnabled(videoTrack.enabled);
       wsRef.current?.send(JSON.stringify({
@@ -390,8 +392,37 @@ export default function useWebRTC(
         video: videoTrack.enabled,
         audio: audioEnabled,
       }));
+    } else {
+      // No video track (started with camera off) — acquire one
+      try {
+        const camStream = await navigator.mediaDevices.getUserMedia({
+          video: currentCameraId ? { deviceId: { exact: currentCameraId } } : true,
+        });
+        const newTrack = camStream.getVideoTracks()[0];
+        localStreamRef.current.addTrack(newTrack);
+
+        // Send to all peers
+        pcsRef.current.forEach((pc) => {
+          const sender = pc.getSenders().find((s) => s.track?.kind === 'video');
+          if (sender) {
+            sender.replaceTrack(newTrack);
+          } else {
+            pc.addTrack(newTrack, localStreamRef.current!);
+          }
+        });
+
+        setVideoEnabled(true);
+        setLocalStream(new MediaStream(localStreamRef.current.getTracks()));
+        wsRef.current?.send(JSON.stringify({
+          type: 'media-state',
+          video: true,
+          audio: audioEnabled,
+        }));
+      } catch {
+        // Camera acquisition failed
+      }
     }
-  }, [audioEnabled]);
+  }, [audioEnabled, currentCameraId]);
 
   const toggleScreenShare = useCallback(async () => {
     if (screenSharing) {
