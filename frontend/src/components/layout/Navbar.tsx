@@ -314,7 +314,7 @@ function AudioMuteButton() {
   return (
     <button
       onClick={toggle}
-      className="relative w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--border-gold)] transition-colors duration-300"
+      className="relative w-11 h-11 md:w-9 md:h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--border-gold)] transition-colors duration-300"
       aria-label={muted ? 'Unmute audio' : 'Mute audio'}
       title={muted ? '음소거 해제' : '음소거'}
     >
@@ -403,14 +403,14 @@ export default function Navbar() {
       )}
 
       <div
+        className="h-14 md:h-[72px]"
         style={{
           maxWidth: 1920,
           margin: '0 auto',
-          padding: '0 20px',
+          padding: '0 12px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          height: 72,
           position: 'relative',
         }}
       >
@@ -652,8 +652,8 @@ export default function Navbar() {
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
           style={{
-            width: 40,
-            height: 40,
+            width: 44,
+            height: 44,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -697,12 +697,12 @@ export default function Navbar() {
           style={{
             position: 'fixed',
             inset: 0,
-            top: 72,
+            top: 56,
             zIndex: 40,
             backgroundImage: `linear-gradient(180deg, rgba(5,5,14,0.95), rgba(10,10,25,0.98))`,
             backdropFilter: 'blur(20px)',
             overflowY: 'auto',
-            padding: '32px 24px',
+            padding: '16px 16px',
           }}
         >
           {/* Nav sections — staggered entrance */}

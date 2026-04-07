@@ -58,7 +58,41 @@ export default function PostModerationPage() {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
+      {/* Mobile card layout */}
+      <div className="md:hidden flex flex-col gap-3">
+        {posts.map((p) => (
+          <div key={p.id} className="p-3 rounded-lg bg-white/5 border border-white/10">
+            <div className="flex items-start justify-between mb-2">
+              <div className="text-white font-medium text-sm line-clamp-2 flex-1 mr-2">{p.title}</div>
+              <span className={`text-xs px-2 py-0.5 rounded shrink-0 ${p.is_hidden ? "bg-red-500/20 text-red-400" : "bg-green-500/20 text-green-400"}`}>
+                {p.is_hidden ? "숨김" : "공개"}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-400 mb-3">
+              <span>{p.board_name}</span>
+              <span>{p.author_nickname}</span>
+              <span>조회 {p.view_count}</span>
+              {p.is_pinned && <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">고정</span>}
+              <span>{p.created_at ? new Date(p.created_at).toLocaleDateString("ko-KR") : ""}</span>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => togglePin(p.id)}
+                className="px-3 py-1.5 text-xs bg-blue-500/20 text-blue-400 rounded hover:bg-blue-500/30">
+                {p.is_pinned ? "고정해제" : "고정"}
+              </button>
+              <button onClick={() => toggleHide(p.id)}
+                className="px-3 py-1.5 text-xs bg-yellow-500/20 text-yellow-400 rounded hover:bg-yellow-500/30">
+                {p.is_hidden ? "공개" : "숨김"}
+              </button>
+              <button onClick={() => deletePost(p.id)}
+                className="px-3 py-1.5 text-xs bg-red-500/20 text-red-400 rounded hover:bg-red-500/30">삭제</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop table layout */}
+      <div className="overflow-x-auto hidden md:block">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-gray-500 border-b border-white/10">

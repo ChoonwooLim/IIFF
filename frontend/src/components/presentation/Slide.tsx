@@ -80,7 +80,7 @@ export default function Slide({ slide, direction }: SlideProps) {
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 0.06, scale: 1 }}
           transition={{ duration: 1.6, ease, delay: 0.2 }}
-          className="absolute w-[600px] h-[600px] rounded-full border border-[var(--color-gold)]"
+          className="absolute w-[min(600px,80vw)] h-[min(600px,80vw)] rounded-full border border-[var(--color-gold)]"
         />
 
         <motion.div
@@ -105,14 +105,17 @@ export default function Slide({ slide, direction }: SlideProps) {
           {slide.video && (
             <motion.div
               variants={fadeUp}
-              className="relative w-full max-w-3xl mx-auto mb-8 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]"
+              style={{ width: 800, maxWidth: '90vw' }}
+              className="relative mx-auto mb-8 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]"
             >
-              <iframe
-                src={`https://www.youtube.com/embed/${slide.video}?rel=0&modestbranding=1&playsinline=1`}
-                title="IIFF Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
+              <video
+                src={slide.video}
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover border-0"
               />
             </motion.div>
           )}

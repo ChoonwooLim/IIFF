@@ -16,7 +16,7 @@ export default function DataTable({ headers, rows, className = '', compact = fal
               <th
                 key={i}
                 scope="col"
-                className={`${compact ? 'px-4 py-3 text-xs' : 'px-6 py-4 text-sm'} font-medium text-gold tracking-wide`}
+                className={`${compact ? 'px-2 py-2 md:px-4 md:py-3 text-xs' : 'px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm'} font-medium text-gold tracking-wide`}
               >
                 {h}
               </th>
@@ -32,7 +32,7 @@ export default function DataTable({ headers, rows, className = '', compact = fal
               {row.map((cell, ci) => (
                 <td
                   key={ci}
-                  className={`${compact ? 'px-4 py-3 text-xs' : 'px-6 py-4 text-sm'} text-[var(--text-dim)]`}
+                  className={`${compact ? 'px-2 py-2 md:px-4 md:py-3 text-xs' : 'px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm'} text-[var(--text-dim)]`}
                 >
                   {cell}
                 </td>

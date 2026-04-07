@@ -23,7 +23,7 @@ export const slides: SlideData[] = [
       '인천에서 시작되는 글로벌 영화의 새로운 물결.',
     ],
     image: images.hero,
-    video: 'zYXrvyNtHlc',
+    video: '/iiff-part2.mp4',
     type: 'cover',
   },
 

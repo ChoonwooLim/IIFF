@@ -116,12 +116,12 @@ export default function LoginPage() {
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Left — Cinematic image panel */}
+      {/* Left — Cinematic image panel (hidden on mobile) */}
       <div style={{
         flex: '1 1 50%',
         position: 'relative',
         display: 'none',
-      }} className="md:!flex">
+      }} className="md:!flex md:!flex-1">
         <img
           src="/images/hero/redcarpet.webp"
           alt=""
@@ -177,13 +177,13 @@ export default function LoginPage() {
 
       {/* Right — Login form */}
       <div style={{
-        flex: '1 1 50%',
+        flex: '1 1 100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '40px 24px',
+        padding: '24px 16px',
         background: '#05050a',
-      }}>
+      }} className="md:!flex-[1_1_50%] md:!p-10">
         <div style={{ width: '100%', maxWidth: 380 }}>
           {/* Header */}
           <div style={{ marginBottom: 48 }}>

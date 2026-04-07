@@ -16,10 +16,10 @@ function OrgNodeCard({ node, level = 0 }: { node: OrgNode; level?: number }) {
     <div className="flex flex-col items-center">
       <div
         className={`
-          px-6 py-4 rounded-[var(--radius-sm)] border text-center
+          px-3 py-2 md:px-6 md:py-4 rounded-[var(--radius-sm)] border text-center
           ${isRoot
-            ? 'bg-gold/10 border-gold/30 min-w-[200px]'
-            : 'bg-[var(--bg-card)] border-[var(--border)] min-w-[160px]'
+            ? 'bg-gold/10 border-gold/30 min-w-[120px] md:min-w-[200px]'
+            : 'bg-[var(--bg-card)] border-[var(--border)] min-w-[100px] md:min-w-[160px]'
           }
         `}
       >

@@ -44,21 +44,21 @@ export default function HomePage() {
             </p>
           </FadeUp>
           <FadeUp delay={0.15}>
-            <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-[var(--text)] mb-8">
-              <GoldShimmer as="span" className="heading-display text-5xl md:text-7xl lg:text-8xl">NextWave</GoldShimmer>
+            <h1 className="heading-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-[var(--text)] mb-4 md:mb-8">
+              <GoldShimmer as="span" className="heading-display text-3xl sm:text-5xl md:text-7xl lg:text-8xl">NextWave</GoldShimmer>
               <br />2026
             </h1>
           </FadeUp>
           <FadeUp delay={0.3}>
-            <p className="text-body text-[var(--text-dim)] text-lg md:text-xl max-w-2xl mx-auto mb-4">
+            <p className="text-body text-[var(--text-dim)] text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-4">
               시네마, 문화, 그리고 기술이 만나는 곳.
             </p>
-            <p className="text-body text-[var(--text-dim)] text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            <p className="text-body text-[var(--text-dim)] text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-10">
               인천에서 시작되는 글로벌 영화의 새로운 물결.
             </p>
           </FadeUp>
           <FadeUp delay={0.4}>
-            <div style={{ width: '200%', maxWidth: '100vw', left: '50%', transform: 'translateX(-50%)' }} className="relative mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
+            <div style={{ left: '50%', transform: 'translateX(-50%)' }} className="relative w-[95vw] md:w-[180%] max-w-[96vw] mx-auto mb-8 md:mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
               <video
                 ref={videoRef}
                 src="/iiff-part2.mp4"
@@ -87,8 +87,8 @@ export default function HomePage() {
           </FadeUp>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-scroll-bounce">
-          <span className="text-[0.6rem] tracking-[4px] uppercase text-[var(--text-muted)]">Scroll</span>
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-scroll-bounce">
+          <span className="text-xs md:text-[0.6rem] tracking-[4px] uppercase text-[var(--text-muted)]">Scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-gold/60 to-transparent" />
         </div>
       </section>
@@ -119,7 +119,7 @@ export default function HomePage() {
               </p>
             </FadeUp>
 
-            <div className="grid md:grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-10">
               {/* Left: if concept */}
               <FadeUp delay={0.1}>
                 <div>
@@ -1051,7 +1051,7 @@ export default function HomePage() {
               <AnimatedCounter end={6} suffix="억" label="수익 사업" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-12">
               <FadeUp delay={0.1}>
                 <div>
                   <h3 className="heading-section text-lg text-gold mb-4">재원 확보 (Revenues)</h3>
@@ -1167,7 +1167,7 @@ export default function HomePage() {
               </h2>
             </FadeUp>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-8">
               <FadeUp delay={0.1}>
                 <div>
                   <h3 className="heading-section text-lg text-gold mb-4">추진위원회 초기 경비 (약 6개월)</h3>

@@ -24,15 +24,15 @@ export default function Footer() {
       width: '100%',
       background: '#08080e',
       borderTop: '1px solid rgba(255,255,255,0.06)',
-      padding: '64px 24px',
-    }}>
+      padding: '32px 16px',
+    }} className="md:!py-16 md:!px-6">
       <div style={{ maxWidth: 720, margin: '0 auto' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: 24,
+          gap: 16,
         }}>
           {/* Logo + tagline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>

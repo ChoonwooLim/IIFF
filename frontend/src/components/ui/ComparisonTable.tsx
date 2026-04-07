@@ -26,17 +26,17 @@ export default function ComparisonTable({
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-[var(--border)]">
-              <th className="px-6 py-4 text-sm font-medium text-[var(--text-muted)] w-1/3">항목</th>
-              <th className="px-6 py-4 text-sm font-medium text-gold w-1/3">IIFF</th>
-              <th className="px-6 py-4 text-sm font-medium text-[var(--text-muted)] w-1/3">{competitorName}</th>
+              <th className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm font-medium text-[var(--text-muted)] w-1/3">항목</th>
+              <th className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm font-medium text-gold w-1/3">IIFF</th>
+              <th className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm font-medium text-[var(--text-muted)] w-1/3">{competitorName}</th>
             </tr>
           </thead>
           <tbody>
             {items.map((item, i) => (
               <tr key={i} className="border-b border-[var(--border)] last:border-0">
-                <td className="px-6 py-4 text-sm font-medium text-[var(--text)]">{item.category}</td>
-                <td className="px-6 py-4 text-sm text-gold">{item.iiff}</td>
-                <td className="px-6 py-4 text-sm text-[var(--text-dim)]">{item.competitor}</td>
+                <td className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm font-medium text-[var(--text)]">{item.category}</td>
+                <td className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm text-gold">{item.iiff}</td>
+                <td className="px-3 py-3 md:px-6 md:py-4 text-xs md:text-sm text-[var(--text-dim)]">{item.competitor}</td>
               </tr>
             ))}
           </tbody>
