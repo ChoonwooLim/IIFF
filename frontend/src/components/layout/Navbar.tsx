@@ -359,6 +359,7 @@ export default function Navbar() {
         {/* ── Logo ── */}
         <Link
           to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           onMouseEnter={() => setLogoHovered(true)}
           onMouseLeave={() => setLogoHovered(false)}
           style={{

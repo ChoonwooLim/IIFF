@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { images } from '@/lib/images';
 import SectionWrapper from '@/components/layout/SectionWrapper';
 import PartDivider from '@/components/layout/PartDivider';
@@ -14,6 +15,17 @@ import GoldShimmer from '@/components/animation/GoldShimmer';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
 
 export default function HomePage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().then(() => {
+      video.muted = false;
+    }).catch(() => {});
+  }, []);
+
   return (
     <>
       {/* ============================================================ */}
@@ -46,13 +58,14 @@ export default function HomePage() {
             </p>
           </FadeUp>
           <FadeUp delay={0.4}>
-            <div className="relative w-full max-w-3xl mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
-              <iframe
-                src="https://www.youtube.com/embed/zYXrvyNtHlc?rel=0&modestbranding=1&playsinline=1"
-                title="IIFF Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
+            <div style={{ width: '200%', maxWidth: '100vw', left: '50%', transform: 'translateX(-50%)' }} className="relative mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
+              <video
+                ref={videoRef}
+                src="/iiff-part2.mp4"
+                controls
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover border-0"
               />
             </div>
           </FadeUp>

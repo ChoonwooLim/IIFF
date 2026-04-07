@@ -16,6 +16,7 @@ import StaggerChildren from '@/components/animation/StaggerChildren';
 import ParallaxImage from '@/components/animation/ParallaxImage';
 import GoldShimmer from '@/components/animation/GoldShimmer';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
+import HeroVideo from '@/components/ui/HeroVideo';
 
 export default function Home() {
   return (
@@ -53,14 +54,8 @@ export default function Home() {
             </p>
           </FadeUp>
           <FadeUp delay={0.4}>
-            <div className="relative w-full max-w-6xl mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
-              <iframe
-                src="https://www.youtube.com/embed/zYXrvyNtHlc?rel=0&modestbranding=1&playsinline=1"
-                title="IIFF Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
-              />
+            <div style={{ width: '180%', maxWidth: '96vw', left: '50%', transform: 'translateX(-50%)' }} className="relative mx-auto mb-12 aspect-video rounded-[var(--radius-card)] overflow-hidden border border-[var(--border-gold)] shadow-[0_0_40px_rgba(201,169,110,0.15)]">
+              <HeroVideo />
             </div>
           </FadeUp>
           <FadeUp delay={0.55}>
