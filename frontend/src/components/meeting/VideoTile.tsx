@@ -8,6 +8,7 @@ interface VideoTileProps {
   audioEnabled: boolean;
   isLocal?: boolean;
   isScreenShare?: boolean;
+  handRaised?: boolean;
 }
 
 export default function VideoTile({
@@ -18,6 +19,7 @@ export default function VideoTile({
   audioEnabled,
   isLocal = false,
   isScreenShare = false,
+  handRaised = false,
 }: VideoTileProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -37,7 +39,9 @@ export default function VideoTile({
       background: '#0a0a14',
       borderRadius: 12,
       overflow: 'hidden',
-      border: '1px solid rgba(255,255,255,0.08)',
+      border: handRaised
+        ? '2px solid rgba(201,169,110,0.6)'
+        : '1px solid rgba(255,255,255,0.08)',
     }}>
       {stream && videoEnabled ? (
         <video
@@ -46,6 +50,8 @@ export default function VideoTile({
           playsInline
           muted={isLocal}
           style={{
+            position: 'absolute',
+            inset: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
@@ -83,6 +89,26 @@ export default function VideoTile({
               {initial}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Hand raised indicator */}
+      {handRaised && (
+        <div style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          width: 32,
+          height: 32,
+          borderRadius: 8,
+          background: 'rgba(201,169,110,0.2)',
+          border: '1px solid rgba(201,169,110,0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 18,
+        }}>
+          &#9995;
         </div>
       )}
 

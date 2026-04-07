@@ -37,3 +37,6 @@ test.db
 
 # Backups
 backups/*.sql.gz
+
+# Source media files
+Sorces/

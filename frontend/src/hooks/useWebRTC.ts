@@ -14,6 +14,16 @@ export interface PeerState {
   stream: MediaStream | null;
   videoEnabled: boolean;
   audioEnabled: boolean;
+  handRaised: boolean;
+}
+
+export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
+
+interface JoinSettings {
+  audioDeviceId?: string;
+  videoDeviceId?: string;
+  audioEnabled?: boolean;
+  videoEnabled?: boolean;
 }
 
 interface UseWebRTCReturn {
@@ -22,40 +32,57 @@ interface UseWebRTCReturn {
   videoEnabled: boolean;
   audioEnabled: boolean;
   screenSharing: boolean;
+  handRaised: boolean;
   error: string | null;
+  connectionStatus: ConnectionStatus;
+  currentCameraId: string;
+  currentMicId: string;
   toggleMic: () => void;
   toggleCamera: () => void;
   toggleScreenShare: () => Promise<void>;
+  toggleHandRaise: () => void;
+  changeCamera: (deviceId: string) => Promise<void>;
+  changeMic: (deviceId: string) => Promise<void>;
   disconnect: () => void;
 }
 
-export default function useWebRTC(meetingId: number, password?: string): UseWebRTCReturn {
+export default function useWebRTC(
+  meetingId: number,
+  password?: string,
+  joinSettings?: JoinSettings | null,
+): UseWebRTCReturn {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [peers, setPeers] = useState<Map<number, PeerState>>(new Map());
-  const [videoEnabled, setVideoEnabled] = useState(true);
-  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [videoEnabled, setVideoEnabled] = useState(joinSettings?.videoEnabled ?? true);
+  const [audioEnabled, setAudioEnabled] = useState(joinSettings?.audioEnabled ?? true);
   const [screenSharing, setScreenSharing] = useState(false);
+  const [handRaised, setHandRaised] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('connecting');
+  const [currentCameraId, setCurrentCameraId] = useState(joinSettings?.videoDeviceId || '');
+  const [currentMicId, setCurrentMicId] = useState(joinSettings?.audioDeviceId || '');
 
   const wsRef = useRef<WebSocket | null>(null);
   const pcsRef = useRef<Map<number, RTCPeerConnection>>(new Map());
   const localStreamRef = useRef<MediaStream | null>(null);
   const screenStreamRef = useRef<MediaStream | null>(null);
   const myUserIdRef = useRef<number>(0);
+  const joinSettingsRef = useRef(joinSettings);
+  joinSettingsRef.current = joinSettings;
 
-  // Create peer connection for a specific user
+  // Don't initialize if joinSettings is null (pre-join phase)
+  const shouldConnect = joinSettings !== null;
+
   const createPeerConnection = useCallback((userId: number, userInfo: { id: number; nickname: string; profile_image: string | null }) => {
     const pc = new RTCPeerConnection(ICE_SERVERS);
     pcsRef.current.set(userId, pc);
 
-    // Add local tracks to the connection
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach((track) => {
         pc.addTrack(track, localStreamRef.current!);
       });
     }
 
-    // Handle ICE candidates
     pc.onicecandidate = (event) => {
       if (event.candidate && wsRef.current?.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify({
@@ -66,7 +93,6 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
       }
     };
 
-    // Handle remote stream
     pc.ontrack = (event) => {
       const [remoteStream] = event.streams;
       setPeers((prev) => {
@@ -79,6 +105,7 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
           stream: remoteStream,
           videoEnabled: existing?.videoEnabled ?? true,
           audioEnabled: existing?.audioEnabled ?? true,
+          handRaised: existing?.handRaised ?? false,
         });
         return next;
       });
@@ -94,7 +121,6 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
     return pc;
   }, []);
 
-  // Send offer to a peer
   const sendOffer = useCallback(async (userId: number, userInfo: { id: number; nickname: string; profile_image: string | null }) => {
     const pc = createPeerConnection(userId, userInfo);
     const offer = await pc.createOffer();
@@ -109,7 +135,6 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
     }
   }, [createPeerConnection]);
 
-  // Handle signaling messages
   const handleSignalingMessage = useCallback(async (data: Record<string, unknown>) => {
     const type = data.type as string;
 
@@ -117,8 +142,8 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
       const user = data.user as { id: number; nickname: string; profile_image: string | null };
       const existingPeers = data.peers as Array<{ id: number; nickname: string; profile_image: string | null }>;
       myUserIdRef.current = user.id;
+      setConnectionStatus('connected');
 
-      // Send offers to all existing peers (new joiner initiates)
       for (const peer of existingPeers) {
         await sendOffer(peer.id, peer);
       }
@@ -126,7 +151,6 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
 
     else if (type === 'peer-joined') {
       const user = data.user as { id: number; nickname: string; profile_image: string | null };
-      // Add peer placeholder — they will send us an offer
       setPeers((prev) => {
         const next = new Map(prev);
         next.set(user.id, {
@@ -136,6 +160,7 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
           stream: null,
           videoEnabled: true,
           audioEnabled: true,
+          handRaised: false,
         });
         return next;
       });
@@ -205,23 +230,46 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
         return next;
       });
     }
+
+    else if (type === 'hand-raise') {
+      const userId = data.user_id as number;
+      const raised = data.raised as boolean;
+      setPeers((prev) => {
+        const next = new Map(prev);
+        const existing = next.get(userId);
+        if (existing) {
+          next.set(userId, { ...existing, handRaised: raised });
+        }
+        return next;
+      });
+    }
   }, [sendOffer, createPeerConnection]);
 
   // Initialize media and WebSocket
   useEffect(() => {
+    if (!shouldConnect) return;
+
     let cancelled = false;
+    const settings = joinSettingsRef.current;
 
     async function init() {
-      // Get local media
       let stream: MediaStream | null = null;
+      const videoConstraints = settings?.videoDeviceId
+        ? { deviceId: { exact: settings.videoDeviceId } }
+        : true;
+      const audioConstraints = settings?.audioDeviceId
+        ? { deviceId: { exact: settings.audioDeviceId } }
+        : true;
+
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: (settings?.videoEnabled !== false) ? videoConstraints : false,
+          audio: audioConstraints,
+        });
       } catch {
-        // Try audio only
         try {
-          stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+          stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: audioConstraints });
           setVideoEnabled(false);
-          setError('카메라 접근 불가 — 오디오만 사용합니다');
         } catch {
           setError('카메라와 마이크 접근 불가 — 시청 전용 모드');
         }
@@ -233,6 +281,22 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
       }
 
       if (stream) {
+        // Apply initial toggle state
+        if (settings?.audioEnabled === false) {
+          stream.getAudioTracks().forEach(t => { t.enabled = false; });
+          setAudioEnabled(false);
+        }
+        if (settings?.videoEnabled === false) {
+          stream.getVideoTracks().forEach(t => { t.enabled = false; });
+          setVideoEnabled(false);
+        }
+
+        // Track device IDs
+        const videoTrack = stream.getVideoTracks()[0];
+        const audioTrack = stream.getAudioTracks()[0];
+        if (videoTrack) setCurrentCameraId(videoTrack.getSettings().deviceId || '');
+        if (audioTrack) setCurrentMicId(audioTrack.getSettings().deviceId || '');
+
         localStreamRef.current = stream;
         setLocalStream(stream);
       }
@@ -249,6 +313,7 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
       let url = `${protocol}//${host}/ws/video/${meetingId}?token=${token}`;
       if (password) url += `&password=${encodeURIComponent(password)}`;
 
+      setConnectionStatus('connecting');
       const ws = new WebSocket(url);
       wsRef.current = ws;
 
@@ -258,16 +323,23 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
       };
 
       ws.onclose = (event) => {
-        if (!cancelled && event.code !== 1000) {
-          const reasons: Record<number, string> = {
-            4001: '인증 토큰이 필요합니다',
-            4003: '인증 실패',
-            4004: '회의를 찾을 수 없습니다',
-            4005: '화상 회의가 아닙니다',
-            4006: '접근 권한이 없습니다',
-          };
-          setError(reasons[event.code] || '연결이 끊어졌습니다');
+        if (!cancelled) {
+          setConnectionStatus('disconnected');
+          if (event.code !== 1000) {
+            const reasons: Record<number, string> = {
+              4001: '인증 토큰이 필요합니다',
+              4003: '인증 실패',
+              4004: '회의를 찾을 수 없습니다',
+              4005: '화상 회의가 아닙니다',
+              4006: '접근 권한이 없습니다',
+            };
+            setError(reasons[event.code] || '연결이 끊어졌습니다');
+          }
         }
+      };
+
+      ws.onerror = () => {
+        if (!cancelled) setConnectionStatus('disconnected');
       };
     }
 
@@ -275,14 +347,13 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
 
     return () => {
       cancelled = true;
-      // Cleanup
       wsRef.current?.close();
       localStreamRef.current?.getTracks().forEach((t) => t.stop());
       screenStreamRef.current?.getTracks().forEach((t) => t.stop());
       pcsRef.current.forEach((pc) => pc.close());
       pcsRef.current.clear();
     };
-  }, [meetingId, password, handleSignalingMessage]);
+  }, [meetingId, password, shouldConnect, handleSignalingMessage]);
 
   // Cleanup on browser close
   useEffect(() => {
@@ -324,7 +395,6 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
 
   const toggleScreenShare = useCallback(async () => {
     if (screenSharing) {
-      // Stop screen sharing, restore camera
       screenStreamRef.current?.getTracks().forEach((t) => t.stop());
       screenStreamRef.current = null;
       const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
@@ -341,13 +411,11 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
         screenStreamRef.current = screenStream;
         const screenTrack = screenStream.getVideoTracks()[0];
 
-        // Replace video track in all peer connections
         pcsRef.current.forEach((pc) => {
           const sender = pc.getSenders().find((s) => s.track?.kind === 'video');
           sender?.replaceTrack(screenTrack);
         });
 
-        // Handle user stopping share via browser UI
         screenTrack.onended = () => {
           const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
           if (cameraTrack) {
@@ -367,6 +435,68 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
     }
   }, [screenSharing]);
 
+  const toggleHandRaise = useCallback(() => {
+    const newState = !handRaised;
+    setHandRaised(newState);
+    wsRef.current?.send(JSON.stringify({
+      type: 'hand-raise',
+      raised: newState,
+    }));
+  }, [handRaised]);
+
+  const changeCamera = useCallback(async (deviceId: string) => {
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: { exact: deviceId } },
+      });
+      const newTrack = newStream.getVideoTracks()[0];
+
+      // Replace in local stream
+      const oldTrack = localStreamRef.current?.getVideoTracks()[0];
+      if (oldTrack && localStreamRef.current) {
+        localStreamRef.current.removeTrack(oldTrack);
+        oldTrack.stop();
+        localStreamRef.current.addTrack(newTrack);
+      }
+
+      // Replace in all peer connections
+      pcsRef.current.forEach((pc) => {
+        const sender = pc.getSenders().find((s) => s.track?.kind === 'video');
+        sender?.replaceTrack(newTrack);
+      });
+
+      setCurrentCameraId(deviceId);
+      setLocalStream(localStreamRef.current ? new MediaStream(localStreamRef.current.getTracks()) : null);
+    } catch {
+      // Device change failed
+    }
+  }, []);
+
+  const changeMic = useCallback(async (deviceId: string) => {
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia({
+        audio: { deviceId: { exact: deviceId } },
+      });
+      const newTrack = newStream.getAudioTracks()[0];
+
+      const oldTrack = localStreamRef.current?.getAudioTracks()[0];
+      if (oldTrack && localStreamRef.current) {
+        localStreamRef.current.removeTrack(oldTrack);
+        oldTrack.stop();
+        localStreamRef.current.addTrack(newTrack);
+      }
+
+      pcsRef.current.forEach((pc) => {
+        const sender = pc.getSenders().find((s) => s.track?.kind === 'audio');
+        sender?.replaceTrack(newTrack);
+      });
+
+      setCurrentMicId(deviceId);
+    } catch {
+      // Device change failed
+    }
+  }, []);
+
   const disconnect = useCallback(() => {
     wsRef.current?.close();
     localStreamRef.current?.getTracks().forEach((t) => t.stop());
@@ -375,6 +505,7 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
     pcsRef.current.clear();
     setPeers(new Map());
     setLocalStream(null);
+    setConnectionStatus('disconnected');
   }, []);
 
   return {
@@ -383,10 +514,17 @@ export default function useWebRTC(meetingId: number, password?: string): UseWebR
     videoEnabled,
     audioEnabled,
     screenSharing,
+    handRaised,
     error,
+    connectionStatus,
+    currentCameraId,
+    currentMicId,
     toggleMic,
     toggleCamera,
     toggleScreenShare,
+    toggleHandRaise,
+    changeCamera,
+    changeMic,
     disconnect,
   };
 }

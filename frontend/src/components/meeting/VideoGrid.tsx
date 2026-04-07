@@ -7,6 +7,7 @@ interface VideoGridProps {
   localProfileImage: string | null;
   localVideoEnabled: boolean;
   localAudioEnabled: boolean;
+  localHandRaised: boolean;
   screenSharing: boolean;
   peers: Map<number, PeerState>;
 }
@@ -18,12 +19,15 @@ function getGridStyle(count: number): React.CSSProperties {
   else if (count <= 9) cols = 3;
   else cols = 4;
 
+  const rows = Math.ceil(count / cols);
+
   return {
     display: 'grid',
     gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gridTemplateRows: `repeat(${rows}, 1fr)`,
     gap: 8,
-    width: '100%',
-    height: '100%',
+    position: 'absolute' as const,
+    inset: 0,
     padding: 8,
   };
 }
@@ -34,11 +38,12 @@ export default function VideoGrid({
   localProfileImage,
   localVideoEnabled,
   localAudioEnabled,
+  localHandRaised,
   screenSharing,
   peers,
 }: VideoGridProps) {
   const peerList = Array.from(peers.values());
-  const totalCount = 1 + peerList.length; // local + remote
+  const totalCount = 1 + peerList.length;
 
   return (
     <div style={getGridStyle(totalCount)}>
@@ -51,6 +56,7 @@ export default function VideoGrid({
         audioEnabled={localAudioEnabled}
         isLocal
         isScreenShare={screenSharing}
+        handRaised={localHandRaised}
       />
 
       {/* Remote peers */}
@@ -62,6 +68,7 @@ export default function VideoGrid({
           profileImage={peer.profileImage}
           videoEnabled={peer.videoEnabled}
           audioEnabled={peer.audioEnabled}
+          handRaised={peer.handRaised}
         />
       ))}
     </div>

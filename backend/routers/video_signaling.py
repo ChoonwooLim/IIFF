@@ -114,6 +114,13 @@ async def websocket_video_signaling(websocket: WebSocket, meeting_id: int):
                         "audio": data.get("audio", True),
                     }, exclude_user_id=user.id)
 
+                elif msg_type == "hand-raise":
+                    await video_manager.broadcast(meeting_id, {
+                        "type": "hand-raise",
+                        "user_id": user.id,
+                        "raised": data.get("raised", False),
+                    }, exclude_user_id=user.id)
+
         except WebSocketDisconnect:
             pass
         finally:
