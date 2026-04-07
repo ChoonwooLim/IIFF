@@ -39,10 +39,14 @@ export default function InviteModal({ meetingId, meetingName, onClose }: { meeti
     }, 300);
   };
 
+  const [statusMsg, setStatusMsg] = useState('');
+
   const handleInvite = async (userId: number) => {
-    await api.post(`/meetings/${meetingId}/invite`, { user_id: userId });
+    const { data } = await api.post(`/meetings/${meetingId}/invite`, { user_id: userId });
     setResults((prev) => prev.filter((u) => u.id !== userId));
     fetchInvitations();
+    setStatusMsg(data.message || '');
+    setTimeout(() => setStatusMsg(''), 3000);
   };
 
   const handleRemove = async (userId: number) => {
@@ -187,6 +191,17 @@ export default function InviteModal({ meetingId, meetingName, onClose }: { meeti
             </div>
           ))}
         </div>
+
+        {/* Status message */}
+        {statusMsg && (
+          <div style={{
+            padding: '8px 24px', fontSize: 12, textAlign: 'center',
+            color: statusMsg.includes('오프라인') ? '#facc15' : '#4ade80',
+            background: statusMsg.includes('오프라인') ? 'rgba(250,204,21,0.06)' : 'rgba(74,222,128,0.06)',
+          }}>
+            {statusMsg}
+          </div>
+        )}
 
         {/* Footer */}
         <div style={{

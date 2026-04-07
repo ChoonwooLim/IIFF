@@ -1,4 +1,3 @@
-import asyncio
 import os
 from datetime import datetime, timezone
 
@@ -266,7 +265,7 @@ def list_invitations(
 
 
 @router.post("/{meeting_id}/invite", status_code=status.HTTP_201_CREATED)
-def invite_user(
+async def invite_user(
     meeting_id: int,
     req: MeetingInviteRequest,
     current_user: User = Depends(require_active),
@@ -299,16 +298,19 @@ def invite_user(
     db.commit()
 
     # Send real-time notification to the invited user
-    asyncio.ensure_future(notification_manager.send_to_user(req.user_id, {
+    delivered = await notification_manager.send_to_user(req.user_id, {
         "type": "meeting_invite",
         "meeting_id": meeting.id,
         "meeting_name": meeting.name,
         "meeting_type": meeting.type,
         "invited_by": {"id": current_user.id, "nickname": current_user.nickname},
         "password": meeting.password,
-    }))
+    })
 
-    return {"message": f"{target.nickname}님을 초대했습니다"}
+    if delivered:
+        return {"message": f"{target.nickname}님을 초대했습니다", "online": True}
+    else:
+        return {"message": f"{target.nickname}님을 초대했습니다 (현재 오프라인)", "online": False}
 
 
 @router.delete("/{meeting_id}/invite/{user_id}")
