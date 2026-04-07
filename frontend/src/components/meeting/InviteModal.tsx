@@ -187,6 +187,18 @@ export default function InviteModal({ meetingId, meetingName, onClose }: { meeti
             </div>
           ))}
         </div>
+
+        {/* Footer */}
+        <div style={{
+          padding: '16px 24px', borderTop: '1px solid rgba(255,255,255,0.06)',
+          display: 'flex', justifyContent: 'flex-end', flexShrink: 0,
+        }}>
+          <button onClick={onClose} style={{
+            padding: '10px 32px', borderRadius: 8,
+            background: 'rgba(201,169,110,0.2)', border: '1px solid rgba(201,169,110,0.4)',
+            color: '#c9a96e', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+          }}>확인</button>
+        </div>
       </div>
     </div>
   );
