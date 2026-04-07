@@ -169,17 +169,19 @@ export default function VideoRoomPage() {
       <div style={{ flex: 1, display: "flex", overflow: "hidden", minHeight: 0 }}>
 
         {/* Video area */}
-        <div style={{ flex: 1, position: "relative", minWidth: 0, paddingBottom: 72 }}>
-          <VideoGrid
-            localStream={localStream}
-            localNickname={user?.nickname || user?.name || "나"}
-            localProfileImage={user?.profile_image || null}
-            localVideoEnabled={videoEnabled}
-            localAudioEnabled={audioEnabled}
-            localHandRaised={handRaised}
-            screenSharing={screenSharing}
-            peers={peers}
-          />
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', padding: 12 }}>
+          <div style={{ flex: 1, position: 'relative', minHeight: 0, borderRadius: 12, overflow: 'hidden' }}>
+            <VideoGrid
+              localStream={localStream}
+              localNickname={user?.nickname || user?.name || "나"}
+              localProfileImage={user?.profile_image || null}
+              localVideoEnabled={videoEnabled}
+              localAudioEnabled={audioEnabled}
+              localHandRaised={handRaised}
+              screenSharing={screenSharing}
+              peers={peers}
+            />
+          </div>
         </div>
 
         {/* ── Right Sidebar ── */}

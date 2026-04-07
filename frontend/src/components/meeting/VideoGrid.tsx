@@ -25,10 +25,9 @@ function getGridStyle(count: number): React.CSSProperties {
     display: 'grid',
     gridTemplateColumns: `repeat(${cols}, 1fr)`,
     gridTemplateRows: `repeat(${rows}, 1fr)`,
-    gap: 8,
+    gap: 6,
     position: 'absolute' as const,
     inset: 0,
-    padding: 8,
   };
 }
 

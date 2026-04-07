@@ -119,10 +119,7 @@ export default function VideoControlBar({
 }: VideoControlBarProps) {
   return (
     <div style={{
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
+      flexShrink: 0,
       height: 72,
       background: 'rgba(8,8,14,0.95)',
       backdropFilter: 'blur(12px)',
