@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import api from "@/services/api";
 import { useAuth } from "@/hooks/AuthContext";
-import useWebRTC from "@/hooks/useWebRTC";
-import VideoGrid from "@/components/meeting/VideoGrid";
+import useWebRTC, { type PeerState } from "@/hooks/useWebRTC";
 import VideoControlBar from "@/components/meeting/VideoControlBar";
 import PreJoinLobby from "@/components/meeting/PreJoinLobby";
 import VideoChatPanel from "@/components/meeting/VideoChatPanel";
@@ -24,6 +23,68 @@ interface JoinSettings {
   videoEnabled: boolean;
 }
 
+/* ── Spotlight slot video cell ── */
+function SpotlightCell({
+  stream, nickname, profileImage, videoOn, audioOn, isLocal, handRaised,
+}: {
+  stream: MediaStream | null; nickname: string; profileImage: string | null;
+  videoOn: boolean; audioOn: boolean; isLocal: boolean; handRaised: boolean;
+}) {
+  const vidRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream]);
+
+  return (
+    <div style={{
+      position: 'relative', width: '100%', height: '100%',
+      background: '#0a0a14', borderRadius: 10, overflow: 'hidden',
+      border: handRaised ? '2px solid rgba(201,169,110,0.6)' : '1px solid rgba(255,255,255,0.08)',
+    }}>
+      {stream && videoOn ? (
+        <video ref={vidRef} autoPlay playsInline muted={isLocal} style={{
+          width: '100%', height: '100%', objectFit: 'cover',
+          transform: isLocal ? 'scaleX(-1)' : 'none',
+        }} />
+      ) : (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {profileImage ? (
+            <img src={profileImage} alt="" style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{
+              width: 72, height: 72, borderRadius: '50%',
+              background: 'rgba(201,169,110,0.15)', border: '2px solid rgba(201,169,110,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 28, fontWeight: 700, color: '#c9a96e',
+            }}>{nickname.charAt(0)}</div>
+          )}
+        </div>
+      )}
+      {/* Name overlay */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, padding: '6px 10px',
+        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <span style={{ fontSize: 12, color: '#e0e0ea', fontWeight: 500 }}>
+          {nickname}{isLocal ? ' (나)' : ''}
+        </span>
+        <div style={{ display: 'flex', gap: 5 }}>
+          {handRaised && <span style={{ fontSize: 14 }}>&#9995;</span>}
+          {!audioOn && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
+              <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
+            </svg>
+          )}
+          {!videoOn && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
+              <path d="M16.88 3.549L7.12 20.451" /><rect x="1" y="5" width="15" height="14" rx="2" />
+            </svg>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function VideoRoomPage() {
   const { meetingId } = useParams<{ meetingId: string }>();
   const [searchParams] = useSearchParams();
@@ -38,6 +99,11 @@ export default function VideoRoomPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
   const [chatUnread, setChatUnread] = useState(0);
+
+  // Spotlight: 4 slots, each holds a userId or null
+  const [spotlightSlots, setSpotlightSlots] = useState<(number | null)[]>([null, null, null, null]);
+  // Picker state: which slot index is being assigned (-1 = none)
+  const [pickerForSlot, setPickerForSlot] = useState(-1);
 
   const mid = Number(meetingId);
   const {
@@ -58,6 +124,31 @@ export default function VideoRoomPage() {
     api.post(`/meetings/${meetingId}/join`).catch(() => {});
     return () => { api.post(`/meetings/${meetingId}/leave`).catch(() => {}); };
   }, [meetingId, joined]);
+
+  // All participant IDs
+  const localUserId = user?.id ?? 0;
+  const allParticipantIds = [localUserId, ...Array.from(peers.keys())];
+
+  // Auto-fill spotlight slots when participants change
+  useEffect(() => {
+    setSpotlightSlots(prev => {
+      const next = [...prev];
+      // Remove IDs that are no longer present
+      for (let i = 0; i < 4; i++) {
+        if (next[i] !== null && !allParticipantIds.includes(next[i]!)) {
+          next[i] = null;
+        }
+      }
+      // Auto-assign unassigned participants to empty slots
+      for (const pid of allParticipantIds) {
+        if (next.includes(pid)) continue; // already in a slot
+        const emptyIdx = next.indexOf(null);
+        if (emptyIdx === -1) break; // no empty slots
+        next[emptyIdx] = pid;
+      }
+      return next;
+    });
+  }, [localUserId, peers.size]);
 
   const activeParticipants = (() => {
     const list: { id: number; nickname: string; profile_image: string | null }[] = [];
@@ -90,6 +181,55 @@ export default function VideoRoomPage() {
   const isCreatorOrAdmin =
     user?.id === meeting?.creator?.id ||
     ["vvip", "admin", "superadmin"].includes(user?.role || "");
+
+  // Assign a participant to a spotlight slot
+  const assignToSlot = (slotIdx: number, userId: number) => {
+    setSpotlightSlots(prev => {
+      const next = [...prev];
+      // Remove this user from any existing slot
+      const existingIdx = next.indexOf(userId);
+      if (existingIdx !== -1) next[existingIdx] = null;
+      // If slot already has someone, swap
+      const displaced = next[slotIdx];
+      next[slotIdx] = userId;
+      if (displaced !== null && existingIdx !== -1) {
+        next[existingIdx] = displaced;
+      }
+      return next;
+    });
+    setPickerForSlot(-1);
+  };
+
+  const clearSlot = (slotIdx: number) => {
+    setSpotlightSlots(prev => {
+      const next = [...prev];
+      next[slotIdx] = null;
+      return next;
+    });
+  };
+
+  // Get participant info for rendering
+  const getSlotInfo = (userId: number): {
+    stream: MediaStream | null; nickname: string; profileImage: string | null;
+    videoOn: boolean; audioOn: boolean; isLocal: boolean; handUp: boolean;
+  } => {
+    if (userId === localUserId) {
+      return {
+        stream: localStream, nickname: user?.nickname || user?.name || '나',
+        profileImage: user?.profile_image || null,
+        videoOn: videoEnabled, audioOn: audioEnabled, isLocal: true, handUp: handRaised,
+      };
+    }
+    const peer = peers.get(userId);
+    if (!peer) return { stream: null, nickname: '?', profileImage: null, videoOn: false, audioOn: false, isLocal: false, handUp: false };
+    return {
+      stream: peer.stream, nickname: peer.nickname, profileImage: peer.profileImage,
+      videoOn: peer.videoEnabled, audioOn: peer.audioEnabled, isLocal: false, handUp: peer.handRaised,
+    };
+  };
+
+  // Participants NOT in any spotlight slot (available for picking)
+  const unassignedParticipants = activeParticipants.filter(p => !spotlightSlots.includes(p.id));
 
   // Pre-join lobby
   if (!joined) {
@@ -162,219 +302,233 @@ export default function VideoRoomPage() {
         )}
       </div>
 
-      {/* ── Main area: Video + Thumbnails + Chat ── */}
+      {/* ── Main area: 2x2 Spotlight + Right Sidebar ── */}
       <div style={{ flex: 1, display: "flex", overflow: "hidden", minHeight: 0 }}>
 
-        {/* Video area (main large view) */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', padding: 12 }}>
-          <div style={{ flex: 1, position: 'relative', minHeight: 0, borderRadius: 12, overflow: 'hidden' }}>
-            <VideoGrid
-              localStream={localStream}
-              localNickname={user?.nickname || user?.name || "나"}
-              localProfileImage={user?.profile_image || null}
-              localVideoEnabled={videoEnabled}
-              localAudioEnabled={audioEnabled}
-              localHandRaised={handRaised}
-              screenSharing={screenSharing}
-              peers={peers}
-            />
-          </div>
+        {/* ── 2x2 Spotlight Grid ── */}
+        <div style={{
+          flex: 1, minWidth: 0, padding: 10,
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8,
+        }}>
+          {spotlightSlots.map((slotUserId, idx) => (
+            <div key={idx} style={{ position: 'relative', minHeight: 0, minWidth: 0 }}>
+              {slotUserId !== null ? (
+                <>
+                  <SpotlightCell {...getSlotInfo(slotUserId)} />
+                  {/* Clear / swap button */}
+                  <button
+                    onClick={() => clearSlot(idx)}
+                    title="슬롯 비우기"
+                    style={{
+                      position: 'absolute', top: 6, right: 6, zIndex: 2,
+                      width: 24, height: 24, borderRadius: 6,
+                      background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.15)',
+                      color: '#8a8a9a', cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 14, lineHeight: 1, padding: 0,
+                      opacity: 0.5, transition: 'opacity 0.15s',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
+                  >&times;</button>
+                </>
+              ) : (
+                /* Empty slot — click to assign */
+                <div
+                  onClick={() => setPickerForSlot(pickerForSlot === idx ? -1 : idx)}
+                  style={{
+                    width: '100%', height: '100%', borderRadius: 10,
+                    background: '#0a0a14',
+                    border: pickerForSlot === idx
+                      ? '2px solid rgba(201,169,110,0.4)'
+                      : '1px dashed rgba(255,255,255,0.1)',
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'center', gap: 8,
+                    cursor: 'pointer', transition: 'border 0.15s, background 0.15s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#0e0e1a'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#0a0a14'; }}
+                >
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                    stroke={pickerForSlot === idx ? 'rgba(201,169,110,0.5)' : 'rgba(255,255,255,0.12)'}
+                    strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="7" r="4" /><path d="M5.5 21v-2a6.5 6.5 0 0113 0v2" />
+                  </svg>
+                  <span style={{ fontSize: 12, color: pickerForSlot === idx ? '#c9a96e' : '#3a3a4a' }}>
+                    {pickerForSlot === idx ? '아래에서 선택' : '클릭하여 배치'}
+                  </span>
+                </div>
+              )}
+
+              {/* Participant picker dropdown */}
+              {pickerForSlot === idx && (
+                <div style={{
+                  position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)',
+                  zIndex: 10, minWidth: 200, maxHeight: 180, overflowY: 'auto',
+                  background: 'rgba(12,12,24,0.97)', border: '1px solid rgba(201,169,110,0.25)',
+                  borderRadius: 10, padding: 6, backdropFilter: 'blur(12px)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                }}>
+                  {unassignedParticipants.length === 0 ? (
+                    <div style={{ padding: '12px 8px', textAlign: 'center', color: '#5a5a6a', fontSize: 12 }}>
+                      배치 가능한 참가자 없음
+                    </div>
+                  ) : (
+                    unassignedParticipants.map(p => (
+                      <button
+                        key={p.id}
+                        onClick={(e) => { e.stopPropagation(); assignToSlot(idx, p.id); }}
+                        style={{
+                          width: '100%', padding: '8px 10px', borderRadius: 6,
+                          background: 'transparent', border: 'none', cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', gap: 8,
+                          color: '#c0c0ca', fontSize: 13, textAlign: 'left',
+                          transition: 'background 0.1s',
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,169,110,0.1)')}
+                        onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                      >
+                        <div style={{
+                          width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                          background: 'rgba(201,169,110,0.12)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          overflow: 'hidden',
+                        }}>
+                          {p.profile_image ? (
+                            <img src={p.profile_image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <span style={{ fontSize: 12, color: '#c9a96e' }}>{p.nickname.charAt(0)}</span>
+                          )}
+                        </div>
+                        {p.nickname}{p.id === localUserId ? ' (나)' : ''}
+                      </button>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* ── Participant Thumbnails Panel ── */}
+        {/* ── Right Sidebar: Thumbnails + Chat ── */}
         <div style={{
           width: 300, flexShrink: 0,
           display: 'flex', flexDirection: 'column',
           background: '#08080f',
           borderLeft: '1px solid rgba(255,255,255,0.06)',
         }}>
-          {/* Header */}
+          {/* ── Participant Thumbnails (top half) ── */}
           <div style={{
-            padding: '10px 14px', flexShrink: 0,
+            flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column',
             borderBottom: '1px solid rgba(255,255,255,0.06)',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: '#c9a96e', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
-              </svg>
-              참가자 ({activeParticipants.length})
-            </span>
-            {isCreatorOrAdmin && (
-              <button onClick={() => setShowInvite(true)} style={{
-                padding: '4px 10px', borderRadius: 6, background: 'rgba(201,169,110,0.1)',
-                border: '1px solid rgba(201,169,110,0.2)', color: '#c9a96e', fontSize: 11, cursor: 'pointer',
-              }}>+ 초대</button>
-            )}
-          </div>
-
-          {/* Thumbnail Grid */}
-          <div style={{
-            flex: 1, overflowY: 'auto', padding: 8,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gridAutoRows: 'minmax(0, 1fr)',
-            gap: 6,
-            alignContent: 'start',
-          }}>
-            {/* Local user thumbnail */}
-            {(() => {
-              const isHandUp = handRaised;
-              return (
-                <div key="local" style={{
-                  aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
-                  position: 'relative', background: '#0c0c18',
-                  border: isHandUp ? '2px solid rgba(201,169,110,0.5)' : '1px solid rgba(255,255,255,0.08)',
-                }}>
-                  {localStream && videoEnabled ? (
-                    <video
-                      ref={(el) => { if (el && localStream) el.srcObject = localStream; }}
-                      autoPlay playsInline muted
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scaleX(-1)' }}
-                    />
-                  ) : (
-                    <div style={{
-                      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <div style={{
-                        width: 36, height: 36, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
-                        border: '1.5px solid rgba(201,169,110,0.3)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 15, fontWeight: 700, color: '#c9a96e',
-                      }}>
-                        {(user?.nickname || user?.name || '나').charAt(0)}
-                      </div>
-                    </div>
-                  )}
-                  {/* Name + status overlay */}
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '4px 6px',
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                    display: 'flex', alignItems: 'center', gap: 3,
-                  }}>
-                    <span style={{ fontSize: 10, color: '#e0e0ea', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {user?.nickname || user?.name || '나'} (나)
-                    </span>
-                    {!audioEnabled && (
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5">
-                        <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
-                      </svg>
-                    )}
-                  </div>
-                  {isHandUp && (
-                    <div style={{
-                      position: 'absolute', top: 3, right: 3, fontSize: 12,
-                      background: 'rgba(0,0,0,0.5)', borderRadius: 4, padding: '1px 3px',
-                    }}>&#9995;</div>
-                  )}
-                </div>
-              );
-            })()}
-
-            {/* Remote peer thumbnails */}
-            {Array.from(peers.values()).map(peer => {
-              const isHandUp = peer.handRaised;
-              return (
-                <div key={peer.userId} style={{
-                  aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
-                  position: 'relative', background: '#0c0c18',
-                  border: isHandUp ? '2px solid rgba(201,169,110,0.5)' : '1px solid rgba(255,255,255,0.08)',
-                }}>
-                  {peer.stream && peer.videoEnabled ? (
-                    <video
-                      ref={(el) => { if (el && peer.stream) el.srcObject = peer.stream; }}
-                      autoPlay playsInline
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    <div style={{
-                      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <div style={{
-                        width: 36, height: 36, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
-                        border: '1.5px solid rgba(201,169,110,0.3)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 15, fontWeight: 700, color: '#c9a96e',
-                      }}>
-                        {peer.nickname.charAt(0)}
-                      </div>
-                    </div>
-                  )}
-                  <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, padding: '4px 6px',
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                    display: 'flex', alignItems: 'center', gap: 3,
-                  }}>
-                    <span style={{ fontSize: 10, color: '#e0e0ea', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {peer.nickname}
-                    </span>
-                    {!peer.audioEnabled && (
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5">
-                        <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
-                      </svg>
-                    )}
-                  </div>
-                  {isHandUp && (
-                    <div style={{
-                      position: 'absolute', top: 3, right: 3, fontSize: 12,
-                      background: 'rgba(0,0,0,0.5)', borderRadius: 4, padding: '1px 3px',
-                    }}>&#9995;</div>
-                  )}
-                </div>
-              );
-            })}
-
-            {/* Empty placeholder slots (always show at least 6 total slots) */}
-            {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
-              <div key={`empty-${i}`} style={{
-                aspectRatio: '4/3', borderRadius: 8, overflow: 'hidden',
-                background: '#0c0c18', border: '1px dashed rgba(255,255,255,0.06)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5">
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+            {/* Header */}
+            <div style={{
+              padding: '8px 12px', flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+            }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e', display: 'flex', alignItems: 'center', gap: 5 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
                 </svg>
-              </div>
-            ))}
-          </div>
-        </div>
+                참가자 ({activeParticipants.length})
+              </span>
+              {isCreatorOrAdmin && (
+                <button onClick={() => setShowInvite(true)} style={{
+                  padding: '3px 8px', borderRadius: 5, background: 'rgba(201,169,110,0.1)',
+                  border: '1px solid rgba(201,169,110,0.2)', color: '#c9a96e', fontSize: 10, cursor: 'pointer',
+                }}>+ 초대</button>
+              )}
+            </div>
 
-        {/* ── Chat Panel (always visible) ── */}
-        <div style={{
-          width: 300, flexShrink: 0,
-          display: 'flex', flexDirection: 'column',
-          background: '#0a0a12',
-          borderLeft: '1px solid rgba(255,255,255,0.06)',
-        }}>
-          {/* Chat Header */}
-          <div style={{
-            padding: '10px 14px', flexShrink: 0,
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            display: 'flex', alignItems: 'center', gap: 6,
-          }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-            </svg>
-            <span style={{ fontSize: 13, fontWeight: 600, color: '#c9a96e' }}>채팅</span>
-            {chatUnread > 0 && (
-              <span style={{
-                minWidth: 18, height: 18, borderRadius: 9,
-                background: '#ef4444', color: '#fff', fontSize: 10, fontWeight: 700,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px',
-              }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
-            )}
+            {/* Thumbnail Grid */}
+            <div style={{
+              flex: 1, overflowY: 'auto', padding: 6,
+              display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 5,
+              alignContent: 'start',
+            }}>
+              {/* Local */}
+              {(() => {
+                const inSpotlight = spotlightSlots.includes(localUserId);
+                return (
+                  <ThumbnailCell
+                    key="local"
+                    stream={localStream} nickname={user?.nickname || user?.name || '나'}
+                    profileImage={user?.profile_image || null}
+                    videoOn={videoEnabled} audioOn={audioEnabled} isLocal handRaised={handRaised}
+                    inSpotlight={inSpotlight}
+                    onClick={() => {
+                      if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, localUserId); }
+                    }}
+                    picking={pickerForSlot >= 0}
+                  />
+                );
+              })()}
+
+              {/* Remote peers */}
+              {Array.from(peers.values()).map(peer => {
+                const inSpotlight = spotlightSlots.includes(peer.userId);
+                return (
+                  <ThumbnailCell
+                    key={peer.userId}
+                    stream={peer.stream} nickname={peer.nickname}
+                    profileImage={peer.profileImage}
+                    videoOn={peer.videoEnabled} audioOn={peer.audioEnabled} isLocal={false}
+                    handRaised={peer.handRaised} inSpotlight={inSpotlight}
+                    onClick={() => {
+                      if (pickerForSlot >= 0) { assignToSlot(pickerForSlot, peer.userId); }
+                    }}
+                    picking={pickerForSlot >= 0}
+                  />
+                );
+              })}
+
+              {/* Empty placeholders */}
+              {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
+                <div key={`e-${i}`} style={{
+                  aspectRatio: '4/3', borderRadius: 6, background: '#0c0c18',
+                  border: '1px dashed rgba(255,255,255,0.05)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+                  </svg>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Chat Content */}
-          <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <VideoChatPanel
-              meetingId={mid}
-              currentUserId={user?.id || 0}
-              onClose={() => {}}
-              unreadCount={chatUnread}
-              onResetUnread={() => setChatUnread(0)}
-            />
+          {/* ── Chat (bottom half) ── */}
+          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+            {/* Chat Header */}
+            <div style={{
+              padding: '8px 12px', flexShrink: 0,
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+              display: 'flex', alignItems: 'center', gap: 5,
+            }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" strokeWidth="2">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+              </svg>
+              <span style={{ fontSize: 12, fontWeight: 600, color: '#c9a96e' }}>채팅</span>
+              {chatUnread > 0 && (
+                <span style={{
+                  minWidth: 16, height: 16, borderRadius: 8,
+                  background: '#ef4444', color: '#fff', fontSize: 9, fontWeight: 700,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 3px',
+                }}>{chatUnread > 99 ? '99+' : chatUnread}</span>
+              )}
+            </div>
+            <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <VideoChatPanel
+                meetingId={mid}
+                currentUserId={user?.id || 0}
+                onClose={() => {}}
+                unreadCount={chatUnread}
+                onResetUnread={() => setChatUnread(0)}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -414,6 +568,93 @@ export default function VideoRoomPage() {
       )}
       {showInvite && meetingId && (
         <InviteModal meetingId={mid} meetingName={meeting?.name || ""} onClose={() => setShowInvite(false)} />
+      )}
+
+      {/* Click-away: close picker */}
+      {pickerForSlot >= 0 && (
+        <div
+          onClick={() => setPickerForSlot(-1)}
+          style={{ position: 'fixed', inset: 0, zIndex: 5 }}
+        />
+      )}
+    </div>
+  );
+}
+
+/* ── Right-sidebar thumbnail cell ── */
+function ThumbnailCell({
+  stream, nickname, profileImage, videoOn, audioOn, isLocal, handRaised,
+  inSpotlight, onClick, picking,
+}: {
+  stream: MediaStream | null; nickname: string; profileImage: string | null;
+  videoOn: boolean; audioOn: boolean; isLocal: boolean; handRaised: boolean;
+  inSpotlight: boolean; onClick: () => void; picking: boolean;
+}) {
+  const vidRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => { if (vidRef.current && stream) vidRef.current.srcObject = stream; }, [stream]);
+
+  return (
+    <div
+      onClick={picking ? onClick : undefined}
+      style={{
+        aspectRatio: '4/3', borderRadius: 6, overflow: 'hidden',
+        position: 'relative', background: '#0c0c18',
+        border: inSpotlight
+          ? '2px solid rgba(201,169,110,0.4)'
+          : handRaised
+          ? '2px solid rgba(201,169,110,0.3)'
+          : '1px solid rgba(255,255,255,0.06)',
+        cursor: picking ? 'pointer' : 'default',
+        opacity: picking && !inSpotlight ? 1 : picking && inSpotlight ? 0.5 : 1,
+        transition: 'border 0.15s, opacity 0.15s',
+      }}
+    >
+      {stream && videoOn ? (
+        <video ref={vidRef} autoPlay playsInline muted={isLocal} style={{
+          width: '100%', height: '100%', objectFit: 'cover',
+          transform: isLocal ? 'scaleX(-1)' : 'none',
+        }} />
+      ) : (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{
+            width: 28, height: 28, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
+            border: '1px solid rgba(201,169,110,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 12, fontWeight: 700, color: '#c9a96e',
+          }}>{nickname.charAt(0)}</div>
+        </div>
+      )}
+      {/* Overlay */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, padding: '3px 5px',
+        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+        display: 'flex', alignItems: 'center', gap: 2,
+      }}>
+        <span style={{ fontSize: 9, color: '#d0d0da', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {nickname}{isLocal ? ' (나)' : ''}
+        </span>
+        {!audioOn && (
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3">
+            <line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 005.12 2.12" />
+          </svg>
+        )}
+      </div>
+      {inSpotlight && (
+        <div style={{
+          position: 'absolute', top: 2, left: 2, fontSize: 8, padding: '1px 4px',
+          background: 'rgba(201,169,110,0.3)', borderRadius: 3, color: '#c9a96e', fontWeight: 700,
+        }}>LIVE</div>
+      )}
+      {handRaised && (
+        <div style={{ position: 'absolute', top: 2, right: 2, fontSize: 10 }}>&#9995;</div>
+      )}
+      {picking && !inSpotlight && (
+        <div style={{
+          position: 'absolute', inset: 0, background: 'rgba(201,169,110,0.08)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ fontSize: 11, color: '#c9a96e', fontWeight: 600 }}>클릭하여 배치</span>
+        </div>
       )}
     </div>
   );
