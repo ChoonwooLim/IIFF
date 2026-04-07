@@ -128,7 +128,7 @@ export default function VideoRoomPage() {
 
   const isCreatorOrAdmin =
     user?.id === meeting?.creator?.id ||
-    ["admin", "superadmin"].includes(user?.role || "");
+    ["vvip", "admin", "superadmin"].includes(user?.role || "");
 
   // Pre-join lobby
   if (!joined) {

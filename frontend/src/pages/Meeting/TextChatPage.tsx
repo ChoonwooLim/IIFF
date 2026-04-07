@@ -203,7 +203,7 @@ export default function TextChatPage() {
     navigate("/meetings");
   };
 
-  const canManage = user?.id === creatorId || user?.role === "admin" || user?.role === "superadmin";
+  const canManage = user?.id === creatorId || user?.role === "vvip" || user?.role === "admin" || user?.role === "superadmin";
 
   const getDateKey = (ts: string) => new Date(ts).toDateString();
 

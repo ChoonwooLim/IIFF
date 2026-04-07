@@ -175,7 +175,7 @@ def update_meeting(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="수정 권한이 없습니다")
 
     meeting.name = req.name
@@ -193,7 +193,7 @@ def delete_meeting(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="삭제 권한이 없습니다")
 
     db.delete(meeting)
@@ -214,7 +214,7 @@ def set_meeting_password(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="비밀번호 설정 권한이 없습니다")
 
     meeting.password = req.password
@@ -232,7 +232,7 @@ def remove_meeting_password(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="비밀번호 삭제 권한이 없습니다")
 
     meeting.password = None
@@ -273,7 +273,7 @@ def invite_user(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="초대 권한이 없습니다")
 
     target = db.query(User).filter(User.id == req.user_id, User.status == "active").first()
@@ -308,7 +308,7 @@ def remove_invitation(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="초대 취소 권한이 없습니다")
 
     invitation = db.query(MeetingInvitation).filter(
@@ -338,7 +338,7 @@ def join_meeting(
 
     # Check access: creator, admin, invited, or correct password
     is_creator = meeting.created_by == current_user.id
-    is_admin = current_user.role in ("admin", "superadmin")
+    is_admin = current_user.role in ("vvip", "admin", "superadmin")
     is_invited = db.query(MeetingInvitation).filter(
         MeetingInvitation.meeting_id == meeting_id,
         MeetingInvitation.user_id == current_user.id,
@@ -405,7 +405,7 @@ def close_meeting(
     if not meeting:
         raise HTTPException(status_code=404, detail="회의실을 찾을 수 없습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="종료 권한이 없습니다")
 
     meeting.status = "closed"
@@ -512,7 +512,7 @@ def create_minutes(
     if meeting.status != "closed":
         raise HTTPException(status_code=400, detail="종료된 회의만 회의록을 생성할 수 있습니다")
 
-    if meeting.created_by != current_user.id and current_user.role not in ("admin", "superadmin"):
+    if meeting.created_by != current_user.id and current_user.role not in ("vvip", "admin", "superadmin"):
         raise HTTPException(status_code=403, detail="회의록 생성 권한이 없습니다")
 
     # Check if minutes already exist

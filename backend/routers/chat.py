@@ -49,7 +49,7 @@ async def websocket_chat(websocket: WebSocket, meeting_id: int):
 
         # Check access: creator, admin, invited, or correct password
         is_creator = meeting.created_by == user.id
-        is_admin = user.role in ("admin", "superadmin")
+        is_admin = user.role in ("vvip", "admin", "superadmin")
         is_invited = db.query(MeetingInvitation).filter(
             MeetingInvitation.meeting_id == meeting_id,
             MeetingInvitation.user_id == user.id,

@@ -80,7 +80,7 @@ export default function MeetingListPage() {
   };
 
   const canManage = (creatorId: number) =>
-    user?.id === creatorId || user?.role === "admin" || user?.role === "superadmin";
+    user?.id === creatorId || user?.role === "vvip" || user?.role === "admin" || user?.role === "superadmin";
 
   return (
     <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
