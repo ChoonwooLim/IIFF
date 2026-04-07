@@ -135,29 +135,17 @@ export default function VideoChatPanel({ meetingId, currentUserId, onClose, unre
 
   return (
     <div style={{
-      width: 320, height: '100%',
+      width: '100%', height: '100%',
       display: 'flex', flexDirection: 'column',
-      background: '#0d0d14',
-      borderLeft: '1px solid rgba(255,255,255,0.06)',
+      background: 'transparent',
     }}>
-      {/* Header */}
-      <div style={{
-        padding: '14px 16px',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        flexShrink: 0,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#f0f0f5' }}>채팅</span>
-          {!connected && (
-            <span style={{ fontSize: 11, color: '#ef4444' }}>연결 중...</span>
-          )}
-        </div>
-        <button onClick={onClose} style={{
-          background: 'none', border: 'none', color: '#5a5a6a',
-          fontSize: 18, cursor: 'pointer', padding: '0 4px',
-        }}>&times;</button>
-      </div>
+      {/* Connection status */}
+      {!connected && (
+        <div style={{
+          padding: '6px 12px', textAlign: 'center',
+          background: 'rgba(239,68,68,0.06)', fontSize: 11, color: '#ef4444', flexShrink: 0,
+        }}>채팅 연결 중...</div>
+      )}
 
       {/* Messages */}
       <div style={{

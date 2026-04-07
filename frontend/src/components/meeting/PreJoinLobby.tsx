@@ -19,8 +19,11 @@ interface PreJoinLobbyProps {
 export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinLobbyProps) {
   const [cameras, setCameras] = useState<DeviceInfo[]>([]);
   const [mics, setMics] = useState<DeviceInfo[]>([]);
+  const [speakers, setSpeakers] = useState<DeviceInfo[]>([]);
   const [selectedCamera, setSelectedCamera] = useState('');
   const [selectedMic, setSelectedMic] = useState('');
+  const [selectedSpeaker, setSelectedSpeaker] = useState('');
+  const [speakerTesting, setSpeakerTesting] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -42,10 +45,15 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
       const audioDevices = devices
         .filter(d => d.kind === 'audioinput')
         .map(d => ({ deviceId: d.deviceId, label: d.label || `마이크 ${d.deviceId.slice(0, 4)}` }));
+      const outputDevices = devices
+        .filter(d => d.kind === 'audiooutput')
+        .map(d => ({ deviceId: d.deviceId, label: d.label || `스피커 ${d.deviceId.slice(0, 4)}` }));
       setCameras(videoDevices);
       setMics(audioDevices);
+      setSpeakers(outputDevices);
       if (videoDevices.length > 0 && !selectedCamera) setSelectedCamera(videoDevices[0].deviceId);
       if (audioDevices.length > 0 && !selectedMic) setSelectedMic(audioDevices[0].deviceId);
+      if (outputDevices.length > 0 && !selectedSpeaker) setSelectedSpeaker(outputDevices[0].deviceId);
     } catch {
       setError('디바이스 목록을 가져올 수 없습니다');
     }
@@ -55,10 +63,10 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
   const getPreviewStream = useCallback(async (camId: string, micId: string) => {
     // Stop existing
     stream?.getTracks().forEach(t => t.stop());
-    if (audioCtxRef.current) {
+    if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
       audioCtxRef.current.close();
-      audioCtxRef.current = null;
     }
+    audioCtxRef.current = null;
 
     const constraints: MediaStreamConstraints = {
       video: videoEnabled && camId ? { deviceId: { exact: camId } } : false,
@@ -114,7 +122,9 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
-      audioCtxRef.current?.close();
+      if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+        audioCtxRef.current.close();
+      }
     };
   }, []);
 
@@ -171,7 +181,9 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
   const handleJoin = () => {
     // Stop preview stream before joining (useWebRTC will create its own)
     stream?.getTracks().forEach(t => t.stop());
-    audioCtxRef.current?.close();
+    if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+      audioCtxRef.current.close();
+    }
     onJoin({
       audioDeviceId: selectedMic,
       videoDeviceId: selectedCamera,
@@ -379,6 +391,83 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
                   ? audioLevel > 0.02 ? '마이크가 정상 작동합니다' : '말을 하면 레벨이 움직입니다'
                   : '마이크가 음소거 상태입니다'
                 }
+              </p>
+            </div>
+
+            {/* Speaker select + test */}
+            <div>
+              <label style={{ fontSize: 12, color: '#8a8a9a', marginBottom: 6, display: 'block' }}>
+                스피커
+              </label>
+              <select
+                value={selectedSpeaker}
+                onChange={e => setSelectedSpeaker(e.target.value)}
+                disabled={speakers.length === 0}
+                style={{
+                  width: '100%', padding: '10px 12px',
+                  background: '#0d0d14', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: 8, color: '#f0f0f5', fontSize: 13, outline: 'none',
+                }}
+              >
+                {speakers.length === 0 && <option>기본 스피커</option>}
+                {speakers.map(s => (
+                  <option key={s.deviceId} value={s.deviceId}>{s.label}</option>
+                ))}
+              </select>
+              <button
+                onClick={async () => {
+                  setSpeakerTesting(true);
+                  try {
+                    const ctx = new AudioContext();
+                    // Play a pleasant test tone sequence
+                    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+                    for (let i = 0; i < notes.length; i++) {
+                      const osc = ctx.createOscillator();
+                      const gain = ctx.createGain();
+                      osc.type = 'sine';
+                      osc.frequency.value = notes[i];
+                      gain.gain.value = 0.15;
+                      gain.gain.setTargetAtTime(0, ctx.currentTime + i * 0.25 + 0.2, 0.05);
+                      osc.connect(gain);
+                      gain.connect(ctx.destination);
+                      osc.start(ctx.currentTime + i * 0.25);
+                      osc.stop(ctx.currentTime + i * 0.25 + 0.3);
+                    }
+                    setTimeout(() => { ctx.close(); setSpeakerTesting(false); }, 1200);
+                  } catch {
+                    setSpeakerTesting(false);
+                  }
+                }}
+                disabled={speakerTesting}
+                style={{
+                  marginTop: 8, padding: '8px 16px', borderRadius: 8, width: '100%',
+                  background: speakerTesting ? 'rgba(74,222,128,0.1)' : 'rgba(255,255,255,0.05)',
+                  border: `1px solid ${speakerTesting ? 'rgba(74,222,128,0.3)' : 'rgba(255,255,255,0.1)'}`,
+                  color: speakerTesting ? '#4ade80' : '#8a8a9a',
+                  fontSize: 12, cursor: speakerTesting ? 'default' : 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                }}
+              >
+                {speakerTesting ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M15.54 8.46a5 5 0 010 7.07" />
+                    </svg>
+                    재생 중...
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+                    </svg>
+                    스피커 테스트
+                  </>
+                )}
+              </button>
+              <p style={{ fontSize: 11, color: '#5a5a6a', marginTop: 4 }}>
+                {speakerTesting ? '테스트 소리가 들리면 스피커가 정상입니다' : '버튼을 눌러 소리가 나는지 확인하세요'}
               </p>
             </div>
 
