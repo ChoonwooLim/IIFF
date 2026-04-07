@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import api from "@/services/api";
 import { useAuth } from "@/hooks/AuthContext";
-import useWebRTC, { type PeerState } from "@/hooks/useWebRTC";
+import useWebRTC from "@/hooks/useWebRTC";
 import VideoControlBar from "@/components/meeting/VideoControlBar";
 import PreJoinLobby from "@/components/meeting/PreJoinLobby";
 import VideoChatPanel from "@/components/meeting/VideoChatPanel";
@@ -211,20 +211,20 @@ export default function VideoRoomPage() {
   // Get participant info for rendering
   const getSlotInfo = (userId: number): {
     stream: MediaStream | null; nickname: string; profileImage: string | null;
-    videoOn: boolean; audioOn: boolean; isLocal: boolean; handUp: boolean;
+    videoOn: boolean; audioOn: boolean; isLocal: boolean; handRaised: boolean;
   } => {
     if (userId === localUserId) {
       return {
         stream: localStream, nickname: user?.nickname || user?.name || '나',
         profileImage: user?.profile_image || null,
-        videoOn: videoEnabled, audioOn: audioEnabled, isLocal: true, handUp: handRaised,
+        videoOn: videoEnabled, audioOn: audioEnabled, isLocal: true, handRaised: handRaised,
       };
     }
     const peer = peers.get(userId);
-    if (!peer) return { stream: null, nickname: '?', profileImage: null, videoOn: false, audioOn: false, isLocal: false, handUp: false };
+    if (!peer) return { stream: null, nickname: '?', profileImage: null, videoOn: false, audioOn: false, isLocal: false, handRaised: false };
     return {
       stream: peer.stream, nickname: peer.nickname, profileImage: peer.profileImage,
-      videoOn: peer.videoEnabled, audioOn: peer.audioEnabled, isLocal: false, handUp: peer.handRaised,
+      videoOn: peer.videoEnabled, audioOn: peer.audioEnabled, isLocal: false, handRaised: peer.handRaised,
     };
   };
 
@@ -616,12 +616,16 @@ function ThumbnailCell({
         }} />
       ) : (
         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
-            border: '1px solid rgba(201,169,110,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 12, fontWeight: 700, color: '#c9a96e',
-          }}>{nickname.charAt(0)}</div>
+          {profileImage ? (
+            <img src={profileImage} alt="" style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{
+              width: 28, height: 28, borderRadius: '50%', background: 'rgba(201,169,110,0.15)',
+              border: '1px solid rgba(201,169,110,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 12, fontWeight: 700, color: '#c9a96e',
+            }}>{nickname.charAt(0)}</div>
+          )}
         </div>
       )}
       {/* Overlay */}

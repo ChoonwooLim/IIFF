@@ -20,7 +20,7 @@ interface VideoChatPanelProps {
   password?: string;
 }
 
-export default function VideoChatPanel({ meetingId, currentUserId, onClose, unreadCount: _, onResetUnread, password }: VideoChatPanelProps) {
+export default function VideoChatPanel({ meetingId, currentUserId, onClose: _, unreadCount: _u, onResetUnread, password }: VideoChatPanelProps) {
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState('');
   const [connected, setConnected] = useState(false);
