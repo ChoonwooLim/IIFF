@@ -481,7 +481,7 @@ export default function VideoRoomPage() {
             })}
 
             {/* Empty placeholders */}
-            {Array.from({ length: Math.max(0, 6 - activeParticipants.length) }).map((_, i) => (
+            {Array.from({ length: Math.max(0, 12 - activeParticipants.length) }).map((_, i) => (
               <div key={`e-${i}`} style={{
                 aspectRatio: '4/3', borderRadius: 6, background: '#0c0c18',
                 border: '1px dashed rgba(255,255,255,0.05)',
