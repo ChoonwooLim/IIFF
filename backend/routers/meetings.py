@@ -1,5 +1,4 @@
 import os
-import uuid
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File as FastAPIFile, status
@@ -130,16 +129,11 @@ def create_meeting(
     current_user: User = Depends(require_active),
     db: Session = Depends(get_db),
 ):
-    jitsi_room_id = None
-    if req.type == "video":
-        jitsi_room_id = f"iiff-{uuid.uuid4().hex[:12]}"
-
     meeting = Meeting(
         name=req.name,
         type=req.type,
         created_by=current_user.id,
         max_participants=req.max_participants,
-        jitsi_room_id=jitsi_room_id,
     )
     db.add(meeting)
     db.commit()
