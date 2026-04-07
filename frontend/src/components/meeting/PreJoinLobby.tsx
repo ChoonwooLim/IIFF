@@ -193,9 +193,9 @@ export default function PreJoinLobby({ meetingName, onJoin, onCancel }: PreJoinL
   };
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 50,
-      background: '#05050a',
+    <div className="top-14 md:top-[72px]" style={{
+      position: 'fixed', left: 0, right: 0, bottom: 0,
+      zIndex: 40, background: '#05050a',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: 24,
     }}>
